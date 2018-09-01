@@ -1,0 +1,9 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+- ../uniform-strings
+- ../uniform-error
+extra-deps:
+- test-invariant-0.4.5.0
+resolver:  nightly-2018-04-03

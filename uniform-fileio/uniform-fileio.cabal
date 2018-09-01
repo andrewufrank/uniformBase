@@ -1,0 +1,96 @@
+name: uniform-fileio
+version: 0.0.14.1
+cabal-version: >=1.22
+build-type: Simple
+license: GPL
+license-file: GPL_3
+maintainer: Andrew U. Frank <andrewufrank@gmail.com>
+author: Andrew Frank
+category: Data, Text, Uniform
+synopsis: uniform file handling operations
+description: reduce complexity of Haskell by providing a set of uniformly named
+    operations to handle files with an uniform handling of error
+    0.0.8 for use in litText
+    0.0.11 fixed callIO and use callIO everywhere
+    0.0.12 changed to use path library for filnames
+
+source-repository head
+    type: git
+    location: https://github.com/andrewufrank/uniform-fileio.git
+
+library
+    build-depends: base -any,
+            bytestring -any,
+            directory ,
+            filepath -any,
+            posix-paths -any,
+--            system-filepath,  -- differen def of FilePath
+            pureMD5 -any,
+            deepseq,
+--            MissingH, or cryptonite...
+            text -any,
+            unix -any,
+            pipes ,
+            safe,
+            path,
+--             ==0.6.2,
+            path-io,
+            exceptions
+            , split
+-- for tests
+--            HTF, test-invariant
+--            QuickCheck,
+-- mine
+--            basics
+--                    stringConversion  -- moved to bascis
+            , uniform-strings
+            , uniform-error
+            , uniform-algebras
+
+    exposed-modules:
+             Uniform.FileIO
+--             FileIO.ByteString
+--             Uniform.Filenames
+             Uniform.Filenames
+             -- exposed only for test use
+             Uniform.FileStrings
+
+             Uniform.Piped
+             Uniform.FileIOalgebra
+--             Uniform.FileStrings
+             Uniform.FileStatus
+             Uniform.TypedFile
+--             Uniform.FileText
+    exposed: True
+    buildable: True
+    default-language: Haskell2010
+    hs-source-dirs: .
+    other-modules:
+
+Test-Suite fileioTestAuto
+    type:       exitcode-stdio-1.0
+    main-is:    UniformFileIOTest.hs
+    build-depends: base, HTF
+        , uniform-fileio
+        , uniform-strings
+        , uniform-error
+        , test-invariant
+        , bytestring
+--        , pipes
+--        , path
+--        , path-io
+    default-language: Haskell2010
+    hs-source-dirs: tests
+    other-modules:
+             Uniform.Filenames_test
+             -- exposed only for test use
+             Uniform.FileStrings_test
+--            Unform.ByteString_test
+
+--             Uniform.Piped_test
+--             Uniform.FileIOalgebra_test
+--             Uniform.FileStrings
+--             Uniform.FileStatus_test
+             Uniform.TypedFile_test
+--             Uniform.FileText
+

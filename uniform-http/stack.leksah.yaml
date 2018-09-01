@@ -1,0 +1,25 @@
+
+resolver: lts-8.2
+
+packages:
+- '.'
+- location: /home/frank/Workspace8/repo8/uniform/uniform-strings
+  extra-dep: true
+- location: /home/frank/Workspace8/repo8/uniform/uniform-error
+  extra-dep: true
+- location: /home/frank/Workspace8/repo8/uniform/uniform-algebras
+  extra-dep: true
+
+extra-deps:
+- data-easy-0.7.0
+- non-negative-0.1.1
+- numeric-prelude-0.4.2
+- test-invariant-0.4.5.0
+
+# Override default flag values for local packages and extra-deps
+flags: {}
+
+# Extra package databases containing global packages
+extra-package-dbs: []
+
+

@@ -1,0 +1,67 @@
+name: uniform-http
+version: 0.0.2.5
+cabal-version: >=1.22
+build-type: Simple
+license: GPL
+license-file: GPL_3
+maintainer: Andrew U. Frank <andrewufrank@gmail.com>
+author: Andrew Frank
+category: Data, Text, Uniform
+synopsis: uniform text based operations to call http
+description: http using text
+    0.0.2.3 added HttpVarParams
+    0.0.2.4 change structure to export as Http
+
+source-repository head
+    type: git
+    location: https://github.com/andrewufrank/uniform-http.git
+
+library
+    build-depends: base
+            , bytestring
+            ,text
+--            , HTTP
+            , http-conduit
+            , http-client
+            , network-uri
+
+-- mine
+            , uniform-strings
+            , uniform-error
+            , uniform-algebras
+
+
+    exposed-modules:
+            Uniform.Http
+            -- the next two must not be imported
+            -- except for testing here
+             Uniform.HttpCall
+             Uniform.HttpURI
+    exposed: True
+    buildable: True
+    default-language: Haskell2010
+    hs-source-dirs: .
+    other-modules:
+
+Test-Suite httpTestAuto
+    type:       exitcode-stdio-1.0
+    main-is:    TestMain.hs
+    build-depends: base, HTF
+        -- , uniform-fileio
+        , uniform-strings
+        , uniform-error
+        , uniform-http
+--        -- needed because the two files
+
+            , uniform-algebras
+            , network-uri
+-- for tests
+            , HTF
+            , test-invariant
+    default-language: Haskell2010
+    hs-source-dirs: tests
+    other-modules:
+                 Uniform.HttpCall_test
+                 Uniform.HttpURI_test
+--             Uniform.HttpCall
+--             Uniform.HttpURI
