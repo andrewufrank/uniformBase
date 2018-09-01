@@ -25,6 +25,7 @@
 
 module Uniform.HttpCall (module Uniform.HttpCall
     , module Uniform.Error
+    , mkServerURI, ServerURI
             )  where
 
 import           Uniform.Error
@@ -39,19 +40,20 @@ makeRequest :: URI -> ErrIO Conduit.Request
 makeRequest dest = Http.parseRequest . t2s . uriT $ dest
 
 
---callHTTP8get :: Bool -> Http.Request  -> ErrIO  Text
----- call the http-conduit simple for a get
----- see https://haskell-lang.org/library/http-client
---callHTTP8get debug uri = do
---    response <- callIO $  Http.httpLBS uri
---     putIOwords ["The status code was: " ,
---               showT (Http.getResponseStatusCode response)]
---    putIOwords [showT (Http.getResponseHeader "Content-Type" response)]
-----    L8.putStrLn $ getResponseBody response
---    let res = bb2t . bl2b . Http.getResponseBody $ response :: Text
---    -- stops if not an UTF8 encoded text
---    putIOwords ["callHTTP8get response: ", res]
---    return res
+callHTTP8get :: Bool -> ServerURI  -> ErrIO  Text
+-- call the http-conduit simple for a get
+-- see https://haskell-lang.org/library/http-client
+callHTTP8get debug (ServerURI dest) = do
+    request <- makeRequest dest
+    response <- callIO $  Http.httpLBS request
+    putIOwords ["The status code was: " ,
+               showT (Http.getResponseStatusCode response)]
+    putIOwords [showT (Http.getResponseHeader "Content-Type" response)]
+--    L8.putStrLn $ getResponseBody response
+    let res = bb2t . bl2b . Http.getResponseBody $ response :: Text
+    -- stops if not an UTF8 encoded text
+    putIOwords ["callHTTP8get response: ", res]
+    return res
 
 callHTTP10post :: Bool -> AppType -> ServerURI -> HttpPath -> LazyByteString
                     -> HttpQueryParams -> TimeOutSec -> ErrIO Text

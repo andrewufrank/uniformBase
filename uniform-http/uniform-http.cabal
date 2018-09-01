@@ -1,5 +1,5 @@
 name: uniform-http
-version: 0.0.2.5
+version: 0.0.2.6
 cabal-version: >=1.22
 build-type: Simple
 license: GPL
@@ -11,6 +11,7 @@ synopsis: uniform text based operations to call http
 description: http using text
     0.0.2.3 added HttpVarParams
     0.0.2.4 change structure to export as Http
+    0.0.2.6 add back callHTTP8get
 
 source-repository head
     type: git
