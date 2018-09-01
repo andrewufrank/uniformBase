@@ -46,13 +46,13 @@ callHTTP8get :: Bool -> ServerURI  -> ErrIO  Text
 callHTTP8get debug (ServerURI dest) = do
     request <- makeRequest dest
     response <- callIO $  Http.httpLBS request
-    putIOwords ["The status code was: " ,
+    when debug $ putIOwords ["The status code was: " ,
                showT (Http.getResponseStatusCode response)]
-    putIOwords [showT (Http.getResponseHeader "Content-Type" response)]
+    when debug $ putIOwords [showT (Http.getResponseHeader "Content-Type" response)]
 --    L8.putStrLn $ getResponseBody response
     let res = bb2t . bl2b . Http.getResponseBody $ response :: Text
     -- stops if not an UTF8 encoded text
-    putIOwords ["callHTTP8get response: ", res]
+    when debug $ putIOwords ["callHTTP8get response: ", res]
     return res
 
 callHTTP10post :: Bool -> AppType -> ServerURI -> HttpPath -> LazyByteString
