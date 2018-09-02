@@ -36,6 +36,7 @@ library
 --        vector,
         split,
         zlib
+        , MissingH
         , uniform-algebras
     exposed-modules:
         Uniform.Strings

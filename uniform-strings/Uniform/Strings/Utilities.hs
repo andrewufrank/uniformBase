@@ -68,6 +68,7 @@ import           Data.Maybe
 import           Data.Monoid
 import           Data.Text                (Text)
 import qualified Data.Text                as T
+import qualified Data.List.Utils       as LU
 import           Safe
 -- import           Uniform.Error            (fromJustNote)
 -- not possible, because Error is based on String
@@ -196,6 +197,8 @@ class (Zeros a, ListForms a, Eq a) => CharChains a where
 --   0      pad with zeros rather than spaces
 
 --    length' :: a -> Int
+    replace' :: a -> a -> a -> a
+    -- replace the first string with the second string in the third string
 
     prop_zero_mknull :: a -> Bool
     prop_zero_mknull a = Law.zero append' a mknull
@@ -304,6 +307,7 @@ instance CharChains String where
 
     nubChar = nub
     take'  = take
+    replace' = LU.replace
 
 
 --instance CharChains2 String String where
@@ -361,6 +365,7 @@ instance CharChains Text where
       where
           cond x = x `notElem` ['a', '\r', '1']
           af = filterChar cond a :: Text
+    replace' = T.replace
 
 --instance CharChains LazyByteString where
 --    append' = Lazy.append
