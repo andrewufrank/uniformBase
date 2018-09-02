@@ -31,7 +31,7 @@ readCSV fileName = do
   let fileName1 = addExtension csvExtension fileName  :: Path Abs File
   putIOwords ["readCSV", "filename", s2t $ toShortFilePath fileName1]
   input <- callIO $ readFile (toShortFilePath fileName1)
-  putIOwords ["readCSV", "input", s2t $ input]
+  when False $ putIOwords ["readCSV", "input", s2t $ input]
   let csv = parseCSV (toShortFilePath fileName1) input
   -- filename is used only for error messages...
   case csv of
