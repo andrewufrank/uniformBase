@@ -177,6 +177,8 @@ class (Zeros a, ListForms a, Eq a) => CharChains a where
     -- filter lets pass what is true
     lengthChar :: a -> Int
     nubChar :: a -> a
+    drop' :: Int -> a -> a
+    -- drop n char from input start
     take' :: Int -> a -> a
     -- add a splitAt or dropN function
     -- repalceAll function from POS
@@ -307,6 +309,7 @@ instance CharChains String where
 
     nubChar = nub
     take'  = take
+    drop' = drop
     replace' = LU.replace
 
 
@@ -360,6 +363,7 @@ instance CharChains Text where
     filterChar = T.filter
     nubChar = s2t . nub .t2s
     take' = T.take
+    drop' = T.drop
 
     prop_filterChar a = (t2s af) == (filterChar cond . t2s $ a)
       where
