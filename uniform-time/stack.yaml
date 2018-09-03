@@ -6,4 +6,4 @@ packages:
 - ../uniform-error
 extra-deps:
 - test-invariant-0.4.5.0
-resolver:  nightly-2018-04-03
+resolver:  lts-12.5
