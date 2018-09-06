@@ -74,6 +74,7 @@ import           Safe
 -- not possible, because Error is based on String
 import           Uniform.Strings.Conversion
 import qualified Data.ByteString.Lazy as Lazy
+import Text.Read (readMaybe)
 --
 -- | generalized functions to work on chains of characters
 -- (i.e. strings, text, url encoded, bytestring), text and bytestring
@@ -201,6 +202,8 @@ class (Zeros a, ListForms a, Eq a) => CharChains a where
 --    length' :: a -> Int
     replace' :: a -> a -> a -> a
     -- replace the first string with the second string in the third string
+    readMaybe' :: Read b => a -> Maybe b
+    -- read something... needs type hints
 
     prop_zero_mknull :: a -> Bool
     prop_zero_mknull a = Law.zero append' a mknull
@@ -311,6 +314,7 @@ instance CharChains String where
     take'  = take
     drop' = drop
     replace' = LU.replace
+    readMaybe' = readMaybe
 
 
 --instance CharChains2 String String where
@@ -370,6 +374,7 @@ instance CharChains Text where
           cond x = x `notElem` ['a', '\r', '1']
           af = filterChar cond a :: Text
     replace' = T.replace
+    readMaybe' = readMaybe' . t2s
 
 --instance CharChains LazyByteString where
 --    append' = Lazy.append
