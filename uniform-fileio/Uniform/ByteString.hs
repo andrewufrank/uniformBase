@@ -93,9 +93,9 @@ instance (FilePathes String , FileOps FilePath) => FileOps RawFilePath where
     createDirIfMissing fp = createDirIfMissing . b2s $ fp
 
 
-    copyFile old new = copyFile (b2s old) (b2s new)
+    copyOneFile old new = copyOneFile (b2s old) (b2s new)
 
-    renameFile old new = renameFile (b2s old) (b2s new)
+    renameOneFile old new = renameFile (b2s old) (b2s new)
 
     renameDirectory old new = renameDirectory (b2s old) (b2s new)
 

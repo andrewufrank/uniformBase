@@ -6,6 +6,6 @@ packages:
 - ../uniform-error
 - ../uniform-algebras
 extra-deps:
-- posix-paths-0.2.1.5
+#- posix-paths-0.2.1.5
 - test-invariant-0.4.5.0
 resolver: lts-12.5

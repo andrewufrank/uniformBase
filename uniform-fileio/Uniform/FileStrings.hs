@@ -149,22 +149,24 @@ instance FileOps FilePath  where
 
 
 --    createDirIfMissing = callIO . D.createDirectoryIfMissing True
---    copyFile old new = do
---        t <- doesFileExist old
---        t2 <- doesFileExist new
---        if t && (not t2) then do
---            let dir = takeDir new
---            direxist <- doesDirExist   dir
---            unless direxist $ do
---                createDirIfMissing  dir
---            callIO $ D.copyFile (old) ( new)
---
---                else if t then  throwErrorT
---                    ["copyFile source not exist", showT old]
---                    -- signalf   SourceNotExist
---                            else throwErrorT  [
---                            "copyFile target exist", showT new]
---                            --   signalf  TargetExist
+
+    copyOneFile old new = do
+        t <- doesFileExist' old
+        t2 <- doesFileExist' new
+        if t && (not t2) then do
+            let dir = getParentDir new  -- was takeDir
+            direxist <- doesDirExist'   dir
+            unless direxist $ do
+                createDirIfMissing'  dir
+            callIO $ D.copyFile (old) ( new)
+
+                else if t then  throwErrorT
+                    ["copyFile source not exist", showT old]
+                    -- signalf   SourceNotExist
+                            else throwErrorT  [
+                            "copyFile target exist", showT new]
+                            --   signalf  TargetExist
+
 --    renameFile old new = do
 --        t <- doesFileExist old
 --        t2 <- doesFileExist new
@@ -209,21 +211,21 @@ instance FileOps FilePath  where
             putIOwords ["getMD5 in FileStrings.hs", showT fn, showT e]  -- reached
             throwErrorT $ ["getMD5 error for" , showT fn]
 
---    getDirCont fn  = do
-----        putIOwords ["getDirCont", show f]
---        testDir <- doesDirExist fn
---        readExec <- getFileAccess fn (True, False, True)
---        if testDir && readExec then
---            do
---               r <- callIO . D.listDirectory $ fn
---               let r2 = filter ( \file' -> (file' /= "." && file' /= "..")  ) r
---               let r3 = map (fn </>) r2
-----               putIOwords ["FileStrigs - getDirCont", showT fn, "files: ", unwordsT . map showT $ r]
---               return r3
---          else
---                throwErrorT
---                    ["getDirCont not exist or not readable"
---                    , showT fn, showT testDir, showT readExec]
+    getDirCont fn  = do
+--        putIOwords ["getDirCont", show f]
+        testDir <- doesDirExist' fn
+        readExec <- getFileAccess fn (True, False, True)
+        if testDir && readExec then
+            do
+               r <- callIO . D.listDirectory $ fn
+               let r2 = filter ( \file' -> (file' /= "." && file' /= "..")  ) r
+               let r3 = map (fn </>) r2
+--               putIOwords ["FileStrigs - getDirCont", showT fn, "files: ", unwordsT . map showT $ r]
+               return r3
+          else
+                throwErrorT
+                    ["getDirCont not exist or not readable"
+                    , showT fn, showT testDir, showT readExec]
 
 --    getDirContentNonHidden fp = do
 ----        putIOwords ["getDirContentNonHidden", unL fp]
@@ -328,8 +330,8 @@ instance DirOps (Path ar Dir)  where
 instance FileOps (Path ar File)  where
     doesFileExist'   =  PathIO.doesFileExist . unPath
 --    getPermissions' = P.getPermissions
-
-    renameFile' old new = do  -- :: fp -> fp ->  ErrIO Text
+    copyOneFile old new =  copyOneFile (unL old) (unL new)
+    renameOneFile old new = do  -- :: fp -> fp ->  ErrIO Text
     -- ^ rename directory old to new
         PathIO.renameFile (unPath old) (unPath new)
 

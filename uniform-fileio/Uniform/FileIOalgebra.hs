@@ -79,9 +79,9 @@ class FileOps fp   where
 
 --    getPermissions' :: fp -> ErrIO D.Permissions
 
-    copyFile' :: fp -> fp ->  ErrIO ()
+    copyOneFile :: fp -> fp ->  ErrIO ()
     -- ^ copy a file from old to new
-    renameFile' :: fp -> fp ->  ErrIO ()
+    renameOneFile :: fp -> fp ->  ErrIO ()
     -- ^ rename a file from old to new
 
     deleteFile :: fp -> ErrIO ()
