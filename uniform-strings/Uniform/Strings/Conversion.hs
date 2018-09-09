@@ -47,6 +47,7 @@ module Uniform.Strings.Conversion (
     , s3lat, t3lat, s3latin, t3latin
     , s2url, url2s, b2urlf, urlf2b, unURL, t22latin
     , convertLatin, findNonLatinChars, findNonLatinCharsT
+    , filterLatin
     , module Safe
     )   where
 
@@ -345,7 +346,9 @@ conv2latinChar c = if ord c < 256 then c else
 
 findNonLatinChars :: String -> String
 -- ^ the result is a string of all the characters not in the latin1 encoding
-findNonLatinChars = filter (\c -> conv2latinChar c == '\SUB')
+-- possibly apply conv2latinChar first
+findNonLatinChars = filter ((<256).ord )
+--            (\c -> conv2latinChar c == '\SUB')
 
 findNonLatinCharsT :: Text -> Text
 -- ^ the result is a string of all the characters not in the latin1 encoding
