@@ -1,5 +1,5 @@
 name: uniform-strings
-version: 0.0.11.0
+version: 0.0.11.1
 cabal-version: >=1.22
 build-type: Simple
 license: GPL
@@ -14,6 +14,7 @@ description: reduce complexity of Haskell by providing a set of uniformly named
     where the semantic is the same (tested with quickcheck).
     0.0.9 radical reduction to use Text only
     0.0.11 structure regularized
+            added LanguageCodes, needs uniform-algebras
 
 source-repository head
     type: git
@@ -22,6 +23,7 @@ source-repository head
 library
     build-depends:
         base >=4.8 && <= 5,
+        uniform-algebras ,
         network-uri,
         monads-tf,
         bytestring,
@@ -44,6 +46,7 @@ library
         Uniform.Strings.Conversion
         Uniform.Strings.Utilities
         Uniform.Strings.Infix
+        Uniform.Strings.LanguageCodes
 
     exposed: True
     buildable: True
