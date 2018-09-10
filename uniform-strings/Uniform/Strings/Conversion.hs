@@ -68,6 +68,7 @@ import Control.Monad (join)
 import           Data.Text            (Text)
 import qualified Data.Text            as T
 import Data.Char (ord)
+import Data.List (nub)
 import           Data.ByteString      (ByteString)
 import qualified Data.ByteString      as ByteString
 import qualified Data.ByteString.Lazy as Lazy
@@ -347,7 +348,7 @@ conv2latinChar c = if ord c < 256 then c else
 findNonLatinChars :: String -> String
 -- ^ the result is a string of all the characters not in the latin1 encoding
 -- possibly apply conv2latinChar first
-findNonLatinChars = filter ((<256).ord )
+findNonLatinChars = nub . filter ((>256).ord )
 --            (\c -> conv2latinChar c == '\SUB')
 
 findNonLatinCharsT :: Text -> Text
