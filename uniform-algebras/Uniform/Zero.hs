@@ -28,11 +28,11 @@ module Uniform.Zero (module Uniform.Zero
 ) where
 
 
-import Data.Text (Text)
+--import Data.Text (Text)
 import Data.Maybe
 import Data.Either
 
-import GHC.Generics
+import GHC.Generics hiding (S)
 
 class  Zeros z where
 -- ^ a minimal algebraic type with nothing than an identity

@@ -37,7 +37,7 @@ module Uniform.Error (module Uniform.Error
 import           "monads-tf" Control.Monad.Error
 import           Safe
 --import           Test.Framework
-import           Uniform.Strings hiding ((</>), (<.>))
+import           Uniform.Strings hiding ((</>), (<.>), S)
 
 import Control.Exception
 instance CharChains2 IOError Text where

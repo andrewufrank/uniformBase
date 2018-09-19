@@ -2,7 +2,7 @@
 --
 -- Module      :  Language Codes
 
--- a single set of language codes - probably could be imported? 
+-- a single set of language codes - probably could be imported?
 
 -----------------------------------------------------------------------------
 {-# LANGUAGE FlexibleInstances     #-}
@@ -17,7 +17,7 @@ module Uniform.Strings.LanguageCodes  where
 
 import Uniform.Zero
 import Uniform.Strings (Text, unwords', t2s)
-import GHC.Generics
+import GHC.Generics hiding (S)
 
 data LanguageCode = NoLanguage | German | USenglish | English
     | French | Spanish | Italian   deriving (Show, Read, Eq, Ord, Generic)
