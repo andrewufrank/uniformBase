@@ -405,6 +405,7 @@ instance   FileOps2 (Path ar File) Text where
 
     readFile2 fp = readFile2 (unL fp)
     -- a strict read (does cloes?)
+    -- deal with latin encoded files - gives hGet error otherwise!
     writeFile2  fp st = writeFile2 (unL fp) st
     appendFile2  fp st = appendFile2  (unL fp) st
 

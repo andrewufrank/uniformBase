@@ -190,7 +190,7 @@ class (Zeros a, ListForms a, Eq a) => CharChains a where
     splitOn' :: a -> a -> Maybe [a]
     -- ^ returns Nothing if second is empty
 
-    printf' :: (PrintfArg r, PrintfType r) => String -> r -> a
+    printf' :: (PrintfArg r) => String -> r -> a
     -- ^ formats a string accoding to a pattern - restricted to a single string (perhaps)
     -- requires type of argument fixed!
 --    see http://hackage.haskell.org/package/base-4.9.1.0/docs/Text-Printf.html#v:printf
@@ -198,6 +198,7 @@ class (Zeros a, ListForms a, Eq a) => CharChains a where
 --   +      always use a sign (+ or -) for signed conversions
 --   space  leading space for positive numbers in signed conversions
 --   0      pad with zeros rather than spaces
+-- example "%2.0v" -- always starts with % then digits before and after decimal, v for default
 
 --    length' :: a -> Int
     replace' :: a -> a -> a -> a
@@ -444,15 +445,25 @@ class NiceStrings a where
 -- the needs are to have a non-read-parse conversion
 -- integrate in StringUtilities
     shownice :: a -> Text
+    showlong :: a -> Text
+    showlong = shownice  -- a default
 
-instance NiceStrings Text where shownice = id
+instance NiceStrings Text where
+    shownice = id
+    showlong = id
 
-instance NiceStrings Int where shownice = show'
-instance NiceStrings Double where shownice = show'
+instance NiceStrings Int where
+    shownice = show'
+    showlong = show'
+instance NiceStrings Double where
+    shownice = show'
+    showlong = show'
 
 instance (NiceStrings a, NiceStrings b) => NiceStrings (a,b) where
     shownice (a,b) = unwords' [shownice a, shownice b]
+    showlong (a,b) = unwords' [showlong a, showlong b]
 instance (NiceStrings a) => NiceStrings [a] where
     shownice as = concat' . catMaybes $ [intercalate' "," .  map shownice $ as, Just "\n"]
---instance (NiceStrings a) => NiceStrings (V.Vector a) where
+    shownice as = concat' . catMaybes $ [intercalate' "," .  map showlong $ as, Just "\n"]
+--showlong (NiceStrings a) => NiceStrings (V.Vector a) where
 --    shownice  = unwords' . map shownice . V.toList
