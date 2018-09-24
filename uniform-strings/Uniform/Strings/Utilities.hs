@@ -169,7 +169,7 @@ class (Zeros a, ListForms a, Eq a) => CharChains a where
     concat' :: [a] -> a
     trim' :: a -> a
     -- ^ removes all spaces front and back, idempotent
-    reverseString :: a -> a
+    reverseString, reverse' :: a -> a
     removeLast :: a -> a
     -- ^ remove last char
     removeChar ::Char -> a -> a
