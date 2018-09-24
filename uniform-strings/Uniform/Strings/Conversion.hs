@@ -335,13 +335,13 @@ conv2latinChar c = if ord c < 256 then c else
         '\x201D' -> '"'
         '\x201E' -> '"'
         '\8212' -> '-'    -- em dash
-        '\8222' -> '"'    -- unclear why 8222 but is lower quote
-        '\8216' -> '\''    -- unclear why 8218 but is left single quote
-        '\8217' -> '\''    -- unclear why 8218 but is right single quote
-        '\8218' -> '\''    -- unclear why 8218 but is quote
+        '\8222' -> '"'    -- lower quote
+        '\8216' -> '\''    --  left single quote
+        '\8217' -> '\''    -- right single quote
+        '\8218' -> '\''    --  quote
         '\8221' -> '"'    -- unclear why 8221 but is quote
-        '\x2018' -> '\''
-        '\x2019' -> '\''
+--        '\x2018' -> '\''   -- same as 8216
+--        '\x2019' -> '\''  -- same as 8217
 
         _ -> c -- '\SUB'    -- could be another char ? \SUB
 
