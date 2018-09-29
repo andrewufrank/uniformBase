@@ -97,6 +97,7 @@ toLowerStart :: Text -> Text
 -- ^ convert the first character to lowercase - for Properties in RDF
 toLowerStart t = (toLower . T.head $ t ) `T.cons` (T.tail t)
 
+
 toUpperStart :: Text -> Text
 -- ^ convert the first character to Uppercase - for  PosTags in Spanish
 toUpperStart t = (toUpper . T.head $ t ) `T.cons` (T.tail t)
