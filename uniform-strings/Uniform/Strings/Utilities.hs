@@ -424,6 +424,7 @@ instance CharChains BSUTF  where
     trim' = s2bu . trim' . bu2s
 
 
+
 unlinesT :: [Text] -> Text
 unlinesT = unlines'
 

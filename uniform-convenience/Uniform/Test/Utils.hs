@@ -186,6 +186,15 @@ instance  ShowTestHarness String where
 --    readTestH = readNote "showTestHarness String " -- . show
     readTestH2 msg = readNote (  msg) . show
     readTestH2e msg = readEither . show
+
+instance  ShowTestHarness LazyByteString where
+    -- to avoid the additional "" added when show text
+    -- but the read must compensate!
+    -- this is necessary that json files (and other with "") can be read
+    showTestH = bb2s . bl2b
+--    readTestH = readNote "showTestHarness Text" . show
+    readTestH2 msg = readNote (  msg) . show
+    readTestH2e msg = readEither . show
 --
 --instance  ShowTestHarness () where
 --    showTestH = show

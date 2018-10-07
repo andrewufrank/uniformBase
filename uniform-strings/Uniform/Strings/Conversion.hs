@@ -25,6 +25,7 @@
 --    , GeneralizedNewtypeDeriving
     , DeriveGeneric
     , DeriveAnyClass
+    , TypeSynonymInstances
       #-}
 {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
@@ -106,6 +107,7 @@ t2s = T.unpack
 type LazyByteString = Lazy.ByteString
 
 instance Zeros ByteString where zero = t2b ""
+instance Zeros LazyByteString where zero = b2bl zero
 -- ByteString -- Text
 -- bytestring can contain any bitcombinations (binary)
 
