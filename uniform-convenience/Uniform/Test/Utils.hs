@@ -27,6 +27,7 @@
 
 module Uniform.Test.Utils (module Uniform.Test.Utils
     , module Uniform.FileIO
+    , ppShow
 
 
         )  where
@@ -34,7 +35,7 @@ module Uniform.Test.Utils (module Uniform.Test.Utils
 import           Safe
 import           Test.Framework
 import Uniform.FileIO
-import Text.Show.Pretty
+import Text.Show.Pretty (ppShow )
 import qualified Path.IO as Path.IO (doesFileExist, getAppUserDataDir)
         -- necessary for operations in IO
 import Text.Read
