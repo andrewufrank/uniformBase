@@ -19,11 +19,11 @@
 {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
 {-# LANGUAGE StandaloneDeriving
-    , GeneralizedNewtypeDeriving
+--    , GeneralizedNewtypeDeriving
     , DeriveGeneric
     , DeriveAnyClass
       #-}
--- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
+ {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 module Uniform.HttpURI (
         -- TimeOutSec, mkTimeOut, mkTimeOutDefault
@@ -31,7 +31,7 @@ module Uniform.HttpURI (
     module Uniform.HttpURI
     , module Uniform.Zero
     , module Uniform.Strings
---    , module Network.URI
+--    , module N.Network.URI
             )  where
 
 
@@ -46,7 +46,8 @@ newtype ServerURI = ServerURI {unServerURI :: URI}
                 deriving (Show, Read, Eq, Ord, Generic, Zeros, Semigroup, Monoid
 --                        , ListForms
                         )
---deriving
+--deriving  -- <> and mempty missing for Semigroup
+
 instance (Zeros ServerURI, Zeros (LF ServerURI)) => ListForms ServerURI
     where
     type LF ServerURI = Text
@@ -128,7 +129,8 @@ makeURI u = URI $ maybe (errorT ["makeURI in Uniform.HttpURI", u])
 
 addToURI :: URI -> Text -> URI
 -- add a text at end to an URI
-addToURI u t =    appendOne u t -- makeURI $ (uriT u) </> t
+addToURI u t =    --appendOne u t --
+            makeURI $ (uriT u) </> t
 
 newtype PortNumber = PortNumber Int
     deriving (Eq, Ord, Show, Read, Generic, Zeros)

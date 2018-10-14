@@ -34,7 +34,7 @@ import     qualified      Network.HTTP.Conduit         as Conduit
 
 import Data.Text (take)
 import Uniform.HttpURI
-import GHC.Generics
+import GHC.Generics hiding (S)
 
 makeRequest :: URI -> ErrIO Conduit.Request
 makeRequest dest = Http.parseRequest . t2s . uriT $ dest

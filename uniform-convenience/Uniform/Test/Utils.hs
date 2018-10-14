@@ -27,6 +27,7 @@
 
 module Uniform.Test.Utils (module Uniform.Test.Utils
     , module Uniform.FileIO
+    , ppShow
 
 
         )  where
@@ -34,7 +35,7 @@ module Uniform.Test.Utils (module Uniform.Test.Utils
 import           Safe
 import           Test.Framework
 import Uniform.FileIO
-import Text.Show.Pretty
+import Text.Show.Pretty (ppShow )
 import qualified Path.IO as Path.IO (doesFileExist, getAppUserDataDir)
         -- necessary for operations in IO
 import Text.Read
@@ -184,6 +185,15 @@ instance  ShowTestHarness String where
     -- to avoid the additional "" added when show text
     showTestH = id
 --    readTestH = readNote "showTestHarness String " -- . show
+    readTestH2 msg = readNote (  msg) . show
+    readTestH2e msg = readEither . show
+
+instance  ShowTestHarness LazyByteString where
+    -- to avoid the additional "" added when show text
+    -- but the read must compensate!
+    -- this is necessary that json files (and other with "") can be read
+    showTestH = bb2s . bl2b
+--    readTestH = readNote "showTestHarness Text" . show
     readTestH2 msg = readNote (  msg) . show
     readTestH2e msg = readEither . show
 --

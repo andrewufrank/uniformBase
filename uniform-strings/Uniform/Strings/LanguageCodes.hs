@@ -1,10 +1,8 @@
 -----------------------------------------------------------------------------
 --
--- Module      :  StringInfix
+-- Module      :  Language Codes
 
--- infix operations with <X> to insert X in between - unconditional
--- even if the two strings are empty
--- todo - how to compare with similar ops in fileio?
+-- a single set of language codes - probably could be imported?
 
 -----------------------------------------------------------------------------
 {-# LANGUAGE FlexibleInstances     #-}
@@ -19,7 +17,7 @@ module Uniform.Strings.LanguageCodes  where
 
 import Uniform.Zero
 import Uniform.Strings (Text, unwords', t2s)
-import GHC.Generics
+import GHC.Generics hiding (S)
 
 data LanguageCode = NoLanguage | German | USenglish | English
     | French | Spanish | Italian   deriving (Show, Read, Eq, Ord, Generic)

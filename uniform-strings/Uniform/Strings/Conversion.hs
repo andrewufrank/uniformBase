@@ -25,6 +25,7 @@
 --    , GeneralizedNewtypeDeriving
     , DeriveGeneric
     , DeriveAnyClass
+    , TypeSynonymInstances
       #-}
 {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
@@ -47,6 +48,7 @@ module Uniform.Strings.Conversion (
     , s3lat, t3lat, s3latin, t3latin
     , s2url, url2s, b2urlf, urlf2b, unURL, t22latin
     , convertLatin, findNonLatinChars, findNonLatinCharsT
+    , filterLatin
     , module Safe
     )   where
 
@@ -67,6 +69,7 @@ import Control.Monad (join)
 import           Data.Text            (Text)
 import qualified Data.Text            as T
 import Data.Char (ord)
+import Data.List (nub)
 import           Data.ByteString      (ByteString)
 import qualified Data.ByteString      as ByteString
 import qualified Data.ByteString.Lazy as Lazy
@@ -104,6 +107,7 @@ t2s = T.unpack
 type LazyByteString = Lazy.ByteString
 
 instance Zeros ByteString where zero = t2b ""
+instance Zeros LazyByteString where zero = b2bl zero
 -- ByteString -- Text
 -- bytestring can contain any bitcombinations (binary)
 
@@ -333,19 +337,21 @@ conv2latinChar c = if ord c < 256 then c else
         '\x201D' -> '"'
         '\x201E' -> '"'
         '\8212' -> '-'    -- em dash
-        '\8222' -> '"'    -- unclear why 8222 but is lower quote
-        '\8216' -> '\''    -- unclear why 8218 but is left single quote
-        '\8217' -> '\''    -- unclear why 8218 but is right single quote
-        '\8218' -> '\''    -- unclear why 8218 but is quote
+        '\8222' -> '"'    -- lower quote
+        '\8216' -> '\''    --  left single quote
+        '\8217' -> '\''    -- right single quote
+        '\8218' -> '\''    --  quote
         '\8221' -> '"'    -- unclear why 8221 but is quote
-        '\x2018' -> '\''
-        '\x2019' -> '\''
+--        '\x2018' -> '\''   -- same as 8216
+--        '\x2019' -> '\''  -- same as 8217
 
         _ -> c -- '\SUB'    -- could be another char ? \SUB
 
 findNonLatinChars :: String -> String
 -- ^ the result is a string of all the characters not in the latin1 encoding
-findNonLatinChars = filter (\c -> conv2latinChar c == '\SUB')
+-- possibly apply conv2latinChar first
+findNonLatinChars = nub . filter ((>256).ord )
+--            (\c -> conv2latinChar c == '\SUB')
 
 findNonLatinCharsT :: Text -> Text
 -- ^ the result is a string of all the characters not in the latin1 encoding

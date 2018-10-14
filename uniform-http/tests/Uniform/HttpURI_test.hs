@@ -32,10 +32,10 @@ import Uniform.HttpURI
 
 --
 
---test_add2uri = assertEqual "\"http://nlp.gerastree.at:9001/xtestx\""
---                        (showT $ addToURI destTest9001g "xtestx")
---test_add2uri2 = assertEqual "\"http://127.0.0.1/xtestx\""
---                        (showT $ addToServerURI forportTest "xtestx")
+test_add2uri = assertEqual "\"http://nlp.gerastree.at:9001/xtestx\""
+                        (showT $ addToURI destTest9001g "xtestx")
+test_add2uri2 = assertEqual "ServerURI {unServerURI = \"http://127.0.0.1:9000\"}"
+                        (showT $ addPort2ServerURI forportTest (PortNumber 9000))
 
 
 destTestFailx = "127.0.0.1:9000" ::Text  -- missing http://

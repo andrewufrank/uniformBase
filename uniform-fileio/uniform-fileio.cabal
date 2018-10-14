@@ -38,6 +38,7 @@ library
             path-io,
             exceptions
             , split
+        , zlib
 -- for tests
 --            HTF, test-invariant
 --            QuickCheck,

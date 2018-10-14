@@ -37,7 +37,7 @@ module Uniform.Strings (
     )   where
 
 
-import           Uniform.Strings.Conversion
+import           Uniform.Strings.Conversion hiding (S)
 import           Uniform.Strings.Infix
 -- hidde when conflict in use                    hiding ((<.>), (</>))
 import           Uniform.Strings.Utilities

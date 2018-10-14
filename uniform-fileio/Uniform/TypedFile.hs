@@ -26,6 +26,7 @@ import           Uniform.FileStrings
 import           Uniform.FileStatus
 --import           Uniform.Strings hiding ((</>))
 import qualified Path.IO (ensureDir)
+import qualified Codec.Compression.GZip as GZip
 
 data TypedFile5 a b = TypedFile5 { tpext5 :: Extension}
 
@@ -174,4 +175,61 @@ instance TypedFiles5 [Text] () where
         let fn2 =  setExtension (tpext5 tp) $ fn
         fmap lines' . readFile2 $ fn2
 
+data GZip  -- just a type, no data
 
+instance TypedFiles5 LazyByteString GZip where
+-- ^ files with full triples
+--    mkTypedFile5 = TypedFile5 {tpext5 = Extension "nt.gz"}
+
+--    typedExtension tp = tpext5 tp
+--    isTyped :: Path Abs File -> TypedFile5 a b -> Bool
+--    isTyped fp tp = (getExtension fp) == typedExtension tp
+    append6 fp  tp jsonld = do
+
+        when rdfGraphDebug $ putIOwords ["triples append6", showT fp]
+        let fn2 = setExtension (tpext5 tp)  fp
+
+        appendFile2 fn2 (GZip.compress jsonld)
+
+
+    openHandle6 fp  tp = do
+        when rdfGraphDebug $ putIOwords ["openHandle6 jsonld"]
+        let ext = unExtension (tpext5 tp)
+        let tmpext = Extension (ext <.> "tmp")
+        let fn2 = setExtension tmpext  fp
+        when rdfGraphDebug $ putIOwords ["openHandle6 jsonld", showT fn2]
+
+        hand <- openFile2handle fn2 WriteMode
+        -- should create or truncate the file, but not when the dir not exist
+        --https://hackage.haskell.org/package/base-4.10.0.0/docs/System-IO.html#g:5
+        when rdfGraphDebug $ putIOwords ["openHandle6 jsonld", showT fn2]
+        return hand
+
+    closeHandle6  fp tp hand = do
+--        when rdfGraphDebug $
+        putIOwords ["closeHandle6 jsonld"]
+        let ext = unExtension (tpext5 tp)
+        let tmpext = Extension (ext <.> "tmp")
+        closeFile2 hand
+        let fn2 = setExtension tmpext  fp
+        let fn1 = setExtension (tpext5 tp) fp
+        renameOneFile fn2 fn1
+--        when rdfGraphDebug $
+        putIOwords ["closeHandle6 jsonld", showT fn2]
+        return ()
+
+
+    writeHandle6 hand  tp jsonld = do
+--        when rdfGraphDebug $
+        putIOwords ["writeHandle6 jsonld gz"]
+        r <- write2handle  hand (GZip.compress jsonld)
+--        when rdfGraphDebug $
+        putIOwords ["writeHandle6 gz jsonld done "
+                    , showT r ]
+        return r
+
+--    exist6 fp tp = do
+--        let fn2 =  setExtension (tpext5 tp)  fp :: Path Abs File
+--        doesFileExist'  fn2
+
+    read6 fp  tp = error "read for jsonld is not easy and not required"
