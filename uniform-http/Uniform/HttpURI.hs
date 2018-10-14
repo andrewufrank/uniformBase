@@ -32,6 +32,7 @@ module Uniform.HttpURI (
     , module Uniform.Zero
     , module Uniform.Strings
 --    , module N.Network.URI
+    , uriT
             )  where
 
 

@@ -25,7 +25,7 @@ module Uniform.Http (
       TimeOutSec, mkTimeOutSec, mkTimeOutDefault
     , mkServerURI, ServerURI, addPort2ServerURI, PortNumber, mkPortNumber
     , URI
-    -- , uriT  -- required?
+    , uriT  -- required?
     , mkAppType, AppType
     , callHTTP10post
     , mkHttpPath, HttpPath   -- from / to ?

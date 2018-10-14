@@ -378,8 +378,9 @@ instance CharChains Text where
     replace' = T.replace
     readMaybe' = readMaybe' . t2s
 
---instance CharChains LazyByteString where
---    append' = Lazy.append
+instance CharChains LazyByteString where
+    append' = Lazy.append
+    lengthChar a = fromIntegral . Lazy.length $ a  -- gives not exact value??
 
 unwordsT :: [Text] -> Text
 unwordsT = T.unwords  -- to fix types for overloaded strings
