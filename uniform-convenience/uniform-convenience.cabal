@@ -31,11 +31,13 @@ library
         , parsec
         , path, path-io
         , pretty-show
+        , iso639
     exposed-modules:
         Uniform.Convenience.StartApp
         Uniform.Convenience.ReadCSV
         Uniform.Test.TestHarness
         Uniform.Test.Utils
+        Uniform.Codes.LanguageCode
 
     exposed: True
     buildable: True
