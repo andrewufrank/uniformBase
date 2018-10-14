@@ -46,7 +46,7 @@ library
         Uniform.Strings.Conversion
         Uniform.Strings.Utilities
         Uniform.Strings.Infix
-        Uniform.Strings.LanguageCodes
+--        Uniform.Strings.LanguageCodes  -- moved to convenience Uniform.Codes.LanguageCode
 
     exposed: True
     buildable: True
