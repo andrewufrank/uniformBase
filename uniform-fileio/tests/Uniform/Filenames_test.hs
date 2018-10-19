@@ -201,4 +201,10 @@ e1 = (Extension "ext")
 --d1 = makeAbsDir "/somedir/more/dir"
 --test_nakedDir = assertEqual "dir" (getNakedDir d1)
 
+--data TestRec = TestRec {f11:: Path Abs Dir} deriving (Show, Eq, Read)
+--inp1 = TestRec { f11 = "/home/frank/"}
+--
+--test_read1 = assertEqual inp1 (inp1)
+--test_read12 = assertEqual "" (show inp1)
+
 

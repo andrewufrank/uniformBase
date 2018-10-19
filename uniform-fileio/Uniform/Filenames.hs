@@ -120,6 +120,7 @@ instance Read (Path Rel File) where
                 where  [(x ::String , rem1)] = readsPrec i r
 
 
+
 instance CharChains2 (Path a d) String where show'  = show
 instance CharChains2 (Path a d) Text where show'  = s2t . show
 
