@@ -199,6 +199,9 @@ instance Filenames1 (Path ar File)   where
         "getNakedDir for Filenamse1 Path ar File) not existing"
 
 instance Filenames1 (Path ar Dir) where
+    getNakedFileName = error "getNakedFileName not from Dir"
+    getImmediateParentDir = getImmediateParentDir . toFilePath
+    getParentDir =  getParentDir . toFilePath
     getNakedDir = getNakedDir . toFilePath
 
 instance Filenames1 FilePath   where
