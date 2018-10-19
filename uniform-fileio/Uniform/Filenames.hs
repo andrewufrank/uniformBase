@@ -18,7 +18,7 @@
 {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE OverloadedStrings
         , DeriveGeneric
-        -- , DeriveAnyClass 
+        -- , DeriveAnyClass
          #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
@@ -53,9 +53,17 @@ newtype Path b t = Path (Path.Path b t)
   -- unclear what zero should be ?
 
 instance Zeros (Path Abs File) where  -- required for NTdescriptor
-  zero = makeAbsFile ""
+  zero = makeAbsFile "/zero"
 instance Zeros (Path Rel File) where  -- required for NTdescriptor
-  zero = makeRelFile ""
+  zero = makeRelFile "zero"
+
+instance Zeros (Path Abs Dir) where  -- required for NTdescriptor
+  zero = makeAbsDir "/"
+instance Zeros (Path Rel Dir) where  -- required for NTdescriptor
+  zero = makeRelDir "."
+
+instance NiceStrings (Path a b) where
+    shownice = s2t . Path.toFilePath . unPath
 
 unPath (Path s) = s
 toFilePath = Path.toFilePath . unPath

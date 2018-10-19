@@ -1,5 +1,5 @@
 name: uniform-http
-version: 0.0.2.6
+version: 0.0.2.6.1
 cabal-version: >=1.22
 build-type: Simple
 license: GPL
@@ -25,6 +25,7 @@ library
             , http-conduit
             , http-client
             , network-uri
+--            , uri-encode
 
 -- mine
             , uniform-strings

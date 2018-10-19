@@ -185,8 +185,10 @@ b2s = fmap t2s . b2t
 -- url - in url encode space as %20, as done in the network-uri library (for strings)
 --  better name: escape?
 -- urlForm - in form as + , as done in the snap core librar (for bytestrings in utf8 endocode)
+-- use only for the query part, not the full url!
 
 newtype URL = URL String deriving (Show, Eq)
+instance Zeros URL where zero = URL zero
 unURL (URL t) = t
 
 

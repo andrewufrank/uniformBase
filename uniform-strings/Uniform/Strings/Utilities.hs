@@ -447,7 +447,8 @@ class NiceStrings a where
 -- ^ produce a text - any particular needs ? (otherwise replace with showT
 -- the needs are to have a non-read-parse conversion
 -- integrate in StringUtilities
-    shownice :: a -> Text
+    shownice, showNice :: a -> Text
+    showNice = shownice
     showlong :: a -> Text
     showlong = shownice  -- a default
 
@@ -470,3 +471,8 @@ instance (NiceStrings a) => NiceStrings [a] where
     shownice as = concat' . catMaybes $ [intercalate' "," .  map showlong $ as, Just "\n"]
 --showlong (NiceStrings a) => NiceStrings (V.Vector a) where
 --    shownice  = unwords' . map shownice . V.toList
+
+instance (NiceStrings a) => NiceStrings (Maybe a) where
+    shownice (Just a)  = shownice a
+    shownice Nothing = "Nothing"
+

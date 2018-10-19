@@ -50,6 +50,52 @@ test_makeURIfail = do
             assertBool (not res)
 --test_makeURIfail2 = assertEqual "Nothing" (showT $ makeAbsURI  destTestFailx)
 
+--test_makeURILineDesc_fail = assertEqual zero (makeURI "http://gerastree.at/test-t4#/TP[54/0002]L0013")
+test_makeURILineDesc0 = assertEqual "http://gerastree.at/test-t4L0013" (makeURI "http://gerastree.at/test-t4L0013")
+test_makeURILineDesc1 = assertEqual "http://gerastree.at/test-t4/TP/L0013" (makeURI "http://gerastree.at/test-t4/TP/L0013")
+--test_makeURILineDesc2fail = assertEqual zero (makeURI "http%3A%2F%2Fgerastree.at%2Ftest-t4%2FTP%5B54%2F0002%5DL0013")
+
+test_parseURI = assertEqual  (Just "htt://gerastree.at") (  parseURI "htt://gerastree.at")
+test_parseURI1 = assertEqual  (Just "http://gerastree.at/test-t4L0013")
+                (  parseURI "http://gerastree.at/test-t4L0013")
+test_parseURI2 = assertEqual  Nothing
+                (  parseURI "http://gerastree.at/test-t4#TP[54/0002]L0013")
+test_URL = assertEqual  resurl
+                (  s2url "http://gerastree.at/test-t4#/TP[54/0002]L0013")
+
+resurl = URL "http%3A%2F%2Fgerastree.at%2Ftest-t4%23%2FTP%5B54%2F0002%5DL0013"
+
+test_parseURI3 = assertEqual  Nothing
+                (  parseURI . s2t . url2s $ resurl)
+
+test_URL4 = assertEqual  resurl4
+                (  s2url "http://gerastree.at/test-t4#TP[54/0002]L0013")
+
+resurl4 = URL "http%3A%2F%2Fgerastree.at%2Ftest-t4%23TP%5B54%2F0002%5DL0013"
+
+
+test_parseURI4 = assertEqual  Nothing
+                (  parseURI . s2t . url2s $ resurl4)
+test_parseURI5 = assertEqual  ( Just "http://gerastree.at/test-t4/#TP54/0002/L0013")
+                (  parseURI "http://gerastree.at/test-t4/#TP54/0002/L0013")
+test_parseURI6 = assertEqual  ( Just "http://gerastree.at/test-t4/#TP5B54%2F0002%5D/L0013")
+                (  parseURI "http://gerastree.at/test-t4/#TP5B54%2F0002%5D/L0013")
+
+
+gerastree =  "http://gerastree.at/"
+test_gerastreurl = assertEqual ( Just "http://gerastree.at/") (parseURI gerastree)
+
+test_gerastree = assertEqual "http://gerastree.at/" (makeURI gerastree)
+test_gerastreurl2 = assertEqual "http://gerastree.at/"  (makeURI "http://gerastree.at/")
+gerastreeURI = makeURI  "http://gerastree.at/"
+
+test_encode = assertEqual  (URL "test-t4%23TP%5B54%2F0002%5DL0013")
+                                    (  s2url . t2s $ "test-t4#TP[54/0002]L0013")
+test_addTo2 = assertEqual "http://gerastree.at//test-t4%23TP%5B54%2F0002%5DL0013"
+                (addToURI2 gerastreeURI (s2url . t2s $ "test-t4#TP[54/0002]L0013"))
+
+test_encodeLineDesc = assertEqual resld (s2url ( "http://gerastree.at/test-t4/TP[54/0002]L0013" :: String))
+resld = URL  "http%3A%2F%2Fgerastree.at%2Ftest-t4%2FTP%5B54%2F0002%5DL0013"
 
 test_addport = assertEqual
             "ServerURI {unServerURI = \"http://127.0.0.1:9001\"}"
@@ -62,7 +108,7 @@ forportTest = mkServerURI "http://127.0.0.1"
 uriTest = "http://127.0.0.1:9001/?annotators=tokenize%2Cssplit%2\
             \Cpos%2Clemma%2Cner%2Cparse&outputFormat=xml"
 
-test_parseURI = assertEqual "Just \"http://127.0.0.1:9001\""
+test_parseURI9 = assertEqual "Just \"http://127.0.0.1:9001\""
                     (showT . parseURI $  destTestOKx)
 test_parseURI_fail  = assertEqual "Nothing" (showT . parseURI  $ destTestFailx)
 

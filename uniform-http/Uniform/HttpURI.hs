@@ -41,6 +41,7 @@ import           Uniform.Zero
 import Uniform.ListForm
 import           Uniform.Strings -- (IsString (..), (</>), (<.>))
 import qualified Network.URI as N
+--import qualified   Network.URI.Encode as N2
 
 -- a server URI (not including the port, but absolute)
 newtype ServerURI = ServerURI {unServerURI :: URI}
@@ -75,6 +76,10 @@ newtype TimeOutSec = TimeOutSec (Maybe Int)
 mkTimeOutSec i = TimeOutSec (Just i)
 mkTimeOutDefault = TimeOutSec Nothing
 
+instance NiceStrings TimeOutSec where
+    shownice (TimeOutSec (Just i)) = unwords' ["TimeOut", shownice i, "sec"]
+    shownice (TimeOutSec Nothing) =   "TimeOut default"
+
 -- | a special type for the app type argumetn
 newtype AppType = AppType Text
     deriving (Eq, Ord, Show, Read, Generic, Zeros)
@@ -106,7 +111,7 @@ newtype URI = URI N.URI  deriving (Eq, Ord, Generic,   Semigroup, Monoid)
 
 un2 (URI u) = u   -- to remove the newtype level
 instance Zeros URI where
-    zero = makeURI ""
+    zero = makeURI "http://zero.zero"  -- there is no obvious zero here
 
 instance ListForms URI where
     type LF URI = Text
@@ -114,24 +119,42 @@ instance ListForms URI where
     appendTwo a b = makeURI $ appendTwo  (uriT a) (uriT b)
 
 parseURI :: Text -> Maybe URI
-parseURI t = fmap URI . N.parseURI . t2s $ t
+parseURI u = maybe (errorT ["parseURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
+                (Just . URI)
+                (N.parseURI  . t2s $ u )
+--                fmap URI . N.parseURI . t2s $ t
 
 parseAbsoluteURI :: Text -> Maybe URI
-parseAbsoluteURI t = fmap URI . N.parseAbsoluteURI . t2s $ t
+parseAbsoluteURI u = maybe (errorT ["parseAbsoluteURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
+                (Just . URI)
+                (N.parseAbsoluteURI  . t2s $ u )
+--                fmap URI . N.parseAbsoluteURI . t2s $ t
 
 makeAbsURI :: Text -> URI
-makeAbsURI u = URI $ maybe (errorT ["makeURI in Uniform.HttpURI", u])
+makeAbsURI u = -- error "absfr"
+    maybe (errorT ["makeAbsURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
                 id
-                (N.parseAbsoluteURI . t2s   $ u)
+                (parseAbsoluteURI  u :: Maybe URI)
+--    URI $ maybe (errorT ["makeAbsURI in Uniform.HttpURI", u])
+--                id
+--                (N.parseAbsoluteURI . t2s   $ u)
 makeURI :: Text -> URI
-makeURI u = URI $ maybe (errorT ["makeURI in Uniform.HttpURI", u])
+makeURI u = -- error "sdafsfs"
+    maybe (errorT ["makeURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
                 id
-                (N.parseURI . t2s $ u)
+                (parseURI  u :: Maybe URI)
+-- alternative code: makeURI2 = fromMaybe zero . parseURI
 
-addToURI :: URI -> Text -> URI
+
+addToURI :: URI -> Text -> URI   -- an url encoded string (use s2url or t2url)
 -- add a text at end to an URI
 addToURI u t =    --appendOne u t --
-            makeURI $ (uriT u) </> t
+            makeURI $ (uriT u) </> (s2t . unURL . s2url . t2s $  t)
+
+addToURI2 :: URI -> URL -> URI   -- an url encoded string (use s2url or t2url)
+-- add a text at end to an URI
+addToURI2 u t =    --appendOne u t --
+            makeURI $ (uriT u) </> (s2t $ unURL t)
 
 newtype PortNumber = PortNumber Int
     deriving (Eq, Ord, Show, Read, Generic, Zeros)

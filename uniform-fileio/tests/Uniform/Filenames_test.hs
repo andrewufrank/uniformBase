@@ -65,8 +65,12 @@ test_addFilename = assertEqual "/home/frank/test/file1.x" (toFilePath $ addFileN
 test_addDir = assertEqual "/home/frank/test/files/" (toFilePath $ addDir testdir1 testdir2)
 test_addDirEmpty = assertEqual "/home/frank/test/" (toFilePath $ addDir testdir1 (""::FilePath))
 
+--test_abs1 = assertEqual "" $ makeAbsDir  "file://home/frank/additionalSpace/DataBig/LitTest/test"
 
-
+test_zeroAbsFile = assertEqual "/zero" (toFilePath (zero:: Path Abs File))
+test_zeroAbsDir = assertEqual  "/" (toFilePath (zero:: Path Abs Dir))
+test_zeroRelFile = assertEqual "zero" (toFilePath (zero:: Path Rel File))
+test_zeroRelDir = assertEqual "./" (toFilePath (zero:: Path Rel Dir))
 
 testname = "/home/frank/dir1/file.ext" :: FilePath
 test_immediateParent = assertEqual "dir1" (getImmediateParentDir testname)
