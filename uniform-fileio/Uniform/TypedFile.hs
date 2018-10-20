@@ -72,7 +72,8 @@ class (FileHandles a) =>
 --        let fn2 = fp </> addExt lpX fn (tpext tp)  -- :: LegalPathname
         let fn2 = setExtension (tpext5 tp)  fp
         createDirIfMissing' (getParentDir fp)  -- add everywhere?
-        when rdfGraphDebug $ putIOwords ["sparql Turtle createDIrIfMissing' ", showT (getParentDir fp)]
+        when rdfGraphDebug $ putIOwords ["sparql Turtle createDIrIfMissing' "
+                , showT (getParentDir fp)]
         hand <- openFile2handle fn2 WriteMode
 --        when rdfGraphDebug $ putIOwords ["sparql Turtle write6", showT fn2]
 
@@ -207,7 +208,7 @@ instance TypedFiles5 LazyByteString GZip where
 
     closeHandle6  fp tp hand = do
 --        when rdfGraphDebug $
-        putIOwords ["closeHandle6 jsonld"]
+        when rdfGraphDebug $ putIOwords ["closeHandle6 jsonld"]
         let ext = unExtension (tpext5 tp)
         let tmpext = Extension (ext <.> "tmp")
         closeFile2 hand
@@ -215,17 +216,16 @@ instance TypedFiles5 LazyByteString GZip where
         let fn1 = setExtension (tpext5 tp) fp
         renameOneFile fn2 fn1
 --        when rdfGraphDebug $
-        putIOwords ["closeHandle6 jsonld", showT fn2]
+        when rdfGraphDebug $ putIOwords ["closeHandle6 jsonld", showT fn2]
         return ()
 
 
     writeHandle6 hand  tp jsonld = do
 --        when rdfGraphDebug $
-        putIOwords ["writeHandle6 jsonld gz"]
+--        putIOwords ["writeHandle6 jsonld gz"]
         r <- write2handle  hand (GZip.compress jsonld)
 --        when rdfGraphDebug $
-        putIOwords ["writeHandle6 gz jsonld done "
-                    , showT r ]
+--        putIOwords ["writeHandle6 gz jsonld done ",  showT r ]
         return r
 
 --    exist6 fp tp = do
