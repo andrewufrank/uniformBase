@@ -200,6 +200,8 @@ instance TypedFiles5 LazyByteString GZip where
         let fn2 = setExtension tmpext  fp
         when rdfGraphDebug $ putIOwords ["openHandle6 jsonld", showT fn2]
 
+        createDirIfMissing' (getParentDir fn2)  -- add everywhere?
+
         hand <- openFile2handle fn2 WriteMode
         -- should create or truncate the file, but not when the dir not exist
         --https://hackage.haskell.org/package/base-4.10.0.0/docs/System-IO.html#g:5
