@@ -140,6 +140,12 @@ class Filenames3 fp file  where
     -- fails, if file is empty  does not add anything if file is empty
     (</>) = addFileName
 
+class Filenames5 dir fil res where
+    stripPrefix :: dir -> fil ->  Maybe res
+    -- ^ strip the
+instance Filenames5 (Path b Dir) (Path b t)  (Path Rel t) where
+    stripPrefix d f = fmap Path $  Path.stripProperPrefix (unPath d) (unPath f)
+
 class Filenames4 fp file  where
     type FileResultT4 fp file
     -- add a filepath to a absolute dir and givev an absolte dir
