@@ -193,6 +193,10 @@ instance Filenames4 (Path b Dir) FilePath  where
         where
             d2 = makeRelDir d :: Path Rel Dir
 
+instance Filenames4 (Path b Dir) (Path Rel t)  where
+    type FileResultT4 (Path b Dir) (Path Rel t) = (Path b t)
+    addDir p  d =  Path $ (Path.</>) (unPath p) (unPath d)
+
 instance Filenames3 (Path b Dir) (Path Rel t)  where
     type FileResultT (Path b Dir) (Path Rel t) = (Path b t)
     addFileName p  d =  Path $ (Path.</>) (unPath p) (unPath d)
