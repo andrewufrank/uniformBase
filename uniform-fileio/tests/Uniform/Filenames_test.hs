@@ -201,10 +201,13 @@ e1 = (Extension "ext")
 --d1 = makeAbsDir "/somedir/more/dir"
 --test_nakedDir = assertEqual "dir" (getNakedDir d1)
 
---data TestRec = TestRec {f11:: Path Abs Dir} deriving (Show, Eq, Read)
---inp1 = TestRec { f11 = "/home/frank/"}
---
---test_read1 = assertEqual inp1 (inp1)
---test_read12 = assertEqual "" (show inp1)
+data TestRec = TestRec {f11:: Path Abs Dir} deriving (Show, Eq, Read)
+inp1 = TestRec { f11 = "/home/frank/"}
+inp2 = TestRec { f11 = makeAbsDir "/home/frank/"}
+f11x = "/home/frank/" :: Path Abs Dir 
 
+test_read1 = assertEqual inp1 (inp1)  -- must fail, reading a string into Path Abs Dir is 
+		                      -- not permitted (should be detected when assign to inp1
+test_read12 = assertEqual "" (show inp1)
+test_read22 = assertEqual "TestRec {f11 = \"/home/frank/\"}" (show inp2)
 
