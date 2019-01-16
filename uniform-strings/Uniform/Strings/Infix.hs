@@ -32,7 +32,7 @@ import           Uniform.Strings.Utilities
 ---- | a synonym for appendTwo
 --(<>) :: (ListForms s) => s -> s -> s
 ----(<>) :: Text -> Text -> Text
---(<>) = appendTwo  -- not required for 8.4.4 (base too high)
+-- (<>) = appendTwo  
 
 
 -- (<:>), (<+>), (<->), (</>), spitz
