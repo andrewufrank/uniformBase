@@ -35,6 +35,7 @@ module Uniform.Strings.Conversion (
     ByteString, LazyByteString
     , s2b, b2s, b2t,   t2b, t2u,  s2u
     , s2t, t2s
+    , t2tl, tl2t
     -- uses UTF8 as encoding in ByteString
     -- urlencode is always represented the same as the input
     , Text (..), BSUTF (..), URL (..), URLform
@@ -88,7 +89,7 @@ import qualified Snap.Core            as SN
 
 import Data.Text.ICU.Convert  as ICU  -- all conversion stuff, neede for tests
 --import Data.Text.Encoding as Encoding
-
+import qualified Data.Text.Lazy as LText
 -- import qualified Data.List as L
 -- import qualified Data.Text.IO as T (putStrLn)
 
@@ -103,6 +104,9 @@ t2s :: Text -> String
 -- ^ String to Text (invertable)
 t2s = T.unpack
 
+tl2t = LText.toStrict
+
+t2tl = LText.fromStrict
 
 type LazyByteString = Lazy.ByteString
 
