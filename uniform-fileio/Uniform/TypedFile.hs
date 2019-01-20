@@ -40,6 +40,8 @@ class (FileHandles a) =>
 -- the b can be () if no differentiation is desired
     append5 f = errorT ["TypedFiles - no implementation for append5", showT f]
     read5 f = errorT ["TypedFiles - no implementation for read5", showT f]
+    read6 f = errorT ["TypedFiles - no implementation for read6", showT f]
+    append6 f = errorT ["TypedFiles - no implementation for append6", showT f]
     openHandle6 f = errorT ["TypedFiles - no implementation for openHandle6", showT f]
     writeHandle6 f = errorT ["TypedFiles - no implementation for writeHandle6", showT f]
     closeHandle6  f = errorT ["TypedFiles - no implementation for closeHandle6", showT f]
@@ -68,7 +70,7 @@ class (FileHandles a) =>
     -- file, if exist, is replaced
     write6 fp  tp queryText = do
 --        when rdfGraphDebug $
-        putIOwords ["sparql Turtle write6", showT fp]
+        putIOwords ["write6", showT fp]
 --        let fn2 = fp </> addExt lpX fn (tpext tp)  -- :: LegalPathname
         let fn2 = setExtension (tpext5 tp)  fp
         createDirIfMissing' (getParentDir fp)  -- add everywhere?
