@@ -124,9 +124,13 @@ callIO op = do
         r2 <- liftIO $ do
                     r <- op
                     return $ Right r
-                `catch` (\e -> return . Left $  (e::SomeException))
+                `catch` (\e -> do
+                                putStrLn "callIO catch caught error"
+                                return . Left $  (e::SomeException))
         case r2 of
-            Left e -> throwError (showT e)
+            Left e -> do
+                        putIOwords ["callIO Left branch", showT e, "throwError"]
+                        throwError (showT e)
             Right v -> return v
 --
 
