@@ -19,6 +19,7 @@
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 module  Uniform.Piped ( getRecursiveContents
+--    , pipeMap, pipeStdoutLn
 
 
             ) where
@@ -49,6 +50,9 @@ import qualified Path.IO  (searchable, readable)
 --import Test.Framework
 --import Test.Invariant
 --
+--pipeMap = PipePrelude.map   -- tricky types
+--pipeMap
+--pipeStdoutLn = PipePrelude.stdoutLn
 
 getRecursiveContents :: -- (Path Abs File-> Pipe.Proxy Pipe.X () () String (ErrorT Text IO) ())
                   Path Abs Dir
