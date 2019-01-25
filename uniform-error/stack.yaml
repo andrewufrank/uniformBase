@@ -5,4 +5,5 @@ packages:
 - ../uniform-strings
 extra-deps:
 - test-invariant-0.4.5.0
+
 resolver: lts-12.5
