@@ -58,6 +58,16 @@ toErrOrVal (Right r) = Right r
 -- | runErr to avoid the depreceated message for runErrorT, which is identical
 runErr :: ErrIO a -> IO (ErrOrVal a)
 runErr = runErrorT
+
+runErrorVoid :: ErrIO () -> IO ()
+-- ^ run an operation in ErrIO which is not returning anything
+-- simpler to use than runErr
+runErrorVoid a = do
+                    res <- runErr a
+                    putIOwords ["runErrorVoid", showT res]
+                    case res of
+                        Left msg -> error (t2s msg)
+                        Right _ -> return ()
 --
 undef :: Text -> a
 undef = error . t2s
