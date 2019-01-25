@@ -25,7 +25,7 @@ startProg programName   progTitle mainProg = do  -- (mainProg prefsfilename glad
 --            , "\ngladefile", gladefilename]
         putIOwords [ "------------------ ", programName , progTitle, " ----------------------------"]
         r <- runErr $ mainProg
-        putIOwords ["main", progTitle, "\nreturning", either id showT r, "\n -------------------------"]
+        putIOwords ["\n------------------", "main", progTitle, "\nreturning", either id showT r, "\n -------------------------"]
         return ()
     `catchError` (\e  -> do
             putIOwords ["startProg error caught", programName, progTitle, showT e ] -- " showT msg])
