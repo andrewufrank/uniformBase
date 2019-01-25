@@ -20,22 +20,13 @@
 module Uniform.FileStrings (
              module Uniform.Filenames   -- exports Path
             , module Uniform.FileIOalgebra
---            , module Path
---            , module Path.IO
             , SIO.IOMode (..)  -- from System.IO
             , closeFile2
             , listDir'
---            , readFile5
             , TIO.hGetLine, TIO.hPutStr  -- for other implementations of FileHandle
-
---    , readFileT, writeFileT
-
             ) where
 
--- using uniform
---import Uniform.Error
 import           Uniform.FileIOalgebra
---import           Uniform.FilenamesAlgebra
 import           Uniform.Filenames as FN
 import           Uniform.Filenames
 import           Uniform.FileStatus
@@ -45,10 +36,6 @@ import           Uniform.FileStatus
 import  qualified         Path                   as Path
 import  qualified         Path.IO                as PathIO
 
---import           Path
---import           Path.IO
-
--- what is further required?
 import qualified System.IO              as SIO
 import           System.Posix           (FileMode)
 
@@ -56,16 +43,12 @@ import           System.Posix           (FileMode)
 import qualified Data.ByteString        as BS (readFile, writeFile)
 import qualified Data.ByteString.Lazy   as L
 import           Data.Digest.Pure.MD5   (md5)
---import Data.Hash.MD5 (md5s)
 import           Data.Maybe             (catMaybes)
 import qualified Data.Text.IO           as T (readFile, writeFile, appendFile)
 import qualified Data.Text.IO           as TIO (hGetLine, hPutStr)
 
 import qualified System.Directory       as D
---import qualified System.Directory      as D
 import qualified System.FilePath        as OS
---       (addExtension, makeRelative, FilePath, combine, splitPath,
---        takeDirectory, replaceExtension, takeExtension)
 import qualified System.Posix           as Posix
 -- for fileAccess
 import           Control.Arrow          (first, second)
