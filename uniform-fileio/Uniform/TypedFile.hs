@@ -1,30 +1,20 @@
---{-# OPTIONS_GHC -F -pgmF htfpp #-}
---{-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
--- {-# OPTIONS -Wall #-}
--- {-# OPTIONS -fno-warn-missing-signatures #-}
 {-# OPTIONS -w #-}
 
 module Uniform.TypedFile (
         module Uniform.TypedFile
---        , textFile, textsFile
-        -- , module Uniform.FileIO
         , EpochTime
 )  where
 
---import Test.Framework
-
---import           Uniform.Error
 import           Uniform.FileIOalgebra (Handle)
 import           Uniform.Filenames as FN
 import           Uniform.FileStrings
---import           Uniform.FileIO (EpochTime, getFileModificationTime)
 import           Uniform.FileStatus
---import           Uniform.Strings hiding ((</>))
+
 import qualified Path.IO (ensureDir)
 import qualified Codec.Compression.GZip as GZip
 
@@ -47,9 +37,6 @@ class (FileHandles a) =>
     closeHandle6  f = errorT ["TypedFiles - no implementation for closeHandle6", showT f]
 
 
---    mkTypedFile5  :: TypedFile5 a b
-    -- no argument, the extension is encapsulated in instance def
-    -- replace by makeTyped
     write5 :: FN.Path Abs Dir -> Path Rel File -> TypedFile5 a b -> a -> ErrIO ()
     -- write a file, directory is created if not exist
     -- file, if exist, is replaced
