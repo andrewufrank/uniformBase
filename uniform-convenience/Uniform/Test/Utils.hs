@@ -79,7 +79,8 @@ checkResult testvardebug testDataDir resfile tt1 = do
             putIOwords ["\n\ncheckResult test ", s2t resfile, showT fn]
 
         fnotexist <- fmap not $ doesFileExist' fn
-        putIOwords ["checkResult file not exist:  doesFileExist' = ", showT fnotexist]
+        when testvardebug $
+                putIOwords ["checkResult file not exist:  doesFileExist' = ", showT fnotexist]
 
         -- write result file, if not exist
         when  fnotexist $ do
@@ -89,7 +90,8 @@ checkResult testvardebug testDataDir resfile tt1 = do
 
         -- write failed file
         writeFileOrCreate2 ( fnx ) .s2t  $ showTestH tt1
-        putIOwords ["checkResult new faile file written", showT fn
+        when testvardebug $
+                putIOwords ["checkResult new faile file written", showT fn
                             , "length ", showT . length . showTestH $ tt1]
         -- a result file and a failed file exist
         checkResultAndDeleteFailedIfEqual testvardebug fn fnx
@@ -105,15 +107,19 @@ checkResultAndDeleteFailedIfEqual ::
              Bool -> Path Abs File -> Path Abs File -> ErrIO Bool
 
 checkResultAndDeleteFailedIfEqual testvardebug fn fnx  = do
-    putIOwords ["checkResultAndDeleteFailedIfEqual for fn and fnx", showT fn, showT fnx]
+    when testvardebug $
+            putIOwords ["checkResultAndDeleteFailedIfEqual for fn and fnx", showT fn, showT fnx]
     rfn :: Text <- readFile2  fn
     rfnx :: Text <- readFile2 fnx   -- the files are written as text
     let testres = rfn == rfnx
-    putIOwords ["checkResultAndDeleteFailedIfEqual testres", showT testres]
+    when testvardebug $
+            putIOwords ["checkResultAndDeleteFailedIfEqual testres", showT testres]
     when testres $ do
         deleteFile fnx
-        putIOwords ["checkResultAndDeleteFailedIfEqual deleted fnx",   showT fnx]
-    putIOwords ["checkResultAndDeleteFailedIfEqual end"]
+        when testvardebug $
+                putIOwords ["checkResultAndDeleteFailedIfEqual deleted fnx",   showT fnx]
+    when testvardebug $
+            putIOwords ["checkResultAndDeleteFailedIfEqual end"]
     return testres
 
 

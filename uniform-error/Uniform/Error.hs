@@ -139,7 +139,7 @@ callIO op = do
                                 return . Left $  (e::SomeException))
         case r2 of
             Left e -> do
-                        putIOwords ["callIO Left branch", showT e, "throwError"]
+                        putIOwords ["\ncallIO Left branch\n", showT e, "throwError"]
                         throwError (showT e)
             Right v -> return v
 --

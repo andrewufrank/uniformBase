@@ -1,4 +1,6 @@
 {-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE OverloadedStrings     #-}
@@ -224,3 +226,56 @@ instance TypedFiles5 LazyByteString GZip where
 --        doesFileExist'  fn2
 
     read6 fp  tp = error "read for jsonld is not easy and not required"
+
+
+class FileHandles a => TypedFiles7 a b where
+-- ^ the a is the base type
+-- which is written on file, b is the type for input and output
+    wrap7 :: a -> b
+    unwrap7 :: b -> a
+
+class FileHandles a => TypedFiles7a a b where
+
+    read7 :: Path Abs Dir -> Path Rel File -> TypedFile5 a b ->   ErrIO b
+    write7 :: Path Abs Dir -> Path Rel File -> TypedFile5 a b -> b -> ErrIO ()
+
+    read8 :: Path Abs File -> TypedFile5 a b ->   ErrIO b
+    write8 :: Path Abs File -> TypedFile5 a b -> b -> ErrIO ()
+
+instance TypedFiles7 Text b => TypedFiles7a Text b where
+-- an instance for all what has text as underlying rep
+    write7 fp fn tp ct = do
+--        let fn2 = fp </> fn <.> tpext5 tp -- :: Path ar File
+        write8 (fp </> fn  ) tp ct
+--        let parent = getParentDir fn2
+--        createDirIfMissing' parent
+--        t <- doesDirExist' fp
+----        putIOwords ["TypedFiles7 write7 Text parent", showT parent, "exists", showT t]
+--
+--        writeFile2 fn2 (unwrap7 ct :: Text )
+----        putIOwords ["TypedFiles7 write7 Text Gtemplate", showT fn2]
+----        putIOwords ["TypedFiles7 write7 Text Gtemplate text \n", unwrap7 ct]
+
+    read7 fp fn tp   = do
+--        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
+--        let fn2 = fn <.> tpext5 tp
+        read8 (fp </> fn) tp
+--        return . wrap7 $ ares
+
+    write8 fp   tp ct = do
+        let fn2 = fp   <.> tpext5 tp -- :: Path ar File
+--        write8 (fp </> fn  ) tp ct
+        let parent = getParentDir fn2
+        createDirIfMissing' parent
+--        t <- doesDirExist' fp
+--        putIOwords ["TypedFiles7 write7 Text parent", showT parent, "exists", showT t]
+
+        writeFile2 fn2 (unwrap7 ct :: Text )
+--        putIOwords ["TypedFiles7 write7 Text Gtemplate", showT fn2]
+--        putIOwords ["TypedFiles7 write7 Text Gtemplate text \n", unwrap7 ct]
+
+    read8 fp  tp   = do
+--        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
+        let fp2 = fp <.> tpext5 tp
+        ares :: Text <- readFile2 $ fp2
+        return . wrap7 $ ares

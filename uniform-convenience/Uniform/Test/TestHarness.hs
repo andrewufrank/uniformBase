@@ -48,7 +48,7 @@ import Uniform.FileIO
 import Uniform.Error  hiding ((</>), (<.>)) -- to allow export
 import Uniform.Test.Utils
 
-testvardebug = True -- False
+testvardebug =   False
 
 -- cases with no IO
 testVar0File :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
@@ -203,6 +203,26 @@ test2FileIO progName  startfile secfile resfile op = do
             f0 <- readStartFile3 testvardebug testDataDir startfile
             f2 <- readStartFile3 testvardebug testDataDir secfile
             t1 <- op  (readTestH2 startfile f0) (readTestH2 secfile f2)
+            checkResult testvardebug testDataDir resfile t1
+
+test3FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b
+                , Zeros c, Eq c, Show c, Read c, ShowTestHarness c
+                , Zeros d, Read d, Show d, Eq d, ShowTestHarness d
+                , Zeros r, Read r, Show r, Eq r, ShowTestHarness r
+                )
+            => Text ->  FilePath -> FilePath -> FilePath -> FilePath
+                    -> ( b -> c -> d -> ErrIO r) -> IO ()
+test3FileIO progName  startfile secfile thrdfile resfile op = do
+        when testvardebug $ putIOwords ["testVar0FileIO read text "]
+        r <- runErr $  sub progName  startfile secfile resfile op
+        assertEqual (Right True) r
+    where
+        sub progName  startfile secfile resfile op =    do
+            testDataDir <- getLitTextTestDir3 progName
+            f0 <- readStartFile3 testvardebug testDataDir startfile
+            f2 <- readStartFile3 testvardebug testDataDir secfile
+            f3 <- readStartFile3 testvardebug testDataDir thrdfile
+            t1 <- op  (readTestH2 startfile f0) (readTestH2 secfile f2) (readTestH2 thrdfile f3)
             checkResult testvardebug testDataDir resfile t1
 
 
