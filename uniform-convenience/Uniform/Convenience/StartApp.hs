@@ -28,6 +28,6 @@ startProg programName   progTitle mainProg = do  -- (mainProg prefsfilename glad
         putIOwords ["\n------------------", "main", progTitle, "\nreturning", either id showT r, "\n -------------------------"]
         return ()
     `catchError` (\e  -> do
-            putIOwords ["startProg error caught", programName, progTitle, showT e ] -- " showT msg])
+            putIOwords ["startProg error caught\n", programName, progTitle, "\n", showT e ] -- " showT msg])
             return ()
             )

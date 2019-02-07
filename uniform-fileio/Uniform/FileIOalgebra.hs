@@ -69,6 +69,11 @@ class DirOps fp where
     -- ^ rename directory old to new
     -- signals: getFileStatus: does not exist (No such file or directory)
 
+    getDirectoryDirs' :: (FileOps fp) => fp -> ErrIO [fp]
+    -- get the directories (but not . and ..)
+    getDirectoryDirs' dir = filterM f =<< getDirCont  dir
+        where f x =  doesDirExist'   x
+
 class FileOps fp   where
     doesFileExist' :: fp -> ErrIO Bool
 --    doesFileOrDirExist :: fp -> ErrIO Bool
@@ -102,6 +107,8 @@ class FileOps fp   where
     -- independent of file system internal structure
     -- filenames completed with calling fp
     getDirContentNonHidden :: fp ->  ErrIO [fp]
+
+
 
     getMD5 :: fp -> ErrIO (Maybe Text)
     -- get MD5, but why Text  -- TODO

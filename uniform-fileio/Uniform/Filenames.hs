@@ -42,8 +42,14 @@ import qualified Data.List.Split          as Sp
 
 
 homeDir =  makeAbsDir "/home/frank/":: Path Abs Dir
+homeDir2 ::ErrIO (Path Abs Dir)
 homeDir2 = fmap Path $ callIO $ PathIO.getHomeDir  ::ErrIO (Path Abs Dir)
 -- replace homeDir with homeDir2 - is user independent but requires IO
+currentDir::ErrIO (Path Abs Dir)
+currentDir = fmap Path $ callIO $ PathIO.getCurrentDir
+
+setCurrentDir :: Path Abs Dir -> ErrIO ()
+setCurrentDir path = PathIO.setCurrentDir (unPath path)
 
 stripProperPrefix' ::  Path b Dir -> Path b t -> ErrIO (Path Rel t)
 stripProperPrefix' dir fn = fmap Path $ Path.stripProperPrefix (unPath dir) (unPath fn)

@@ -135,11 +135,11 @@ callIO op = do
                     r <- op
                     return $ Right r
                 `catch` (\e -> do
-                                putStrLn "callIO catch caught error"
+                                putStrLn "callIO catch caught error\n"
                                 return . Left $  (e::SomeException))
         case r2 of
             Left e -> do
-                        putIOwords ["\ncallIO Left branch\n", showT e, "throwError"]
+                        putIOwords ["\ncallIO Left branch\n", showT e, "throwError\n"]
                         throwError (showT e)
             Right v -> return v
 --

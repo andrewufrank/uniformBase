@@ -210,16 +210,18 @@ instance FileOps FilePath  where
                     ["getDirCont not exist or not readable"
                     , showT fn, showT testDir, showT readExec]
 
---    getDirContentNonHidden fp = do
-----        putIOwords ["getDirContentNonHidden", unL fp]
---        r <- getDirCont fp
---        let r2 = filter (not . isHidden) r
+    getDirContentNonHidden fp = do
+        putIOwords ["getDirContentNonHidden", s2t fp]
+        r <- getDirCont fp
+        let r2 = filter (not . isHidden) r
 ----        r2 <- callIO $ D.listDirectory (unL fp)
 ----          would be possible but filter here is simpler
 ----        let r2 = filter ( \file' -> (file' /= "." && file' /= "..")  ) r
 ----        let r2 = filter (not . isPrefixOf "." ) r
 ----        putIOwords ["nonhidden files", show r2]
---        return r2
+        return r2
+            where
+                isHidden = isPrefixOf "."
 
     deleteFile f = do
          putIOwords ["delete file ", showT f]
