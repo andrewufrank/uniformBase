@@ -161,6 +161,11 @@ fromJustNoteT :: [Text] -> Maybe a -> a
 -- produce error with msg when Nothing, msg is list of texts
 fromJustNoteT msgs a = fromJustNote (t2s . unlinesT $ msgs) a
 
+fromRightNoteString ::   Text -> Either String b -> b
+-- produce an error when assuming that a value is Right
+fromRightNoteString msg (Left a) = errorT ["fromRight", showT a, msg]
+fromRightNoteString _ (Right a) = a
+
 headNoteT :: [Text] -> [a] -> a
 -- get head with a list of texts
 headNoteT msg s = headNote (t2s $ unwords' msg) s
