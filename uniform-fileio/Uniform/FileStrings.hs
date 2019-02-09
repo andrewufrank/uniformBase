@@ -312,6 +312,9 @@ instance DirOps (Path ar Dir)  where
 
     createDirIfMissing' = PathIO.createDirIfMissing True . unPath
 
+    copyDirRecursive old new = PathIO.copyDirRecur (unPath old) (unPath new)
+
+
 instance FileOps (Path ar File)  where
     doesFileExist'   =  PathIO.doesFileExist . unPath
 --    getPermissions' = P.getPermissions

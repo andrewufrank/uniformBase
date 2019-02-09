@@ -74,6 +74,10 @@ class DirOps fp where
     getDirectoryDirs' dir = filterM f =<< getDirCont  dir
         where f x =  doesDirExist'   x
 
+    copyDirRecursive :: fp -> fp -> ErrIO ()
+    -- | copy the directory content recursively, does not follow symlink
+    -- implemented only for Path n Dir, not FilePath
+
 class FileOps fp   where
     doesFileExist' :: fp -> ErrIO Bool
 --    doesFileOrDirExist :: fp -> ErrIO Bool
