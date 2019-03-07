@@ -25,6 +25,7 @@ library
         , HTF
         -- , safe
         , time
+        , old-time
         , convertible
 --        , old-time
     exposed-modules:

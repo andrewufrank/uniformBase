@@ -37,6 +37,8 @@ import Uniform.Error
 -- import Uniform.Strings
 import Data.Convertible
 import System.Posix.Types (EpochTime)
+import System.Time (getClockTime, toCalendarTime, calendarTimeToString)
+
 --class Times a where
 --    type TimeUTC  a
 --    type YMD a
@@ -73,3 +75,9 @@ diffDays a b = T.diffDays (T.utctDay a) (T.utctDay b)
 
 epochTime2UTCTime :: EpochTime -> UTCTime
 epochTime2UTCTime = convert
+
+getDateAsText :: ErrIO Text
+getDateAsText = callIO $ do
+                        t <-  getClockTime
+                        tc <- toCalendarTime t
+                        return (s2t $ calendarTimeToString tc)
