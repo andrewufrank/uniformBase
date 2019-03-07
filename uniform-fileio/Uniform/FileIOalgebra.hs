@@ -78,6 +78,9 @@ class DirOps fp where
     -- | copy the directory content recursively, does not follow symlink
     -- implemented only for Path n Dir, not FilePath
 
+    deleteDirRecursive :: fp -> ErrIO ()
+    -- ^ delete a directory (even non empty), no error if not existing
+
 class FileOps fp   where
     doesFileExist' :: fp -> ErrIO Bool
 --    doesFileOrDirExist :: fp -> ErrIO Bool
@@ -94,8 +97,6 @@ class FileOps fp   where
     -- ^ rename a file from old to new
 
     deleteFile :: fp -> ErrIO ()
-    deleteDirRecursive :: fp -> ErrIO ()
-    -- ^ delete a directory (even non empty), no error if not existing
 
 --    assertDirNotExist :: fp -> ErrIO ()
 --    -- ^ delete a directory (even non empty), if exist

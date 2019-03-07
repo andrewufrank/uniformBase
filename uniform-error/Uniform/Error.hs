@@ -64,7 +64,7 @@ runErrorVoid :: ErrIO () -> IO ()
 -- simpler to use than runErr
 runErrorVoid a = do
                     res <- runErr a
-                    putIOwords ["runErrorVoid", showT res]
+--                    putIOwords ["runErrorVoid", showT res]
                     case res of
                         Left msg -> error (t2s msg)
                         Right _ -> return ()
@@ -135,11 +135,11 @@ callIO op = do
                     r <- op
                     return $ Right r
                 `catch` (\e -> do
-                                putStrLn "callIO catch caught error\n"
+--                                putStrLn "callIO catch caught error\n"
                                 return . Left $  (e::SomeException))
         case r2 of
             Left e -> do
-                        putIOwords ["\ncallIO Left branch\n", showT e, "throwError\n"]
+--                        putIOwords ["\ncallIO Left branch\n", showT e, "throwError\n"]
                         throwError (showT e)
             Right v -> return v
 --

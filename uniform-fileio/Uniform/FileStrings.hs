@@ -120,6 +120,15 @@ instance DirOps FilePath where
 --                        [ "renamed dir from ", showT old
 --                            , " to " , showT  new]
 
+    deleteDirRecursive f =
+        do
+            t <- doesDirExist' f
+            when t $ do
+                callIO . D.removeDirectoryRecursive  $  f
+
+                putIOwords ["deleted", showT f]
+            return ()
+
 instance FileOps FilePath  where
     doesFileExist'   = callIO . D.doesFileExist
 --    getPermissions' = callIO . D.getPermissions
@@ -143,12 +152,15 @@ instance FileOps FilePath  where
                 createDirIfMissing'  dir
             callIO $ D.copyFile (old) ( new)
 
-                else if t then  throwErrorT
-                    ["copyFile source not exist", showT old]
-                    -- signalf   SourceNotExist
-                            else throwErrorT  [
-                            "copyFile target exist", showT new]
+                else if not t
+                        then  throwErrorT
+                            ["copyFile source not exist", showT old]
+                            -- signalf   SourceNotExist
+                        else if t2
+                            then throwErrorT
+                                ["copyFile target exist", showT new]
                             --   signalf  TargetExist
+                            else throwErrorT ["copyOneFile", "other error"]
 
 --    renameFile old new = do
 --        t <- doesFileExist old
@@ -211,7 +223,7 @@ instance FileOps FilePath  where
                     , showT fn, showT testDir, showT readExec]
 
     getDirContentNonHidden fp = do
-        putIOwords ["getDirContentNonHidden", s2t fp]
+--        putIOwords ["getDirContentNonHidden", s2t fp]
         r <- getDirCont fp
         let r2 = filter (not . isHidden) r
 ----        r2 <- callIO $ D.listDirectory (unL fp)
@@ -227,14 +239,6 @@ instance FileOps FilePath  where
          putIOwords ["delete file ", showT f]
          callIO . D.removeFile   $ f
 
-    deleteDirRecursive f =
-        do
-            t <- doesDirExist' f
-            when t $ do
-                callIO . D.removeDirectoryRecursive  $  f
-
-                putIOwords ["deleted", showT f]
-            return ()
 
 
     getAppConfigDirectory = error "not implemented" -- do
@@ -314,6 +318,7 @@ instance DirOps (Path ar Dir)  where
 
     copyDirRecursive old new = PathIO.copyDirRecur (unPath old) (unPath new)
 
+    deleteDirRecursive f = deleteDirRecursive (unL f)
 
 instance FileOps (Path ar File)  where
     doesFileExist'   =  PathIO.doesFileExist . unPath
@@ -411,7 +416,7 @@ instance   FileOps2 (Path ar File) Text where
         t <- doesDirExist' dir
         when False $ putIOwords ["writeFileOrCreate2 dir test", showT t]
         writeFile2 filepath st
-        putIOwords ["writeFileOrCreate2 file written", showT filepath]
+        when False $ putIOwords ["writeFileOrCreate2 file written", showT filepath]
 
 instance FileOps2 FilePath Text where
 
