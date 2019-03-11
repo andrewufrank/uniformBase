@@ -166,6 +166,11 @@ fromRightNoteString ::   Text -> Either String b -> b
 fromRightNoteString msg (Left a) = errorT ["fromRight", showT a, msg]
 fromRightNoteString _ (Right a) = a
 
+fromRightNote  ::   Text -> Either Text b -> b
+-- produce an error when assuming that a value is Right
+fromRightNote msg (Left a) = errorT ["fromRight", showT a, msg]
+fromRightNote _ (Right a) = a
+
 headNoteT :: [Text] -> [a] -> a
 -- get head with a list of texts
 headNoteT msg s = headNote (t2s $ unwords' msg) s
