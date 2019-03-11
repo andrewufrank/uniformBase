@@ -25,7 +25,8 @@ library
         , HTF
         -- , safe
         , time
-        , old-time
+--        , old-time
+        , time
         , convertible
 --        , old-time
     exposed-modules:
@@ -47,6 +48,8 @@ Test-Suite timetest
        , uniform-error
        , uniform-time
        , uniform-strings
+       , time
+--       , old-time
 --       , data-easy
 --       , basics -- must not be included, gives dependency issue
     main-is: TestingTime.hs

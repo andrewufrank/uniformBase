@@ -15,10 +15,11 @@
     , ScopedTypeVariables
     , DeriveDataTypeable   -- needed
     , TypeSynonymInstances
-    , DoAndIfThenElse
-    , TypeFamilies
-    , ConstraintKinds
-    , BangPatterns
+--    , DoAndIfThenElse
+--    , TypeFamilies
+--    , ConstraintKinds
+--    , BangPatterns
+    , OverloadedStrings
              #-}
 
 
@@ -37,7 +38,7 @@ import Uniform.Error
 -- import Uniform.Strings
 import Data.Convertible
 import System.Posix.Types (EpochTime)
-import System.Time (getClockTime, toCalendarTime, calendarTimeToString)
+--import System.Time (getClockTime, toCalendarTime, calendarTimeToString)
 
 --class Times a where
 --    type TimeUTC  a
@@ -78,6 +79,46 @@ epochTime2UTCTime = convert
 
 getDateAsText :: ErrIO Text
 getDateAsText = callIO $ do
-                        t <-  getClockTime
-                        tc <- toCalendarTime t
-                        return (s2t $ calendarTimeToString tc)
+            now <- getCurrentTime
+            let res = formatTime defaultTimeLocale "%b %-d, %Y" now
+            return . s2t $ res
+--                        t <-  getClockTime
+--                        tc <- toCalendarTime t
+--                        return (s2t $ calendarTimeToString tc)
+
+readDate2 :: Text ->  UTCTime
+-- ^ read data in the Jan 7, 2019 format (no . after month)
+readDate2 datestring = parseTimeOrError True defaultTimeLocale
+            "%b %-d, %Y" (t2s datestring) :: UTCTime
+
+readDate3 :: Text ->   UTCTime
+-- ^ read data in the Jan 7, 2019 format (no . after month)
+readDate3 datestring  =
+
+    case shortMonth of
+        Just t -> t
+        Nothing -> case longMonth of
+            Just t2 -> t2
+            Nothing -> case monthPoint of
+                Just t3 -> t3
+                Nothing -> case germanNumeralShort of
+                  Just t3 -> t3
+                  Nothing -> case germanNumeral of
+                    Just t3 -> t3
+                    Nothing -> case isoformat of
+                      Just t4 -> t4
+                      Nothing -> errorT   ["readDate3", datestring, "is not parsed"]
+
+    where
+        shortMonth = parseTimeM True defaultTimeLocale
+            "%b %-d, %Y" (t2s datestring) :: Maybe UTCTime
+        longMonth = parseTimeM True defaultTimeLocale
+            "%B %-d, %Y" (t2s datestring) :: Maybe UTCTime
+        monthPoint = parseTimeM True defaultTimeLocale
+            "%b. %-d, %Y" (t2s datestring) :: Maybe UTCTime
+        germanNumeral = parseTimeM True defaultTimeLocale
+            "%-d.%-m.%Y" (t2s datestring) :: Maybe UTCTime
+        germanNumeralShort = parseTimeM True defaultTimeLocale
+            "%-d.%-m.%y" (t2s datestring) :: Maybe UTCTime
+        isoformat = parseTimeM True defaultTimeLocale
+            "%Y-%m-%d" (t2s datestring) :: Maybe UTCTime
