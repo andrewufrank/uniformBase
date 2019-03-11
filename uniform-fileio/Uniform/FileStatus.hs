@@ -66,7 +66,7 @@ import Uniform.Filenames
 
 unL = toShortFilePath
 
-getFileStatus :: Path df ra -> ErrIO P.FileStatus
+--getFileStatus :: Path df ra -> ErrIO P.FileStatus
 getFileStatus fp = callIO $ P.getFileStatus . unL $ fp
 
 getFileStatus' :: FilePath  -> ErrIO P.FileStatus
