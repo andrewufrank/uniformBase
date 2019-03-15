@@ -39,6 +39,7 @@ import Text.Show.Pretty (ppShow )
 import qualified Path.IO as Path.IO (doesFileExist, getAppUserDataDir)
         -- necessary for operations in IO
 import Text.Read
+import Data.Time (UTCTime (..))
 
 -- operations are in IO not ErrIO, therefore here and not in fileio
 getLitTextTestDir ::  IO (Path Abs Dir)
@@ -144,6 +145,10 @@ class ShowTestHarness t where
 --    showTestH t =   ppShow t run
 
 instance ShowTestHarness Bool
+
+instance ShowTestHarness UTCTime where
+    showTestH = show
+    readTestH2 msg = readNote msg
 
 instance  ShowTestHarness Text where
     -- to avoid the additional "" added when show text

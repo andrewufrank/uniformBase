@@ -27,7 +27,7 @@ module Uniform.Time (
         module Uniform.Time
         , module Uniform.Error   -- or at least ErrIO
         -- , module Uniform.Strings
-        , UTCTime , EpochTime
+        , EpochTime, UTCTime (..)
 --    , htf_thisModulesTests
         )  where
 
@@ -122,3 +122,4 @@ readDate3 datestring  =
             "%-d.%-m.%y" (t2s datestring) :: Maybe UTCTime
         isoformat = parseTimeM True defaultTimeLocale
             "%Y-%m-%d" (t2s datestring) :: Maybe UTCTime
+

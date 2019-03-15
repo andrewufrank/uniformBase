@@ -27,6 +27,7 @@ import Uniform.Time as UT
 import Test.Framework
 import Data.Time
 --import System.Time (calendarTimeToString)
+import Text.Show.Pretty
 
 main = do
     putIOwords ["HTF Time:\n "]
@@ -108,7 +109,33 @@ test_date4 = do
 test_date3a =
     assertEqual r3a (map showT $ map readDate3 t3a)
 
-r3a = []
+r3a =
+    ["2019-01-03 00:00:00 UTC", "2019-01-03 00:00:00 UTC",
+     "2019-03-05 00:00:00 UTC", "2019-01-06 00:00:00 UTC",
+     "2011-02-07 00:00:00 UTC", "2018-01-01 00:00:00 UTC",
+     "2020-10-09 00:00:00 UTC", "2018-11-27 00:00:00 UTC",
+     "2009-05-14 00:00:00 UTC"]
 t3a = ["Jan 3, 2019", "Jan. 3, 2019", "March 5, 2019"
     , "jan 6, 2019", "February 7, 2011"
     , "1.1.2018", "9.10.20", "2018-11-27", "2009-05-14"]
+
+
+test_showRead =
+--    do
+--        print time1
+--        print show1
+--        print read1
+        assertEqual read1 time1
+
+    where
+     dateString = "9-8-2012 10:54 AM"
+     time1 :: UTCTime
+     time1 = parseTimeOrError True defaultTimeLocale "%-d-%-m-%Y %l:%M %p" dateString :: UTCTime
+     show1 = show time1 :: String
+     read1 = read show1 :: UTCTime
+
+test_pp = assertEqual (show timeX) (ppShow timeX)
+
+timeX :: UTCTime
+timeX = parseTimeOrError True defaultTimeLocale "%-d-%-m-%Y %l:%M %p"
+                "9-8-2012 10:54 AM" :: UTCTime
