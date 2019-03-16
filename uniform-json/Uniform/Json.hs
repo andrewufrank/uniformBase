@@ -25,7 +25,7 @@ module Uniform.Json (
         , module Uniform.Error   -- or at least ErrIO
         , Value (..)
         , toJSON, toJSONList 
-        , merge_aeson
+        -- , merge_aeson
           )  where
 
 import Uniform.Error hiding (at)

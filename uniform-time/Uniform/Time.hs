@@ -91,7 +91,8 @@ readDate2 datestring = parseTimeOrError True defaultTimeLocale
 
 readDate3 :: Text ->   UTCTime
 -- ^ read data in various formats
-readDate3 datestring  =
+readDate3 dateText  = 
+        -- fromJust $ shortMonth >>= longMonth
 
     case shortMonth of
         Just t -> t
@@ -105,19 +106,22 @@ readDate3 datestring  =
                     Just t3 -> t3
                     Nothing -> case isoformat of
                       Just t4 -> t4
-                      Nothing -> errorT   ["readDate3", datestring, "is not parsed"]
+                      Nothing -> errorT   ["readDate3",dateText, "is not parsed"]
 
     where
+        shortMonth :: Maybe UTCTime
         shortMonth = parseTimeM True defaultTimeLocale
-            "%b %-d, %Y" (t2s datestring) :: Maybe UTCTime
+            "%b %-d, %Y" dateString :: Maybe UTCTime
         longMonth = parseTimeM True defaultTimeLocale
-            "%B %-d, %Y" (t2s datestring) :: Maybe UTCTime
+            "%B %-d, %Y" dateString :: Maybe UTCTime
         monthPoint = parseTimeM True defaultTimeLocale
-            "%b. %-d, %Y" (t2s datestring) :: Maybe UTCTime
+            "%b. %-d, %Y" dateString :: Maybe UTCTime
         germanNumeral = parseTimeM True defaultTimeLocale
-            "%-d.%-m.%Y" (t2s datestring) :: Maybe UTCTime
+            "%-d.%-m.%Y" dateString :: Maybe UTCTime
         germanNumeralShort = parseTimeM True defaultTimeLocale
-            "%-d.%-m.%y" (t2s datestring) :: Maybe UTCTime
+            "%-d.%-m.%y" dateString :: Maybe UTCTime
         isoformat = parseTimeM True defaultTimeLocale
-            "%Y-%m-%d" (t2s datestring) :: Maybe UTCTime
+            "%Y-%m-%d" dateString :: Maybe UTCTime
+
+        dateString = t2s dateText
 

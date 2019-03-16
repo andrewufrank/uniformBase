@@ -48,12 +48,13 @@ Test-Suite jsontest
     type:       exitcode-stdio-1.0
     build-depends:  base -any
         , HTF
+        , test-invariant
 --                    bytestring -any, mtl,
 --                   text -any, utf8-string -any
        , uniform-error
        , uniform-time
        , uniform-strings
-    --    , time
+       , uniform-time
     --    , pretty-show
 --       , old-time
 --       , data-easy
@@ -65,3 +66,4 @@ Test-Suite jsontest
     other-modules:
         Uniform.Json_test
         Uniform.Yaml_test
+        Uniform.Pandoc_test

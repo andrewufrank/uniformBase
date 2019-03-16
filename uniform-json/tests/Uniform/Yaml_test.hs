@@ -30,6 +30,6 @@ import           Uniform.Error hiding ((</>), (<.>))
 
 import Test.Framework
 -- import Test.Invariant
-import Uniform.Filenames
+-- import Uniform.Filenames
 
 
