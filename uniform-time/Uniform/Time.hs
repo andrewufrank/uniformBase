@@ -9,7 +9,7 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 -- {-# LANGUAGE BangPatterns                   #-}
 {-# LANGUAGE ConstraintKinds          #-}
-{-# LANGUAGE DeriveDataTypeable    #-}
+-- {-# LANGUAGE DeriveDataTypeable    #-}
 {-# LANGUAGE DoAndIfThenElse        #-}
 {-# LANGUAGE FlexibleContexts               #-}
 {-# LANGUAGE FlexibleInstances              #-}
@@ -17,7 +17,7 @@
 {-# LANGUAGE OverloadedStrings              #-}
 {-# LANGUAGE ScopedTypeVariables            #-}
 {-# LANGUAGE TypeFamilies               #-}
-{-# LANGUAGE TypeSynonymInstances       #-}
+-- {-# LANGUAGE TypeSynonymInstances       #-}
 {-# LANGUAGE UndecidableInstances           #-}
 
 
