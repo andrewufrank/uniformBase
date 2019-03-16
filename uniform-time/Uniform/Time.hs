@@ -7,20 +7,18 @@
 -- examples in TestingTime.hs
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
-{-# LANGUAGE
-     MultiParamTypeClasses
-    , FlexibleInstances
-    , FlexibleContexts
-    , UndecidableInstances
-    , ScopedTypeVariables
-    , DeriveDataTypeable   -- needed
-    , TypeSynonymInstances
---    , DoAndIfThenElse
---    , TypeFamilies
---    , ConstraintKinds
---    , BangPatterns
-    , OverloadedStrings
-             #-}
+-- {-# LANGUAGE BangPatterns                   #-}
+{-# LANGUAGE ConstraintKinds          #-}
+{-# LANGUAGE DeriveDataTypeable    #-}
+{-# LANGUAGE DoAndIfThenElse        #-}
+{-# LANGUAGE FlexibleContexts               #-}
+{-# LANGUAGE FlexibleInstances              #-}
+{-# LANGUAGE MultiParamTypeClasses          #-}
+{-# LANGUAGE OverloadedStrings              #-}
+{-# LANGUAGE ScopedTypeVariables            #-}
+{-# LANGUAGE TypeFamilies               #-}
+{-# LANGUAGE TypeSynonymInstances       #-}
+{-# LANGUAGE UndecidableInstances           #-}
 
 
 module Uniform.Time (
@@ -67,9 +65,9 @@ getCurrentTimeUTC :: ErrIO UTCTime
 addSeconds :: Double -> UTCTime -> UTCTime
 diffSeconds :: UTCTime -> UTCTime  -> T.NominalDiffTime
 
-getCurrentTimeUTC = liftIO $ T.getCurrentTime
+getCurrentTimeUTC = liftIO T.getCurrentTime
 addSeconds s t = T.addUTCTime (realToFrac s) t
-diffSeconds a b =  T.diffUTCTime a b
+diffSeconds = T.diffUTCTime
 
 toYMD = T.toGregorian . T.utctDay
 diffDays a b = T.diffDays (T.utctDay a) (T.utctDay b)

@@ -28,6 +28,8 @@ import Test.Framework
 
 -- import Data.Time as T
 import           Text.Pandoc.Readers (readMarkdown)
+import qualified Data.Yaml                     as Y
+
 import Uniform.Error
 -- import Uniform.Strings
 import Uniform.Filenames 
@@ -130,3 +132,37 @@ flattenMeta (Pandoc.Meta meta) = toJSON $ fmap go meta
   go (Pandoc.MetaString  m) = toJSON m
   go (Pandoc.MetaInlines m) = toJSON $ stringify m
   go (Pandoc.MetaBlocks  m) = toJSON $ stringify m
+
+
+readYaml2value :: Path Abs File -> ErrIO Value
+-- read a yaml file to a value
+-- error when syntax issue
+readYaml2value fp = do
+  t <- read8 fp yamlFileType
+  return . yaml2value $ t
+
+yaml2value :: YamlText -> Value
+-- convert a YamlText to a JSON value, error if not ok
+-- how to debug input erros?
+yaml2value yt = either (error . show) id vx
+ where
+  vx = Y.decodeEither' (t2b . unYAML $ yt) :: Either Y.ParseException Value
+
+
+newtype YamlText = YamlText Text deriving (Show, Read, Eq, Ord)
+-- a wrapper around Markdonw text
+unYAML (YamlText a) = a   --needed for other ops
+
+extYAML = Extension "yaml"
+instance Zeros YamlText where zero = YamlText zero
+
+yamlFileType = TypedFile5 {tpext5 = extYAML} :: TypedFile5   Text YamlText
+--instance FileHandles YamlText
+-- what is missing here?
+
+
+instance TypedFiles7 Text  YamlText    where
+-- handling Markdown and read them into YamlText
+    wrap7 = YamlText
+    unwrap7 (YamlText a) = a
+
