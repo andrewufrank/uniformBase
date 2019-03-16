@@ -24,6 +24,7 @@ module Uniform.Json (
         module Uniform.Json 
         , module Uniform.Error   -- or at least ErrIO
         , Value (..)
+        , toJSON, toJSONList 
           )  where
 
 import Uniform.Error hiding (at)

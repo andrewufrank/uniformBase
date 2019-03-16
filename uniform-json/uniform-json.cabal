@@ -7,7 +7,7 @@ license-file: GPL_3
 maintainer: Andrew U. Frank <andrewufrank@gmail.com>
 author: Andrew Frank
 category: Uniform
-synopsis: handling of JSON and YAML in an uniform way 
+synopsis: handling of JSON and YAML in an uniform way and some pandoc stuff 
 description: remove particular aspects of abstraction in json and yaml
 
 source-repository head
@@ -24,18 +24,18 @@ library
         , uniform-fileio
         , HTF
         -- , safe
-        -- , time
---        , old-time
         , aeson
         , lens-aeson 
         , lens
         , yaml 
         , unordered-containers
         , convertible
---        , old-time
+        , pandoc 
+
     exposed-modules:
         Uniform.Json 
         Uniform.Yaml 
+        Uniform.Pandoc
 
     exposed: True
     buildable: True
