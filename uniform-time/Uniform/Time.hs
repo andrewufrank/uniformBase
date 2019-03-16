@@ -34,7 +34,7 @@ import Test.Framework
 import Data.Time as T
 import Uniform.Error
 -- import Uniform.Strings
-import Data.Convertible
+import Data.Convertible (convert)
 import System.Posix.Types (EpochTime)
 --import System.Time (getClockTime, toCalendarTime, calendarTimeToString)
 
@@ -90,7 +90,7 @@ readDate2 datestring = parseTimeOrError True defaultTimeLocale
             "%b %-d, %Y" (t2s datestring) :: UTCTime
 
 readDate3 :: Text ->   UTCTime
--- ^ read data in the Jan 7, 2019 format (no . after month)
+-- ^ read data in various formats
 readDate3 datestring  =
 
     case shortMonth of
