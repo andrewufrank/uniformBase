@@ -26,16 +26,25 @@ library
         -- , safe
         , aeson
         , lens-aeson 
+        , aeson-pretty
         , lens
         , yaml 
         , unordered-containers
+        , containers
         , convertible
         , pandoc 
+        , pandoc-types
+        , bibtex
+        , pandoc-citeproc
+        , doctemplates
+        , directory
+        , parsec
 
     exposed-modules:
         Uniform.Json 
         Uniform.Yaml 
         Uniform.Pandoc
+        Uniform.BibTex
 
     exposed: True
     buildable: True
@@ -55,6 +64,8 @@ Test-Suite jsontest
        , uniform-time
        , uniform-strings
        , uniform-time
+       , uniform-json 
+       , bibtex 
     --    , pretty-show
 --       , old-time
 --       , data-easy
@@ -67,3 +78,4 @@ Test-Suite jsontest
         Uniform.Json_test
         Uniform.Yaml_test
         Uniform.Pandoc_test
+        Uniform.BibTex_test

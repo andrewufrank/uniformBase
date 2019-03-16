@@ -27,16 +27,16 @@ module Uniform.Filenames  (
          , module Uniform.Error
          , Abs, Rel, File, Dir
              ) where
-import           Uniform.Error hiding ((</>), (<.>))
-import Uniform.Zero -- for Generics
+import qualified Data.List.Split          as Sp -- hiding ((</>), (<.>))
+import qualified Path  as Path -- for Generics
 
+import           Path (Abs, Rel, File, Dir)
 import qualified Path.IO as PathIO
-import qualified Path  as Path
-import Path (Abs, Rel, File, Dir)
+import qualified System.FilePath       as S
 
-import  qualified         System.FilePath       as S -- prefered
-import  qualified         System.FilePath.Posix       as S -- prefered
-import qualified Data.List.Split          as Sp
+import qualified System.FilePath.Posix       as S -- prefered
+import           Uniform.Error -- prefered
+import           Uniform.Zero
 --import  qualified         Filesystem.Path       as F -- prefered
 -- not usable, has a different definition of FilePath
 

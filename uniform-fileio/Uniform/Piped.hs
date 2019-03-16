@@ -6,16 +6,14 @@
 -- | the recursive access to many files not blocking
 -----------------------------------------------------------------------------
 --{-# OPTIONS_GHC -F -pgmF htfpp #-}
-{-# LANGUAGE
-    MultiParamTypeClasses
---    , TypeSynonymInstances
-    , FlexibleInstances
-    , FlexibleContexts
-    , ScopedTypeVariables
-    , UndecidableInstances
-    , OverloadedStrings
---    , TypeFamilies
-    #-}
+{-# LANGUAGE FlexibleContexts         #-}
+{-# LANGUAGE FlexibleInstances        #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
+{-# LANGUAGE OverloadedStrings        #-}
+{-# LANGUAGE ScopedTypeVariables      #-}
+{-# LANGUAGE TypeFamilies             #-}
+-- {-# LANGUAGE TypeSynonymInstances     #-}
+{-# LANGUAGE UndecidableInstances     #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 module  Uniform.Piped ( getRecursiveContents
@@ -72,9 +70,9 @@ getRecursiveContents  fp = do
                         Pipe.lift $ putIOwords ["recurseDir files\n", showT files]
                         Pipe.lift $ putIOwords ["recurseDir directories\n", showT dirs]
 
-                    Prelude.mapM_ (Pipe.yield) (sort files)
+                    Prelude.mapM_ Pipe.yield (sort files)
 --                                (Path.IO.sort (map unPath files))
-                    Prelude.mapM_ (getRecursiveContents) (sort dirs)
+                    Prelude.mapM_ getRecursiveContents (sort dirs)
 --                            (Path.IO.sort (map unPath dirs))
                     return ()--    where processOneFile fp = Pipe.yield fp
 

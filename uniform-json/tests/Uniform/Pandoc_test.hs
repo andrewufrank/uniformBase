@@ -9,26 +9,28 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+-- {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE TypeSynonymInstances  #-}
-{-# LANGUAGE OverloadedStrings     #-}
+-- {-# LANGUAGE TypeSynonymInstances  #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
-module Uniform.Pandoc_test  where
+module Uniform.Pandoc_test where
 --
 -- --import qualified Data.Text as T
 -- import qualified System.Posix  as P (FileStatus)
 -- --import qualified System.Directory as S
 --
 ---- using uniform:
-import           Uniform.Error hiding ((</>), (<.>))
+import           Uniform.Error           hiding ( (</>)
+                                                , (<.>)
+                                                )
 -- import           Uniform.Strings     hiding ((</>), (<.>))
             -- (s2t, showT, t2s, removeChar, CharChains2 (..), Text)
 --import Safe   -- todo error
- 
 
-import Test.Framework
+
+import           Test.Framework
 -- import Test.Invariant
 -- import Uniform.Filenames
 

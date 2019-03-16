@@ -1,5 +1,5 @@
 name: uniform-convenience
-version: 0.0.9.33
+version: 0.0.9.4
 cabal-version: >=1.22
 build-type: Simple
 license: GPL
@@ -36,6 +36,8 @@ library
     exposed-modules:
         Uniform.Convenience.StartApp
         Uniform.Convenience.ReadCSV
+        Uniform.Convenience.DataVarious
+
         Uniform.Test.TestHarness
         Uniform.Test.Utils
         Uniform.Codes.LanguageCode
