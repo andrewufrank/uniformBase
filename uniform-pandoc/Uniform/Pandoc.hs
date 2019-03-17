@@ -20,9 +20,12 @@ module Uniform.Pandoc
   ( module Uniform.Pandoc
   , readMd2meta 
   , Pandoc(..)
-  , unDocValue
+  , unDocValue, DocValue(..), docValueFileType
   , module Uniform.Error   -- or at least ErrIO
   , write8
+  , TypedFile5, TypedFiles5
+  , TypedFiles7
+  , read8
   )
 where
 
@@ -267,12 +270,12 @@ docValueFileType = TypedFile5 {tpext5 = Extension "docval"} :: TypedFile5   Text
 -- what is missing here?
 
 
--- instance TypedFiles7 Text  DocValue    where
--- -- handling Markdown and read them into DocValue
---     wrap7 = DocValue . fromJustNote "wrap7 docvalue decode" . decode . b2bl . t2b
---     unwrap7 (DocValue a) = shownice a
+instance TypedFiles7 Text  DocValue    where
+-- ^ handling Markdown and read them into DocValue
+    wrap7 = DocValue . fromJustNote "wrap7 docvalue decode" . decode . b2bl . t2b
+    unwrap7 (DocValue a) = shownice a
 
 mergeAll :: [Value] -> DocValue
--- merge the four diffferent value -- last winns
+-- ^ merge the four diffferent value -- last winns
 -- issue how to collect all css?
 mergeAll  = DocValue . mergeAeson . reverse     
