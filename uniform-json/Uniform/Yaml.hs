@@ -22,7 +22,7 @@ module Uniform.Yaml (
         , Y.decodeEither', Y.ParseException(..)
         )  where
 
-import Test.Framework
+-- import Test.Framework
 
 -- import Data.Time as T
 import Uniform.Error

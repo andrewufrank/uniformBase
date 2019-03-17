@@ -23,9 +23,9 @@ module Uniform.Json
     ( module Uniform.Json
     , module Uniform.Error   -- or at least ErrIO
     , Value(..)
-    , ToJSON(..)
+    , ToJSON(..), FromJSON(..) 
     , fromJSON
-    , decode 
+    , decode, omitNothingFields
     )
 where
 
