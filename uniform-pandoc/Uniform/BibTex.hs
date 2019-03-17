@@ -38,7 +38,7 @@ import qualified Text.Pandoc.Definition   as PD
 import           Text.Parsec
 
 import           Uniform.Error
--- import Lib.YamlBlocks (flattenMeta, getMeta, putMeta, getMaybeStringAtKey
+-- import Lib.YamlBlocks (flattenMeta, getMeta, putMeta, getAtKey
 --                 , putStringAtKey, readMarkdown2, unPandocM)
 import           Uniform.FileIO 
 import           Uniform.Json
