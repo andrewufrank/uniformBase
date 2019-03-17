@@ -30,6 +30,7 @@ module Uniform.FileIO (
          , module Uniform.Piped
             ,  getAppUserDataDir'
          , makeAbsoluteFile'
+         , findDirs, isDir 
 --         , homeDir2
             ) where
 
@@ -50,4 +51,16 @@ makeAbsoluteFile' file = do
 
 getAppUserDataDir' :: String -> ErrIO (Path Abs Dir)
 getAppUserDataDir' appName  = fmap Path $ Path.IO.getAppUserDataDir $ appName
+
+findDirs :: [FilePath] -> ErrIO [Path Abs Dir]
+-- ^ find directories in a list of files
+findDirs fns = do
+    mdirs <- mapM isDir fns
+    return . catMaybes $ mdirs
+
+isDir :: FilePath -> ErrIO (Maybe (Path Abs Dir))
+-- ^ is this filepateh an directory 
+isDir fn = do
+    st <- getFileStatus' fn
+    return (if isDirectory st then Just (makeAbsDir fn) else Nothing)
 
