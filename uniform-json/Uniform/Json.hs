@@ -26,7 +26,6 @@ module Uniform.Json
     , ToJSON(..)
     , fromJSON
     , decode 
-        -- , merge_aeson
     )
 where
 

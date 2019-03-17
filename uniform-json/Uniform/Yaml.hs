@@ -2,25 +2,24 @@
 --
 -- Module      :  Uniform.Yaml
 -----------------------------------------------------------------------------
-{-# LANGUAGE
-     MultiParamTypeClasses
-    , FlexibleInstances
-    , FlexibleContexts
-    , UndecidableInstances
-    , ScopedTypeVariables
-    , DeriveDataTypeable   -- needed
-    , TypeSynonymInstances
---    , DoAndIfThenElse
---    , TypeFamilies
---    , ConstraintKinds
---    , BangPatterns
-    , OverloadedStrings
-             #-}
+-- {-# LANGUAGE BangPatterns                   #-}
+{-# LANGUAGE ConstraintKinds             #-}
+-- {-# LANGUAGE DeriveDataTypeable    #-}
+{-# LANGUAGE DoAndIfThenElse             #-}
+{-# LANGUAGE FlexibleContexts               #-}
+{-# LANGUAGE FlexibleInstances              #-}
+{-# LANGUAGE MultiParamTypeClasses          #-}
+{-# LANGUAGE OverloadedStrings              #-}
+{-# LANGUAGE ScopedTypeVariables            #-}
+{-# LANGUAGE TypeFamilies                #-}
+-- {-# LANGUAGE TypeSynonymInstances        #-}
+{-# LANGUAGE UndecidableInstances           #-}
 
 
 module Uniform.Yaml (
         module Uniform.Yaml
         , module Uniform.Error   -- or at least ErrIO
+        , Y.decodeEither', Y.ParseException(..)
         )  where
 
 import Test.Framework
@@ -87,14 +86,14 @@ yaml2value yt = either (error . show) id vx
 -- --                        , bl2b . encode . toJSON $ ix
 -- --                       ]  -- last winns!
 
-merge_aeson :: [Value] -> Value
--- The (left-biased) union of two maps.
--- It prefers the first map when duplicate keys are encountered,
--- http://hackage.haskell.org/package/hashmap-1.3.3/docs/Data-HashMap.html
-merge_aeson = Object . HML.unions . map (\(Object x) -> x)
+-- mergeAeson :: [Value] -> Value
+-- -- The (left-biased) union of two maps.
+-- -- It prefers the first map when duplicate keys are encountered,
+-- -- http://hackage.haskell.org/package/hashmap-1.3.3/docs/Data-HashMap.html
+-- mergeAeson = Object . HML.unions . map (\(Object x) -> x)
 
---merge_aesonPlus :: [Value] -> Value
----- The   union of two maps -- unions values
----- It prefers the first map when duplicate keys are encountered,
----- http://hackage.haskell.org/package/hashmap-1.3.3/docs/Data-HashMap.html
---merge_aesonPlus = Object . HML.unionWith (++) . map (\(Object x) -> x)
+-- --merge_aesonPlus :: [Value] -> Value
+-- ---- The   union of two maps -- unions values
+-- ---- It prefers the first map when duplicate keys are encountered,
+-- ---- http://hackage.haskell.org/package/hashmap-1.3.3/docs/Data-HashMap.html
+-- --merge_aesonPlus = Object . HML.unionWith (++) . map (\(Object x) -> x)

@@ -32,11 +32,11 @@ library
         , unordered-containers
         , containers
         , convertible
-        , pandoc 
-        , pandoc-types
-        , bibtex
-        , pandoc-citeproc
-        , doctemplates
+        -- , pandoc 
+        -- , pandoc-types
+        -- , bibtex
+        -- , pandoc-citeproc
+        -- , doctemplates
         , directory
         , parsec
 
@@ -63,7 +63,7 @@ Test-Suite jsontest
        , uniform-strings
        , uniform-time
        , uniform-json 
-       , bibtex 
+    --    , bibtex 
     --    , pretty-show
 --       , old-time
 --       , data-easy

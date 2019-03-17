@@ -1,4 +1,4 @@
-name: uniform-json
+name: uniform-pandoc 
 version: 0.0.1
 cabal-version: >=1.22
 build-type: Simple
@@ -12,7 +12,7 @@ description: remove particular aspects of abstraction
 
 source-repository head
     type: git
-    location: https://github.com/andrewufrank/uniform-json.git
+    location: https://github.com/andrewufrank/uniform-pandoc.git
 
 library
     build-depends:
@@ -22,13 +22,14 @@ library
         , uniform-strings
         , uniform-error
         , uniform-fileio
+        , uniform-json 
         , HTF
         -- , safe
-        , aeson
-        , lens-aeson 
-        , aeson-pretty
-        , lens
-        , yaml 
+        -- , aeson
+        -- , lens-aeson 
+        -- , aeson-pretty
+        -- , lens
+        -- , yaml 
         , unordered-containers
         , containers
         , convertible

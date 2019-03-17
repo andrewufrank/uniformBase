@@ -23,13 +23,13 @@ module Uniform.Pandoc
   )
 where
 
-import           Data.Aeson                     ( toJSONList )
+-- import           Data.Aeson                     ( toJSONList )
 import           Test.Framework
 
 -- import Data.Time as T
 import           Text.Pandoc.Readers            ( readMarkdown )
 import Text.DocTemplates              ( applyTemplate )
-import qualified Data.Yaml                     as Y
+-- import qualified Data.Yaml                     as Y
 
 import           Uniform.Error
 -- import Uniform.Strings
@@ -39,6 +39,7 @@ import           Uniform.TypedFile              ( TypedFiles7(..)
                                                 )
 import           Uniform.FileIO                 ( read8 )
 import           Uniform.Json
+import Uniform.Yaml  
 
 -- import qualified Data.Yaml                     as Y
 -- import qualified Data.HashMap.Lazy             as HML
@@ -156,31 +157,31 @@ readYaml2value fp = do
   t <- read8 fp yamlFileType
   return . yaml2value $ t
 
-yaml2value :: YamlText -> Value
--- convert a YamlText to a JSON value, error if not ok
--- how to debug input erros?
-yaml2value yt = either (error . show) id vx
- where
-  vx = Y.decodeEither' (t2b . unYAML $ yt) :: Either Y.ParseException Value
+-- yaml2value :: YamlText -> Value
+-- -- convert a YamlText to a JSON value, error if not ok
+-- -- how to debug input erros?
+-- yaml2value yt = either (error . show) id vx
+--  where
+--   vx = decodeEither' (t2b . unYAML $ yt) :: Either ParseException Value
 
 
-newtype YamlText = YamlText Text deriving (Show, Read, Eq, Ord)
--- a wrapper around Markdonw text
-unYAML (YamlText a) = a   --needed for other ops
+-- newtype YamlText = YamlText Text deriving (Show, Read, Eq, Ord)
+-- -- a wrapper around Markdonw text
+-- unYAML (YamlText a) = a   --needed for other ops
 
-extYAML = Extension "yaml"
-instance Zeros YamlText where
-  zero = YamlText zero
+-- extYAML = Extension "yaml"
+-- instance Zeros YamlText where
+--   zero = YamlText zero
 
-yamlFileType = TypedFile5 { tpext5 = extYAML } :: TypedFile5 Text YamlText
---instance FileHandles YamlText
--- what is missing here?
+-- yamlFileType = TypedFile5 { tpext5 = extYAML } :: TypedFile5 Text YamlText
+-- --instance FileHandles YamlText
+-- -- what is missing here?
 
 
-instance TypedFiles7 Text  YamlText    where
--- handling Markdown and read them into YamlText
-  wrap7 = YamlText
-  unwrap7 (YamlText a) = a
+-- instance TypedFiles7 Text  YamlText    where
+-- -- handling Markdown and read them into YamlText
+--   wrap7 = YamlText
+--   unwrap7 (YamlText a) = a
 
 
 -- | Reasonable options for rendering to HTML

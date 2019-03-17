@@ -23,7 +23,7 @@ module Uniform.Json_test where
 
 
 import Test.Framework
-import Test.Invariant
+-- import Test.Invariant
 -- import Uniform.ByteString
 --import qualified Data.ByteString as BS
 --
