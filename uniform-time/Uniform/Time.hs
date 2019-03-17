@@ -38,6 +38,9 @@ import Data.Convertible (convert)
 import System.Posix.Types (EpochTime)
 --import System.Time (getClockTime, toCalendarTime, calendarTimeToString)
 
+year2000 :: UTCTime
+year2000 = readDate3 "2000-01-01"
+
 --class Times a where
 --    type TimeUTC  a
 --    type YMD a
