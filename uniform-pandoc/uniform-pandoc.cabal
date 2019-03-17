@@ -64,6 +64,7 @@ Test-Suite jsontest
        , uniform-strings
        , uniform-time
        , uniform-json 
+       , uniform-pandoc
        , bibtex 
     --    , pretty-show
 --       , old-time

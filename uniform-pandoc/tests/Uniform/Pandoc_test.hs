@@ -22,15 +22,14 @@ module Uniform.Pandoc_test where
 -- --import qualified System.Directory as S
 --
 ---- using uniform:
-import           Uniform.Error           hiding ( (</>)
-                                                , (<.>)
-                                                )
+import Test.Framework
 -- import           Uniform.Strings     hiding ((</>), (<.>))
             -- (s2t, showT, t2s, removeChar, CharChains2 (..), Text)
 --import Safe   -- todo error
 
 
-import           Test.Framework
+import Uniform.Error           hiding (  (<.>)  )  -- (</>)
+
 -- import Test.Invariant
 -- import Uniform.Filenames
 

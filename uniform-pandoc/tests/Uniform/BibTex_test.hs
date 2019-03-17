@@ -42,14 +42,14 @@ resReadA = "% Encoding: UTF-8\n\n@InProceedings{navrat"
 test_parse = do
     bib <- readBibTex bib1
     entries <- parseBibTex bib
-    assertEqual resParse ( take 2  entries)
+    assertEqual resParse ( take 2  entries)  
 test_parseaf = do
     bib <- readBibTex bibaf
     entries <- parseBibTex bib
     assertEqual resParseA ( take 2  entries)
 
 resParse =
- [Cons{entryType = "InProceedings",
+ [Cons{entryType = "InProceedings", 
       identifier = "alfer2002beginning",
       fields =
         [("author", "Alfer, Ralf and Thielemann, Henning"),

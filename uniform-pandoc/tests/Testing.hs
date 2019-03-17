@@ -19,12 +19,13 @@ module Main     where      -- must have Main (main) or Main where
 --import System.Exit
 
 import            Test.Framework
-import     {-@ HTF_TESTS @-}       Uniform.Json_test
+-- import     {-@ HTF_TESTS @-}       Uniform.Json_test
 --import {-@ HTF_TESTS @-} Uniform.ByteString_test
-import     {-@ HTF_TESTS @-}       Uniform.Yaml_test
+-- import     {-@ HTF_TESTS @-}       Uniform.Yaml_test
 --import    {-@ HTF_TESTS @-}        Uniform.FileStatus_test
 --import     {-@ HTF_TESTS @-}       Uniform.Piped_test
 import    {-@ HTF_TESTS @-}        Uniform.Pandoc_test
+import    {-@ HTF_TESTS @-}        Uniform.BibTex_test
 
 import           Uniform.Strings
 

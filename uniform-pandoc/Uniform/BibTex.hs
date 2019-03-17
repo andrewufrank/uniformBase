@@ -20,6 +20,7 @@ import           System.Directory (setCurrentDirectory, getCurrentDirectory)
  
 import           Text.BibTeX.Entry as T
 import qualified Text.BibTeX.Entry as Entry
+import           Text.BibTeX.Entry ()
 import           Text.BibTeX.Parse
 import qualified Text.BibTeX.Parse as Parse
 --import qualified Text.ParserCombinators.Parsec as Parsec
