@@ -35,6 +35,9 @@ import Uniform.Json
 import qualified Data.Yaml                     as Y
 import qualified Data.HashMap.Lazy             as HML
 
+decodeThrowT :: Text -> ErrIO Value 
+decodeThrowT =  Y.decodeThrow . t2b
+
 newtype YamlText = YamlText Text deriving (Show, Read, Eq, Ord)
 -- a wrapper around Markdonw text
 unYAML (YamlText a) = a   --needed for other ops

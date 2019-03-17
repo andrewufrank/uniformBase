@@ -18,9 +18,11 @@
 
 module Uniform.Pandoc
   ( module Uniform.Pandoc
+  , readMd2meta 
   , Pandoc(..)
   , unDocValue
   , module Uniform.Error   -- or at least ErrIO
+  , write8
   )
 where
 
@@ -38,7 +40,7 @@ import           Uniform.Filenames
 import           Uniform.TypedFile              ( TypedFiles7(..)
                                                 , TypedFiles5(..), TypedFile5(..)  
                                                 )
-import           Uniform.FileIO                 ( read8 )
+import           Uniform.FileIO                 (write8, read8 )
 import           Uniform.Json
 import Uniform.Yaml  
 
