@@ -22,6 +22,8 @@ module Uniform.Json
     , ToJSON(..), FromJSON(..) 
     , fromJSON
     , decode, omitNothingFields
+    , encode
+    , genericParseJSON, defaultOptions
     )
 where
 
