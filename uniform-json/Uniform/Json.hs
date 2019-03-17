@@ -19,7 +19,7 @@ module Uniform.Json
     ( module Uniform.Json
     , module Uniform.Error   -- or at least ErrIO
     , Value(..)
-    , ToJSON(..), FromJSON(..) 
+    , ToJSON(..), FromJSON(..)
     , fromJSON
     , decode, omitNothingFields
     , encode
@@ -41,20 +41,21 @@ import qualified Data.HashMap.Lazy             as HML
 import           Uniform.Error           hiding ( at )
 
 class AtKey vk v where
+-- ^ get and set at a key 
     getAtKey :: vk -> Text -> Maybe v
-    putStringAtKey :: Text -> v -> vk -> vk
+    putAtKey :: Text -> v -> vk -> vk
 
 instance AtKey Value Text where
     getAtKey meta2 k2 = meta2 ^? key k2 . _String
-    putStringAtKey k2 txt meta2 = meta2 & _Object . at k2 ?~ String txt
+    putAtKey k2 txt meta2 = meta2 & _Object . at k2 ?~ String txt
 --        (unHTMLout text2)
 instance AtKey Value Bool where
     getAtKey meta2 k2 = meta2 ^? key k2 . _Bool
-    putStringAtKey k2 txt meta2 = meta2 & _Object . at k2 ?~ Bool txt
+    putAtKey k2 txt meta2 = meta2 & _Object . at k2 ?~ Bool txt
 
 
 mergeAeson :: [Value] -> Value
--- The (left-biased) union of two maps.
+-- ^ The (left-biased) union of two maps.
 -- It prefers the first map when duplicate keys are encountered,
 -- http://hackage.haskell.org/package/hashmap-1.3.3/docs/Data-HashMap.html
 mergeAeson = Object . HML.unions . map (\(Object x) -> x)

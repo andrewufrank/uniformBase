@@ -19,6 +19,7 @@
 module Uniform.Pandoc
   ( module Uniform.Pandoc
   , Pandoc(..)
+  , unDocValue
   , module Uniform.Error   -- or at least ErrIO
   )
 where
