@@ -6,18 +6,16 @@
 --
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
-{-# LANGUAGE
-    MultiParamTypeClasses
-    , TypeSynonymInstances
---    , FunctionalDependencies
-    , FlexibleInstances
-    , FlexibleContexts
---    , DeriveFunctor
-    , ScopedTypeVariables
-    , UndecidableInstances
-    , OverloadedStrings
-    , TypeFamilies
-    #-}
+-- {-# LANGUAGE DeriveFunctor           #-}
+{-# LANGUAGE FlexibleContexts     #-}
+{-# LANGUAGE FlexibleInstances       #-}
+-- {-# LANGUAGE FunctionalDependencies  #-}
+{-# LANGUAGE MultiParamTypeClasses   #-}
+-- {-# LANGUAGE OverloadedStrings       #-}
+{-# LANGUAGE ScopedTypeVariables     #-}
+{-# LANGUAGE TypeFamilies            #-}
+-- {-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE UndecidableInstances    #-}
 {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 

@@ -17,6 +17,7 @@
 -- {-# LANGUAGE TypeSynonymInstances          #-}
 {-# LANGUAGE UndecidableInstances           #-}
 
+{-# OPTIONS_GHC -fno-warn-orphans #-}
 
 module Uniform.Json
     ( module Uniform.Json

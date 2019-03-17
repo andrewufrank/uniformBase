@@ -7,8 +7,8 @@ license-file: GPL_3
 maintainer: Andrew U. Frank <andrewufrank@gmail.com>
 author: Andrew Frank
 category: Uniform
-synopsis: handling of JSON and YAML in an uniform way and some pandoc stuff 
-description: remove particular aspects of abstraction in json and yaml
+synopsis: handling of   some pandoc stuff 
+description: remove particular aspects of abstraction 
 
 source-repository head
     type: git
@@ -41,8 +41,8 @@ library
         , parsec
 
     exposed-modules:
-        Uniform.Json 
-        Uniform.Yaml 
+        Uniform.Pandoc
+        Uniform.BibTex
 
     exposed: True
     buildable: True
@@ -73,6 +73,5 @@ Test-Suite jsontest
     default-language: Haskell2010
     hs-source-dirs: tests
     other-modules:
-        Uniform.Json_test
-        Uniform.Yaml_test
- 
+        Uniform.Pandoc_test
+        Uniform.BibTex_test
