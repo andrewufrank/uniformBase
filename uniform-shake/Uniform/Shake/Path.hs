@@ -1,4 +1,4 @@
-module Development.Shake.Path
+module Uniform.Shake.Path
     ( getHashedShakeVersionP
     , needP
     , wantP
@@ -13,9 +13,15 @@ module Development.Shake.Path
     ) where
 
 import Development.Shake
+import Uniform.FileIO (makeRelFile)
 
-import Path
+import Path  
 import Path.IO
+
+getDirectoryFilesP :: Path Abs Dir -> [FilePattern] -> Action [Path Rel File] 
+getDirectoryFilesP d p = do 
+            res <- getDirectoryFiles (toFilePath d)
+            return $ map makeRelFile res 
 
 getHashedShakeVersionP :: [Path r File] -> IO String
 getHashedShakeVersionP = getHashedShakeVersion . map toFilePath

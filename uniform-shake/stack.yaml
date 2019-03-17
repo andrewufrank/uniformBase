@@ -2,4 +2,9 @@
 resolver: lts-13.12 
 packages:
 - .
- 
+- ../uniform-algebras
+- ../uniform-error
+- ../uniform-strings
+- ../uniform-fileio
+extra-deps:
+- test-invariant-0.4.5.0
