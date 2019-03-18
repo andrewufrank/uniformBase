@@ -208,6 +208,6 @@ f11x = "/home/frank/" :: Path Abs Dir
 
 --test_read1 = assertEqual inp1 (inp1)  -- must fail, reading a string into Path Abs
 --                                      -- not permitted (should be detected when assign to inp1
---test_read12 = assertEqual "" (show inp1)
+test_read12 = assertEqual "" (show inp1)
 test_read22 = assertEqual "TestRec {f11 = \"/home/frank/\"}" (show inp2)
 
