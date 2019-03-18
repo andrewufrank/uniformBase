@@ -45,6 +45,7 @@ import Uniform.Error
 import Uniform.Zero
 import Uniform.Strings
 import Uniform.Filenames
+import Uniform.PathShowCase  -- read and show for Path
 
 --import Test.Framework
 
@@ -83,7 +84,7 @@ getModificationTimeFromStatus :: P.FileStatus -> P.EpochTime
 getModificationTimeFromStatus = P.modificationTime
 getFileSize = P.fileSize
 
-createSymbolicLink :: Path df ra -> Path df ra-> ErrIO ()
+createSymbolicLink :: Show (Path df ra) => Path df ra -> Path df ra-> ErrIO ()
 createSymbolicLink fn tn = do
     putIOwords ["createSymbolidLink", showT fn , "to", showT tn]
     callIO $ P.createSymbolicLink (unL fn) (unL tn)

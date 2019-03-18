@@ -10,7 +10,7 @@
 --{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module PathShowCase
+module Uniform.PathShowCase
 
 where
 

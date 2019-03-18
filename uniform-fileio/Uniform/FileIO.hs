@@ -47,10 +47,10 @@ import qualified Path.IO (makeAbsolute, getAppUserDataDir)
 makeAbsoluteFile' :: Path a File -> ErrIO (Path Abs File)
 makeAbsoluteFile' file = do
             f2 <- Path.IO.makeAbsolute (unPath file)
-            return . Path $ f2
+            return  f2
 
 getAppUserDataDir' :: String -> ErrIO (Path Abs Dir)
-getAppUserDataDir' appName  = fmap Path $ Path.IO.getAppUserDataDir $ appName
+getAppUserDataDir' appName  = Path.IO.getAppUserDataDir $ appName
 
 findDirs :: [FilePath] -> ErrIO [Path Abs Dir]
 -- ^ find directories in a list of files

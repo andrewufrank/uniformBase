@@ -25,10 +25,11 @@
 module Uniform.Filenames  (
          module Uniform.Filenames
          , module Uniform.Error
-         , Abs, Rel, File, Dir
+         , Abs, Rel, File, Dir, Path, toFilePath 
              ) where
 import qualified Data.List.Split          as Sp -- hiding ((</>), (<.>))
 import qualified Path  as Path -- for Generics
+import Path (Path(..), toFilePath)
 
 import           Path (Abs, Rel, File, Dir)
 import qualified Path.IO as PathIO
@@ -39,69 +40,76 @@ import           Uniform.Error -- prefered
 import           Uniform.Zero
 --import  qualified         Filesystem.Path       as F -- prefered
 -- not usable, has a different definition of FilePath
-
+import Uniform.PathShowCase  -- read and show for Path
 
 homeDir =  makeAbsDir "/home/frank/":: Path Abs Dir
 homeDir2 ::ErrIO (Path Abs Dir)
-homeDir2 = fmap Path $ callIO $ PathIO.getHomeDir  ::ErrIO (Path Abs Dir)
+homeDir2 = callIO $ PathIO.getHomeDir  ::ErrIO (Path Abs Dir)
 -- replace homeDir with homeDir2 - is user independent but requires IO
 currentDir::ErrIO (Path Abs Dir)
-currentDir = fmap Path $ callIO $ PathIO.getCurrentDir
+currentDir = callIO $ PathIO.getCurrentDir
 
 setCurrentDir :: Path Abs Dir -> ErrIO ()
 setCurrentDir path = PathIO.setCurrentDir (unPath path)
 
 stripProperPrefix' ::  Path b Dir -> Path b t -> ErrIO (Path Rel t)
-stripProperPrefix' dir fn = fmap Path $ Path.stripProperPrefix (unPath dir) (unPath fn)
+stripProperPrefix' dir fn = Path.stripProperPrefix (unPath dir) (unPath fn)
 
-newtype Path b t = Path (Path.Path b t)
--- in Path: newtype   Path b t = Path FilePath
--- should this be used
-  deriving (Ord, Eq, Generic)
-  -- read and show is defined separately
-  -- unclear what zero should be ?
+instance {-# OVERLAPPABLE #-} Show (Path a b) where  
+    show a = error "Show (Path a b) - the generic instance should not be used"
 
-instance Zeros (Path Abs File) where  -- required for NTdescriptor
-  zero = makeAbsFile "/zero"
-instance Zeros (Path Rel File) where  -- required for NTdescriptor
-  zero = makeRelFile "zero"
+-- newtype Path b t = Path (Path.Path b t)
+-- -- in Path: newtype   Path b t = Path FilePath
+-- -- should this be used
+--   deriving (Ord, Eq, Generic)
+--   -- read and show is defined separately
+--   -- unclear what zero should be ?
 
-instance Zeros (Path Abs Dir) where  -- required for NTdescriptor
-  zero = makeAbsDir "/"
-instance Zeros (Path Rel Dir) where  -- required for NTdescriptor
-  zero = makeRelDir "."
+-- instance Zeros (Path Abs File) where  -- required for NTdescriptor
+--   zero = makeAbsFile "/zero"
+-- instance Zeros (Path Rel File) where  -- required for NTdescriptor
+--   zero = makeRelFile "zero"
 
-instance NiceStrings (Path a b) where
-    shownice = s2t . Path.toFilePath . unPath
+-- instance Zeros (Path Abs Dir) where  -- required for NTdescriptor
+--   zero = makeAbsDir "/"
+-- instance Zeros (Path Rel Dir) where  -- required for NTdescriptor
+--   zero = makeRelDir "."
 
-unPath (Path s) = s
-toFilePath = Path.toFilePath . unPath
+-- instance NiceStrings (Path a b) where
+--     shownice = s2t . Path.toFile unPath
+
+unPath   = id
+-- toFilePath = Path.toFile unPath
 
 
-instance Show (Path b t) where
-  show = show . Path.toFilePath . unPath
+-- instance Show (Path b t) where
+--   show = show . Path.toFile unPath
 
 makeRelFile :: FilePath -> Path Rel File
 makeRelDir :: FilePath -> Path Rel Dir
 makeAbsFile :: FilePath -> Path Abs File
 makeAbsDir :: FilePath -> Path Abs Dir
 
-makeRelFile fn = Path . fromJustNote ("makeRelFile " ++ fn)
+makeRelFile fn =  fromJustNote ("makeRelFile " ++ fn)
                         $ Path.parseRelFile fn
-makeRelDir fn = Path . fromJustNote ("makeRelDir " ++ fn)
+makeRelDir fn =  fromJustNote ("makeRelDir " ++ fn)
                         $ Path.parseRelDir fn
-makeAbsFile fn = Path . fromJustNote ("makeAbsFile " ++ fn)
+makeAbsFile fn =  fromJustNote ("makeAbsFile " ++ fn)
                         $ Path.parseAbsFile fn
-makeAbsDir fn = Path . fromJustNote ("makeAbsDir " ++ fn)
+makeAbsDir fn =  fromJustNote ("makeAbsDir " ++ fn)
                         $ Path.parseAbsDir fn
 
 toShortFilePath :: Path df ar -> FilePath
 ---- ^ get the filepath, but without the trailing separator
 --    , necessary for systemcalls
-toShortFilePath = S.dropTrailingPathSeparator . Path.toFilePath . unPath
+toShortFilePath = S.dropTrailingPathSeparator . toFilePath
 
+instance Zeros (Path Abs Dir) where zero = makeAbsDir "/"
+instance Zeros (Path Abs File) where zero = makeAbsFile "/zero"
+instance Zeros (Path Rel Dir) where zero = makeRelDir "./"
+instance Zeros (Path Rel File) where zero = makeRelFile "zero"
 instance IsString (Path Abs File) where
-    fromString = read . show
+    fromString = read  
 instance IsString (Path Abs Dir) where
     fromString = read
 instance IsString (Path Rel File) where
@@ -109,29 +117,29 @@ instance IsString (Path Rel File) where
 instance IsString (Path Rel Dir) where
     fromString = read
 
-instance Read (Path Abs Dir) where
-        readsPrec i r =   maybe []  (\res -> [(Path res, rem1)] )
-                $ Path.parseAbsDir x
-                where  [(x ::String , rem1)] = readsPrec i r
-instance Read (Path Abs File) where
-        readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
-                $ Path.parseAbsFile x
-                where  [(x ::String , rem1)] = readsPrec i r
---                       mres = parseAbsFile x :: Maybe (Path Abs File)
+-- instance Read (Path Abs Dir) where
+--         readsPrec i r =   maybe []  (\res -> [(Path res, rem1)] )
+--                 $ Path.parseAbsDir x
+--                 where  [(x ::String , rem1)] = readsPrec i r
+-- instance Read (Path Abs File) where
+--         readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
+--                 $ Path.parseAbsFile x
+--                 where  [(x ::String , rem1)] = readsPrec i r
+-- --                       mres = parseAbsFile x :: Maybe (Path Abs File)
 
-instance Read (Path Rel Dir) where
-        readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
-                $ Path.parseRelDir x
-                where  [(x ::String , rem1)] = readsPrec i r
-instance Read (Path Rel File) where
-        readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
-                $ Path.parseRelFile x
-                where  [(x ::String , rem1)] = readsPrec i r
+-- instance Read (Path Rel Dir) where
+--         readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
+--                 $ Path.parseRelDir x
+--                 where  [(x ::String , rem1)] = readsPrec i r
+-- instance Read (Path Rel File) where
+--         readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
+--                 $ Path.parseRelFile x
+--                 where  [(x ::String , rem1)] = readsPrec i r
 
 
 
-instance CharChains2 (Path a d) String where show'  = show
-instance CharChains2 (Path a d) Text where show'  = s2t . show
+-- instance CharChains2 (Path a d) String where show'  = show
+-- instance CharChains2 (Path a d) Text where show'  = s2t . show
 
 newtype Extension = Extension FilePath deriving (Show, Read, Eq, Ord)
 unExtension (Extension e) = e
@@ -153,7 +161,7 @@ class Filenames5 dir fil res where
     stripPrefix :: dir -> fil ->  Maybe res
     -- ^ strip the
 instance Filenames5 (Path b Dir) (Path b t)  (Path Rel t) where
-    stripPrefix d f = fmap Path $  Path.stripProperPrefix (unPath d) (unPath f)
+    stripPrefix d f =  Path.stripProperPrefix (unPath d) (unPath f)
 
 class Filenames4 fp file  where
     type FileResultT4 fp file
@@ -179,12 +187,11 @@ instance Filenames3 FilePath FilePath  where
     addFileName  = S.combine
 
 instance Filenames (Path ar File) (Path Rel File) where
-    getFileName = Path . Path.filename . unPath
+    getFileName =  Path.filename . unPath
 
 instance Filenames3 (Path b Dir) FilePath  where
     type FileResultT (Path b Dir) FilePath = (Path b File)
-    addFileName p  d =
-                Path $ if null' d
+    addFileName p  d = if null' d
                     then error ("addFileName with empty file" ++ d)
                     else (Path.</>) (unPath p) (unPath d2)
         where
@@ -197,18 +204,18 @@ instance Filenames4 FilePath FilePath  where
 
 instance Filenames4 (Path b Dir) FilePath  where
     type FileResultT4 (Path b Dir) FilePath = (Path b Dir)
-    addDir p  d =  Path $ if null' d then (unPath p)
+    addDir p  d =  if null' d then (unPath p)
                                     else (Path.</>) (unPath p) (unPath d2)
         where
             d2 = makeRelDir d :: Path Rel Dir
 
 instance Filenames4 (Path b Dir) (Path Rel t)  where
     type FileResultT4 (Path b Dir) (Path Rel t) = (Path b t)
-    addDir p  d =  Path $ (Path.</>) (unPath p) (unPath d)
+    addDir p  d =  (Path.</>) (unPath p) (unPath d)
 
 instance Filenames3 (Path b Dir) (Path Rel t)  where
     type FileResultT (Path b Dir) (Path Rel t) = (Path b t)
-    addFileName p  d =  Path $ (Path.</>) (unPath p) (unPath d)
+    addFileName p  d =   (Path.</>) (unPath p) (unPath d)
 
 instance Filenames1 (Path ar File)   where
     getNakedFileName =   getNakedFileName . toFilePath
@@ -262,9 +269,11 @@ instance Extensions FilePath  where
 instance Extensions (Path ar File) where
     type ExtensionType (Path ar File) = Extension
 
-    getExtension f = Extension . removeChar '.'
-                    . Path.fileExtension . unPath $ f
-    setExtension e f = Path $ fromJustNote "setExtension"
+    getExtension f = Extension  e -- . removeChar '.'
+        where e =  headNote "werwqerqw"
+                    . Path.fileExtension $ f :: String 
+
+    setExtension e f =  fromJustNote "setExtension"
                     $ Path.setFileExtension
                     (unExtension e) (unPath f)
     addExtension   =  setExtension

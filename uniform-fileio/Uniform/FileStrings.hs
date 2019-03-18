@@ -87,8 +87,9 @@ listDir' :: (MonadIO m, MonadThrow m)
   => Path b Dir          -- ^ Directory to list
   -> m ([Path Abs Dir], [Path Abs File]) -- ^ Sub-directories and files
 listDir' p =  do
-    abList ::([Path.Path Abs Dir], [Path.Path Abs File]) <- PathIO.listDir . unPath $ p
-    let abPathList = first (map Path) . second ( map Path)  $ abList
+    abList ::([Path.Path Abs Dir], [Path.Path Abs File]) 
+                        <- PathIO.listDir . unPath $ p
+    let abPathList = abList
     return abPathList
 -- would require a class and an implementation for FilePath
 

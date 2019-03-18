@@ -46,13 +46,13 @@ import Uniform.Filenames
 
 
 --
-test_show = assertEqual "\"afile\"" (show g1)
-test_read = assertEqual  g1 (read "\"afile\"")
+test_show = assertEqual "Path Rel File afile" (show g1)
+test_read = assertEqual  g1 (read "Path Rel File afile")
 
 test_read2 = assertEqual g1 (makeRelFile "afile")
 
 --test_readrd = assertEqual  g1 (read "afile")
-test_readaf = assertEqual  g3 (read "\"/somedir/more/afile.ext\"")
+test_readaf = assertEqual  g3 (read "Path Abs File /somedir/more/afile.ext")
 --test_readrf = assertEqual  g1 (read "afile")
 
 testdir1 = makeAbsDir "/home/frank/test"
@@ -86,10 +86,12 @@ test_nakedFilename2 = assertEqual "file" (getNakedFileName testname2)
 x1f = makeAbsFile f3 :: Path Abs File
 x1t = showT x1f
 x1s = t2s x1t
+x1ss = show x1f
 
-test_sp = assertEqual "\"/somedir/more/afile.ext\"" (show x1f)
+test_sp = assertEqual "Path Abs File /somedir/more/afile.ext" (show x1f)
 
-test_sp1 = assertEqual ("/somedir/more/afile.ext"::String) (read x1s)
+-- test_sp1 = assertEqual ("/somedir/more/afile.ext"::String) (read x1s)
+test_sp2 = assertEqual (x1f:: Path Abs File) (read x1ss)
 
 data S2 = S2 String String deriving (Show, Read,  Eq)
 --instance Read S2 where
@@ -116,16 +118,16 @@ data Xt = Xt { p :: Path Abs File
 --                where
 --                    [(x ::String , rem)] = readsPrec i r
 
-xt = Xt x1f "f3"
-xt3 = Xt "/somedir/more/afile.ext" "f3"
-xts = show xt
+-- xt = Xt x1f "f3"
+-- xt3 = Xt "/somedir/more/afile.ext" "f3"
+-- xts = show xt
 
-test_xt1 = do
-        putIOwords ["xt1 - xts is:", s2t xts]
-        putIOwords ["xt1 - show xt is:", showT xt]
-        assertEqual xt  (read $ xts)
+-- test_xt1 = do
+--         putIOwords ["xt1 - xts is:", s2t xts]
+--         putIOwords ["xt1 - show xt is:", showT xt]
+--         assertEqual xt  (read $ xts)
 
-xt2 = Xt {p = "/somedir/more/afile.ext", q = "f3"}
+-- xt2 = Xt {p = "Path Abs File /somedir/more/afile.ext", q = "f3"}
 
 --test_rp = do
 --        putIOwords ["rp - f3 :", s2t  f3s]
@@ -201,13 +203,13 @@ e1 = (Extension "ext")
 --d1 = makeAbsDir "/somedir/more/dir"
 --test_nakedDir = assertEqual "dir" (getNakedDir d1)
 
-data TestRec = TestRec {f11:: Path Abs Dir} deriving (Show, Eq, Read)
-inp1 = TestRec { f11 = "/home/frank/"}
-inp2 = TestRec { f11 = makeAbsDir "/home/frank/"}
-f11x = "/home/frank/" :: Path Abs Dir
+-- data TestRec = TestRec {f11:: Path Abs Dir} deriving (Show, Eq, Read)
+-- inp1 = TestRec { f11 = "/home/frank/"}
+-- inp2 = TestRec { f11 = makeAbsDir "/home/frank/"}
+-- f11x = "/home/frank/" :: Path Abs Dir
 
---test_read1 = assertEqual inp1 (inp1)  -- must fail, reading a string into Path Abs
---                                      -- not permitted (should be detected when assign to inp1
-test_read12 = assertEqual "" (show inp1)
-test_read22 = assertEqual "TestRec {f11 = \"/home/frank/\"}" (show inp2)
+-- --test_read1 = assertEqual inp1 (inp1)  -- must fail, reading a string into Path Abs
+-- --                                      -- not permitted (should be detected when assign to inp1
+-- test_read12 = assertEqual "" (show inp1)
+-- test_read22 = assertEqual "TestRec {f11 = \"/home/frank/\"}" (show inp2)
 

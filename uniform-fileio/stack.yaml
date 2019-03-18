@@ -5,8 +5,11 @@ packages:
 - ../uniform-strings
 - ../uniform-error
 - ../uniform-algebras
+- ../../fromOthers/path
+- ../../fromOthers/path-io
 
 extra-deps:
 #- posix-paths-0.2.1.5
 - test-invariant-0.4.5.0
+
 resolver: lts-13.12
