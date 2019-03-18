@@ -5,6 +5,7 @@ packages:
 - ../uniform-strings
 - ../uniform-error
 - ../uniform-algebras
+- ../../fromOthers/pretty-show
 extra-deps:
 - test-invariant-0.4.5.0
 resolver:  lts-13.12

@@ -24,6 +24,8 @@ module Main     where
 import Data.Time 
 import Uniform.Time {-@ HTF_TESTS @-} 
 import Test.Framework
+import Data.Time
+--import System.Time (calendarTimeToString)
 import Text.Show.Pretty
 import Uniform.Strings
 import Uniform.Time as UT
@@ -133,8 +135,12 @@ test_showRead =
      show1 = show time1 :: String
      read1 = read show1 :: UTCTime
 
--- test_pp = assertEqual (show timeX) (ppShow timeX) 
--- problem with prettyprint 
+test_pp = assertEqual (show timeX) (ppShow timeX)
+-- demonstrates the issue with ppShow which cannot be 
+-- read 
+
+test_pp2 = assertEqual "" (ppShow timeX)
+-- just to produce a display of "2012-08-09 10:54:00 UTC"
 
 timeX :: UTCTime
 timeX = parseTimeOrError True defaultTimeLocale "%-d-%-m-%Y %l:%M %p"

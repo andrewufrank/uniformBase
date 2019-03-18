@@ -49,7 +49,7 @@ Test-Suite timetest
        , uniform-time
        , uniform-strings
        , time
-       , pretty-show
+       , pretty-show==1.9.6
 --       , old-time
 --       , data-easy
 --       , basics -- must not be included, gives dependency issue
