@@ -1,3 +1,16 @@
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE TypeSynonymInstances  #-}
+{-# LANGUAGE OverloadedStrings
+    , RecordWildCards     #-}
+
+{-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
+{-# OPTIONS -Wall #-}
+--{-# OPTIONS -fno-warn-missing-signatures #-}
+
 module Uniform.Shake.Path
     ( getHashedShakeVersionP
     , needP
@@ -20,7 +33,7 @@ import Path.IO
 
 getDirectoryFilesP :: Path Abs Dir -> [FilePattern] -> Action [Path Rel File] 
 getDirectoryFilesP d p = do 
-            res <- getDirectoryFiles (toFilePath d)
+            res :: [FilePath] <- getDirectoryFiles (toFilePath d) p
             return $ map makeRelFile res 
 
 getHashedShakeVersionP :: [Path r File] -> IO String

@@ -7,10 +7,9 @@ build-type: Simple
 license: MIT
 license-file: LICENSE
 copyright: Copyright: (c) 2017 Tom Sydney Kerckhove additions 2019 Andrew U. Frank 
-maintainer: syd.kerckhove@gmail.com
-homepage: http://cs-syd.eu
+
 category: Development, Shake
-author: Tom Sydney Kerckhove
+author: Tom Sydney Kerckhove and Andrew U Frank
 
 library
     exposed-modules:
