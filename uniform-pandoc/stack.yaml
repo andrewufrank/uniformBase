@@ -9,6 +9,8 @@ packages:
 - ../uniform-time
 - ../uniform-json
 - ../../fromOthers/bibtex
+- ../../fromOthers/path
+- ../../fromOthers/path-io
 extra-deps:
 - test-invariant-0.4.5.0
 # - lens-aeson-1.0.2
