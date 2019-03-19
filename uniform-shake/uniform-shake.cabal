@@ -30,7 +30,7 @@ library
     ghc-options: -Wall
 
 executable shakeMain
-    main-is : UniformShakeMain.hs
+    main-is : Main.hs
     build-depends:  base -any
         -- HTF,
        , uniform-strings
