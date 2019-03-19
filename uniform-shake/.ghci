@@ -1,7 +1,6 @@
 :set -fno-warn-unused-binds 
-:set -fnowarn-unused-imports
+:set -fno-warn-unused-imports
 :set -fno-warn-missing-signatures
-:set -fnowarn-unused-top-binds
+:set -fno-warn-unused-top-binds
 :set -isrc
-:set -iUniform/Shake
-:load Main
+:load UniformShakeMain

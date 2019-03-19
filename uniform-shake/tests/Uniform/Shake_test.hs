@@ -28,4 +28,4 @@ import Test.Framework
 --import qualified Data.ByteString as BS
 --
 
-test__0 = assertBool False
+test_0 = assertBool False

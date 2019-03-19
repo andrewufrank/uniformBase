@@ -19,16 +19,18 @@ module Main     where      -- must have Main (main) or Main where
 --import System.Exit
 
 import            Test.Framework
-import           Uniform.Shake_test
+import  {-@ HTF_TESTS @-}         Uniform.Shake_test
 
 import           Uniform.Strings
 
 --import TestingFileIO
 
-test_fileio = assertBool False
+-- test_fileio = assertBool False
 
-main :: IO ()
 main = do
-
-    putIOwords ["shake main"
-    return ()
+    putIOwords ["HTF errorTest.hs:\n uniform-error test"]
+    r <- htfMainWithArgs ["--quiet"] htf_importedTests
+    putIOwords ["HTF end errorTest.hs:\n posTest", showT r]
+    -- r2 <- errorTest
+    -- putIOwords [" error test end\n  ", showT r2]
+    return r

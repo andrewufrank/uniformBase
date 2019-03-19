@@ -8,7 +8,7 @@
     , RecordWildCards     #-}
 
 {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
-{-# OPTIONS -Wall #-}
+-- {-# OPTIONS -Wall #-}
 --{-# OPTIONS -fno-warn-missing-signatures #-}
 
 module Uniform.Shake.Path
@@ -26,10 +26,13 @@ module Uniform.Shake.Path
     ) where
 
 import Development.Shake
+        -- (getDirectoryFiles, Action
+        --     , Rules, FilePattern)
 import Uniform.FileIO (makeRelFile)
 
-import Path  
-import Path.IO
+import qualified Path  
+import  Path  (Path(..), File, Dir, Abs, Rel, toFilePath)
+import qualified Path.IO
 
 getDirectoryFilesP :: Path Abs Dir -> [FilePattern] -> Action [Path Rel File] 
 getDirectoryFilesP d p = do 

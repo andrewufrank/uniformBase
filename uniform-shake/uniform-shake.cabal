@@ -1,6 +1,8 @@
-name: shake-path
+name: uniform-shake
 synopsis: path alternatives to shake functions
-description: path alternatives to shake functions
+description: shake top level functions using Path (not filepath)
+               version 2 to include in uniform ecosystem
+
 version: 0.0.0.2
 cabal-version: >=1.10
 build-type: Simple
@@ -25,11 +27,12 @@ library
     ghc-options: -Wall
 
 executable shakeMain
-    main-is : TestingShake.hs
+    main-is : UniformShakeMain.hs
     build-depends:  base -any
         -- HTF,
        , uniform-strings
        , uniform-error
+       , uniform-shake
         -- shake >= 0.15 && < 0.18,
         -- path ==0.6.1.1,
         -- path-io ==1.4.2.1,
@@ -44,6 +47,7 @@ Test-Suite errortest
         HTF,
        uniform-strings,
        uniform-error,
+       uniform-shake,
         shake >= 0.15 && < 0.18,
         path ==0.6.1.1,
         path-io ==1.4.2.1,
