@@ -19,8 +19,7 @@ module Main     where      -- must have Main (main) or Main where
 --import System.Exit
 
 import            Test.Framework
-import     {-@ HTF_TESTS @-}       Uniform.Json_test
-import     {-@ HTF_TESTS @-}       Uniform.Yaml_test
+import           Uniform.Shake_test
 
 import           Uniform.Strings
 
@@ -31,9 +30,5 @@ test_fileio = assertBool False
 main :: IO ()
 main = do
 
-    putIOwords ["HTF LayoutTest.hs:\n posTest"]
---    htfMainWithArgs ["--quiet"] htf_importedTests
-    htfMain   htf_importedTests
-    putIOwords ["HTF end LayoutTest.hs:\n posTest"]
-    runTest test_fileio
+    putIOwords ["shake main"
     return ()

@@ -19,7 +19,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 
-module Uniform.Json_test where
+module Uniform.Shake_test where
 
 
 import Test.Framework
@@ -28,4 +28,4 @@ import Test.Framework
 --import qualified Data.ByteString as BS
 --
 
-
+test__0 = assertBool False

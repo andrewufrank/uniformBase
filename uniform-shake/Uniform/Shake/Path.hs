@@ -34,7 +34,7 @@ import Path.IO
 getDirectoryFilesP :: Path Abs Dir -> [FilePattern] -> Action [Path Rel File] 
 getDirectoryFilesP d p = do 
             res :: [FilePath] <- getDirectoryFiles (toFilePath d) p
-            return $ map makeRelFile res 
+            return $ map makeRelFile res
 
 getHashedShakeVersionP :: [Path r File] -> IO String
 getHashedShakeVersionP = getHashedShakeVersion . map toFilePath
