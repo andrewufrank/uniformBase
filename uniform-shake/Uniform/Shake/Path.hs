@@ -14,7 +14,7 @@
 module Uniform.Shake.Path
     ( getHashedShakeVersionP
     , getDirectoryFilesP
-    , replaceExtension
+    , replaceExtension   
     , needP
     , wantP
     , ($%>)
