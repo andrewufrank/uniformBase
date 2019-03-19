@@ -23,6 +23,7 @@ module Uniform.Pandoc
   -- , unDocValue
   , DocValue(..)
   -- , docValueFileType
+  , getAtKey 
   , module Uniform.Error   -- or at least ErrIO
   , write8
   , TypedFile5, TypedFiles5

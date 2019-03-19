@@ -14,6 +14,7 @@
 module Uniform.Shake.Path
     ( getHashedShakeVersionP
     , getDirectoryFilesP
+    , replaceExtension
     , needP
     , wantP
     , ($%>)
@@ -29,11 +30,23 @@ module Uniform.Shake.Path
 import Development.Shake
         -- (getDirectoryFiles, Action
         --     , Rules, FilePattern)
-import Uniform.FileIO (makeRelFile)
-
+import Uniform.FileIO (makeRelFile, makeAbsFile
+        , setExtension, makeExtension)
+import Uniform.Strings (Text, t2s)
 import qualified Path  
 import  Path  (Path(..), File, Dir, Abs, Rel, toFilePath)
 import qualified Path.IO
+
+replaceExtension :: Text -> Path a File -> Path a File 
+-- a flipped version of -<.> 
+replaceExtension newext filep = 
+            setExtension (makeExtension . t2s $  newext) filep
+    -- if isRelative filen 
+    --     then makeRelFile resn 
+    --     else makeAbsFile resn
+    --     where 
+    --             filen = toFilePath filep 
+    --             resn = replaceExtension (t2s newext) filen 
 
 getDirectoryFilesP :: Path Abs Dir -> [FilePattern] -> Action [Path Rel File] 
 getDirectoryFilesP d p = do 
