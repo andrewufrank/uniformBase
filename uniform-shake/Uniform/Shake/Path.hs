@@ -13,6 +13,7 @@
 
 module Uniform.Shake.Path
     ( getHashedShakeVersionP
+    , getDirectoryFilesP
     , needP
     , wantP
     , ($%>)
@@ -22,7 +23,7 @@ module Uniform.Shake.Path
     , liftIO
     , CmdOption(..)
     , module Path
-    , module Path.IO
+    -- , module Path.IO
     ) where
 
 import Development.Shake

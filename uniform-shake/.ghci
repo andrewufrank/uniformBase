@@ -3,4 +3,4 @@
 :set -fno-warn-missing-signatures
 :set -fno-warn-unused-top-binds
 :set -isrc
-:load UniformShakeMain
+:load Main

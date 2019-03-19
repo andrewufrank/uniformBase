@@ -43,13 +43,13 @@ import Data.Time (UTCTime (..))
 
 -- operations are in IO not ErrIO, therefore here and not in fileio
 getLitTextTestDir ::  IO (Path Abs Dir)
-getLitTextTestDir  = fmap Path $ Path.IO.getAppUserDataDir "LitTextTest"
+getLitTextTestDir  = Path.IO.getAppUserDataDir "LitTextTest"
 -- operations are in IO not ErrIO, therefore here and not in fileio
 getLitTextTestDir2 :: Text -> IO (Path Abs Dir)
-getLitTextTestDir2 progName = fmap Path $ Path.IO.getAppUserDataDir . t2s $ progName
+getLitTextTestDir2 progName = Path.IO.getAppUserDataDir . t2s $ progName
 
 getLitTextTestDir3 :: Text -> ErrIO (Path Abs Dir)
-getLitTextTestDir3 progName = fmap Path . callIO . Path.IO.getAppUserDataDir . t2s $ progName
+getLitTextTestDir3 progName =  callIO . Path.IO.getAppUserDataDir . t2s $ progName
 
 doesFileExistWrapped :: Path Abs File -> IO Bool
 doesFileExistWrapped fn = Path.IO.doesFileExist (unPath fn)
