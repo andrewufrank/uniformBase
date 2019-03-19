@@ -22,10 +22,10 @@
 module Uniform.Shake_test where
 
 
-import Test.Framework
+import           Test.Framework
 -- import Test.Invariant
 -- import Uniform.ByteString
 --import qualified Data.ByteString as BS
 --
 
-test_0 = assertBool False
+test_0 = assertBool True

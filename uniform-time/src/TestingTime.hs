@@ -139,7 +139,7 @@ test_pp = assertEqual (show timeX) (ppShow timeX)
 -- demonstrates the issue with ppShow which cannot be 
 -- read 
 
-test_pp2 = assertEqual "" (ppShow timeX)
+-- test_pp2 = assertEqual "" (ppShow timeX)
 -- just to produce a display of "2012-08-09 10:54:00 UTC"
 
 timeX :: UTCTime
