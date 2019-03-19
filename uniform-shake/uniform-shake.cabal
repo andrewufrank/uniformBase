@@ -16,6 +16,7 @@ author: Tom Sydney Kerckhove and Andrew U Frank
 library
     exposed-modules:
         Uniform.Shake.Path
+        Uniform.Shake
     build-depends:
         base >=4.9 && <=5,
         shake >= 0.15 && < 0.18,

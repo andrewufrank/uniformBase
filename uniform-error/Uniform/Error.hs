@@ -48,6 +48,9 @@ type ErrOrVal = Either Text
 type ErrIO  = ErrorT Text IO
 -- an instance of Control.Monad.Error for ErrIO is automatic
 
+instance Exception [Text] 
+-- necessary to use throw in IO monad 
+
 --catchError :: (ErrIO a) -> ErrIO a -> ErrIO a
 ---- | redefine catchError - the definition in monads-tf seems broken
 --catchError = catch
