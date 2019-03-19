@@ -3,7 +3,7 @@ synopsis: path alternatives to shake functions
 description: shake top level functions using Path (not filepath)
                version 2 to include in uniform ecosystem
 
-version: 0.0.0.2
+version: 0.0.0.3
 cabal-version: >=1.10
 build-type: Simple
 license: MIT
