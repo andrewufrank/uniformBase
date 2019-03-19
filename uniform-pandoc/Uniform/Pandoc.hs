@@ -26,6 +26,7 @@ module Uniform.Pandoc
   , TypedFile5, TypedFiles5
   , TypedFiles7
   , read8
+  , module Uniform.Json 
   )
 where
 
