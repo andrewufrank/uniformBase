@@ -3,7 +3,7 @@ synopsis: path alternatives to shake functions
 description: shake top level functions using Path (not filepath)
                version 2 to include in uniform ecosystem
 
-version: 0.0.0.3
+version: 0.0.0.4
 cabal-version: >=1.10
 build-type: Simple
 license: MIT
@@ -15,8 +15,9 @@ author: Tom Sydney Kerckhove and Andrew U Frank
 
 library
     exposed-modules:
-        Uniform.Shake.Path
         Uniform.Shake
+    other-modules:
+        Uniform.Shake.Path
     build-depends:
         base >=4.9 && <=5,
         shake >= 0.15 && < 0.18,

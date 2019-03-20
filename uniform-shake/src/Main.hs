@@ -20,7 +20,7 @@ module Main where  -- UniformShakeMain
 
 
 import           Uniform.Strings
-import Uniform.Shake.Path
+import Uniform.Shake 
 
 main :: IO()
 main = do

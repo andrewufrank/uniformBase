@@ -11,10 +11,15 @@
 -- {-# OPTIONS -Wall #-}
 --{-# OPTIONS -fno-warn-missing-signatures #-}
 
-module Uniform.Shake
+module Uniform.Shake (runErr2action     
+        , module Uniform.Shake.Path
+        , takeBaseName, splitPath 
+        , Action)
       where
 
 import Development.Shake (Action)
+import Development.Shake.FilePath (takeBaseName, splitPath
+                        )
         -- (getDirectoryFiles, Action
         --     , Rules, FilePattern)
 -- import Uniform.FileIO (makeRelFile)
@@ -23,6 +28,7 @@ import Development.Shake (Action)
 -- import  Path  (Path(..), File, Dir, Abs, Rel, toFilePath)
 -- import qualified Path.IO
 import Uniform.Error
+import Uniform.Shake.Path
 
 -- instance Exception [Text] 
 

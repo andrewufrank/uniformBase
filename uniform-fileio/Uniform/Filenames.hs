@@ -23,15 +23,15 @@
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 module Uniform.Filenames
-    ( module Uniform.Filenames
-    , module Uniform.Error
-    , Abs
-    , Rel
-    , File
-    , Dir
-    , Path
-    , toFilePath
-    )
+  ( module Uniform.Filenames
+  , module Uniform.Error
+  , Abs
+  , Rel
+  , File
+  , Dir
+  , Path
+  , toFilePath
+  )
 where
 import qualified Data.List.Split               as Sp -- hiding ((</>), (<.>))
 import qualified Path                          as Path -- for Generics
@@ -131,29 +131,7 @@ instance IsString (Path Rel Dir) where
 instance  NiceStrings (Path a b) where
     shownice = s2t . toFilePath
 
--- instance Read (Path Abs Dir) where
---         readsPrec i r =   maybe []  (\res -> [(Path res, rem1)] )
---                 $ Path.parseAbsDir x
---                 where  [(x ::String , rem1)] = readsPrec i r
--- instance Read (Path Abs File) where
---         readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
---                 $ Path.parseAbsFile x
---                 where  [(x ::String , rem1)] = readsPrec i r
--- --                       mres = parseAbsFile x :: Maybe (Path Abs File)
 
--- instance Read (Path Rel Dir) where
---         readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
---                 $ Path.parseRelDir x
---                 where  [(x ::String , rem1)] = readsPrec i r
--- instance Read (Path Rel File) where
---         readsPrec i r =  maybe []  (\res -> [(Path res, rem1)] )
---                 $ Path.parseRelFile x
---                 where  [(x ::String , rem1)] = readsPrec i r
-
-
-
--- instance CharChains2 (Path a d) String where show'  = show
--- instance CharChains2 (Path a d) Text where show'  = s2t . show
 
 newtype Extension = Extension FilePath deriving (Show, Read, Eq, Ord)
 unExtension (Extension e) = e
