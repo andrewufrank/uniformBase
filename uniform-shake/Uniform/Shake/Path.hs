@@ -15,6 +15,7 @@ module Uniform.Shake.Path
     ( getHashedShakeVersionP
     , getDirectoryFilesP
     , replaceExtension   
+    , stripProperPrefix   -- import because runs in IO (' runs in ErrIO)
     , needP
     , wantP
     , ($%>)
@@ -23,8 +24,10 @@ module Uniform.Shake.Path
     , cmd
     , liftIO
     , CmdOption(..)
-    , module Path
+    , (?>), (?==), phony, want 
+--     , module Path
     -- , module Path.IO
+    , module Development.Shake
     ) where
 
 import Development.Shake
@@ -33,9 +36,9 @@ import Development.Shake
 import Uniform.FileIO (makeRelFile, makeAbsFile
         , setExtension, makeExtension)
 import Uniform.Strings (Text, t2s)
-import qualified Path  
-import  Path  (Path(..), File, Dir, Abs, Rel, toFilePath)
-import qualified Path.IO
+-- import qualified Path  
+import  Path  (Path, File, Dir, Abs, Rel, toFilePath, stripProperPrefix)
+-- import qualified Path.IO
 
 replaceExtension :: Text -> Path a File -> Path a File 
 -- a flipped version of -<.> 
