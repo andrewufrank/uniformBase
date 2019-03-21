@@ -14,6 +14,7 @@
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
+{-# LANGUAGE UndecidableInstances  #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 {-# OPTIONS -w #-}
 
@@ -28,6 +29,7 @@ module Uniform.FileStrings (
 
 import           Uniform.FileIOalgebra
 import           Uniform.Filenames as FN
+import Uniform.PathShowCase 
 import           Uniform.Filenames
 import           Uniform.FileStatus
 -- import           Uniform.Strings hiding ((<.>), (</>))
@@ -321,7 +323,7 @@ instance DirOps (Path ar Dir)  where
 
     deleteDirRecursive f = deleteDirRecursive (unL f)
 
-instance FileOps (Path ar File)  where
+instance (Show (Path ar File)) => FileOps (Path ar File)  where
     doesFileExist'   =  PathIO.doesFileExist . unPath
 --    getPermissions' = P.getPermissions
     copyOneFile old new =  copyOneFile (unL old) (unL new)
@@ -387,7 +389,7 @@ writeFileT :: Path ar File  -> Text -> ErrIO ()
 writeFileT  fp st = callIO $  T.writeFile (unL fp) st
 -- attention - does not create file if not existing
 
-instance   FileOps2 (Path ar File) String where
+instance  (Show (Path ar File)) => FileOps2 (Path ar File) String where
 
     readFile2 fp = callIO $ readFile   (unL fp)
     -- a strict read (does cloes?)
@@ -395,7 +397,7 @@ instance   FileOps2 (Path ar File) String where
     appendFile2  fp st = callIO  $   appendFile  (unL fp) st
 
 
-instance   FileOps2 (Path ar File) Text where
+instance (Show (Path ar File)) =>  FileOps2 (Path ar File) Text where
 
     readFile2 fp = readFile2 (unL fp)
     -- a strict read (does cloes?)
@@ -431,7 +433,7 @@ instance FileOps2 FilePath L.ByteString where
     writeFile2  fp st = callIO $  L.writeFile fp st
     appendFile2  fp st = callIO  $  L.appendFile  fp st
 
-instance FileOps2 (Path ar File) L.ByteString where
+instance (Show (Path ar File)) => FileOps2 (Path ar File) L.ByteString where
 
     readFile2 fp = callIO $  L.readFile . unL $ fp
     writeFile2  fp st = callIO $  L.writeFile (unL fp) st

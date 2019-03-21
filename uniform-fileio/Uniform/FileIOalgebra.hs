@@ -81,7 +81,7 @@ class DirOps fp where
     deleteDirRecursive :: fp -> ErrIO ()
     -- ^ delete a directory (even non empty), no error if not existing
 
-class FileOps fp   where
+class (Show fp) => FileOps fp   where
     doesFileExist' :: fp -> ErrIO Bool
 --    doesFileOrDirExist :: fp -> ErrIO Bool
 --    doesFileOrDirExist fp = do

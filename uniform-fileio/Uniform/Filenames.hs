@@ -67,8 +67,8 @@ setCurrentDir path = PathIO.setCurrentDir (unPath path)
 stripProperPrefix' :: Path b Dir -> Path b t -> ErrIO (Path Rel t)
 stripProperPrefix' dir fn = Path.stripProperPrefix (unPath dir) (unPath fn)
 
-instance {-# OVERLAPPABLE #-} Show (Path a b) where
-    show a = error "Show (Path a b) - the generic instance should not be used"
+-- instance {-# OVERLAPPABLE #-} Show (Path a b) where
+--     show a = error "Show (Path a b) - the generic instance must not be used"
 
 -- newtype Path b t = Path (Path.Path b t)
 -- -- in Path: newtype   Path b t = Path FilePath
@@ -262,8 +262,7 @@ instance Extensions (Path ar File) where
     getExtension f = Extension e -- . removeChar '.'
         where e = headNote "werwqerqw" . Path.fileExtension $ f :: String
 
-    setExtension e f = fromJustNote "setExtension"
-        $ Path.setFileExtension (unExtension e) (unPath f)
+    setExtension e f = fromJustNote "setExtension" $ Path.setFileExtension   (unExtension e) f
     addExtension    = setExtension
     removeExtension = setExtension (Extension "")
 --    hasExtension e f = (e==). getExtension

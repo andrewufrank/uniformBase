@@ -4,6 +4,7 @@
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
+{-# LANGUAGE UndecidableInstances  #-}
 {-# LANGUAGE OverloadedStrings
     , RecordWildCards     #-}
 
@@ -60,6 +61,8 @@ getDirectoryFilesP d p = do
     res :: [FilePath] <- getDirectoryFiles (toFilePath d) p
     return $ map makeRelFile res
 
+copyFileChangedP :: Path Abs File -> Path Abs File -> Action ()
+copyFileChangedP infile outf = copyFileChanged (toFilePath infile) (toFilePath outf)
 
 class Path2nd  a c where
     stripProperPrefixP :: Path a b -> Path a c -> Path Rel c
@@ -70,11 +73,11 @@ class Path2nd  a c where
     replaceDirectoryP :: Path a Dir -> Path a Dir -> Path a c  -> Path a c
     -- ^ strip the first (the prefix) and add the second to the third 
     
-instance Path2nd  a File where
+instance   Path2nd  a File where
     stripProperPrefixP a b = fromJustNote
         ( t2s
         . unwords'
-        $ ["Path2nd Dir - not a prefix", showT a, "for", showT b]
+        $ ["Path2nd Dir - not a prefix", s2t . toFilePath $  a, "for",  s2t . toFilePath $ b]
         )
         (fmap makeRelFile ab)
         where ab = stripPrefix' (toFilePath a) (toFilePath b) :: Maybe FilePath
@@ -87,7 +90,7 @@ instance Path2nd  a Dir where
     stripProperPrefixP a b = fromJustNote
         ( t2s
         . unwords'
-        $ ["Path2nd Dir - not a prefix", showT a, "for", showT b]
+        $ ["Path2nd Dir - not a prefix",  s2t . toFilePath $ a, "for",  s2t . toFilePath $ b]
         )
         (fmap makeRelDir ab)
         where ab = stripPrefix' (toFilePath a) (toFilePath b) :: Maybe FilePath
