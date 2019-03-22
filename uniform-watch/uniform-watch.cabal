@@ -24,8 +24,11 @@ library
         , uniform-strings
         , HTF
         , uniform-algebras
+        , uniform-fileio
         , uniform-strings
         , uniform-error 
+        , twitch -any
+         
     exposed-modules:
         Uniform.Watch
 
