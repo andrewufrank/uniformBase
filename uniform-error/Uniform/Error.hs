@@ -96,42 +96,13 @@ bracketErrIO before after thing =  (fmap fromRightEOV) .  callIO $
         (\a -> runErr $ after  . fromRightEOV  $ a )
         (\a -> runErr $ thing . fromRightEOV  $ a)
 
---        ra <- before
---        rc <- thing ra
---        return rc
---    `catchError` \e -> do
---                putIOwordsT ["bracketErrIO caught - release resource"]
---                rb <- after ra
---                throwError e
---                return rc
---
---  mask $ \restore -> do
---    a <- before
---    r <- restore ( thing a) `onExceptionErrIO` after a
---    _ <- after a
---    return r
---
----- | Like 'finally', but only performs the final action if there was an
----- exception raised by the computation.
---onExceptionErrIO :: ErrIO a -> ErrIO b -> ErrIO a
---onExceptionErrIO io what =
---            io
---        `catchError` \e -> do
---                            _ <- what
---                            throwError e
---       -- the exception is ot ErrorType  $ s2t .  displayException   $ (e :: SomeException)
 
-
---catchT :: (MonadError m, ErrorType m ~ Text) => m a -> (Text -> m a) -> m a
---catchT p f = do
---                  p
---                `catch` \(e::SomeException) -> f (showT e)
 
 instance Error Text where
 -- noMsg = Left ""
 -- strMsg s = Left s
 
---callIO ::  (MonadError m, MonadIO m, ErrorType m ~ Text) => IO a -> m a
+callIO ::  (MonadError m, MonadIO m, ErrorType m ~ Text) => IO a -> m a
 -- this is using now catch to grab all errors
 callIO op = do
         r2 <- liftIO $ do

@@ -1,14 +1,15 @@
+{-# LANGUAGE DeriveAnyClass        #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
+
 {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
-{-# LANGUAGE OverloadedStrings
-    , RecordWildCards     #-}
-
-{-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
 -- {-# OPTIONS -Wall #-}
 --{-# OPTIONS -fno-warn-missing-signatures #-}
 
@@ -47,8 +48,8 @@ import Uniform.Strings hiding ((</>), (<.>))
 
 replaceExtension' :: Text -> Path a File -> Path a File
 -- a flipped version of -<.> 
-replaceExtension' newext filep =
-    setExtension (makeExtension . t2s $ newext) filep
+replaceExtension' newext  =
+    setExtension (makeExtension . t2s $ newext) 
     -- if isRelative filen 
     --     then makeRelFile resn 
     --     else makeAbsFile resn
@@ -97,7 +98,9 @@ instance Path2nd  a Dir where
 
     replaceDirectoryP pref newpref old = newpref </> rem1 
         where rem1 = stripProperPrefixP pref old
+
 -- instance Exception [Text] 
+-- should be in Error
 
 liftErrIO :: ErrIO a -> Action a
 liftErrIO = runErr2action 
