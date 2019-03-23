@@ -32,6 +32,34 @@ import           Control.Concurrent
 import           Uniform.Strings hiding ((</>), (<.>), S)
 import Uniform.FileIO 
 
+-- example for use - 
+-- not likely worth to generalize
+-- see SSG - serversg
+
+-- mainWatch :: SiteLayout -> Port -> Path Abs Dir -> ErrIO ()
+-- mainWatch layout bakedPort bakedPath = bracketErrIO
+--     (do  -- first
+--         shake layout ""
+--         watchDoughTID     <- callIO $ forkIO (runErrorVoid $ watchDough layout)
+--         watchTemplatesTID <- callIO $ forkIO (runErrorVoid $ watchThemes layout )
+--         callIO $ scotty bakedPort (site bakedPath)
+--         return (watchDoughTID, watchTemplatesTID)
+--     )
+--     (\(watchDoughTID, watchTemplatesTID) -> do -- last
+--         putIOwords ["main2 end"]
+--         callIO $ killThread (watchDoughTID)
+--         callIO $ killThread (watchTemplatesTID)
+--         return ()
+--     )
+--     (\watch -> do   -- during
+--         putIOwords ["main2 run"]
+-- --                        mainWatch
+--         -- could here the watch for bake be included ?
+--         putIOwords ["main2 run end "]
+--         return ()
+--     )
+
+    
 twichDefault4ssg = Twitch.Options { Twitch.log                = NoLogger
                                   , logFile                   = Nothing
                                   , root                      = Nothing
