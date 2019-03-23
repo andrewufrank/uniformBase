@@ -22,6 +22,7 @@
 
 
 module Uniform.WebServer (module Uniform.WebServer
+        , Port 
         )  where
 
 import           Uniform.Strings hiding ((</>), (<.>), S)
@@ -31,6 +32,11 @@ import           Network.Wai.Middleware.Static  ( staticPolicy
                                                 )
 import           Network.Wai.Handler.Warp       ( Port ) -- .Warp.Types
 import Uniform.FileIO
+
+runScotty :: Port -> Path Abs Dir -> Path Rel File -> ErrIO () 
+-- run scotty at the port for the directory with the given landing page 
+runScotty port bakedPath landingFile = callIO $ do 
+    scotty port (site bakedPath landingFile)
 
 site :: Path Abs Dir -> Path Rel File -> ScottyM ()
 -- for get, return the page from baked
