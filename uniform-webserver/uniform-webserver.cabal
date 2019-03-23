@@ -1,0 +1,58 @@
+name: uniform-webserver
+version: 0.0.10.1
+
+cabal-version: >=1.22
+build-type: Simple
+license: GPL
+license-file: GPL_3
+maintainer: Andrew U. Frank <andrewufrank@gmail.com>
+author: Andrew Frank
+category:Webserver
+synopsis: Webserver
+description: Webserver
+
+source-repository head
+    type: git
+    location: https://github.com/andrewufrank/uniform-webserver.git
+
+library
+    build-depends:
+        base >=4.8 && <= 5
+        , monads-tf
+        , exceptions
+        , safe
+        , uniform-strings
+        , HTF
+        , uniform-algebras
+        , uniform-strings
+        , uniform-error 
+        , uniform-fileio
+        , scotty -any,
+        warp -any,
+        wai-middleware-static -any
+
+    exposed-modules:
+        Uniform.WebServer
+
+    exposed: True
+    buildable: True
+    default-language: Haskell2010
+    hs-source-dirs: .
+    other-modules:
+
+
+Test-Suite errortest
+    type:       exitcode-stdio-1.0
+    build-depends:  base -any
+        , HTF
+       , uniform-strings
+       , uniform-error
+       , uniform-webserver
+--       , data-easy
+--       , basics -- must not be included, gives dependency issue
+    main-is: Testing.hs
+    buildable: True
+    default-language: Haskell2010
+    hs-source-dirs: tests
+    other-modules:
+        Uniform.Webserver_test
