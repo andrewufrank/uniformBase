@@ -85,3 +85,9 @@ setTwichAddModifyDelete op arg1  ext =
     -- do not simplify, needs lambda for Twitch 
     -- addModify :: (FilePath -> IO a) -> Dep -> Dep
 
+runErrorRepl :: (Show a) => a -> IO ()
+-- just for testing when an event is triggered
+runErrorRepl a = do
+    putIOwords ["runErrorRepl", "input is", showT a]
+    return ()
+
