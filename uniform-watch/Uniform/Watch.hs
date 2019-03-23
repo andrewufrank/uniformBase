@@ -50,15 +50,18 @@ mainWatch2  op arg1 path1 exts = do
     -- copy the static files, not done by shake yet
     -- runErrorVoid $ copyDirRecursive path1  path2
     -- putIOwords [programName, "copied templates all files"]
+    let exts2 = map fromString exts :: [Dep]
     callIO $ Twitch.defaultMainWithOptions
         (twichDefault4ssg { Twitch.root = Just . toFilePath $ path1
                         , Twitch.log  = Twitch.NoLogger
                         }
         )
         $ do 
-                let deps  = (setTwichAddModifyDelete op arg1)   exts :: [Dep]
-                fold deps 
-    return () 
+            -- let deps  = map  (setTwichAddModifyDelete op arg1)   exts :: [Dep]
+            -- sequence  deps 
+            let deps  = map  (setTwichAddModifyDelete op arg1)   exts2 :: [Dep]
+            sequence  deps 
+            return () 
             --            verbosity from Cabal
             -- Twitch.addModify
             --     (\filepath -> runErrorVoid $ shake layout filepath)
@@ -76,7 +79,9 @@ mainWatch2  op arg1 path1 exts = do
             --     --  "*.html" |> \_ -> system $ "osascript refreshSafari.AppleScript"
 
 
-setTwichAddModifyDelete :: (t -> FilePath -> ErrIO ()) -> t -> FilePath -> Dep
+setTwichAddModifyDelete :: (t -> FilePath -> ErrIO ()) -> t -> Dep -> Dep
 setTwichAddModifyDelete op arg1  ext =   
-    Twitch.addModify    (\filepath -> runErrorVoid $ op arg1 filepath) ("**/*." <> ext)
+    Twitch.addModify   (\filepath -> runErrorVoid $ op arg1 filepath)(ext :: Dep)
+    -- do not simplify, needs lambda for Twitch 
+    -- addModify :: (FilePath -> IO a) -> Dep -> Dep
 
