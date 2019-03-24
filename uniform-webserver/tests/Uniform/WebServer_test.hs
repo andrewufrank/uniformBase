@@ -20,12 +20,15 @@
 -- {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
 
 
-module Uniform.Webserver_test where
+module Uniform.WebServer_test where
 
 import           Test.Framework
-import           Uniform.Strings hiding ((</>), (<.>), (<|>))
-import Uniform.Webserver
+import           Uniform.Strings         hiding ( (</>)
+                                                , (<.>)
+                                                , (<|>)
+                                                )
+import           Uniform.WebServer
 
-import Control.Exception
+import           Control.Exception
 
 
