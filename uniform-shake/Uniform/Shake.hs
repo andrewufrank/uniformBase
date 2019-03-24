@@ -13,7 +13,7 @@
 -- {-# OPTIONS -Wall #-}
 --{-# OPTIONS -fno-warn-missing-signatures #-}
 
-module Uniform.Shake (runErr2action, liftErrIO  
+module Uniform.Shake (runErr2action, runErr2action  
         , module Uniform.Shake
         , module Uniform.Shake.Path
         , takeBaseName, splitPath 
@@ -43,8 +43,8 @@ import Uniform.Shake.Path
 import Uniform.FileIO 
 import Uniform.Strings hiding ((</>), (<.>))
 
-($-<.>) :: Text -> Path a File -> Path a File
-($-<.>) = replaceExtension'
+($-<.>) :: Path a File -> Text ->  Path a File
+f $-<.> e = replaceExtension' e f 
 
 replaceExtension' :: Text -> Path a File -> Path a File
 -- a flipped version of -<.> 
@@ -102,8 +102,8 @@ instance Path2nd  a Dir where
 -- instance Exception [Text] 
 -- should be in Error
 
-liftErrIO :: ErrIO a -> Action a
-liftErrIO = runErr2action 
+-- liftErrIO :: ErrIO a -> Action a
+-- liftErrIO = runErr2action 
 
 runErr2action :: ErrIO a -> Action a
 runErr2action op = liftIO $ do

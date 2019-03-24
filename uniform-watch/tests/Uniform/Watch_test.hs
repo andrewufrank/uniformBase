@@ -20,11 +20,11 @@
 -- {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
 
 
-module Uniform.watch_test where
+module Uniform.Watch_test where
 
 import           Test.Framework
 import           Uniform.Strings hiding ((</>), (<.>), (<|>))
-import Uniform.watch
+import Uniform.Watch
 
 import Control.Exception
 

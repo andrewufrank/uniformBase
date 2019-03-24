@@ -22,7 +22,7 @@ module Main     where
 
 
 import Test.Framework
-import {-@ HTF_TESTS @-} Uniform.watch_test
+import {-@ HTF_TESTS @-} Uniform.Watch_test
 import Uniform.Strings
 
 main = do
