@@ -23,15 +23,15 @@
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 module Uniform.Filenames
-  ( module Uniform.Filenames
-  , module Uniform.Error
-  , Abs
-  , Rel
-  , File
-  , Dir
-  , Path
-  , toFilePath
-  )
+    ( module Uniform.Filenames
+    , module Uniform.Error
+    , Abs
+    , Rel
+    , File
+    , Dir
+    , Path
+    , toFilePath
+    )
 where
 import qualified Data.List.Split               as Sp -- hiding ((</>), (<.>))
 import qualified Path                          as Path -- for Generics
@@ -136,8 +136,11 @@ instance  NiceStrings (Path a b) where
 newtype Extension = Extension FilePath deriving (Show, Read, Eq, Ord)
 unExtension (Extension e) = e
 
+makeExtension :: FilePath -> Extension
 makeExtension = Extension
 -- would need a makeExtension in IO to catch errors here
+makeExtensionT :: Text -> Extension
+makeExtensionT = Extension . t2s
 
 class Filenames fp fr where
     getFileName :: fp -> fr
@@ -262,7 +265,8 @@ instance Extensions (Path ar File) where
     getExtension f = Extension e -- . removeChar '.'
         where e = headNote "werwqerqw" . Path.fileExtension $ f :: String
 
-    setExtension e f = fromJustNote "setExtension" $ Path.setFileExtension   (unExtension e) f
+    setExtension e f =
+        fromJustNote "setExtension" $ Path.setFileExtension (unExtension e) f
     addExtension    = setExtension
     removeExtension = setExtension (Extension "")
 --    hasExtension e f = (e==). getExtension
