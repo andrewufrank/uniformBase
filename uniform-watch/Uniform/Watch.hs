@@ -70,9 +70,9 @@ twichDefault4ssg = Twitch.Options { Twitch.log                = NoLogger
                                   , pollInterval              = 10 ^ (6 :: Int) -- 1 second
                                   , usePolling                = False
                                   }
-mainWatch2 :: (Show [Text], Show (Path b t1)) => (t -> FilePath -> ErrIO ()) 
-                        -> t -> Path b t1 -> [FilePath] -> ErrIO ()
-mainWatch2  op arg1 path1 exts = do
+mainWatch2 :: (Show [Text], Show (Path b Dir)) => ( FilePath -> ErrIO ()) 
+                         -> Path b Dir -> [FilePath] -> ErrIO ()
+mainWatch2  op path1 exts = do
     -- let path1P = (themeDir layout) </> templatesDirName :: Path Abs Dir
     -- let bakedPath     = bakedDir layout
     putIOwords ["mainWatchThemes", "path1", showT path1, "extensions", showT exts]
@@ -88,7 +88,7 @@ mainWatch2  op arg1 path1 exts = do
         $ do 
             -- let deps  = map  (setTwichAddModifyDelete op arg1)   exts :: [Dep]
             -- sequence  deps 
-            let deps  = map  (setTwichAddModifyDelete op arg1)   exts2 :: [Dep]
+            let deps  = map  (setTwichAddModifyDelete op)   exts2 :: [Dep]  
             sequence  deps 
             return () 
             --            verbosity from Cabal
@@ -108,9 +108,9 @@ mainWatch2  op arg1 path1 exts = do
             --     --  "*.html" |> \_ -> system $ "osascript refreshSafari.AppleScript"
 
 
-setTwichAddModifyDelete :: (t -> FilePath -> ErrIO ()) -> t -> Dep -> Dep
-setTwichAddModifyDelete op arg1  ext =   
-    Twitch.addModify   (\filepath -> runErrorVoid $ op arg1 filepath)(ext :: Dep)
+setTwichAddModifyDelete :: (FilePath -> ErrIO ()) -> Dep -> Dep
+setTwichAddModifyDelete op   ext =   
+    Twitch.addModify   (\filepath -> runErrorVoid $ op  filepath)(ext :: Dep)
     -- do not simplify, needs lambda for Twitch 
     -- addModify :: (FilePath -> IO a) -> Dep -> Dep
 
