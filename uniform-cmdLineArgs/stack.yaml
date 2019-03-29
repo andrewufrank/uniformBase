@@ -5,6 +5,10 @@ packages:
 - ../uniform-algebras
 - ../uniform-strings
 - ../uniform-error
+- ../uniform-fileio
+- ../uniform-convenience
+- ../../fromOthers/path
+- ../../fromOthers/path-io
 
 extra-deps:
 - test-invariant-0.4.5.0

@@ -1,5 +1,5 @@
 name: uniform-cmdLineArgs
-version: 0.0.10.1
+version: 0.0.1.0
 
 cabal-version: >=1.22
 build-type: Simple
@@ -41,10 +41,10 @@ executable cmdLineExample
         , uniform-strings
         , uniform-fileio
         , uniform-convenience
-        , CmdLineUtilities
+        -- , CmdLineUtilities
        , optparse-applicative
        , optparse-generic
-        , MainLitText
+        -- , MainLitText
 
     default-language: Haskell2010
     hs-source-dirs: src
@@ -57,7 +57,7 @@ Test-Suite errortest
         , HTF
        , uniform-strings
        , uniform-error
-       , uniform-cmdLIneArgs
+       , uniform-cmdLineArgs
 --       , data-easy
 --       , basics -- must not be included, gives dependency issue
     main-is: Testing.hs
