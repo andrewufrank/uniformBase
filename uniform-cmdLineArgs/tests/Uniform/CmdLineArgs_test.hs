@@ -28,4 +28,6 @@ import Uniform.CmdLineArgs
 
 import Control.Exception
 
+test_1 = assertEqual "" "x"
+
 

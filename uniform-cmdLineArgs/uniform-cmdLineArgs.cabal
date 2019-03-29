@@ -41,6 +41,7 @@ executable cmdLineExample
         , uniform-strings
         , uniform-fileio
         , uniform-convenience
+        , uniform-error 
         -- , CmdLineUtilities
        , optparse-applicative
        , optparse-generic
@@ -55,9 +56,11 @@ Test-Suite errortest
     type:       exitcode-stdio-1.0
     build-depends:  base -any
         , HTF
-       , uniform-strings
-       , uniform-error
-       , uniform-cmdLineArgs
+        , uniform-strings
+        , uniform-error
+        , uniform-cmdLineArgs
+        , uniform-error 
+
 --       , data-easy
 --       , basics -- must not be included, gives dependency issue
     main-is: Testing.hs
