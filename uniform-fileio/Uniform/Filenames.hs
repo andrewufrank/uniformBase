@@ -107,6 +107,16 @@ makeRelDir fn = fromJustNote ("makeRelDir " ++ fn) $ Path.parseRelDir fn
 makeAbsFile fn = fromJustNote ("makeAbsFile " ++ fn) $ Path.parseAbsFile fn
 makeAbsDir fn = fromJustNote ("makeAbsDir " ++ fn) $ Path.parseAbsDir fn
 
+makeRelFileT :: Text -> Path Rel File
+makeRelDirT :: Text -> Path Rel Dir
+makeAbsFileT :: Text -> Path Abs File
+makeAbsDirT :: Text -> Path Abs Dir
+
+makeRelFileT  = makeRelFile . t2s
+makeRelDirT  = makeRelDir . t2s 
+makeAbsFileT  = makeAbsFile .t2s 
+makeAbsDirT  =  makeAbsDir . t2s 
+
 toShortFilePath :: Path df ar -> FilePath
 ---- ^ get the filepath, but without the trailing separator
 --    , necessary for systemcalls
