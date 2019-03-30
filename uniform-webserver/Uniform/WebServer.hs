@@ -44,11 +44,11 @@ site :: Path Abs Dir -> Path Rel File -> ScottyM ()
 -- the bakedPath is the origin for the relative url
 -- the landing is the rel page name for the landing page 
 site bakedPath landing = do
-    get "/" $ file (toFilePath $ landingPage landing bakedPath)
+    get "/" $ file (toFilePath $ makeLandingPage landing bakedPath)
     middleware $ staticPolicy $ addBase (toFilePath bakedPath)
 
-landingPage :: Path Rel File -> Path Abs Dir -> Path Abs File 
-landingPage landingFn bakedPath =
+makeLandingPage :: Path Rel File -> Path Abs Dir -> Path Abs File 
+makeLandingPage landingFn bakedPath =
      addFileName bakedPath landingFn 
             -- (makeRelFile "landingPage.html")
 

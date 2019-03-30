@@ -2,8 +2,8 @@
 --
 -- Module      :   an example for a command line argument setup 
 --                  is a Main and starts with convenience
-                    -- for information see https://github.com/pcapriotti/optparse-applicative
-                    -- change the getAttr function to return Text
+-- for information see https://github.com/pcapriotti/optparse-applicative
+-- change the getAttr function to return Text
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 
@@ -29,7 +29,7 @@ import           Test.Framework
 import           Uniform.Strings
 import           Uniform.FileIO
 import           Uniform.Error
-import Uniform.Convenience.StartApp
+import           Uniform.Convenience.StartApp
 import           Data.Semigroup                 ( (<>) )
 import           Options.Applicative.Builder
 import           Options.Applicative
@@ -38,13 +38,18 @@ programName = "CmdLineArgsExample.hs"
 progTitle = "example for command line argument processing" :: Text
 
 main :: IO ()
-main = startProg programName progTitle
+main = startProg
+  programName
+  progTitle
   (do
     inp :: Inputs <- parseArgs2input
-                        "makeReport.txt"  -- the default filename 
-                        (unlinesT ["a flag, a flag (characters), a filename"
-                                  , "all value default, nothing enforced"])
-                        "dir relative to home"
+      "makeReport.txt"  -- the default filename 
+      (unlinesT
+        [ "a flag, a flag (characters), a filename"
+        , "all value default, nothing enforced"
+        ]
+      )
+      "dir relative to home"
     mainExample inp
   )
 -- | the command line arguments raw 
@@ -58,13 +63,14 @@ data LitArgs = LitArgs
 
 cmdArgs :: Parser LitArgs
 -- | strings which have no default result in enforced arguments
+-- order and type of arguments must correspod to LitArgs
 cmdArgs =
   LitArgs
     <$> switch
-          (long "lswitch" 
-          <> short 'l' 
+          (  long "lswitch"
+          <> short 'l'
           -- <> value True  -- default False, if not set
-          <> help  "switch (default False) "
+          <> help "switch (default False) "
           )
     <*> strOption
           (  long "flag1"
@@ -112,11 +118,10 @@ parseArgs2input filenameDefault t1 t2 = do
         then addFileName homeDir (makeRelFileT filenameDefault)
         else addFileName homeDir (makeRelFileT inFile1) :: Path Abs File
 
-  let inputs1 =
-        Inputs { inFile1 = filename1
-                , flag1 = s2t $ argFlag1 args1
-                , switch1 = argSwitch1 args1
-                }
+  let inputs1 = Inputs { inFile1 = filename1
+                       , flag1   = s2t $ argFlag1 args1
+                       , switch1 = argSwitch1 args1
+                       }
 
   putIOwords ["parseArgs2input:  inputs ", showT inputs1]
   return inputs1
