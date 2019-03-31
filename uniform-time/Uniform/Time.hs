@@ -40,6 +40,7 @@ import System.Posix.Types (EpochTime)
 
 year2000 :: UTCTime
 year2000 = readDate3 "2000-01-01"
+-- serves as zero in some applications
 
 --class Times a where
 --    type TimeUTC  a
@@ -92,24 +93,30 @@ readDate2 :: Text ->  UTCTime
 readDate2 datestring = parseTimeOrError True defaultTimeLocale
             "%b %-d, %Y" (t2s datestring) :: UTCTime
 
-readDate3 :: Text ->   UTCTime
--- ^ read data in various formats
-readDate3 dateText  = 
+readDate3 :: Text -> UTCTime 
+readDate3 dateText = case (readDateMaybe dateText) of 
+    Nothing -> errorT   ["readDate3",dateText, "cannot be parsed"]
+    Just t -> t 
+
+readDateMaybe :: Text -> Maybe  UTCTime
+-- ^ read data in various formats (but not 9.10.20 !)
+readDateMaybe dateText  = headNote "readDateMaybe werwerxx" . dropWhile isNothing $
+            [shortMonth, longMonth, monthPoint
+            , germanNumeralShort, germanNumeral, isoformat]
+
         -- fromJust $ shortMonth >>= longMonth
 
-    case shortMonth of
-        Just t -> t
-        Nothing -> case longMonth of
-            Just t2 -> t2
-            Nothing -> case monthPoint of
-                Just t3 -> t3
-                Nothing -> case germanNumeralShort of
-                  Just t3 -> t3
-                  Nothing -> case germanNumeral of
-                    Just t3 -> t3
-                    Nothing -> case isoformat of
-                      Just t4 -> t4
-                      Nothing -> errorT   ["readDate3",dateText, "is not parsed"]
+    -- case shortMonth of
+    --     Just t -> Just t
+    --     Nothing -> case longMonth of
+    --         Just t2 -> Just t2
+    --         Nothing -> case monthPoint of
+    --             Just t3 -> Just t3
+    --             Nothing -> case germanNumeralShort of
+    --               Just t4 -> Just t4
+    --               Nothing -> case germanNumeral of
+    --                 Just t5 -> Just t5
+    --                 Nothing ->  isoformat 
 
     where
         shortMonth :: Maybe UTCTime

@@ -95,6 +95,7 @@ readMd2meta md = do
   mdtext :: MarkdownText <- read8 md markdownFileType
   pandoc                 <- readMarkdown2 mdtext
   let meta2 = flattenMeta (getMeta pandoc)
+  putIOwords ["readMd2meta", "readPandocFile", showT md, "done"]
   return (pandoc, meta2)
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc
