@@ -21,6 +21,7 @@
 -- {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
 module Uniform.Watch
   ( module Uniform.Watch
+  , forkIO, killThread
   ) where
 
 import Twitch hiding (Options, log)
@@ -29,6 +30,7 @@ import qualified Twitch
 
 --import Control.Concurrent.Spawn
 import Control.Concurrent
+import           Control.Concurrent (forkIO, killThread)
 import Uniform.FileIO
 import Uniform.Strings hiding (S, (<.>), (</>))
 
