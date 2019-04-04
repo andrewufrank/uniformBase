@@ -31,6 +31,7 @@ module Uniform.FileIO (
             ,  getAppUserDataDir'
          , makeAbsoluteFile'
          , findDirs, isDir 
+         , toFilePathT
 --         , homeDir2
             ) where
 
@@ -64,3 +65,5 @@ isDir fn = do
     st <- getFileStatus' fn
     return (if isDirectory st then Just (makeAbsDir fn) else Nothing)
 
+toFilePathT :: Path a b  -> Text 
+toFilePathT = s2t . toFilePath 

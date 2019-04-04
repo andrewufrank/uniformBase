@@ -6,6 +6,10 @@ packages:
 - ../uniform-error
 - ../uniform-algebras
 - ../uniform-fileio
+- ../../fromOthers/bibtex
+- ../../fromOthers/path
+- ../../fromOthers/path-io
+- ../../fromOthers/pretty-show
 extra-deps:
 - test-invariant-0.4.5.0
 resolver: lts-13.12

@@ -21,7 +21,8 @@ library
         -- , safe
         , uniform-strings
         , uniform-error
-        , uniform-fileio
+        , uniform-fileio == 0.0.14.3
+        , path == 0.6.1.2
         , HTF
         -- , safe
         , aeson
@@ -61,8 +62,9 @@ Test-Suite jsontest
        , uniform-error
        , uniform-time
        , uniform-strings
-       , uniform-time
        , uniform-json 
+       , uniform-algebras
+       , aeson
     --    , bibtex 
     --    , pretty-show
 --       , old-time

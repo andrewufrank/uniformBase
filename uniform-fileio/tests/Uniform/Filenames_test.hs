@@ -88,10 +88,22 @@ x1t = showT x1f
 x1s = t2s x1t
 x1ss = show x1f
 
-test_sp = assertEqual "Path Abs File /somedir/more/afile.ext" (show x1f)
+test_sp = assertEqual "Path Abs File /somedir/more/afile.ext" 
+                    (show x1f)
 
 -- test_sp1 = assertEqual ("/somedir/more/afile.ext"::String) (read x1s)
 test_sp2 = assertEqual (x1f:: Path Abs File) (read x1ss)
+test_sp3 = assertEqual (x1f:: Path Abs File)
+     (read "Path Abs File /somedir/more/afile.ext" )
+
+data Rec11 = Rec11 {date :: Path Abs File} deriving (Show, Read, Eq)
+rec1 = Rec11 x1f 
+rec1s = show rec1 
+
+test_r1 = assertEqual "Rec11 {date = Path Abs File /somedir/more/afile.ext}" (rec1s)
+test_r2 = assertEqual rec1 (readNote "r2 test" rec1s :: Rec11)
+
+test_force = assertBool False 
 
 data S2 = S2 String String deriving (Show, Read,  Eq)
 --instance Read S2 where

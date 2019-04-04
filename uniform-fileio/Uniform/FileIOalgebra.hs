@@ -113,6 +113,10 @@ class (Show fp) => FileOps fp   where
     -- filenames completed with calling fp
     getDirContentNonHidden :: fp ->  ErrIO [fp]
 
+    getDirContentFiles :: fp -> ErrIO [fp]
+    getDirContentFiles dir = filterM f =<< getDirCont  dir
+        where f x =  doesFileExist'   x
+
 
 
     getMD5 :: fp -> ErrIO (Maybe Text)

@@ -17,7 +17,7 @@
 
     #-}
 
-module Main     where
+module Uniform.Time_test     where
 
 
 
@@ -30,48 +30,7 @@ import Text.Show.Pretty
 import Uniform.Strings
 import Uniform.Time as UT
 
-main = do
-    putIOwords ["HTF Time:\n "]
-    r <- htfMainWithArgs ["--quiet"] htf_thisModulesTests
-                -- htf_importedTests
-    putIOwords ["HTF end LayoutTest.hs:\n posTest"]
-    return r
 
-timeTest ::   IO [Bool]
-timeTest = do
-    r <- runErr timeTest2
-    v1 <- case r of
-        Left msg -> do
-                putIOwords ["errorTest returned Left :", msg]
-                return [False]
-        Right v -> return v
-    return v1
-
-
-
-
-timeTest2 ::   ErrIO [Bool]
--- examples how to use
-timeTest2 = do
-    t1 <- getCurrentTimeUTC
-    putIOwords ["now",   showT t1]
-    let     t2 = addSeconds 4.0 t1
-            d4 = diffSeconds t2 t1
-            x1 = d4 == 4.0
-    putIOwords ["diff d4", showT d4, showT t2]
-
-    let day1 = toYMD t1
-
-
-    let     tomorrow = addSeconds (24 * 60 * 60) t1
-            day2 = toYMD tomorrow
-            oneDay = UT.diffDays  tomorrow t1
-            x2 = oneDay == 1
-
-    putIOwords ["today is", showT day1, "tomorrow", showT day2]
-
-
-    return [x1, x2, True]
 
 
 test_date1 =
@@ -136,6 +95,10 @@ test_showRead =
      show1 = show time1 :: String
      read1 = read show1 :: UTCTime
 
+test_show = assertEqual (timeX) 
+        (readNote "test_showT" timeXshow :: UTCTime)
+timeXshow = show timeX :: String 
+
 test_pp = assertEqual (show timeX) (ppShow timeX)
 -- demonstrates the issue with ppShow which cannot be 
 -- read 
@@ -146,3 +109,5 @@ test_pp = assertEqual (show timeX) (ppShow timeX)
 timeX :: UTCTime
 timeX = parseTimeOrError True defaultTimeLocale "%-d-%-m-%Y %l:%M %p"
                 "9-8-2012 10:54 AM" :: UTCTime
+
+-- test_force = assertBool False 

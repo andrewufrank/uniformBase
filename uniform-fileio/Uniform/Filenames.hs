@@ -67,6 +67,9 @@ setCurrentDir path = PathIO.setCurrentDir (unPath path)
 stripProperPrefix' :: Path b Dir -> Path b t -> ErrIO (Path Rel t)
 stripProperPrefix' dir fn = Path.stripProperPrefix (unPath dir) (unPath fn)
 
+stripProperPrefixM:: Path b Dir -> Path b t -> Maybe (Path Rel t)
+stripProperPrefixM dir fn = Path.stripProperPrefix (unPath dir) (unPath fn)
+
 -- instance {-# OVERLAPPABLE #-} Show (Path a b) where
 --     show a = error "Show (Path a b) - the generic instance must not be used"
 

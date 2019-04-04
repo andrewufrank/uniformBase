@@ -14,6 +14,7 @@ description: reduce complexity of Haskell by providing a set of uniformly named
     0.0.11 fixed callIO and use callIO everywhere
     0.0.12 changed to use path library for filnames
     0.0.14.2 changed copyFile' to copyOneFile renameOneFile
+    0.0.14.3 path without wrapper 
 
 source-repository head
     type: git
@@ -33,8 +34,8 @@ library
             unix -any,
             pipes ,
             safe,
-            path             ==0.6.1.1,
-            path-io==1.4.2.1,
+            path             ==0.6.1.2,
+            path-io==1.4.2.2,
             exceptions
             , split
         , zlib

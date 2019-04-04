@@ -26,6 +26,7 @@ module Uniform.Strings (
     , putIOwordsT
 --    , putIOwordsS
     , putIOwords
+    , putIOlineList, putIOline
     , wordwrap
     , NiceStrings (..)
     , IsString (..)
@@ -96,3 +97,10 @@ putIOwordsT ::  MonadIO m => [T.Text] -> m ()
 putIOwordsT = putIOwords
 --putIOwordsS :: MonadIO m =>  [String] -> m ()
 --putIOwordsS = putIOwords
+
+text0 = "" :: Text 
+
+putIOline ::(MonadIO m, Show a) => Text -> a -> m () 
+putIOline msg a = putIOwords [msg, showT a, "\n"] 
+putIOlineList ::(MonadIO m, Show a) => Text -> [a] -> m () 
+putIOlineList msg a = putIOwords [msg, unlines' . map showT $ a, "\n"] 

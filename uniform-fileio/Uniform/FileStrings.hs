@@ -239,7 +239,7 @@ instance FileOps FilePath  where
                 isHidden = isPrefixOf "."
 
     deleteFile f = do
-         putIOwords ["delete file ", showT f]
+        --  putIOwords ["delete file ", showT f]
          callIO . D.removeFile   $ f
 
 
@@ -340,6 +340,8 @@ instance (Show (Path ar File)) => FileOps (Path ar File)  where
 --          let r2 = map mkL r1
 --          return r2
 --
+    -- getDirContentFiles  fp = 
+
 --    getDirContentNonHidden fp = do
 ----        putIOwords ["getDirContentNonHidden", unL fp]
 --        r <- getDirCont . unL $ fp

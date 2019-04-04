@@ -7,6 +7,10 @@ packages:
 - ../uniform-algebras
 - ../uniform-fileio
 - ../uniform-time
+# not really needed, but seems to find the old ones 
+- ../../fromOthers/path
+- ../../fromOthers/path-io
+- ../../fromOthers/pretty-show
 # - ../../fromOthers/bibtex
 extra-deps:
 - test-invariant-0.4.5.0
