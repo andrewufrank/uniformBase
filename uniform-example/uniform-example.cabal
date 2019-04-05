@@ -36,7 +36,7 @@ library
     other-modules:
 
 
-Test-Suite errortest
+Test-Suite tests_example
     type:       exitcode-stdio-1.0
     build-depends:  base -any
         , HTF

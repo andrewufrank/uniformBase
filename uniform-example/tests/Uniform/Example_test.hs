@@ -2,7 +2,7 @@
 --
 -- Module      :  Uniform.Example_test
 --
--- | a miniaml set of  
+-- | import examples to test with  {-@ HTF_TESTS @-}
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 {-# LANGUAGE BangPatterns          #-}
@@ -24,7 +24,7 @@ module Uniform.Example_test where
 
 import           Test.Framework
 import           Uniform.Strings hiding ((</>), (<.>), (<|>))
-import Uniform.Example
+import  {-@ HTF_TESTS @-} Uniform.Example_test
 
 import Control.Exception
 
