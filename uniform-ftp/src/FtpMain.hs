@@ -24,7 +24,7 @@ import           Uniform.Error
 import           Uniform.Ftp
 main = do
     putIOwords ["start FTP main"]
-    push2
+    -- push2
     putIOwords [" end FTP main"]
     return ()
 

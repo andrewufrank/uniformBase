@@ -40,21 +40,12 @@ data FTPclient = FTPclient
             , hand ::Maybe FTPConnection -- connected and login
             } -- no show for FTPConnection -- deriving (Read, Show, Ord, Eq)
 
-            -- must be changed to statemonad
-
 getConnection :: FTPclient -> FTPConnection 
 -- get the connection from the ftp client - must be connected before
 getConnection f = fromJustNote "getConnection 42345dd" $ hand f
 
 ftp0 = FTPclient "cp140.sp-server.net" username keycpanel Nothing Nothing
 
--- changeDir ::Path Abs Dir -> FTPclient -> StateT  FTPclient ErrIO [Text]
--- changeDir dir h  = do 
---         h1 <- connect' h
---         callIO $ cwd (fromJustNote "cwd w4234" $ hand h1) (toFilePath dir)
---         d :: [String] <- callIO $ dir (fromJustNote "cwd w55324" $ hand h1) Nothing 
---         putIOwords ["dir", unlines'. map s2t $ d]
---         return $  map s2t  d 
 
 type FTPstate =  StateT  FTPclient ErrIO 
 
@@ -75,11 +66,24 @@ ftpConnect  = do
                 return h
             Just _ -> return (getConnection ftp)
 
-ftpChangeDir :: Path b Dir ->FTPstate ()
+ftpChangeDir :: Path b Dir -> FTPstate ()
 ftpChangeDir path = do 
     h <- ftpConnect
     callIO $ cwd h (toFilePath path) 
     return () 
+
+ftpMakeDir :: Path Abs Dir -> FTPstate ()
+-- check if it exists already 
+ftpMakeDir path = do 
+    h <- ftpConnect
+    callIO $ mkdir h (toFilePath path) 
+    return () 
+
+ftpCurrentDir ::  FTPstate (Path Abs Dir)
+ftpCurrentDir  = do 
+    h <- ftpConnect
+    (p,e) <- callIO $ pwd h 
+    return . makeAbsDir . fromJustNote "ftpCurrent dir werw222" $ p 
 
 ftpDir :: FTPstate [Text]
 ftpDir = do 
@@ -109,48 +113,15 @@ ftpUpload  source target = do
 
     return () 
     
-        -- transferDir :: Path Abs Dir -> ErrIO 
-
-
-        -- l <- nlst h Nothing 
-        -- putIOwords ["nlst", showT  l] 
-        -- -- b <- getbinary h "1KB.zip"
-        -- -- putIOwords ["getbinary", showT b]
-        -- -- d :: [String] <- dir h Nothing 
-        -- -- putIOwords ["dir", unlines'. map s2t $ d]
-
-        -- -- r <- uploadbinary h "Setup.lhs"
-        -- -- putIOwords ["upload result", showT r]  -- not permitted?
-        -- putIOwords ["push2 ends"]
-        -- return ()
-
-push2 :: FTPConnection -> IO [Text]
-push2  h = do 
-    putIOwords ["push2 starts"]
-    -- enableFTPDebugging
-    -- h <- easyConnectFTP "speedtest.tele2.net" -- "ftp.kernel.org"
-    -- loginAnon h
-    l <- nlst h Nothing 
-    putIOwords ["nlst", showT  l] 
-    b <- getbinary h "1KB.zip"
-    putIOwords ["getbinary", showT b]
-    d :: [String] <- dir h Nothing 
-    putIOwords ["dir", unlines'. map s2t $ d]
-    return (map s2t d)
-    -- r <- uploadbinary h "Setup.lhs"
-    -- putIOwords ["upload result", showT r]  -- not permitted?
-    -- putIOwords ["push2 ends"]
-    -- return ()
-     
--- push1 :: IO () 
--- push1 =  do
---         h <- withFTP  "ftp://speedtest.tele2.net" 21 $ op1 
---         -- w <- nlst h []
---         -- print w 
---         return () 
-
--- op1 h welcome = do
---     print welcome
---     login h "anonymous" "anonymous"
---     w <- nlst h []
---     print w 
+ftpUploadFilesFromDir :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
+-- upload all the files in a directory 
+-- ignore the dirs
+ftpUploadFilesFromDir source target = do 
+    h <- ftpConnect 
+    files :: [FilePath] <- lift $ getDirContentFiles 
+            (toFilePath source)
+    mapM  (\s -> do 
+                    cont :: Text <- lift $ readFile2 s
+                    liftIO $ putbinary h (toFilePath target </> s) (t2s cont)
+                ) files
+    return () 
