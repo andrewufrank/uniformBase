@@ -5,6 +5,8 @@
 :set -fno-warn-missing-signatures
 :set -fno-warn-orphans
 :set -fno-warn-type-defaults 
+:set -fno-warn-dodgy-imports 
+
 :set -isrc
 :set -itests
 :set -i.stack-work/dist/x86_64-linux-tinfo6/Cabal-2.4.0.1/build/autogen/

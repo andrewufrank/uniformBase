@@ -26,8 +26,11 @@ library
         , uniform-algebras
         , uniform-strings
         , uniform-error 
+        , uniform-fileio
         -- , ftp-client
         , ftphs
+        -- , monads-tf
+        , transformers
     exposed-modules:
         Uniform.Ftp
 

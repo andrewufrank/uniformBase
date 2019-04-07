@@ -19,6 +19,7 @@
 module Main     where
 
 import Uniform.Strings 
+import Uniform.Error 
 
 import Uniform.Ftp 
 main = do

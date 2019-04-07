@@ -31,10 +31,13 @@ main2 :: IO ()
 main2      -- just a simple bake for test
   = do
     putStrLn "main2"
-    push2
+    -- push2
     runErrorVoid
       $ do
         putIOwords ["main2 - in IO ()"]
+        h <- connect' ftp0
+        dirX <- push2 h
+        putIOwords ["dir", unlines'  dirX]
         return ()
 
 
