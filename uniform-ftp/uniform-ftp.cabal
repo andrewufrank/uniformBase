@@ -65,6 +65,7 @@ Test-Suite tests_ftp
        , uniform-ftp
 --       , data-easy
 --       , basics -- must not be included, gives dependency issue
+        , transformers 
     main-is: Testing.hs
     buildable: True
     default-language: Haskell2010

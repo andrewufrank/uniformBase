@@ -15,10 +15,10 @@ module Main where
 
 import           Test.Framework
 import   {-@ HTF_TESTS @-}         Uniform.Ftp_test
-import           Uniform.Strings
+import           Uniform.Strings hiding ((</>), (<.>))
 import           Uniform.Error
 import Uniform.Ftp
-
+import Control.Monad.Trans.State 
 
 main :: IO ()
 main = do
@@ -32,13 +32,12 @@ main2      -- just a simple bake for test
   = do
     putStrLn "main2"
     -- push2
-    runErrorVoid
-      $ do
-        putIOwords ["main2 - in IO ()"]
-        h <- connect' ftp0
-        dirX <- push2 h
-        putIOwords ["dir", unlines'  dirX]
-        return ()
+    runErrorVoid $ do 
+      (a,s)  <- runStateT mainStateIOb ftp0
+      return () 
+
+
+
 
 
 
