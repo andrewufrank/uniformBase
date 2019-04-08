@@ -29,6 +29,8 @@ import           Uniform.Strings hiding ((</>), (<.>), S)
 import "ftphs" Network.FTP.Client
 import Uniform.Error 
 import Uniform.FileIO 
+-- import Uniform.FileIO 
+import Uniform.FileStrings (getDirectoryDirs')
 import Control.Monad.Trans.State 
 -- import qualified Control.Monad.HT (zipWith)
 import Data.List.Utils
@@ -133,16 +135,20 @@ ftpUploadFilesFromDir :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
 
 ftpUploadFilesFromDir source target = do 
     h <- ftpConnect 
-    files :: [FilePath] <- lift $ getDirContentFiles  (toFilePath source)
-    let files2 = map (fromJustNote "stripPrefix ftpUpload 77454" . stripPrefix' (toFilePath source) ) files
+    ftpMakeDir target 
+
+    files :: [Path Abs File] <- lift $ getDirContentFiles  ( source)
+    let files2 = map (fromJustNote "stripPrefix ftpUpload 77454" . stripProperPrefixMaybe source) files
+            :: [Path Rel File]
     putIOwords ["ftpUpload fils to upload", showT files2]
-    mapM_ (\s -> do 
-                    cont :: Text <- lift $ do 
-                                                c <- readFile2 (toFilePath source  </> s)
-                                                putIOwords ["ftpUpload read", showT s]
-                                                return c
-                    liftIO $ putbinary h (toFilePath target </> s) (t2s cont)
-                ) (seqList files2)
+    mapM_ (\s -> ftpUpload (source </> s) (target </> s)) (seqList files2)
+    -- mapM_ (\s -> do 
+    --                 cont :: Text <- lift $ do 
+    --                                             c <- readFile2 ( source  </> s)
+    --                                             putIOwords ["ftpUpload read", showT s]
+    --                                             return c
+    --                 liftIO $ putbinary h (toFilePath $  target </> s) (t2s cont)
+    --             ) (seqList files2)
     -- return () 
 
 ftpUploadDirsRecurse :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
@@ -150,14 +156,13 @@ ftpUploadDirsRecurse :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
 ftpUploadDirsRecurse source target = do 
     h <- ftpConnect
     -- make directory and upload files  
-    ftpMakeDir target 
     ftpUploadFilesFromDir source target
     -- get all the directories 
     (dirs1, targets) <- lift $ do 
-        dirs :: [FilePath] <- getDirectoryDirs' (toFilePath source )
-        let dirs1 = map makeAbsDir dirs
+        dirs :: [Path Abs Dir] <- getDirectoryDirs' ( source )
+        let dirs1 =   dirs
         putIOwords ["\n\nftpUploadDirsRecurse for ", showT source, " dirs ", showT dirs1]
-        let targets = map (\f-> target </>  (fromJustNote "234233772" . stripProperPrefixM source $ f)) dirs1
+        let targets = map (\f-> target </>  (fromJustNote "234233772" . stripProperPrefixMaybe source $ f)) dirs1
         putIOwords ["ftpUploadDirsRecurse targets ", showT targets]
         return (dirs1,targets)
     -- create target dirs 

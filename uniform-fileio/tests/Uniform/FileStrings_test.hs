@@ -119,7 +119,42 @@ test_createNewDirFile = do
     let fn = makeAbsFile "/home/frank/test/1.test"
     r <- runErr $ writeFileOrCreate2 fn ("testtext"::Text)
     assertEqual (Right () ) r
---
+
+dir31 = "dir4test" :: FilePath
+abs31 = "/home/frank/Workspace8/uniform/uniform-fileio" :: FilePath 
+abs3131 = abs31 </> dir31
+
+res3131 =  
+    ["/home/frank/Workspace8/uniform/uniform-fileio/dir4test/testghci",
+    "/home/frank/Workspace8/uniform/uniform-fileio/dir4test/testfile.txt",
+    "/home/frank/Workspace8/uniform/uniform-fileio/dir4test/Setup.lhs",
+    "/home/frank/Workspace8/uniform/uniform-fileio/dir4test/testgitignore"]
+
+test_getDirCont1 = do
+    res :: ErrOrVal [FilePath] <- runErr $ getDirContentFiles (abs3131) 
+    assertEqual (Right res3131) res 
+
+test_getDirCont2 = do 
+    res :: ErrOrVal [Path Abs File]  <- 
+                    runErr $ getDirContentFiles (makeAbsDir abs3131)
+    assertEqual (Right (map makeAbsFile res3131)) res 
+                -- (fmap makeAbsFile res3131) res 
+
+res3132 ::   [FilePath]
+res3132 = 
+  ["dir4test/testghci", "dir4test/testfile.txt",
+   "dir4test/Setup.lhs", "dir4test/testgitignore"]
+
+test_getDirCont3 = do
+    res :: ErrOrVal [FilePath] <- runErr $ getDirContentFiles (dir31) 
+    assertEqual (Right res3132) res 
+
+test_getDirCont4 = do 
+    res :: ErrOrVal [Path Rel File]  <- 
+                    runErr $ getDirContentFiles (makeRelDir dir31)
+    assertEqual (Right (map makeRelFile res3132)) res 
+                -- (fmap makeAbsFile res3131) res 
+        
 --test_md5_nonReadablep = do
 --    res :: ErrOrVal (Maybe Text)  <- runErr $ getMD5 procFile
 --    putIOwords ["test_md5_nonReadable res", showT res]

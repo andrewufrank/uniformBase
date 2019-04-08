@@ -20,8 +20,8 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE TypeSynonymInstances  #-}
-{-# LANGUAGE OverloadedStrings     #-}
+-- {-# LANGUAGE TypeSynonymInstances  #-}
+-- {-# LANGUAGE OverloadedStrings     #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 module Uniform.FileIOalgebra (
@@ -69,10 +69,10 @@ class DirOps fp where
     -- ^ rename directory old to new
     -- signals: getFileStatus: does not exist (No such file or directory)
 
-    getDirectoryDirs' :: (FileOps fp) => fp -> ErrIO [fp]
+    getDirectoryDirs' ::  fp -> ErrIO [fp]
     -- get the directories (but not . and ..)
-    getDirectoryDirs' dir = filterM f =<< getDirCont  dir
-        where f x =  doesDirExist'   x
+    -- getDirectoryDirs' dir = filterM f =<< getDirCont  dir
+    --     where f  =  doesDirExist'  
 
     copyDirRecursive :: fp -> fp -> ErrIO ()
     -- | copy the directory content recursively, does not follow symlink
@@ -105,19 +105,16 @@ class (Show fp) => FileOps fp   where
     -- not returning the special entries   . and ..
         -- filenames completed with the filename calling
         -- check access and readable
+        -- returns for filepath always an absolute path
+        -- for Path Rel gives Path Rel results
     getDirCont :: fp ->  ErrIO [fp] --  (Maybe [String])
     -- | get the directory content - if not existing Nothing, if empty Just []
     -- not returning any hidden files
     -- alphabetic search to assure that equal directories have equal conten
     -- independent of file system internal structure
     -- filenames completed with calling fp
+    -- only for filepath!
     getDirContentNonHidden :: fp ->  ErrIO [fp]
-
-    getDirContentFiles :: fp -> ErrIO [fp]
-    getDirContentFiles dir = filterM f =<< getDirCont  dir
-        where f x =  doesFileExist'   x
-
-
 
     getMD5 :: fp -> ErrIO (Maybe Text)
     -- get MD5, but why Text  -- TODO
@@ -153,6 +150,11 @@ class (Show fp) => FileOps fp   where
 --    readFile3 :: fp -> m fc
 --    writeFile3 :: fp -> fc -> m ()
 
+class (Show fd, Show ff) => FileOps2a fd ff where 
+-- ^ operations on dir to produce file
+    getDirContentFiles :: fd -> ErrIO [ff]
+    -- getDirContentFiles dir = filterM f =<< getDirCont  dir
+    --     where f x =  doesFileExist'   x
 
 --
 --

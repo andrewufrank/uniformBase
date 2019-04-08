@@ -71,7 +71,7 @@ library
 
 Test-Suite fileioTestAuto
     type:       exitcode-stdio-1.0
-    main-is:    UniformFileIOTest.hs
+    main-is:    Testing.hs
     build-depends: base, HTF
         , uniform-fileio
         , uniform-strings

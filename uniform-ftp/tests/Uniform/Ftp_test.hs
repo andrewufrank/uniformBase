@@ -127,7 +127,7 @@ mainStateIOd = do
 
       -- writing to test 
         lift $ putIOwords ["\ntesting uploads mainStateIOd makedir"]
-        let targetDir = makeAbsDir "/test.gerastree.at/dir9test"
+        let targetDir = makeAbsDir "/test.gerastree.at/dir10test"
         let sourceDir = (wdir </> makeRelDir "dir4test") :: Path Abs Dir
         -- ftpMakeDir targetDir 
         lift $ putIOwords ["\ntesting uploads mainStateIOd upload "]

@@ -13,7 +13,7 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE TypeSynonymInstances  #-}
+-- {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 {-# OPTIONS -w #-}
@@ -96,7 +96,7 @@ listDir' p =  do
 -- would require a class and an implementation for FilePath
 
 instance FileSystemOps FilePath where
-    checkSymbolicLink fp =  callIO $ D.pathIsSymbolicLink ( fp)
+    checkSymbolicLink fp =  callIO $ D.pathIsSymbolicLink fp
     getPermissions' = callIO . D.getPermissions
 
 instance DirOps FilePath where
@@ -117,11 +117,13 @@ instance DirOps FilePath where
                     [showT old]
                 else do
                      callIO $ putStrLn "renamed"
-                     r <- callIO $ D.renameDirectory (old) (new)
+                     r <- callIO $ D.renameDirectory old new
                      return ()
 --                     $ unwordsT
 --                        [ "renamed dir from ", showT old
 --                            , " to " , showT  new]
+    getDirectoryDirs' dir = filterM f =<< getDirCont  dir
+        where f  =  doesDirExist'  
 
     deleteDirRecursive f =
         do
@@ -130,7 +132,7 @@ instance DirOps FilePath where
                 callIO . D.removeDirectoryRecursive  $  f
 
                 putIOwords ["deleted", showT f]
-            return ()
+            -- return ()
 
 instance FileOps FilePath  where
     doesFileExist'   = callIO . D.doesFileExist
@@ -151,10 +153,9 @@ instance FileOps FilePath  where
         if t && (not t2) then do
             let dir = getParentDir new  -- was takeDir
             direxist <- doesDirExist'   dir
-            unless direxist $ do
+            unless direxist $ 
                 createDirIfMissing'  dir
-            callIO $ D.copyFile (old) ( new)
-
+            callIO $ D.copyFile old new 
                 else if not t
                         then  throwErrorT
                             ["copyFile source not exist", showT old]
@@ -286,7 +287,7 @@ instance FileOps FilePath  where
 
 
 
-    openFile2handle fp mode = do
+    openFile2handle fp mode = 
             callIO $ SIO.openFile fp mode
 --        `catchError` \e -> do
         -- most likely the dir does not exist.
@@ -300,8 +301,8 @@ instance FileSystemOps (Path ar df) where
     getPermissions' = PathIO.getPermissions . unPath
     checkSymbolicLink  fp =   callIO $ D.pathIsSymbolicLink (unL fp)
 
-instance DirOps (Path ar Dir)  where
-    doesDirExist' =  PathIO.doesDirExist .unPath
+instance DirOps (Path Abs Dir)  where 
+    doesDirExist' =  PathIO.doesDirExist  
 --    getDirPermissions = P.getPermissions
     createDir'  = PathIO.createDir . unPath
 --        do
@@ -309,12 +310,16 @@ instance DirOps (Path ar Dir)  where
 --        if not t then  callIO $ D.createDirectory . unL $ fp
 --            else throwErrorT
 --                ["File or Dir exists", showT fp]
-    renameDir' old new = do  -- :: fp -> fp ->  ErrIO Text
+    renameDir' old new =    -- :: fp -> fp ->  ErrIO Text
     -- ^ rename directory old to new
         PathIO.renameDir (unPath old) (unPath new)
 --        return $ unwordsT
 --                        [ "renamed dir from ", showT old
 --                            , " to " , showT  new]
+    getDirectoryDirs' dir = do 
+            res <- filterM f =<< getDirCont  (toFilePath dir)
+            return . map makeAbsDir $ res 
+            where f  =  doesDirExist'  
 
 
     createDirIfMissing' = PathIO.createDirIfMissing True . unPath
@@ -323,36 +328,48 @@ instance DirOps (Path ar Dir)  where
 
     deleteDirRecursive f = deleteDirRecursive (unL f)
 
+instance DirOps (Path Rel Dir)  where 
+    doesDirExist' =  PathIO.doesDirExist  
+--    getDirPermissions = P.getPermissions
+    createDir'  = PathIO.createDir . unPath
+--        do
+--        t <- doesFileOrDirExist fp
+--        if not t then  callIO $ D.createDirectory . unL $ fp
+--            else throwErrorT
+--                ["File or Dir exists", showT fp]
+    renameDir' old new =    -- :: fp -> fp ->  ErrIO Text
+    -- ^ rename directory old to new
+        PathIO.renameDir (unPath old) (unPath new)
+--        return $ unwordsT
+--                        [ "renamed dir from ", showT old
+--                            , " to " , showT  new]
+    getDirectoryDirs' dir = do 
+        res <- filterM f =<< getDirCont  (toFilePath dir)
+        return . map makeRelDir $ res 
+        where f  =  doesDirExist'
+
+    createDirIfMissing' = PathIO.createDirIfMissing True . unPath
+
+    copyDirRecursive old new = PathIO.copyDirRecur (unPath old) (unPath new)
+
+    deleteDirRecursive f = deleteDirRecursive (unL f)
+    
 instance (Show (Path ar File)) => FileOps (Path ar File)  where
     doesFileExist'   =  PathIO.doesFileExist . unPath
 --    getPermissions' = P.getPermissions
     copyOneFile old new =  copyOneFile (unL old) (unL new)
-    renameOneFile old new = do  -- :: fp -> fp ->  ErrIO Text
+    renameOneFile old new =    -- :: fp -> fp ->  ErrIO Text
     -- ^ rename directory old to new
         PathIO.renameFile (unPath old) (unPath new)
 
     deleteFile f =  deleteFile (unL f)
 
     getMD5 fp = getMD5 (unL fp)
--- use listDir which separats result in dir and file list and does not include . and ..
---    getDirCont fn  = do
---          r1 <- getDirCont  . unL $ fn
---          let r2 = map mkL r1
---          return r2
---
-    -- getDirContentFiles  fp = 
 
---    getDirContentNonHidden fp = do
-----        putIOwords ["getDirContentNonHidden", unL fp]
---        r <- getDirCont . unL $ fp
---        let r2 = filter (not . isHidden) r
-----        r2 <- callIO $ D.listDirectory (unL fp)
-----          would be possible but filter here is simpler
-----        let r2 = filter ( \file' -> (file' /= "." && file' /= "..")  ) r
-----        let r2 = filter (not . isPrefixOf "." ) r
-----        putIOwords ["nonhidden files", show r2]
---        let r3 = (map (makeLegalPath . s2t) r2)
---        return (catMaybes r3)
+    getDirCont fp = 
+        error "getDirCont cannot be implemented for Path"
+    getDirContentNonHidden fp = 
+        error "getDirContentNonHidden cannot be implemented for Path"
 
 --    isFileAbeforeB fpa fpb = do
 --        statA :: P.FileStatus <- getFileStatus fpa
@@ -361,6 +378,7 @@ instance (Show (Path ar File)) => FileOps (Path ar File)  where
 --            timea = getModificationTimeFromStatus statA
 --            timeb = getModificationTimeFromStatus statB
 --        return $ timea < timeb
+
     getFileModificationTime  fp =  getFileModificationTime (unL fp)
 
 
@@ -370,7 +388,6 @@ instance (Show (Path ar File)) => FileOps (Path ar File)  where
 --    checkSymbolicLink fp =   callIO $ D.pathIsSymbolicLink (unL fp)
 
     getFileAccess fp (r,w,e) =
-        do
 --            putIOwords ["getFileAccess", show fp]
             callIO $
                 (do
@@ -441,7 +458,19 @@ instance (Show (Path ar File)) => FileOps2 (Path ar File) L.ByteString where
     writeFile2  fp st = callIO $  L.writeFile (unL fp) st
     appendFile2  fp st = callIO  $  L.appendFile  (unL fp) st
 
+instance FileOps2a FilePath FilePath where 
+    getDirContentFiles dir = filterM doesFileExist' =<< getDirCont  dir
+        -- where f =  doesFileExist' 
 
+instance FileOps2a (Path Abs Dir ) (Path Abs File) where 
+    getDirContentFiles dir = do  
+        res <- getDirContentFiles (toFilePath dir) 
+        return (map makeAbsFile res)
+
+instance FileOps2a (Path Rel Dir ) (Path Rel File) where 
+    getDirContentFiles dir = do  
+        res <- getDirContentFiles (toFilePath dir) 
+        return (map makeRelFile res)
 --bracket2
 --        :: IO a         -- ^ computation to run first (\"acquire resource\")
 --        -> (a -> IO b)  -- ^ computation to run last (\"release resource\")
