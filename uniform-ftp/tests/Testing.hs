@@ -33,7 +33,7 @@ main2      -- just a simple bake for test
     putStrLn "main2"
     -- push2
     runErrorVoid $ do 
-      (a,s)  <- runStateT mainStateIOc ftp0
+      (a,s)  <- runStateT mainStateIOd ftp0
       return () 
 
 

@@ -15,7 +15,7 @@
 {-# LANGUAGE TypeFamilies          #-}
 -- {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
-{-# LANGUAGE RecordWildCards  #-}
+-- {-# LANGUAGE RecordWildCards  #-}
 
 -- {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
     -- runErrorT is  but used in monads-tf
@@ -30,6 +30,7 @@ import "ftphs" Network.FTP.Client
 import Uniform.Error 
 import Uniform.FileIO 
 import Control.Monad.Trans.State 
+-- import qualified Control.Monad.HT (zipWith)
 
 username = "gerastre"
 keycpanel = "geras125cpanel"
@@ -138,7 +139,8 @@ ftpUpload  source target = do
     
 ftpUploadFilesFromDir :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
 -- upload all the files in a directory 
--- ignore the dirs
+-- ignore the dirs in the file 
+-- the target dir must exist 
 ftpUploadFilesFromDir source target = do 
     h <- ftpConnect 
     files :: [FilePath] <- lift $ getDirContentFiles  (toFilePath source)
@@ -152,3 +154,38 @@ ftpUploadFilesFromDir source target = do
                     liftIO $ putbinary h (toFilePath target </> s) (t2s cont)
                 ) files2
     return () 
+
+ftpUploadDirsRecurse :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
+-- recursive upload of a dir
+ftpUploadDirsRecurse source target = do 
+    h <- ftpConnect
+    -- make directory and upload files  
+    ftpMakeDir target 
+    ftpUploadFilesFromDir source target
+    -- get all the directories 
+    (dirs1, targets) <- lift $ do 
+        dirs :: [FilePath] <- getDirectoryDirs' (toFilePath source )
+        let dirs1 = map makeAbsDir dirs
+        putIOwords ["\n\nftpUploadDirsRecurse dirs ", showT dirs1]
+        let targets = map (\f-> target </>  (fromJustNote "234233772" . stripProperPrefixM source $ f)) dirs1
+        putIOwords ["ftpUploadDirsRecurse targets ", showT targets]
+        return (dirs1,targets)
+    -- create target dirs 
+
+    -- let 
+    let sts = zip dirs1 targets :: [(Path Abs Dir, Path Abs Dir)]
+    putIOwords ["ftpUploadDirsRecurse recurse  ", "dirs", showT dirs1, "targets", showT targets]
+    [rs] :: [ ()]<- mapM (\(s,t) -> ftpUploadDirsRecurse s t)  sts
+    putIOwords ["ftpUploadDirsRecurse end "]
+
+ftpUpload2 :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
+-- upload all the files in a directory 
+-- ignore the dirs in the file 
+-- create targetDir 
+ftpUpload2 source target = do 
+    putIOwords ["ftpUpload2 ", showT source, showT target]
+    ftpMakeDir target 
+    putIOwords ["ftpUpload2 ", "created" , showT target]
+
+
+-- x :: m(a->b->c) -> [a] -> [b] -> m [c]

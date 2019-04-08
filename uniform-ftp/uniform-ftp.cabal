@@ -31,6 +31,8 @@ library
         , ftphs
         -- , monads-tf
         , transformers
+        , utility-ht
+
     exposed-modules:
         Uniform.Ftp
 
