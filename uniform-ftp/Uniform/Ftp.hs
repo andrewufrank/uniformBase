@@ -29,10 +29,7 @@ import           Uniform.Strings hiding ((</>), (<.>), S)
 import "ftphs" Network.FTP.Client
 import Uniform.Error 
 import Uniform.FileIO 
--- import Uniform.FileIO 
-import Uniform.FileStrings (getDirectoryDirs')
 import Control.Monad.Trans.State 
--- import qualified Control.Monad.HT (zipWith)
 import Data.List.Utils
 
 username = "gerastre"
@@ -142,14 +139,6 @@ ftpUploadFilesFromDir source target = do
             :: [Path Rel File]
     putIOwords ["ftpUpload fils to upload", showT files2]
     mapM_ (\s -> ftpUpload (source </> s) (target </> s)) (seqList files2)
-    -- mapM_ (\s -> do 
-    --                 cont :: Text <- lift $ do 
-    --                                             c <- readFile2 ( source  </> s)
-    --                                             putIOwords ["ftpUpload read", showT s]
-    --                                             return c
-    --                 liftIO $ putbinary h (toFilePath $  target </> s) (t2s cont)
-    --             ) (seqList files2)
-    -- return () 
 
 ftpUploadDirsRecurse :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
 -- recursive upload of a dir
@@ -165,9 +154,7 @@ ftpUploadDirsRecurse source target = do
         let targets = map (\f-> target </>  (fromJustNote "234233772" . stripProperPrefixMaybe source $ f)) dirs1
         putIOwords ["ftpUploadDirsRecurse targets ", showT targets]
         return (dirs1,targets)
-    -- create target dirs 
-
-    -- let 
+ 
     let sts = zip dirs1 targets :: [(Path Abs Dir, Path Abs Dir)]
 
     if not . null $ sts 
@@ -178,15 +165,3 @@ ftpUploadDirsRecurse source target = do
         else do 
             putIOwords ["ftpUploadDirsRecurse no recursion", showT sts]
             return ()
-
--- ftpUpload2 :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
--- -- upload all the files in a directory 
--- -- ignore the dirs in the file 
--- -- create targetDir 
--- ftpUpload2 source target = do 
---     putIOwords ["ftpUpload2 ", showT source, showT target]
---     ftpMakeDir target 
---     putIOwords ["ftpUpload2 ", "created" , showT target]
-
-
--- x :: m(a->b->c) -> [a] -> [b] -> m [c]

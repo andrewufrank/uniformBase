@@ -119,13 +119,7 @@ mainStateIOd ::  FTPstate  ()
 mainStateIOd = do
         lift $ putIOwords ["testing uploads mainStateIOd"]
         h <- ftpConnect  
-        -- d1 <- ftpDir  -- main dir 
-        -- lift $ putIOwords ["\ndir root", unlines'  d1]
-        -- ftpChangeDir (makeRelDir "test.gerastree.at")
-        -- d2 <- ftpDir 
-        -- lift $ putIOwords ["\ndir test", unlines'  d2]
 
-      -- writing to test 
         lift $ putIOwords ["\ntesting uploads mainStateIOd makedir"]
         let targetDir = makeAbsDir "/test.gerastree.at/dir10test"
         let sourceDir = (wdir </> makeRelDir "dir4test") :: Path Abs Dir
@@ -135,20 +129,6 @@ mainStateIOd = do
         ftpChangeDir targetDir
         d3 <- ftpDir 
         lift $ putIOwords ["\ndir test with test1.txt", unlines'  d3]
-        -- written relative path 
-        -- return ()
-
-         -- 
-
-        -- -- writing to test 
-        -- ftpUpload (wdir </> makeRelFile "testfile.txt") 
-        --     (makeAbsFile "/test.gerastree.at/af/test2.txt")
-        -- d4 <- ftpDir 
-        -- lift $ putIOwords ["\ndir test with test1.txt", unlines'  d4]
-        -- -- written relative path 
-        -- ftpChangeDir (makeAbsDir "/test.gerastree.at/af/" )
-        -- d5 <- ftpDir 
-        -- lift $ putIOwords ["\ndir test with test2.txt", unlines'  d5]
 
         return ()
 
