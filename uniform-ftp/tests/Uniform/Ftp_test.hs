@@ -5,16 +5,16 @@
 -- | a miniaml set of  
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
-{-# LANGUAGE BangPatterns          #-}
+-- {-# LANGUAGE BangPatterns          #-}
 {-# LANGUAGE DoAndIfThenElse       #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE PackageImports        #-}
+-- {-# LANGUAGE PackageImports        #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE TypeSynonymInstances  #-}
+-- {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
 
 -- {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
@@ -28,6 +28,7 @@ import           Test.Framework
 import           Uniform.Strings hiding ((</>), (<.>), (<|>))
 import Uniform.Ftp
 import Uniform.FileIO
+-- import Control.Monad.Trans.State 
 
 import Control.Exception
 
@@ -75,7 +76,7 @@ mainStateIOb = do
         d3 <- ftpDir 
         lift $ putIOwords ["\ndir test with test1.txt", unlines'  d3]
         -- written relative path 
-        return ()
+        -- return ()
 
         -- writing to test 
         ftpUpload (wdir </> makeRelFile "testfile.txt") 
@@ -87,7 +88,7 @@ mainStateIOb = do
         d5 <- ftpDir 
         lift $ putIOwords ["\ndir test with test2.txt", unlines'  d5]
 
-        return ()
+        -- return ()
 
 mainStateIOc ::  FTPstate  ()
 -- tests for uploading dir  
@@ -126,17 +127,16 @@ mainStateIOd = do
 
       -- writing to test 
         lift $ putIOwords ["\ntesting uploads mainStateIOd makedir"]
-        let targetDir = makeAbsDir "/test.gerastree.at/dir4test"
+        let targetDir = makeAbsDir "/test.gerastree.at/dir9test"
+        let sourceDir = (wdir </> makeRelDir "dir4test") :: Path Abs Dir
         -- ftpMakeDir targetDir 
         lift $ putIOwords ["\ntesting uploads mainStateIOd upload "]
-        ftpUploadDirsRecurse (
-                    (wdir </> makeRelDir "dir4test") :: Path Abs Dir)
-                    targetDir
+        ftpUploadDirsRecurse sourceDir targetDir 
         ftpChangeDir targetDir
         d3 <- ftpDir 
         lift $ putIOwords ["\ndir test with test1.txt", unlines'  d3]
         -- written relative path 
-        return ()
+        -- return ()
 
          -- 
 
@@ -153,3 +153,5 @@ mainStateIOd = do
         return ()
 
 wdir = makeAbsDir "/home/frank/Workspace8/uniform/uniform-ftp/"
+
+ 
