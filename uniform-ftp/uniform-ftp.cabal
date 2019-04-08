@@ -63,6 +63,7 @@ Test-Suite tests_ftp
        , uniform-strings
        , uniform-error
        , uniform-ftp
+       , uniform-fileio
 --       , data-easy
 --       , basics -- must not be included, gives dependency issue
         , transformers 

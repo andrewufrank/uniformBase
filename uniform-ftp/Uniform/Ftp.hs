@@ -72,13 +72,36 @@ ftpChangeDir path = do
     callIO $ cwd h (toFilePath path) 
     return () 
 
-ftpMakeDir :: Path Abs Dir -> FTPstate ()
--- check if it exists already 
-ftpMakeDir path = do 
-    h <- ftpConnect
-    callIO $ mkdir h (toFilePath path) 
-    return () 
+-- ftpMakeDir :: Path Abs Dir -> FTPstate ()
+-- -- check if it exists already - no op if exist
+-- ftpMakeDir path = do 
+--     (a,s) <- runStateT $ do 
+--         h <- ftpConnect
+--         (fn, res) <- callIO $ mkdir h (toFilePath path) 
+--         putIOwords ["ftpMakeDir", "fn", showT fn, "res", showT res ]
+--         return () 
+--     return ()
+--   `catch` (\e -> do 
+--         putIOwords ["ftpMakeDir error", showT e ]
+--         -- putIOwords ["ftpMakeDir error", "fn", showT fn, "res", showT res ]
+--         )
 
+ftpMakeDir :: Path Abs Dir -> FTPstate ()
+-- check if it exists already - no op if exist
+ftpMakeDir path = do 
+        h <- ftpConnect
+        callIO $ do 
+                         mkdir h (toFilePath path) 
+                         return () 
+                    `catchError` (\e   -> do 
+                        putIOwords ["ftpMakeDir error", showT e ]
+                        if "user error (FTP:550" `isPrefixOf'` showT e then return () 
+                                else throwError e 
+                                    -- putIOwords ["ftpMakeDir error", "fn", showT fn, "res", showT res ]
+                                    )
+        -- putIOwords ["ftpMakeDir", "fn", showT fn, "res", showT res ]
+        return () 
+ 
 ftpCurrentDir ::  FTPstate (Path Abs Dir)
 ftpCurrentDir  = do 
     h <- ftpConnect
@@ -118,10 +141,14 @@ ftpUploadFilesFromDir :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
 -- ignore the dirs
 ftpUploadFilesFromDir source target = do 
     h <- ftpConnect 
-    files :: [FilePath] <- lift $ getDirContentFiles 
-            (toFilePath source)
+    files :: [FilePath] <- lift $ getDirContentFiles  (toFilePath source)
+    let files2 = map (fromJustNote "stripPrefix ftpUpload 77454" . stripPrefix' (toFilePath source) ) files
+    putIOwords ["ftpUpload fils to upload", showT files2]
     mapM  (\s -> do 
-                    cont :: Text <- lift $ readFile2 s
+                    cont :: Text <- lift $ do 
+                                                c <- readFile2 (toFilePath source  </> s)
+                                                putIOwords ["ftpUpload read", showT s]
+                                                return c
                     liftIO $ putbinary h (toFilePath target </> s) (t2s cont)
-                ) files
+                ) files2
     return () 

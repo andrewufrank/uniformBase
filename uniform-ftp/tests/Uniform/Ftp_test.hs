@@ -92,7 +92,7 @@ mainStateIOb = do
         mainStateIOb ::  FTPstate  ()
 -- tests for uploading dir  
 mainStateIOc = do
-        lift $ putIOwords ["testing uploads - in IO ()"]
+        lift $ putIOwords ["testing uploads mainStateIOc"]
         h <- ftpConnect  
         d1 <- ftpDir  -- main dir 
         lift $ putIOwords ["\ndir root", unlines'  d1]
@@ -101,8 +101,10 @@ mainStateIOc = do
         lift $ putIOwords ["\ndir test", unlines'  d2]
 
       -- writing to test 
+        lift $ putIOwords ["\ntesting uploads mainStateIOc makedir"]
         let targetDir = makeAbsDir "/test.gerastree.at/dir4test"
         ftpMakeDir targetDir 
+        lift $ putIOwords ["\ntesting uploads mainStateIOc upload "]
         ftpUploadFilesFromDir (
                     (wdir </> makeRelDir "dir4test") :: Path Abs Dir)
                     targetDir

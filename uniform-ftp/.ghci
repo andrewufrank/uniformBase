@@ -6,6 +6,7 @@
 :set -fno-warn-orphans
 :set -fno-warn-type-defaults 
 :set -fno-warn-dodgy-imports 
+:set -fno-warn-unused-matches 
 
 :set -isrc
 :set -itests
