@@ -29,7 +29,7 @@ import Twitch hiding (Options, log)
 import qualified Twitch
 
 --import Control.Concurrent.Spawn
-import Control.Concurrent
+-- import Control.Concurrent
 import           Control.Concurrent (forkIO, killThread)
 import Uniform.FileIO
 import Uniform.Strings hiding (S, (<.>), (</>))
@@ -52,16 +52,21 @@ mainWatch2 :: (Show [Text], Show (Path b Dir))
   -> [FilePath]
   -> ErrIO ()
 mainWatch2 op path1 exts = do
-  putIOwords ["mainWatchThemes", "path1", showT path1, "extensions", showT exts]
+  -- putIOwords ["mainWatch2", "\n\tpath1", showT path1, "\n\textensions", showT exts]
     -- the path1 is dir to watch -- should probably be fixed to absolute
   let exts2 = map fromString exts :: [Dep]
-  callIO $
+  putIOwords ["mainWatch2", "\n\tpath1", showT path1, "\n\textensions", showT exts]
+
+  callIO $ do 
     Twitch.defaultMainWithOptions
       (twichDefault4ssg
-         {Twitch.root = Just . toFilePath $ path1, Twitch.log = Twitch.NoLogger}) $ do
-      let deps = map (setTwichAddModifyDelete op) exts2 :: [Dep]
-      sequence deps
-      return ()
+         {Twitch.root = Just . toFilePath $ path1, Twitch.log = Twitch.NoLogger})
+           $ do
+                let deps = map (setTwichAddModifyDelete op) exts2 :: [Dep]
+                sequence_ deps
+    putIOwords ["mainWatch2", "end"]
+
+      -- return ()
 
 setTwichAddModifyDelete :: (FilePath -> ErrIO ()) -> Dep -> Dep
 setTwichAddModifyDelete op ext =
