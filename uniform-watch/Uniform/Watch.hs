@@ -48,7 +48,7 @@ multipleWatches ws = do
       return is
   where 
     mainWatch2one :: WatchOpType -> ErrIO GHC.Conc.Sync.ThreadId
-    mainWatch2one w = callIO $ forkIO (runErrorVoid $ mainWatch2 w)    
+    mainWatch2one w = callIO $ forkIO (runErrorVoid $ startWatch2 w)    
 
 twichDefault4ssg =
   Twitch.Options
@@ -64,15 +64,17 @@ twichDefault4ssg =
 
 type WatchOpType = (Path Abs Dir, (FilePath -> ErrIO ()), [Glob])
 
-mainWatch2 :: (Show [Text], Show (Path Abs Dir))
+makeWatch a b c = (a,b,c)
+
+startWatch2 :: (Show [Text], Show (Path Abs Dir))
   => WatchOpType   -> ErrIO ()
 -- | start watching for a set of files (glob patterns) in one directory
 -- essentially producing lines in the minimal twitch example with a single operation
-mainWatch2 (path1,op,globs) = do
-  -- putIOwords ["mainWatch2", "\n\tpath1", showT path1, "\n\textensions", showT exts]
+startWatch2 (path1,op,globs) = do
+  -- putIOwords ["startWatch2", "\n\tpath1", showT path1, "\n\textensions", showT exts]
     -- the path1 is dir to watch -- should probably be fixed to absolute
   let globs2 = map (fromString . t2s . unGlob) globs :: [Dep]
-  putIOwords ["mainWatch2", "\n\tpath1", showT path1, "\n\textensions", showT globs]
+  putIOwords ["startWatch2", "\n\tpath1", showT path1, "\n\textensions", showT globs]
 
   callIO $ do 
     Twitch.defaultMainWithOptions
@@ -81,7 +83,7 @@ mainWatch2 (path1,op,globs) = do
            $ do
                 let deps = map (setTwichAddModifyDelete op) globs2 :: [Dep]
                 sequence_ deps
-    putIOwords ["mainWatch2", "end"]
+    putIOwords ["startWatch2", "end"]
 
       -- return ()
 
@@ -97,8 +99,8 @@ runErrorRepl a = do
   putIOwords ["runErrorRepl", "input is", showT a]
   return ()
 
-mainWatch :: [WatchOpType] -> ErrIO () ->  ErrIO () 
-mainWatch watches  foreverOp = -- callIO $ defaultMain $ 
+watchMain :: [WatchOpType] -> ErrIO () ->  ErrIO () 
+watchMain watches  foreverOp = -- callIO $ defaultMain $ 
     bracketErrIO
         (do
             -- first
@@ -112,7 +114,7 @@ mainWatch watches  foreverOp = -- callIO $ defaultMain $
         (\watchTIDs      -- last
         -> do
             putIOwords ["main watch  end"]
-            callIO $ mapM killThread (watchTIDs)
+            callIO $ mapM killThread watchTIDs
             return ()
             )
         (\_         -- during

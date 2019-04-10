@@ -25,12 +25,13 @@ import   Uniform.Error
 import Uniform.Strings
 import Uniform.FileIO 
 import Uniform.Watch_test
+import Uniform.Watch
 import Uniform.Convenience.StartApp
 
 main = startProg
     "WatchMain"
     "testing watch"
             (do
-                mainWatch [testWatch] foreverScotty
+                watchMain [testWatch] foreverScotty
             )
 

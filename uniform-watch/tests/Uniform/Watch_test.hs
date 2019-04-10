@@ -15,8 +15,8 @@
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
 -- {-# LANGUAGE TypeSynonymInstances  #-}
-{-# LANGUAGE UndecidableInstances  #-}
-{-# LANGUAGE DeriveGeneric  #-}
+-- {-# LANGUAGE UndecidableInstances  #-}
+-- {-# LANGUAGE DeriveGeneric  #-}
 
 -- {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
 
@@ -32,7 +32,7 @@ import Uniform.Strings
 import Uniform.FileIO 
 import           Control.Concurrent (forkIO, killThread)
 import           Uniform.Convenience.StartApp (startProg)
--- import Uniform.Watch (mainWatch2)
+-- import Uniform.Watch (startWatch2)
 import Uniform.WebServer
 import Control.Exception
 import Twitch 
@@ -47,26 +47,26 @@ foreverScotty = runScotty 3000
 
 
 watchOp :: Path Abs Dir -> (FilePath -> ErrIO ()) -> [Glob]-> ErrIO ()
-watchOp path  ops globs = mainWatch2 (path, ops, globs)
+watchOp path  ops globs = startWatch2 (path, ops, globs)
 testWatch, testWatch2 :: WatchOpType                
-testWatch = makeTriple 
+testWatch = makeWatch  
                 (makeAbsDir "/home/frank/Workspace8/uniform/uniform-watch")
                 (\f -> putIOwords ["testWatch", showT f]) 
                 [Glob "*.txt"]
 
-testWatch2 = makeTriple 
+testWatch2 = makeWatch  
   (makeAbsDir "/home/frank/Workspace8/uniform/uniform-watch")
   (\f -> putIOwords ["testWatch2", showT f]) 
-  [Glob "*.html", Glob "*.md"]
+  [Glob "*.html", Glob "**/*.md"]
 
-makeTriple a b c = (a,b,c)
+-- makeWatch a b c = (a,b,c)
 
 mainWatch3 ::  ErrIO ()
-mainWatch3  = callIO $ do 
+mainWatch3  = callIO $ 
     defaultMain $ do 
       -- "*.txt"  |> opx
       let deps = map (setTwichAddModifyDelete opx) ["*.txt"] :: [Dep]
-      sequence deps
-      return ()
+      sequence_ deps
+      -- return ()
   where
       opx filepath = putIOwords ["mainWatch3", "touched", s2t filepath]                    
