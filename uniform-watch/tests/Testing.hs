@@ -28,8 +28,9 @@ main = do
 
 main3 = mainTwitchMinimal 
 
-main4 = runErr $ mainWatch testWatch
+main4 = runErr $ mainWatch [testWatch]
 main5 = runErr $ mainWatch3
+main6 = runErr $ mainWatch [testWatch, testWatch2]
 
 
 

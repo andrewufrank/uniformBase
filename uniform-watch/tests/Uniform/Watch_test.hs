@@ -37,21 +37,22 @@ import Uniform.WebServer
 import Control.Exception
 import Twitch 
  
-mainWatch :: ErrIO () ->  ErrIO () 
-mainWatch watchOp1  = -- callIO $ defaultMain $ 
+mainWatch :: [WatchOpType] ->  ErrIO () 
+mainWatch watches  = -- callIO $ defaultMain $ 
     bracketErrIO
         (do
             -- first
             putIOwords ["mainWatch started"]
             -- watchTID <- callIO $ forkIO (runErrorVoid $ testWatch)
-            watchOp1
-            -- runScotty zero zero zero -- just to make it run forever
-            return () 
+            watchTIDs <- multipleWatches watches
+            runScotty zero zero zero -- just to make it run forever
+                  -- the zeros produce strange output!
+            return watchTIDs 
             )
-        (\()       -- last
+        (\watchTIDs      -- last
         -> do
             putIOwords ["main watch  end"]
-            -- callIO $ killThread (watchTID)
+            callIO $ mapM killThread (watchTIDs)
             return ()
             )
         (\_         -- during
@@ -62,39 +63,28 @@ mainWatch watchOp1  = -- callIO $ defaultMain $
             return ()
             )
     
-type WatchOpType = (Path Abs Dir, (FilePath -> ErrIO ()), [Glob])
-
 
 watchOp :: Path Abs Dir -> (FilePath -> ErrIO ()) -> [Glob]-> ErrIO ()
 watchOp path  ops globs = mainWatch2 (path, ops, globs)
-                 
-testWatch = watchOp 
+testWatch, testWatch2 :: WatchOpType                
+testWatch = makeTriple 
                 (makeAbsDir "/home/frank/Workspace8/uniform/uniform-watch")
                 (\f -> putIOwords ["testWatch", showT f]) 
                 [Glob "*.txt"]
 
-mainWatch3 :: 
-  -- (Show [Text], Show (Path b Dir))
-  -- => 
-  --   (FilePath -> ErrIO ())
-  -- -> Path b Dir
-  -- -> [FilePath]
-      ErrIO ()
+testWatch2 = makeTriple 
+  (makeAbsDir "/home/frank/Workspace8/uniform/uniform-watch")
+  (\f -> putIOwords ["testWatch2", showT f]) 
+  [Glob "*.html", Glob "*.md"]
+
+makeTriple a b c = (a,b,c)
+
+mainWatch3 ::  ErrIO ()
 mainWatch3  = callIO $ do 
     defaultMain $ do 
       -- "*.txt"  |> opx
       let deps = map (setTwichAddModifyDelete opx) ["*.txt"] :: [Dep]
       sequence deps
       return ()
-
-opx filepath = putIOwords ["mainWatch3", "touched", s2t filepath]                    
-main2 :: IO ()
-main2      -- just a simple bake for test
-  = do
-    putStrLn "main2"
-    runErrorVoid
-      $ do
-        mainWatch mainWatch3
-        putIOwords ["mainWatch ends"]     
-
-        return ()
+  where
+      opx filepath = putIOwords ["mainWatch3", "touched", s2t filepath]                    

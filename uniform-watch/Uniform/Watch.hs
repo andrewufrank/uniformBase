@@ -27,7 +27,7 @@ module Uniform.Watch
   ) where
 
 import Twitch hiding (Options, log)
-
+import GHC.Conc.Sync
 import qualified Twitch
 
 --import Control.Concurrent.Spawn
@@ -41,8 +41,14 @@ newtype Glob = Glob Text
 -- the globs used here (possibly use the type from system-filepath-glob
 unGlob (Glob a) = a
 
-multipleWatches :: ErrIO () 
-multipleWatches = return () 
+multipleWatches :: [WatchOpType] ->  ErrIO [GHC.Conc.Sync.ThreadId]
+multipleWatches ws = do 
+      is <- mapM mainWatch2one ws
+  
+      return is
+  where 
+    mainWatch2one :: WatchOpType -> ErrIO GHC.Conc.Sync.ThreadId
+    mainWatch2one w = callIO $ forkIO (runErrorVoid $ mainWatch2 w)    
 
 twichDefault4ssg =
   Twitch.Options
