@@ -23,6 +23,7 @@
 
 
 module Uniform.Ftp (module Uniform.Ftp
+    , runStateT 
         )  where
 
 import           Uniform.Strings hiding ((</>), (<.>), S)

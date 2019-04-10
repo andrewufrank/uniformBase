@@ -134,4 +134,4 @@ mainStateIOd = do
 
 wdir = makeAbsDir "/home/frank/Workspace8/uniform/uniform-ftp/"
 
- 
+-- uploadBaked = ftpUploadRecurse 
