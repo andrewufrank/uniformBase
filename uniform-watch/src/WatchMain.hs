@@ -31,6 +31,6 @@ main = startProg
     "WatchMain"
     "testing watch"
             (do
-                mainWatch testWatch
+                mainWatch [testWatch] foreverScotty
             )
 

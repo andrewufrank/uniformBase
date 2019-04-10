@@ -18,8 +18,9 @@ import Uniform.TwitchMinimal
 import Uniform.Strings
 import Uniform.Watch_test
 import Uniform.Error
+import Uniform.Watch
 
-main = do
+main1 = do
     putIOwords ["HTF watchTest.hs:\n uniform-watch test"]
     r <- htfMainWithArgs ["--quiet"] htf_importedTests
     putIOwords ["HTF end examp;eTest.hs:\n", showT r]
@@ -28,9 +29,9 @@ main = do
 
 main3 = mainTwitchMinimal 
 
-main4 = runErr $ mainWatch [testWatch]
+main4 = runErr $ mainWatch [testWatch] foreverScotty
 main5 = runErr $ mainWatch3
-main6 = runErr $ mainWatch [testWatch, testWatch2]
+main = runErr $ mainWatch [testWatch, testWatch2] foreverScotty
 
 
 

@@ -37,32 +37,14 @@ import Uniform.WebServer
 import Control.Exception
 import Twitch 
  
-mainWatch :: [WatchOpType] ->  ErrIO () 
-mainWatch watches  = -- callIO $ defaultMain $ 
-    bracketErrIO
-        (do
-            -- first
-            putIOwords ["mainWatch started"]
-            -- watchTID <- callIO $ forkIO (runErrorVoid $ testWatch)
-            watchTIDs <- multipleWatches watches
-            runScotty zero zero zero -- just to make it run forever
-                  -- the zeros produce strange output!
-            return watchTIDs 
-            )
-        (\watchTIDs      -- last
-        -> do
-            putIOwords ["main watch  end"]
-            callIO $ mapM killThread (watchTIDs)
-            return ()
-            )
-        (\_         -- during
-        -> do
-            putIOwords ["mainWatch run"]
-            -- brackets the runs of shake runs 
-            putIOwords ["mainWatch run end "]
-            return ()
-            )
-    
+          
+
+foreverScotty :: ErrIO () 
+foreverScotty = runScotty 3000 
+    (makeAbsDir "/home/frank/Workspace8/uniform/uniform-watch")  
+    (     makeRelFile "test1.html")  
+-- the zeros produce strange output!
+
 
 watchOp :: Path Abs Dir -> (FilePath -> ErrIO ()) -> [Glob]-> ErrIO ()
 watchOp path  ops globs = mainWatch2 (path, ops, globs)

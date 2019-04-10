@@ -96,3 +96,29 @@ runErrorRepl :: (Show a) => a -> IO ()
 runErrorRepl a = do
   putIOwords ["runErrorRepl", "input is", showT a]
   return ()
+
+mainWatch :: [WatchOpType] -> ErrIO () ->  ErrIO () 
+mainWatch watches  foreverOp = -- callIO $ defaultMain $ 
+    bracketErrIO
+        (do
+            -- first
+            putIOwords ["mainWatch started"]
+            -- watchTID <- callIO $ forkIO (runErrorVoid $ testWatch)
+            watchTIDs <- multipleWatches watches
+            foreverOp -- just to make it run forever
+                  
+            return watchTIDs 
+            )
+        (\watchTIDs      -- last
+        -> do
+            putIOwords ["main watch  end"]
+            callIO $ mapM killThread (watchTIDs)
+            return ()
+            )
+        (\_         -- during
+        -> do
+            putIOwords ["mainWatch run"]
+            -- brackets the runs of shake runs 
+            putIOwords ["mainWatch run end "]
+            return ()
+            )
