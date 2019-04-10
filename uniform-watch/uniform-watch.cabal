@@ -81,3 +81,4 @@ Test-Suite errortest
     hs-source-dirs: tests
     other-modules:
         Uniform.Watch_test
+        Uniform.TwitchMinimal

@@ -2,7 +2,7 @@
 --
 -- Module      :   top tests for layout
 -----------------------------------------------------------------------------
--- {-# OPTIONS_GHC -F -pgmF htfpp #-}
+ 
 
     {-# LANGUAGE
             MultiParamTypeClasses
@@ -21,21 +21,16 @@ module Main     where
 
 
 
--- import Test.Framework
--- import {-@ HTF_TESTS @-} Uniform.Error
 import   Uniform.Error
 import Uniform.Strings
 import Uniform.FileIO 
-import           Control.Concurrent (forkIO, killThread)
-import           Uniform.Convenience.StartApp (startProg)
-import Uniform.Watch (mainWatch2)
-import Uniform.WebServer
 import Uniform.Watch_test
+import Uniform.Convenience.StartApp
 
 main = startProg
     "WatchMain"
     "testing watch"
             (do
-                mainWatch 
+                mainWatch testWatch
             )
 

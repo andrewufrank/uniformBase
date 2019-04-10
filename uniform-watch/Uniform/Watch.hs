@@ -13,7 +13,9 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
-    -- runErrorT is  but used in monads-tf
+{-# LANGUAGE DeriveGeneric  #-}
+
+-- runErrorT is  but used in monads-tf
 {-# OPTIONS_GHC -w #-}
 
 -- {-# LANGUAGE PackageImports        #-}
@@ -34,6 +36,14 @@ import           Control.Concurrent (forkIO, killThread)
 import Uniform.FileIO
 import Uniform.Strings hiding (S, (<.>), (</>))
 
+newtype Glob = Glob Text 
+    deriving (Show, Read, Eq, Generic)
+-- the globs used here (possibly use the type from system-filepath-glob
+unGlob (Glob a) = a
+
+multipleWatches :: ErrIO () 
+multipleWatches = return () 
+
 twichDefault4ssg =
   Twitch.Options
     { Twitch.log = NoLogger
@@ -46,23 +56,24 @@ twichDefault4ssg =
     , usePolling = False
     }
 
-mainWatch2 :: (Show [Text], Show (Path b Dir))
-  => (FilePath -> ErrIO ())
-  -> Path b Dir
-  -> [FilePath]
-  -> ErrIO ()
-mainWatch2 op path1 exts = do
+type WatchOpType = (Path Abs Dir, (FilePath -> ErrIO ()), [Glob])
+
+mainWatch2 :: (Show [Text], Show (Path Abs Dir))
+  => WatchOpType   -> ErrIO ()
+-- | start watching for a set of files (glob patterns) in one directory
+-- essentially producing lines in the minimal twitch example with a single operation
+mainWatch2 (path1,op,globs) = do
   -- putIOwords ["mainWatch2", "\n\tpath1", showT path1, "\n\textensions", showT exts]
     -- the path1 is dir to watch -- should probably be fixed to absolute
-  let exts2 = map fromString exts :: [Dep]
-  putIOwords ["mainWatch2", "\n\tpath1", showT path1, "\n\textensions", showT exts]
+  let globs2 = map (fromString . t2s . unGlob) globs :: [Dep]
+  putIOwords ["mainWatch2", "\n\tpath1", showT path1, "\n\textensions", showT globs]
 
   callIO $ do 
     Twitch.defaultMainWithOptions
       (twichDefault4ssg
          {Twitch.root = Just . toFilePath $ path1, Twitch.log = Twitch.NoLogger})
            $ do
-                let deps = map (setTwichAddModifyDelete op) exts2 :: [Dep]
+                let deps = map (setTwichAddModifyDelete op) globs2 :: [Dep]
                 sequence_ deps
     putIOwords ["mainWatch2", "end"]
 

@@ -17,6 +17,7 @@ import {-@ HTF_TESTS @-} Uniform.Watch_test
 import Uniform.TwitchMinimal 
 import Uniform.Strings
 import Uniform.Watch_test
+import Uniform.Error
 
 main = do
     putIOwords ["HTF watchTest.hs:\n uniform-watch test"]
@@ -27,7 +28,8 @@ main = do
 
 main3 = mainTwitchMinimal 
 
-main4 = mainWatch
+main4 = runErr $ mainWatch testWatch
+main5 = runErr $ mainWatch3
 
 
 

@@ -16,6 +16,7 @@
 {-# LANGUAGE TypeFamilies          #-}
 -- {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
+{-# LANGUAGE DeriveGeneric  #-}
 
 -- {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
 
@@ -61,18 +62,16 @@ mainWatch watchOp1  = -- callIO $ defaultMain $
             return ()
             )
     
-type WatchOpType = Path Abs Dir -> (Path Abs File -> ErrIO ()) -> [Extension]-> ErrIO ()
+type WatchOpType = (Path Abs Dir, (FilePath -> ErrIO ()), [Glob])
 
-watchOp :: Path Abs Dir -> (FilePath -> ErrIO ()) -> [Extension]-> ErrIO ()
-watchOp path  ops exts = mainWatch2
-                ops
-                path    -- :: Path Abs Dir
-                (map show exts) :: ErrIO ()
+
+watchOp :: Path Abs Dir -> (FilePath -> ErrIO ()) -> [Glob]-> ErrIO ()
+watchOp path  ops globs = mainWatch2 (path, ops, globs)
+                 
 testWatch = watchOp 
                 (makeAbsDir "/home/frank/Workspace8/uniform/uniform-watch")
                 (\f -> putIOwords ["testWatch", showT f]) 
-                 
-                [Extension "txt"]
+                [Glob "*.txt"]
 
 mainWatch3 :: 
   -- (Show [Text], Show (Path b Dir))
