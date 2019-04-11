@@ -32,7 +32,7 @@ import Uniform.Error
 import Uniform.FileIO 
 import Control.Monad.Trans.State 
 import Data.List.Utils
-
+import System.IO.Binary (readBinaryFile)
 username = "gerastre"
 keycpanel = "geras125cpanel"
 
@@ -56,7 +56,7 @@ ftpConnect ::  FTPstate FTPConnection --
 -- establish the connection, idempotent 
 ftpConnect  = do
         ftp <- get 
-        putIOwords ["connect starts"]
+        -- putIOwords ["connect starts"]
         case hand ftp of 
             Nothing -> do 
                 h <- callIO $ do 
@@ -68,8 +68,9 @@ ftpConnect  = do
                 return h
             Just _ -> return (getConnection ftp)
 
-ftpChangeDir :: Path b Dir -> FTPstate ()
+ftpChangeDir :: Show (Path b Dir) => Path b Dir -> FTPstate ()
 ftpChangeDir path = do 
+    putIOwords ["connect ftpChangeDir", showT path]
     h <- ftpConnect
     callIO $ cwd h (toFilePath path) 
     return () 
@@ -78,6 +79,7 @@ ftpChangeDir path = do
 ftpMakeDir :: Path Abs Dir -> FTPstate ()
 -- check if it exists already - no op if exist
 ftpMakeDir path = do 
+        putIOwords ["ftpMakeDir", showT path]
         h <- ftpConnect
         callIO $ do 
                          mkdir h (toFilePath path) 
@@ -94,12 +96,14 @@ ftpMakeDir path = do
 ftpCurrentDir ::  FTPstate (Path Abs Dir)
 -- get current dir 
 ftpCurrentDir  = do 
+    putIOwords ["ftpCurrentDir"]
     h <- ftpConnect
     (p,e) <- callIO $ pwd h 
     return . makeAbsDir . fromJustNote "ftpCurrent dir werw222" $ p 
 
 ftpDir :: FTPstate [Text]
 ftpDir = do 
+    putIOwords ["ftpDir"]
     h <- ftpConnect 
     s <- callIO $ nlst h Nothing 
     return (map s2t s)
@@ -107,21 +111,33 @@ ftpDir = do
 ftpUpload2currentDir :: Path Abs File -> Path Rel File -> FTPstate () 
 -- upload a file relative to current dir 
 ftpUpload2currentDir source target = do 
+    putIOwords ["ftpUpload2currentDir", showT source, showT target]
     h <- ftpConnect 
-    content :: String <- lift $ readFile2 source
+    -- content :: String <- lift $ readFile2 source
     callIO $ do 
-            res <- putbinary h (toFilePath target) content 
-            putIOwords ["ftpUpload", showT source, showT target, showT res]
+            -- res <- putbinary h (toFilePath target) content 
+            res <- uploadbinary2 h (toFilePath source) (toFilePath target)
+            putIOwords ["ftpUpload2currentDir files to upload"
+                        , showT source, showT target, showT res]
 
     return () 
-    
+{- | Uploads a file from disk in binary mode. Note: filename is used for both local and remote. -}
+uploadbinary2 :: FTPConnection -> FilePath -> FilePath  -> IO Text
+uploadbinary2 h source target = do 
+            input <- readBinaryFile source
+            -- res <- putbinary h target input
+            -- putIOwords ["uploadbinary2", showT source ]
+            return  ""
+
+                       
 ftpUpload  :: Path Abs File -> Path Abs File -> FTPstate () 
 -- upload a file to absolute path (relative to root)
 ftpUpload  source target = do 
+    putIOwords ["ftpUpload", showT source, showT target]
     h <- ftpConnect 
-    content :: String <- lift $ readFile2 source
+    -- content :: String <- lift $ readFile2 source
     callIO $ do 
-            res <- putbinary h (toFilePath target) content 
+            res <- uploadbinary2 h (toFilePath source) (toFilePath target) 
             putIOwords ["ftpUpload", showT source, showT target, showT res]
 
     return () 
@@ -132,25 +148,26 @@ ftpUploadFilesFromDir :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
 -- the target dir must exist 
 
 ftpUploadFilesFromDir source target = do 
+    putIOwords ["ftpUploadFilesFromDir", showT source, showT target]
     h <- ftpConnect 
     ftpMakeDir target 
 
-    files :: [Path Abs File] <- lift $ getDirContentFiles  ( source)
+    files :: [Path Abs File] <- lift $ getDirContentNonHiddenFiles  source
     let files2 = map (fromJustNote "stripPrefix ftpUpload 77454" . stripProperPrefixMaybe source) files
             :: [Path Rel File]
-    putIOwords ["ftpUpload fils to upload", showT files2]
+    putIOwords ["ftpUploadFilesFromDir files to upload", showT files2]
     mapM_ (\s -> ftpUpload (source </> s) (target </> s)) (seqList files2)
 
 ftpUploadDirsRecurse :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
 -- recursive upload of a dir
 ftpUploadDirsRecurse source target = do 
+    putIOwords ["ftpUploadDirsRecurse", showT source, showT target]
     h <- ftpConnect
     -- make directory and upload files  
     ftpUploadFilesFromDir source target
     -- get all the directories 
     (dirs1, targets) <- lift $ do 
-        dirs :: [Path Abs Dir] <- getDirectoryDirs' ( source )
-        let dirs1 =   dirs
+        dirs1 :: [Path Abs Dir] <- getDirectoryDirsNonHidden' source
         putIOwords ["\n\nftpUploadDirsRecurse for ", showT source, " dirs ", showT dirs1]
         let targets = map (\f-> target </>  (fromJustNote "234233772" . stripProperPrefixMaybe source $ f)) dirs1
         putIOwords ["ftpUploadDirsRecurse targets ", showT targets]
@@ -164,5 +181,5 @@ ftpUploadDirsRecurse source target = do
             [rs] :: [ ()]<- mapM (\(s,t) -> ftpUploadDirsRecurse s t) (seqList sts)
             putIOwords ["ftpUploadDirsRecurse end "]
         else do 
-            putIOwords ["ftpUploadDirsRecurse no recursion", showT sts]
+            putIOwords ["ftpUploadDirsRecurse no recursion", showT sts, "for source", showT source]
             return ()

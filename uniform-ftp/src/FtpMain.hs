@@ -29,9 +29,10 @@ import Control.Monad.Trans.State
 main :: IO ()
 main = do
     putIOwords ["start FTP main"]
-    runErrorVoid $ do 
-        (a,s)  <- runStateT mainStateIOd ftp0
-        return ()
+    -- runErrorVoid $ do 
+    --     (a,s)  <- runStateT mainStateIOd ftp0
+    --     return ()
+    main3
     putIOwords [" end FTP main"]
     return ()
 

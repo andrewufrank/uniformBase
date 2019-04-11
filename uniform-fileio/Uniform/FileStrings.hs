@@ -124,6 +124,8 @@ instance DirOps FilePath where
 --                            , " to " , showT  new]
     getDirectoryDirs' dir = filterM f =<< getDirCont  dir
         where f  =  doesDirExist'  
+    getDirectoryDirsNonHidden' dir = filterM f =<< getDirContentNonHidden  dir
+         where f  =  doesDirExist'  
 
     deleteDirRecursive f =
         do
@@ -317,9 +319,13 @@ instance DirOps (Path Abs Dir)  where
 --                        [ "renamed dir from ", showT old
 --                            , " to " , showT  new]
     getDirectoryDirs' dir = do 
-            res <- filterM f =<< getDirCont  (toFilePath dir)
-            return . map makeAbsDir $ res 
-            where f  =  doesDirExist'  
+        res <- filterM f =<< getDirCont  (toFilePath dir)
+        return . map makeAbsDir $ res 
+        where f  =  doesDirExist'  
+    getDirectoryDirsNonHidden' dir = do 
+        res <- filterM f =<< getDirContentNonHidden  (toFilePath dir)
+        return . map makeAbsDir $ res 
+        where f  =  doesDirExist'  
 
 
     createDirIfMissing' = PathIO.createDirIfMissing True . unPath
@@ -348,6 +354,11 @@ instance DirOps (Path Rel Dir)  where
         return . map makeRelDir $ res 
         where f  =  doesDirExist'
 
+    getDirectoryDirsNonHidden' dir = do 
+            res <- filterM f =<< getDirContentNonHidden  (toFilePath dir)
+            return . map makeRelDir $ res 
+            where f  =  doesDirExist'
+    
     createDirIfMissing' = PathIO.createDirIfMissing True . unPath
 
     copyDirRecursive old new = PathIO.copyDirRecur (unPath old) (unPath new)
@@ -459,17 +470,27 @@ instance (Show (Path ar File)) => FileOps2 (Path ar File) L.ByteString where
     appendFile2  fp st = callIO  $  L.appendFile  (unL fp) st
 
 instance FileOps2a FilePath FilePath where 
-    getDirContentFiles dir = filterM doesFileExist' =<< getDirCont  dir
+    getDirContentFiles dir = filterM doesFileExist' 
+                    =<< getDirCont  dir
+        -- where f =  doesFileExist' 
+    getDirContentNonHiddenFiles dir = filterM doesFileExist' 
+                    =<< getDirContentNonHidden  dir
         -- where f =  doesFileExist' 
 
 instance FileOps2a (Path Abs Dir ) (Path Abs File) where 
     getDirContentFiles dir = do  
         res <- getDirContentFiles (toFilePath dir) 
         return (map makeAbsFile res)
-
+    getDirContentNonHiddenFiles dir = do  
+        res <- getDirContentNonHiddenFiles (toFilePath dir) 
+        return (map makeAbsFile res)
+    
 instance FileOps2a (Path Rel Dir ) (Path Rel File) where 
     getDirContentFiles dir = do  
         res <- getDirContentFiles (toFilePath dir) 
+        return (map makeRelFile res)
+    getDirContentNonHiddenFiles dir = do  
+        res <- getDirContentNonHiddenFiles (toFilePath dir) 
         return (map makeRelFile res)
 --bracket2
 --        :: IO a         -- ^ computation to run first (\"acquire resource\")

@@ -73,6 +73,7 @@ class DirOps fp where
     -- get the directories (but not . and ..)
     -- getDirectoryDirs' dir = filterM f =<< getDirCont  dir
     --     where f  =  doesDirExist'  
+    getDirectoryDirsNonHidden' ::  fp -> ErrIO [fp]
 
     copyDirRecursive :: fp -> fp -> ErrIO ()
     -- | copy the directory content recursively, does not follow symlink
@@ -156,6 +157,9 @@ class (Show fd, Show ff) => FileOps2a fd ff where
     -- getDirContentFiles dir = filterM f =<< getDirCont  dir
     --     where f x =  doesFileExist'   x
 
+    getDirContentNonHiddenFiles :: fd -> ErrIO [ff]
+    -- getDirContentFiles dir = filterM f =<< getDirCont  dir
+    --     where f x =  doesFileExist'   x
 --
 --
 ---- | the operations on files with content

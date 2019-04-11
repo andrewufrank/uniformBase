@@ -25,7 +25,7 @@ main = do
   putIOwords ["HTF exampleTest.hs:\n uniform-ftp test"]
   r <- htfMainWithArgs ["--quiet"] htf_importedTests
   putIOwords ["HTF end exampleTest.hs:\n", showT r]
-  -- ma?in2 
+  main3 
   return r
 
 main2 :: IO ()

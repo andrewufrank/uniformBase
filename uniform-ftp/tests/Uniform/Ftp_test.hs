@@ -134,4 +134,11 @@ mainStateIOd = do
 
 wdir = makeAbsDir "/home/frank/Workspace8/uniform/uniform-ftp/"
 
+main3 = runErrorVoid $ do 
+        (a,s)  <- runStateT  
+                     (ftpUploadDirsRecurse bakedPath (makeAbsDir "/test.gerastree.at/"))
+                     ftp0
+                     
+        return () 
+bakedPath = makeAbsDir "/home/frank/Workspace8/ssg/docs/site/baked"
 -- uploadBaked = ftpUploadRecurse 
