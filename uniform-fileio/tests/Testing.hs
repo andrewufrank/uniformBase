@@ -27,7 +27,7 @@ import     {-@ HTF_TESTS @-}       Uniform.FileStrings_test
 -- import    {-@ HTF_TESTS @-}        Uniform.TypedFile_test
 
 import           Uniform.Strings
-
+import Uniform.Error 
 --import TestingFileIO
 
 test_fileio = assertBool False
@@ -41,3 +41,10 @@ main = do
     putIOwords ["HTF end LayoutTest.hs:\n posTest"]
     runTest test_fileio
     return ()
+
+file1test = do
+    putStrLn "file1test"
+    -- push2
+    -- runErrorVoid $ do 
+    test_hidden1
+    return () 

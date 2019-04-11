@@ -147,7 +147,7 @@ res3132 =
 
 test_getDirCont3 = do
     res :: ErrOrVal [FilePath] <- runErr $ getDirContentFiles (dir31) 
-    assertEqual (Right res3132) res 
+    assertEqual (Right res3131) res 
 
 test_getDirCont4 = do 
     res :: ErrOrVal [Path Rel File]  <- 
@@ -155,11 +155,25 @@ test_getDirCont4 = do
     assertEqual (Right (map makeRelFile res3132)) res 
                 -- (fmap makeAbsFile res3131) res 
 
-test_hidden1 = do 
+res3134 = -- no hidden
+        ["dir4test/testghci", "dir4test/testfile.txt",
+        "dir4test/f1", "dir4test/Setup.lhs", "dir4test/f2",
+        "dir4test/testgitignore"]
+
+res3135 =    -- with hidden 
+        "dir4test/.ghci" : res3134
+
+
+test_hidden1 = do  -- no hidden files
     res :: ErrOrVal [FilePath]  <- 
-                    runErr $ getDirContentNonHidden fp dir31
-    assertEqual (Right (map makeRelFile res3132)) res 
-                -- (fmap makeAbsFile res3131) res 
+                    runErr $ getDirContNonHidden  dir31
+    assertEqual (Right ( res3134)) res 
+
+test_hidden2 = do   -- with hidden files
+    res :: ErrOrVal [FilePath]  <- 
+                    runErr $ getDirCont  dir31
+    assertEqual (Right ( res3135)) res 
+                                -- (fmap makeAbsFile res3131) res 
 
 --test_md5_nonReadablep = do
 --    res :: ErrOrVal (Maybe Text)  <- runErr $ getMD5 procFile

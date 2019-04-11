@@ -212,34 +212,22 @@ instance FileOps FilePath  where
             putIOwords ["getMD5 in FileStrings.hs", showT fn, showT e]  -- reached
             throwErrorT $ ["getMD5 error for" , showT fn]
 
-    getDirCont fn  = do
---        putIOwords ["getDirCont", show f]
-        testDir <- doesDirExist' fn
-        readExec <- getFileAccess fn (True, False, True)
-        if testDir && readExec then
-            do
-               r <- callIO . D.listDirectory $ fn
-               let r2 = filter ( \file' -> (file' /= "." && file' /= "..")  ) r
-               let r3 = map (fn </>) r2
---               putIOwords ["FileStrigs - getDirCont", showT fn, "files: ", unwordsT . map showT $ r]
-               return r3
-          else
-                throwErrorT
-                    ["getDirCont not exist or not readable"
-                    , showT fn, showT testDir, showT readExec]
+    getDirCont fn  = getDirContAll True fn 
+    -- get all content in a directory 
 
+    
     getDirContNonHidden fp = do
 --        putIOwords ["getDirContentNonHidden", s2t fp]
-        r <- getDirCont fp
-        let r2 = filter (not . isHidden) r
+        r <- getDirContAll False fp
+        -- let r2 = filter (not . isHidden) r
 ----        r2 <- callIO $ D.listDirectory (unL fp)
 ----          would be possible but filter here is simpler
 ----        let r2 = filter ( \file' -> (file' /= "." && file' /= "..")  ) r
 ----        let r2 = filter (not . isPrefixOf "." ) r
 ----        putIOwords ["nonhidden files", show r2]
-        return r2
-            where
-                isHidden = isPrefixOf "."
+        return r
+            -- where
+            --     isHidden = isPrefixOf "."
 
     deleteFile f = do
         --  putIOwords ["delete file ", showT f]
@@ -295,6 +283,25 @@ instance FileOps FilePath  where
         -- most likely the dir does not exist.
         -- try to create the file?
 --    closeFile _ handle = callIO $ SIO.hClose handle
+
+getDirContAll hiddenFlag fn = do
+    -- the hiddenFlag must be true to include them 
+--        putIOwords ["getDirCont", show f]
+    testDir <- doesDirExist' fn
+    readExec <- getFileAccess fn (True, False, True)
+    if testDir && readExec then
+        do
+           r <- callIO . D.listDirectory $ fn
+           let r2 = filter ( \file' -> (file' /= "." && file' /= "..")  ) r
+           let r3 = if hiddenFlag then r2 
+                            else filter (not . isPrefixOf ".") r2
+           let r4 = map (fn </>) r3
+--               putIOwords ["FileStrigs - getDirCont", showT fn, "files: ", unwordsT . map showT $ r4]
+           return r4
+      else
+            throwErrorT
+                ["getDirCont not exist or not readable"
+                , showT fn, showT testDir, showT readExec]
 
 --unL = t2s . filepath2text lpX
 --mkL = mkFilepath lpX . s2t
