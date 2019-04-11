@@ -125,9 +125,9 @@ ftpUpload2currentDir source target = do
 uploadbinary2 :: FTPConnection -> FilePath -> FilePath  -> IO Text
 uploadbinary2 h source target = do 
             input <- readBinaryFile source
-            -- res <- putbinary h target input
-            -- putIOwords ["uploadbinary2", showT source ]
-            return  ""
+            res <- putbinary h target input
+            res <- putIOwords ["uploadbinary2", showT source ]
+            return  . showT $ res 
 
                        
 ftpUpload  :: Path Abs File -> Path Abs File -> FTPstate () 
@@ -161,25 +161,25 @@ ftpUploadFilesFromDir source target = do
 ftpUploadDirsRecurse :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
 -- recursive upload of a dir
 ftpUploadDirsRecurse source target = do 
-    putIOwords ["ftpUploadDirsRecurse", showT source, showT target]
+    putIOwords ["ftpUploadDirsRecurse for source", showT source, showT target]
     h <- ftpConnect
     -- make directory and upload files  
     ftpUploadFilesFromDir source target
     -- get all the directories 
-    (dirs1, targets) <- lift $ do 
-        dirs1 :: [Path Abs Dir] <- getDirectoryDirsNonHidden' source
-        putIOwords ["\n\nftpUploadDirsRecurse for ", showT source, " dirs ", showT dirs1]
-        let targets = map (\f-> target </>  (fromJustNote "234233772" . stripProperPrefixMaybe source $ f)) dirs1
-        putIOwords ["ftpUploadDirsRecurse targets ", showT targets]
-        return (dirs1,targets)
- 
-    let sts = zip dirs1 targets :: [(Path Abs Dir, Path Abs Dir)]
-
-    if not . null $ sts 
+    
+    dirs1 :: [Path Abs Dir] <- lift $ getDirectoryDirsNonHidden' source
+    if not . null $ dirs1 
         then do 
+            putIOwords ["\n\nftpUploadDirsRecurse ", " dirs ", showT dirs1]
+            let targets = map (\f-> target </>  (fromJustNote "234233772" . stripProperPrefixMaybe source $ f)) dirs1
+            putIOwords ["ftpUploadDirsRecurse targets ", showT targets]
+            -- return (dirs1,targets)
+
+            let sts = zip dirs1 targets :: [(Path Abs Dir, Path Abs Dir)]
+
             putIOwords ["ftpUploadDirsRecurse recurse  ", "dirs and targets", unwords'. map showNice $ sts]
-            [rs] :: [ ()]<- mapM (\(s,t) -> ftpUploadDirsRecurse s t) (seqList sts)
+            mapM_ (\(s,t) -> ftpUploadDirsRecurse s t) (seqList sts)
             putIOwords ["ftpUploadDirsRecurse end "]
         else do 
-            putIOwords ["ftpUploadDirsRecurse no recursion", showT sts, "for source", showT source]
+            putIOwords ["ftpUploadDirsRecurse no recursion", showT dirs1, "for source", showT source]
             return ()
