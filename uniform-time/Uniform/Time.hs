@@ -26,6 +26,7 @@ module Uniform.Time (
         , module Uniform.Error   -- or at least ErrIO
         -- , module Uniform.Strings
         , EpochTime, UTCTime (..)
+        -- , fromEpochTime'
 --    , htf_thisModulesTests
         )  where
 
@@ -37,6 +38,8 @@ import Uniform.Error
 import Data.Convertible (convert)
 import System.Posix.Types (EpochTime)
 --import System.Time (getClockTime, toCalendarTime, calendarTimeToString)
+import Data.Time.Clock.POSIX
+
 
 year2000 :: UTCTime
 year2000 = readDate3 "2000-01-01"
@@ -135,3 +138,6 @@ readDateMaybe dateText  = headNote "readDateMaybe werwerxx" . dropWhile isNothin
 
         dateString = t2s dateText
 
+fromEpochTime' :: EpochTime -> UTCTime
+fromEpochTime' et = posixSecondsToUTCTime (realToFrac et)
+-- from Distribution.Hackage.DB.Utility from hackage-db

@@ -24,12 +24,14 @@
 
 module Uniform.Ftp (module Uniform.Ftp
     , runStateT 
+    , testNewerModTime
         )  where
 
 import           Uniform.Strings hiding ((</>), (<.>), S)
 import "ftphs" Network.FTP.Client
 import Uniform.Error 
 import Uniform.FileIO 
+import Uniform.Time
 import Control.Monad.Trans.State 
 import Data.List.Utils
 import System.IO.Binary (readBinaryFile)
@@ -125,8 +127,8 @@ ftpUpload2currentDir source target = do
 uploadbinary2 :: FTPConnection -> FilePath -> FilePath  -> IO Text
 uploadbinary2 h source target = do 
             input <- readBinaryFile source
-            res <- putbinary h target input
-            res <- putIOwords ["uploadbinary2", showT source ]
+            res <- return "" -- putbinary h target input
+            putIOwords ["uploadbinary2 ", showT source ,"----------------------FTP transfer"]
             return  . showT $ res 
 
                        
@@ -142,29 +144,30 @@ ftpUpload  source target = do
 
     return () 
     
-ftpUploadFilesFromDir :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
+ftpUploadFilesFromDir ::(Path Abs File -> ErrIO Bool) -> Path Abs Dir -> Path Abs Dir -> FTPstate ()
 -- upload all the files in a directory 
 -- ignore the dirs in the file 
 -- the target dir must exist 
 
-ftpUploadFilesFromDir source target = do 
+ftpUploadFilesFromDir test source target = do 
     putIOwords ["ftpUploadFilesFromDir", showT source, showT target]
     h <- ftpConnect 
     ftpMakeDir target 
 
-    files :: [Path Abs File] <- lift $ getDirContentNonHiddenFiles  source
-    let files2 = map (fromJustNote "stripPrefix ftpUpload 77454" . stripProperPrefixMaybe source) files
-            :: [Path Rel File]
-    putIOwords ["ftpUploadFilesFromDir files to upload", showT files2]
-    mapM_ (\s -> ftpUpload (source </> s) (target </> s)) (seqList files2)
+    files1 :: [Path Abs File] <- lift $ getDirContentNonHiddenFiles  source
+    files2 <-lift $ filterM test files1
+    let files3 = map (fromJustNote "stripPrefix ftpUpload 77454" . stripProperPrefixMaybe source) 
+                files2 :: [Path Rel File]
+    putIOwords ["ftpUploadFilesFromDir files to upload", showT files3]
+    mapM_ (\s -> ftpUpload (source </> s) (target </> s)) (seqList files3)
 
-ftpUploadDirsRecurse :: Path Abs Dir -> Path Abs Dir -> FTPstate ()
+ftpUploadDirsRecurse :: (Path Abs File -> ErrIO Bool) ->  Path Abs Dir -> Path Abs Dir -> FTPstate ()
 -- recursive upload of a dir
-ftpUploadDirsRecurse source target = do 
+ftpUploadDirsRecurse test source target = do 
     putIOwords ["ftpUploadDirsRecurse for source", showT source, showT target]
     h <- ftpConnect
     -- make directory and upload files  
-    ftpUploadFilesFromDir source target
+    ftpUploadFilesFromDir test source target
     -- get all the directories 
     
     dirs1 :: [Path Abs Dir] <- lift $ getDirectoryDirsNonHidden' source
@@ -178,8 +181,18 @@ ftpUploadDirsRecurse source target = do
             let sts = zip dirs1 targets :: [(Path Abs Dir, Path Abs Dir)]
 
             putIOwords ["ftpUploadDirsRecurse recurse  ", "dirs and targets", unwords'. map showNice $ sts]
-            mapM_ (\(s,t) -> ftpUploadDirsRecurse s t) (seqList sts)
+            mapM_ (\(s,t) -> ftpUploadDirsRecurse test s t) (seqList sts)
             putIOwords ["ftpUploadDirsRecurse end "]
         else do 
             putIOwords ["ftpUploadDirsRecurse no recursion", showT dirs1, "for source", showT source]
             return ()
+
+
+
+testNewerModTime :: UTCTime -> Path Abs File -> ErrIO Bool 
+testNewerModTime basetime f = do 
+        etime <- getFileModificationTime f
+        let b = basetime < (fromEpochTime' etime)
+        when b $ putIOwords ["testNewerModTime basetime ", showT basetime
+                    , "is older than", showT etime]
+        return b 

@@ -29,6 +29,7 @@ import           Uniform.Strings hiding ((</>), (<.>), (<|>))
 import Uniform.Ftp
 import Uniform.FileIO
 -- import Control.Monad.Trans.State 
+import Uniform.Time 
 
 import Control.Exception
 
@@ -106,7 +107,7 @@ mainStateIOc = do
         let targetDir = makeAbsDir "/test.gerastree.at/dir4test"
         ftpMakeDir targetDir 
         lift $ putIOwords ["\ntesting uploads mainStateIOc upload "]
-        ftpUploadFilesFromDir (
+        ftpUploadFilesFromDir test0 (
                     (wdir </> makeRelDir "dir4test") :: Path Abs Dir)
                     targetDir
         ftpChangeDir targetDir
@@ -125,7 +126,7 @@ mainStateIOd = do
         let sourceDir = (wdir </> makeRelDir "dir4test") :: Path Abs Dir
         -- ftpMakeDir targetDir 
         lift $ putIOwords ["\ntesting uploads mainStateIOd upload "]
-        ftpUploadDirsRecurse sourceDir targetDir 
+        ftpUploadDirsRecurse test0 sourceDir targetDir 
         ftpChangeDir targetDir
         d3 <- ftpDir 
         lift $ putIOwords ["\ndir test with test1.txt", unlines'  d3]
@@ -134,11 +135,54 @@ mainStateIOd = do
 
 wdir = makeAbsDir "/home/frank/Workspace8/uniform/uniform-ftp/"
 
-main3 = runErrorVoid $ do 
+main3 = runErrorVoid $ do
+        currentTime <- getCurrentTimeUTC 
         (a,s)  <- runStateT  
-                     (ftpUploadDirsRecurse bakedPath (makeAbsDir "/test.gerastree.at/"))
+                     (ftpUploadDirsRecurse test0 bakedPath (makeAbsDir "/test.gerastree.at/"))
                      ftp0
-                     
+        putIOwords ["uploadTest completed", showT currentTime]             
         return () 
+
 bakedPath = makeAbsDir "/home/frank/Workspace8/ssg/docs/site/baked"
 -- uploadBaked = ftpUploadRecurse 
+
+lastUploadFile = makeRelFile "lastload.txt" :: Path Rel File 
+
+main4 = runErrorVoid $ do
+        -- test with file stored 
+        lastUpload1 <- readFile2 lastUploadFile   -- current dir - same as settingsfile 
+        let lastUpload = read lastUpload1 :: UTCTime 
+        let testWithLastTime  = testNewerModTime lastUpload
+
+        putIOwords ["uploadTest started - last was ", showT lastUpload]             
+
+        (a,s)  <- runStateT  
+                     (ftpUploadDirsRecurse testWithLastTime bakedPath 
+                        (makeAbsDir "/test.gerastree.at/")
+                        )
+                     ftp0
+
+        currentTime <- getCurrentTimeUTC 
+        writeFile2 lastUploadFile (show currentTime)
+
+        putIOwords ["uploadTest completed", showT currentTime]             
+        return () 
+
+
+test1, test0 :: Path Abs File -> ErrIO Bool 
+test1 = testNewerModTime (read "2019-04-11 12:00:00 UTC" :: UTCTime)  
+test0 = (\f -> return    True )
+
+test_time1 = do
+        res <- runErr $ do  
+                ct <- getCurrentTimeUTC 
+                b <- testNewerModTime ct (wdir </> makeRelFile "testfile.txt")
+                return b
+        assertEqual (Right False) res
+
+test_time2 = do
+        res <- runErr $ do  
+                
+                b <- test1 (wdir </> makeRelFile "testfile.txt")
+                return b
+        assertEqual (Right False) res

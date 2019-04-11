@@ -1,5 +1,5 @@
 name: uniform-ftp
-version: 0.0.1.2
+version: 0.0.1.4
 
 cabal-version: >=1.22
 build-type: Simple
@@ -27,6 +27,7 @@ library
         , uniform-strings
         , uniform-error 
         , uniform-fileio
+        , uniform-time
         -- , ftp-client
         , ftphs
         -- , monads-tf
@@ -58,6 +59,7 @@ executable ftpTest
         -- ,uniform-webserver  
         -- , uniform-watch 
         , uniform-ftp
+        , uniform-time
         , transformers
         , HTF
     other-modules:
@@ -71,6 +73,7 @@ Test-Suite tests_ftp
        , uniform-error
        , uniform-ftp
        , uniform-fileio
+       , uniform-time 
 --       , data-easy
 --       , basics -- must not be included, gives dependency issue
         , transformers 
