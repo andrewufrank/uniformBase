@@ -127,7 +127,8 @@ ftpUpload2currentDir source target = do
 uploadbinary2 :: FTPConnection -> FilePath -> FilePath  -> IO Text
 uploadbinary2 h source target = do 
             input <- readBinaryFile source
-            res <- return "" -- putbinary h target input
+            res <- -- return "" 
+                     putbinary h target input
             putIOwords ["uploadbinary2 ", showT source ,"----------------------FTP transfer"]
             return  . showT $ res 
 
@@ -192,7 +193,8 @@ ftpUploadDirsRecurse test source target = do
 testNewerModTime :: UTCTime -> Path Abs File -> ErrIO Bool 
 testNewerModTime basetime f = do 
         etime <- getFileModificationTime f
-        let b = basetime < (fromEpochTime' etime)
+        let eutc = fromEpochTime' etime
+        let b = basetime < eutc
         when b $ putIOwords ["testNewerModTime basetime ", showT basetime
-                    , "is older than", showT etime]
+                    , "is older than", showT eutc]
         return b 

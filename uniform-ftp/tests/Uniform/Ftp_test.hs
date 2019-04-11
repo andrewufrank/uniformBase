@@ -152,7 +152,8 @@ main4 = runErrorVoid $ do
         -- test with file stored 
         lastUpload1 <- readFile2 lastUploadFile   -- current dir - same as settingsfile 
         let lastUpload = read lastUpload1 :: UTCTime 
-        let testWithLastTime  = testNewerModTime lastUpload
+        let testWithLastTime  = testNewerModTime  lastUpload
+                        -- compare with year2000 if all should be uploaded
 
         putIOwords ["uploadTest started - last was ", showT lastUpload]             
 
