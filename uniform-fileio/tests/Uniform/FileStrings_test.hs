@@ -154,7 +154,13 @@ test_getDirCont4 = do
                     runErr $ getDirContentFiles (makeRelDir dir31)
     assertEqual (Right (map makeRelFile res3132)) res 
                 -- (fmap makeAbsFile res3131) res 
-        
+
+test_hidden1 = do 
+    res :: ErrOrVal [FilePath]  <- 
+                    runErr $ getDirContentNonHidden fp dir31
+    assertEqual (Right (map makeRelFile res3132)) res 
+                -- (fmap makeAbsFile res3131) res 
+
 --test_md5_nonReadablep = do
 --    res :: ErrOrVal (Maybe Text)  <- runErr $ getMD5 procFile
 --    putIOwords ["test_md5_nonReadable res", showT res]

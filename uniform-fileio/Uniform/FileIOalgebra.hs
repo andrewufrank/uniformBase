@@ -115,7 +115,7 @@ class (Show fp) => FileOps fp   where
     -- independent of file system internal structure
     -- filenames completed with calling fp
     -- only for filepath!
-    getDirContentNonHidden :: fp ->  ErrIO [fp]
+    getDirContNonHidden :: fp ->  ErrIO [fp]
 
     getMD5 :: fp -> ErrIO (Maybe Text)
     -- get MD5, but why Text  -- TODO
@@ -158,8 +158,6 @@ class (Show fd, Show ff) => FileOps2a fd ff where
     --     where f x =  doesFileExist'   x
 
     getDirContentNonHiddenFiles :: fd -> ErrIO [ff]
-    -- getDirContentFiles dir = filterM f =<< getDirCont  dir
-    --     where f x =  doesFileExist'   x
 --
 --
 ---- | the operations on files with content

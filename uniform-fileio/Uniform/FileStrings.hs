@@ -124,7 +124,7 @@ instance DirOps FilePath where
 --                            , " to " , showT  new]
     getDirectoryDirs' dir = filterM f =<< getDirCont  dir
         where f  =  doesDirExist'  
-    getDirectoryDirsNonHidden' dir = filterM f =<< getDirContentNonHidden  dir
+    getDirectoryDirsNonHidden' dir = filterM f =<< getDirContNonHidden  dir
          where f  =  doesDirExist'  
 
     deleteDirRecursive f =
@@ -228,7 +228,7 @@ instance FileOps FilePath  where
                     ["getDirCont not exist or not readable"
                     , showT fn, showT testDir, showT readExec]
 
-    getDirContentNonHidden fp = do
+    getDirContNonHidden fp = do
 --        putIOwords ["getDirContentNonHidden", s2t fp]
         r <- getDirCont fp
         let r2 = filter (not . isHidden) r
@@ -323,7 +323,7 @@ instance DirOps (Path Abs Dir)  where
         return . map makeAbsDir $ res 
         where f  =  doesDirExist'  
     getDirectoryDirsNonHidden' dir = do 
-        res <- filterM f =<< getDirContentNonHidden  (toFilePath dir)
+        res <- filterM f =<< getDirContNonHidden  (toFilePath dir)
         return . map makeAbsDir $ res 
         where f  =  doesDirExist'  
 
@@ -355,7 +355,7 @@ instance DirOps (Path Rel Dir)  where
         where f  =  doesDirExist'
 
     getDirectoryDirsNonHidden' dir = do 
-            res <- filterM f =<< getDirContentNonHidden  (toFilePath dir)
+            res <- filterM f =<< getDirContNonHidden  (toFilePath dir)
             return . map makeRelDir $ res 
             where f  =  doesDirExist'
     
@@ -379,7 +379,7 @@ instance (Show (Path ar File)) => FileOps (Path ar File)  where
 
     getDirCont fp = 
         error "getDirCont cannot be implemented for Path"
-    getDirContentNonHidden fp = 
+    getDirContNonHidden fp = 
         error "getDirContentNonHidden cannot be implemented for Path"
 
 --    isFileAbeforeB fpa fpb = do
@@ -474,7 +474,7 @@ instance FileOps2a FilePath FilePath where
                     =<< getDirCont  dir
         -- where f =  doesFileExist' 
     getDirContentNonHiddenFiles dir = filterM doesFileExist' 
-                    =<< getDirContentNonHidden  dir
+                    =<< getDirContNonHidden  dir
         -- where f =  doesFileExist' 
 
 instance FileOps2a (Path Abs Dir ) (Path Abs File) where 
