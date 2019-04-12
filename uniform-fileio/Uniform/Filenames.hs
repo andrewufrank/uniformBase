@@ -31,15 +31,14 @@ module Uniform.Filenames
     , Dir
     , Path
     , toFilePath
+    -- , takeBaseName'
     )
 where
 import qualified Data.List.Split               as Sp -- hiding ((</>), (<.>))
-import qualified Path                          as Path -- for Generics
+import qualified Path                           -- for Generics
 import           Path                           ( Path(..)
                                                 , toFilePath
-                                                )
-
-import           Path                           ( Abs
+                                                , Abs
                                                 , Rel
                                                 , File
                                                 , Dir
@@ -53,6 +52,9 @@ import           Uniform.Zero
 --import  qualified         Filesystem.Path       as F -- prefered
 -- not usable, has a different definition of FilePath
 import           Uniform.PathShowCase  -- read and show for Path
+
+takeBaseName' ::FilePath -> FilePath 
+takeBaseName' = S.takeBaseName 
 
 homeDir = makeAbsDir "/home/frank/" :: Path Abs Dir
 homeDir2 :: ErrIO (Path Abs Dir)
@@ -212,8 +214,8 @@ instance Filenames4 FilePath FilePath  where
 instance Filenames4 (Path b Dir) FilePath  where
     type FileResultT4 (Path b Dir) FilePath = (Path b Dir)
     addDir p d = if null' d
-        then (unPath p)
-        else (Path.</>) (unPath p) (unPath d2)
+        then  p
+        else p </> d2
         where d2 = makeRelDir d :: Path Rel Dir
 
 instance Filenames4 (Path b Dir) (Path Rel t)  where
@@ -259,7 +261,7 @@ class (Eq (ExtensionType fp)) => Extensions fp where
     prop_add_has e f =  (hasExtension e) (addExtension e f)
     prop_add_add_has :: ExtensionType fp -> ExtensionType fp -> fp -> Bool
     prop_add_add_has e1 e2 f = (hasExtension e1)
-               ( (setExtension e1) . setExtension e2 $ f)
+               ( setExtension e1 . setExtension e2 $ f)
     prop_set_get :: ExtensionType fp -> fp -> Bool
     prop_set_get e f =  ((e==) . getExtension)  (setExtension e f)
 
