@@ -29,7 +29,7 @@ import           Uniform.FileStatus
 
 import           Test.Framework
 import           Test.Invariant
-
+import Data.List
 --import           Path                   as P
 --import           Path.IO                as P
 --
@@ -124,38 +124,42 @@ dir31 = "dir4test" :: FilePath
 abs31 = "/home/frank/Workspace8/uniform/uniform-fileio" :: FilePath 
 abs3131 = abs31 </> dir31
 
-res3131 =  
+res3131 = sort 
     ["/home/frank/Workspace8/uniform/uniform-fileio/dir4test/testghci",
     "/home/frank/Workspace8/uniform/uniform-fileio/dir4test/testfile.txt",
     "/home/frank/Workspace8/uniform/uniform-fileio/dir4test/Setup.lhs",
     "/home/frank/Workspace8/uniform/uniform-fileio/dir4test/testgitignore"]
 
+res3131wh = sort $ "/home/frank/Workspace8/uniform/uniform-fileio/dir4test/.ghci" : 
+                res3131
+
 test_getDirCont1 = do
     res :: ErrOrVal [FilePath] <- runErr $ getDirContentFiles (abs3131) 
-    assertEqual (Right res3131) res 
+    assertEqual (Right res3131wh) (fmap sort res ) 
 
 test_getDirCont2 = do 
     res :: ErrOrVal [Path Abs File]  <- 
                     runErr $ getDirContentFiles (makeAbsDir abs3131)
-    assertEqual (Right (map makeAbsFile res3131)) res 
+    assertEqual (Right (map makeAbsFile res3131wh)) (fmap sort res ) 
                 -- (fmap makeAbsFile res3131) res 
 
 res3132 ::   [FilePath]
-res3132 = 
+res3132 = sort $ "dir4test/.ghci" :
   ["dir4test/testghci", "dir4test/testfile.txt",
    "dir4test/Setup.lhs", "dir4test/testgitignore"]
 
 test_getDirCont3 = do
     res :: ErrOrVal [FilePath] <- runErr $ getDirContentFiles (dir31) 
-    assertEqual (Right res3131) res 
+    assertEqual (Right res3132) (fmap sort res ) 
+    -- gives hidden and 
 
 test_getDirCont4 = do 
     res :: ErrOrVal [Path Rel File]  <- 
                     runErr $ getDirContentFiles (makeRelDir dir31)
-    assertEqual (Right (map makeRelFile res3132)) res 
+    assertEqual (Right (map makeRelFile res3132)) (fmap sort res ) 
                 -- (fmap makeAbsFile res3131) res 
 
-res3134 = -- no hidden
+res3134 =  sort -- no hidden
         ["dir4test/testghci", "dir4test/testfile.txt",
         "dir4test/f1", "dir4test/Setup.lhs", "dir4test/f2",
         "dir4test/testgitignore"]
@@ -167,12 +171,12 @@ res3135 =    -- with hidden
 test_hidden1 = do  -- no hidden files
     res :: ErrOrVal [FilePath]  <- 
                     runErr $ getDirContNonHidden  dir31
-    assertEqual (Right ( res3134)) res 
+    assertEqual (Right ( res3134)) (fmap sort res )
 
 test_hidden2 = do   -- with hidden files
     res :: ErrOrVal [FilePath]  <- 
-                    runErr $ getDirCont  dir31
-    assertEqual (Right ( res3135)) res 
+                    runErr $ getDirCont dir31
+    assertEqual (Right ( res3135)) (fmap sort res )
                                 -- (fmap makeAbsFile res3131) res 
 
 --test_md5_nonReadablep = do
