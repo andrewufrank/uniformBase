@@ -34,8 +34,8 @@ library
             unix -any,
             pipes ,
             safe,
-            path             ==0.6.1.2,
-            path-io==1.4.2.2,
+            path  ,
+            path-io ,
             exceptions
             , split
         , zlib

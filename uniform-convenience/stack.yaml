@@ -12,4 +12,4 @@ packages:
 - ../../fromOthers/pretty-show
 extra-deps:
 - test-invariant-0.4.5.0
-resolver: lts-13.12
+resolver: lts-12.26

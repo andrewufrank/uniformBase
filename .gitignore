@@ -8,6 +8,8 @@ dist-newstyle
 *.lkshw
 */*.lkshs
 */*.lkshw
+**/*.o
+**/*.hi
 unused.txt
 *.autosave*
 cabal.project.local
