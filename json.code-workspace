@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "uniform-json"
+		},
+		{
+			"path": "uniform-fileio"
+		}
+	],
+	"settings": {}
+}

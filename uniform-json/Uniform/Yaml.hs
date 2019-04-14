@@ -20,6 +20,7 @@ module Uniform.Yaml (
         module Uniform.Yaml
         , module Uniform.Error   -- or at least ErrIO
         , Y.decodeEither', Y.ParseException(..)
+        , module Data.Yaml
         )  where
 
 -- import Test.Framework
@@ -35,6 +36,7 @@ import Uniform.FileIO (read8, Extension(..))
 import Uniform.Json 
 
 import qualified Data.Yaml                     as Y
+import   Data.Yaml                 
 import qualified Data.HashMap.Lazy             as HML
 
 decodeThrowT :: Text -> ErrIO Value 

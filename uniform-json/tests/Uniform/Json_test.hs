@@ -27,6 +27,7 @@ module Uniform.Json_test where
 import Test.Framework
 import Uniform.Zero
 import           Data.Aeson
+-- import Data.Map 
 import Uniform.Time 
 import Uniform.Strings 
  
@@ -56,5 +57,19 @@ rec1shown = show rec1 :: String
 test_jsonTime = assertEqual rec1 
         (readNote "testJsonTime" rec1shown :: MetaRec)
 
--- test_forceoutput = assertBool False 
+test_encode = assertEqual res1 $ encode rec1
+res1 =   
+   "{\"date\":\"2000-01-01T00:00:00Z\",\"title\":\"rec1\",\"date2\":\"2000-01-01T00:00:00Z\"}"
+-- encode rec1 
 
+-- rec1json = Object (fromList [("date"
+--                         ,String "2000-01-01T00:00:00Z")
+--                         ,("title",String "rec1")
+--                         ,("date2",String "2000-01-01T00:00:00Z")])
+
+rec1json' = toJSON rec1 
+
+json2rec = eitherDecode res1 :: Either String MetaRec 
+-- test_2 = assertEqual (Right "") ( toJSON res1)
+
+--- now for yaml 
