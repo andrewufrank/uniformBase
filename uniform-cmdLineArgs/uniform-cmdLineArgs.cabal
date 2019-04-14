@@ -26,6 +26,8 @@ library
         , uniform-algebras
         , uniform-strings
         , uniform-error 
+       , optparse-applicative
+       , optparse-generic
     exposed-modules:
         Uniform.CmdLineArgs
 

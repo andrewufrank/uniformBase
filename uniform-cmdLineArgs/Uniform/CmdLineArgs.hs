@@ -22,8 +22,13 @@
 
 
 module Uniform.CmdLineArgs (module Uniform.CmdLineArgs
+        , (<>), (<*>), Parser (..)
+        ,switch, long, short, help
+        , header, helper, fullDesc, progDesc, info, execParser
         )  where
 
 import           Uniform.Strings hiding ((</>), (<.>), S)
 
+import           Options.Applicative.Builder
+import           Options.Applicative
 
