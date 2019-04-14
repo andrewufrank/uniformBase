@@ -241,6 +241,7 @@ class FileHandles a => TypedFiles7a a b where
 
     read8 :: Path Abs File -> TypedFile5 a b ->   ErrIO b
     write8 :: Path Abs File -> TypedFile5 a b -> b -> ErrIO ()
+    -- writeFileOrCreate8 :: Path Abs File -> TypedFile5 a b -> b -> ErrIO ()
 
 instance TypedFiles7 Text b => TypedFiles7a Text b where
 -- an instance for all what has text as underlying rep
@@ -279,3 +280,15 @@ instance TypedFiles7 Text b => TypedFiles7a Text b where
         let fp2 = fp <.> tpext5 tp
         ares :: Text <- readFile2 $ fp2
         return . wrap7 $ ares
+
+--     writeFileOrCreate8 fp   tp ct = do
+--         let fn2 = fp   <.> tpext5 tp -- :: Path ar File
+-- --        write8 (fp </> fn  ) tp ct
+--         let parent = getParentDir fn2
+--         createDirIfMissing' parent
+-- --        t <- doesDirExist' fp
+-- --        putIOwords ["TypedFiles7 write7 Text parent", showT parent, "exists", showT t]
+
+--         writeFileOrCreate fn2 (unwrap7 ct :: Text )
+-- --        putIOwords ["TypedFiles7 write7 Text Gtemplate", showT fn2]
+-- --        putIOwords ["TypedFiles7 write7 Text Gtemplate text \n", unwrap7 ct]
