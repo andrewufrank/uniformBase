@@ -23,8 +23,9 @@ module Uniform.Json
     , fromJSON
     , decode, omitNothingFields
     -- , encode
-    , object
+    , object, (.=)
     , genericParseJSON, defaultOptions
+    
     )
 where
 

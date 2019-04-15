@@ -22,6 +22,7 @@ module Uniform.Yaml (
         -- , Y.decodeEither'
         , Y.ParseException(..)
         -- , module Data.Yaml
+        , Y.decodeFileThrow
         )  where
 
 -- import Test.Framework

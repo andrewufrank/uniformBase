@@ -21,11 +21,11 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE TypeSynonymInstances  #-}
-{-# LANGUAGE OverloadedStrings
-    , RecordWildCards     #-}
+-- {-# LANGUAGE TypeSynonymInstances  #-}
+{-# LANGUAGE OverloadedStrings  #-}
+    -- , RecordWildCards    
 
-{-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
+-- {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
 {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 {-# OPTIONS_GHC -w #-}
 
@@ -95,15 +95,15 @@ showList' = unlines' . map showT
 
 toLowerStart :: Text -> Text
 -- ^ convert the first character to lowercase - for Properties in RDF
-toLowerStart t = (toLower . T.head $ t ) `T.cons` (T.tail t)
+toLowerStart t = (toLower . T.head $ t) `T.cons` T.tail t
 
 
 toUpperStart :: Text -> Text
 -- ^ convert the first character to Uppercase - for  PosTags in Spanish
-toUpperStart t = (toUpper . T.head $ t ) `T.cons` (T.tail t)
+toUpperStart t = (toUpper . T.head $ t) `T.cons` T.tail t
 
 --instance Zeros String where zero = (""::String)
-instance Zeros Text where zero = (""::Text)
+instance Zeros Text where zero = "" :: Text
 
 instance ListForms Text where
     type LF Text = Char
@@ -214,7 +214,7 @@ class (Zeros a, ListForms a, Eq a) => CharChains a where
     prop_assoz a b c = Rule.associative append' a b c
 
     prop_concat :: [a] -> Bool
-    prop_concat as =    (concat' as)==(foldr append' mknull as)
+    prop_concat as =    concat' as == foldr append' mknull as
 
     prop_filterChar :: a -> Bool
     -- test with fixed set of chars to filter out
@@ -294,7 +294,7 @@ instance CharChains String where
     intercalate' s a
         | null a = Nothing
         | null s = Nothing
-        | s `isInfixOf` (concat' a) = Nothing
+        | s `isInfixOf` concat' a = Nothing
         | otherwise = Just $ L.intercalate s a
 
     splitOn' o s
@@ -305,7 +305,7 @@ instance CharChains String where
         where f = reverse . dropWhile isSpace
     removeLast a =  if null' a
         then mknull
-        else (reverseString . tail . reverseString $ a)
+        else reverseString . tail . reverseString $ a
     reverseString = reverse
     printf' = printf
     lengthChar = length
@@ -344,14 +344,14 @@ instance CharChains Text where
     stripSuffix' = T.stripSuffix
 
     intercalate' s a
-      | null a = (Nothing :: Maybe Text)
+      | null a = Nothing :: Maybe Text
       | null' s = Nothing
-      | (s `isInfixOf'` (concat' a)) = Nothing
+      | s `isInfixOf'` concat' a = Nothing
       | otherwise = Just $ T.intercalate s a
 
     splitOn' o s
       | null' o = Just []
-      | null' s = (Just [""])
+      | null' s = Just [""]
       | otherwise = Just $ T.splitOn o s
 
     trim' = T.strip -- s2t . trim' . t2s
@@ -371,7 +371,7 @@ instance CharChains Text where
     take' = T.take
     drop' = T.drop
 
-    prop_filterChar a = (t2s af) == (filterChar cond . t2s $ a)
+    prop_filterChar a = t2s af == (filterChar cond . t2s $ a)
       where
           cond x = x `notElem` ['a', '\r', '1']
           af = filterChar cond a :: Text
