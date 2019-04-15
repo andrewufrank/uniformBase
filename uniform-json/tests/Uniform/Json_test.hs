@@ -29,7 +29,8 @@ import Uniform.Zero
 import           Data.Aeson
 -- import Data.Map 
 import Uniform.Time 
-import Uniform.Strings 
+-- import Uniform.Strings 
+import Uniform.Json  
  
 -- import Test.Invariant
 -- import Uniform.ByteString
@@ -43,33 +44,49 @@ data MetaRec = MetaRec {
         title :: Maybe Text -- ^ the title as shown
         , date :: Maybe UTCTime -- read the time early one to find errors
         , date2 ::  UTCTime -- read the time early one to find errors
+        , int1 :: Int -- to test assignement
         } deriving (Generic, Eq, Ord, Show, Read)
 
 instance Zeros MetaRec where
-  zero = MetaRec zero   (Just year2000) year2000
+  zero = MetaRec zero   (Just year2000) year2000 zero
 --instance FromJSON IndexEntry
 instance ToJSON MetaRec
 instance FromJSON MetaRec where
 
+rec1 :: MetaRec
 rec1 = zero {title = Just "rec1"} :: MetaRec 
+rec1shown :: String
 rec1shown = show rec1 :: String 
 
+test_jsonTime :: IO ()
 test_jsonTime = assertEqual rec1 
         (readNote "testJsonTime" rec1shown :: MetaRec)
 
+test_encode :: IO ()
 test_encode = assertEqual res1 $ encode rec1
+-- res1 :: Data.ByteString.Lazy.Internal.ByteString
 res1 =   
-   "{\"date\":\"2000-01-01T00:00:00Z\",\"title\":\"rec1\",\"date2\":\"2000-01-01T00:00:00Z\"}"
+   "{\"int1\":0,\"date\":\"2000-01-01T00:00:00Z\",\"title\":\"rec1\",\"date2\":\"2000-01-01T00:00:00Z\"}"
+
+
 -- encode rec1 
 
 -- rec1json = Object (fromList [("date"
 --                         ,String "2000-01-01T00:00:00Z")
 --                         ,("title",String "rec1")
 --                         ,("date2",String "2000-01-01T00:00:00Z")])
-
+rec1json' :: Value
 rec1json' = toJSON rec1 
 
+json2rec :: Either String MetaRec
 json2rec = eitherDecode res1 :: Either String MetaRec 
--- test_2 = assertEqual (Right "") ( toJSON res1)
+test_setInt :: IO ()
+test_setInt = assertEqual rec2json
+        $ putAtKey "int1" (22::Integer) (toJSON rec0)
 
---- now for yaml 
+rec2json :: Value
+rec2json = toJSON $ MetaRec zero   (Just year2000) year2000 22
+rec0 :: MetaRec
+rec0 = MetaRec zero   (Just year2000) year2000 zero
+
+-- test_force = assertBool False 

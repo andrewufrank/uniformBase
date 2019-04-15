@@ -58,7 +58,7 @@ instance AtKey Value Text where
 instance AtKey Value Integer where
     getAtKey meta2 k2 = meta2 ^? key k2 . _Integral
     getAt2Key meta2 k1 k2 = meta2 ^? key k1 . key k2 . _Integral 
-    -- putAtKey k2 txt meta2 = meta2 & _Object . at k2 ?~ Integer txt
+    putAtKey k2 txt meta2 = meta2 & _Object . at k2 ?~ toJSON txt
 --        (unHTMLout text2)
 instance AtKey Value Bool where
     getAtKey meta2 k2 = meta2 ^? key k2 . _Bool

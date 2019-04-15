@@ -19,8 +19,9 @@
 module Uniform.Yaml (
         module Uniform.Yaml
         , module Uniform.Error   -- or at least ErrIO
-        , Y.decodeEither', Y.ParseException(..)
-        , module Data.Yaml
+        -- , Y.decodeEither'
+        , Y.ParseException(..)
+        -- , module Data.Yaml
         )  where
 
 -- import Test.Framework
@@ -31,22 +32,25 @@ import Uniform.Error
 
 -- import Uniform.Filenames (Extension(..)) 
 import Uniform.TypedFile (TypedFiles7(..), TypedFile5 (..))
-import Path (Path, Abs, Rel, File, Dir)
+import Path -- (Path, Abs, Rel, File, Dir)
 import Uniform.FileIO (read8, Extension(..))
 import Uniform.Json 
 
 import qualified Data.Yaml                     as Y
-import   Data.Yaml                 
-import qualified Data.HashMap.Lazy             as HML
+-- import   Data.Yaml                 
+-- import qualified Data.HashMap.Lazy             as HML
 
 decodeThrowT :: Text -> ErrIO Value 
 decodeThrowT =  Y.decodeThrow . t2b
 
 newtype YamlText = YamlText Text deriving (Show, Read, Eq, Ord)
 -- a wrapper around Markdonw text
+unYAML :: YamlText -> Text
 unYAML (YamlText a) = a   --needed for other ops
+extYAML :: Extension
 
 extYAML = Extension "yaml"
+yamlFileType :: TypedFile5 Text YamlText
 instance Zeros YamlText where zero = YamlText zero
 
 yamlFileType = TypedFile5 {tpext5 = extYAML} :: TypedFile5   Text YamlText
