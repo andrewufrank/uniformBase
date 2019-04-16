@@ -22,23 +22,9 @@
 
 module Uniform.Filenames_test  where
 --
--- --import qualified Data.Text as T
--- import qualified System.Posix  as P (FileStatus)
--- --import qualified System.Directory as S
 --
 ---- using uniform:
 import           Uniform.Error hiding ((</>), (<.>))
--- import           Uniform.Strings     hiding ((</>), (<.>))
-            -- (s2t, showT, t2s, removeChar, CharChains2 (..), Text)
---import Safe   -- todo error
---import Path   hiding ( (</>) ) -- should I hide the quasi quoters?
---import qualified Path   ((</>))
-----import qualified          System.Posix.FilePath as P
---import Path.IO
---import  qualified         System.FilePath       as S -- prefered
---import  qualified         System.FilePath.Posix       as S -- prefered
---import  qualified         Filesystem.Path       as F -- prefered
--- not usable, has a different definition of FilePath
 
 import Test.Framework
 -- import Test.Invariant
@@ -182,6 +168,7 @@ f1 = "afile" :: FilePath
 f0 = "" :: FilePath  -- not legal?
 f2 = "afile.ext" :: FilePath
 f3 = "/somedir/more/afile.ext"  :: FilePath
+f4 = "afile.gut.ext" :: FilePath 
 test_emptyExt = assertEqual "" (getExtension f1)
 test_emptyExt0 = assertEqual "" (getExtension f0)
 test_getExt = assertEqual "ext" (getExtension f2)
@@ -190,6 +177,14 @@ test_hasExt2 = assertBool $  hasExtension "ext" f3
 test_addExt = assertEqual ( f2) $  addExtension "ext" f1
 test_removeExt = assertEqual f1 (removeExtension f2)
 test_setExt = assertEqual ("afile.txt") (setExtension "txt" f2)
+
+test_removeExt2 = assertEqual f1 (removeExtension . removeExtension $ f4)
+
+f4p = makeRelFile f4 
+f1p = makeRelFile f1
+
+test_removeExt2path  = assertEqual f1p 
+               (removeExtension . removeExtension $ f4p)
 
 
 --prop_add_has_FP :: FilePath -> FilePath -> Bool

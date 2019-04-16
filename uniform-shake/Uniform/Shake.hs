@@ -46,10 +46,18 @@ import Uniform.Strings hiding ((</>), (<.>))
 ($-<.>) :: Path a File -> Text ->  Path a File
 f $-<.> e = replaceExtension' e f 
 
+($--<.>) :: Path a File -> Text ->  Path a File
+f $--<.> e = replaceExtension2 e f 
+
 replaceExtension' :: Text -> Path a File -> Path a File
 -- a flipped version of -<.> 
 replaceExtension' newext  =
     setExtension (makeExtension . t2s $ newext) 
+replaceExtension2 :: Text -> Path a File -> Path a File
+-- remove a doubled extension (e.g. gutenberg.txt)
+replaceExtension2 newext  =
+    setExtension (makeExtension . t2s $ newext) . removeExtension
+
     -- if isRelative filen 
     --     then makeRelFile resn 
     --     else makeAbsFile resn

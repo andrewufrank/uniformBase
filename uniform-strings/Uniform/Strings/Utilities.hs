@@ -43,6 +43,7 @@ module Uniform.Strings.Utilities
     , T.toTitle
     , toLowerStart, toUpperStart  -- for types and properties in RDF
     , prop_filterChar
+    , isSpace, isLower
     )
     where
 
