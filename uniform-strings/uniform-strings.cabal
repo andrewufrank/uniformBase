@@ -40,6 +40,7 @@ library
         zlib
         , MissingH
         , uniform-algebras
+         , pretty-show
     exposed-modules:
         Uniform.Strings
     -- for testing, afterwards include in test-suite

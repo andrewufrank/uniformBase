@@ -143,9 +143,10 @@ instance IsString (Path Rel File) where
     fromString = read
 instance IsString (Path Rel Dir) where
     fromString = read
-instance  NiceStrings (Path a b) where
-    shownice = s2t . toFilePath
-
+-- instance  NiceStrings (Path a b) where
+--     shownice = s2t . toFilePath
+-- -- instance Show (Path a b) where 
+-- --     show = toFilePath 
 
 
 newtype Extension = Extension FilePath deriving (Show, Read, Eq, Ord)

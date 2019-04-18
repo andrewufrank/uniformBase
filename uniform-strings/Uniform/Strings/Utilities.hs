@@ -23,6 +23,7 @@
 {-# LANGUAGE TypeFamilies          #-}
 -- {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE UndecidableInstances  #-}
     -- , RecordWildCards    
 
 -- {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
@@ -44,6 +45,7 @@ module Uniform.Strings.Utilities
     , toLowerStart, toUpperStart  -- for types and properties in RDF
     , prop_filterChar
     , isSpace, isLower
+    , PrettyStrings (..)
     )
     where
 
@@ -76,6 +78,7 @@ import           Safe
 import           Uniform.Strings.Conversion
 import qualified Data.ByteString.Lazy as Lazy
 import Text.Read (readMaybe)
+import Text.Show.Pretty 
 --
 -- | generalized functions to work on chains of characters
 -- (i.e. strings, text, url encoded, bytestring), text and bytestring
@@ -444,7 +447,7 @@ string2maybe :: (Eq a, IsString a) => a -> Maybe a
 string2maybe x = if x == "" then Nothing else Just x
 
 
-class NiceStrings a where
+class   NiceStrings a where
 -- ^ produce a text - any particular needs ? (otherwise replace with showT
 -- the needs are to have a non-read-parse conversion
 -- integrate in StringUtilities
@@ -452,6 +455,10 @@ class NiceStrings a where
     showNice = shownice
     showlong :: a -> Text
     showlong = shownice  -- a default
+class Show a => PrettyStrings a where 
+    showPretty :: a -> Text
+instance Show a => PrettyStrings a where
+    showPretty = s2t . ppShow
 
 instance NiceStrings Text where
     shownice = id

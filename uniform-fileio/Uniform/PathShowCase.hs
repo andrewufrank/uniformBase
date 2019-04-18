@@ -9,6 +9,7 @@
 --{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 --{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Uniform.PathShowCase
 
@@ -35,7 +36,7 @@ readsPrecForPath readOp prefix msg a =
     else error ("not a  prefix for " ++ msg ++ " input " ++ show a)
 
 instance Read (Path Abs Dir) where 
-  readsPrec _ = readsPrecForPath parseAbsDir prefixAbsDir"Abs Dir"
+  readsPrec _ = readsPrecForPath parseAbsDir prefixAbsDir "Abs Dir"
 
 instance Read (Path Abs File) where 
   readsPrec _ = readsPrecForPath parseAbsFile prefixAbsFile "Abs File"
@@ -45,16 +46,42 @@ instance Read (Path Rel File) where
 instance Read (Path Rel Dir) where
   readsPrec _ = readsPrecForPath parseRelDir prefixRelDir "Rel Dir"
       
+      
 instance Show (Path Abs Dir) where 
-    show a = concat' ["Path Abs Dir ",  toFilePath a]
+    show a = concat' [prefixAbsDir,  toFilePath a]
 instance Show (Path Abs File) where 
     show a = concat' [prefixAbsFile,  toFilePath a]
 instance Show (Path Rel File) where 
     show a = concat' [prefixRelFile,  toFilePath a]
-
 instance Show (Path Rel Dir) where 
     show a = concat' [prefixRelDir,  toFilePath a]
-  
+
+-- class ShowPrefix p  where 
+--   getPrefix :: p -> String 
+-- instance ShowPrefix (Path a b)
+
+-- instance ShowPrefix (Path Abs Dir) where 
+--    getPrefix a = prefixAbsDir 
+-- instance ShowPrefix (Path Abs File) where 
+--     getPrefix a = prefixAbsFile 
+-- instance ShowPrefix (Path Rel File) where 
+--     getPrefix a = prefixRelFile 
+-- instance ShowPrefix (Path Rel Dir) where 
+--    getPrefix a = prefixRelDir 
+
+-- -- getPrefix (Path Abs File )
+-- -- show (undefined::Abs) = "Abs"
+
+-- instance (ShowPrefix (Path a b)) => Show (Path a b) where 
+--   show a = concat' [getPrefix a, toFilePath a]
+
+instance NiceStrings (Path a b) where 
+  showNice = s2t . toFilePath 
+
+
+toFilePathT = s2t . toFilePath
+
+prefixAbsDir, prefixAbsFile, prefixRelDir, prefixRelFile :: String  
 prefixAbsFile = "Path Abs File "
 prefixAbsDir =  "Path Abs Dir "
 prefixRelFile = "Path Rel File "
