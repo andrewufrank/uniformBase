@@ -56,6 +56,8 @@ import           Uniform.PathShowCase  -- read and show for Path
 takeBaseName' ::FilePath -> FilePath 
 takeBaseName' = S.takeBaseName 
 
+toFilePathT = s2t . toFilePath 
+
 homeDir = makeAbsDir "/home/frank/" :: Path Abs Dir
 homeDir2 :: ErrIO (Path Abs Dir)
 homeDir2 = callIO $ PathIO.getHomeDir :: ErrIO (Path Abs Dir)

@@ -39,8 +39,7 @@ module Uniform.Strings (
 
 
 import           Uniform.Strings.Conversion hiding (S)
-import           Uniform.Strings.Infix
--- hidde when conflict in use                    hiding ((<.>), (</>))
+import           Uniform.Strings.Infix  hiding ((<.>), (</>))
 import           Uniform.Strings.Utilities
 --if these string ops are desired (and not the usual ones from fileio
 -- then import them from Data.StringInfix
@@ -58,8 +57,6 @@ import qualified Data.List.Split          as S
 import qualified Data.Text                as T
 import qualified Data.Text.IO             as T
 
-putIOwords :: MonadIO m =>  [Text] -> m ()
-putIOwords = liftIO . T.putStrLn. unwordsT
 
 -- split a text into lines such that words are maintained
 -- source https://gist.github.com/yiannist/4546899 - adapted

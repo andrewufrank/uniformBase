@@ -24,6 +24,7 @@
 -- {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE OverloadedStrings  #-}
 {-# LANGUAGE UndecidableInstances  #-}
+{-# LANGUAGE PackageImports  #-}
     -- , RecordWildCards    
 
 -- {-# LANGUAGE DeriveGeneric, DeriveAnyClass #-}
@@ -41,6 +42,7 @@ module Uniform.Strings.Utilities
     , sortCaseInsensitive, cmpCaseInsensitive
     , maybe2string
     , showList'
+    , putIOwords, debugPrint 
     , T.toTitle
     , toLowerStart, toUpperStart  -- for types and properties in RDF
     , prop_filterChar
@@ -79,6 +81,9 @@ import           Uniform.Strings.Conversion
 import qualified Data.ByteString.Lazy as Lazy
 import Text.Read (readMaybe)
 import Text.Show.Pretty 
+import           "monads-tf" Control.Monad.State      (MonadIO, liftIO)
+import Control.Monad (when)
+
 --
 -- | generalized functions to work on chains of characters
 -- (i.e. strings, text, url encoded, bytestring), text and bytestring
@@ -105,6 +110,17 @@ toLowerStart t = (toLower . T.head $ t) `T.cons` T.tail t
 toUpperStart :: Text -> Text
 -- ^ convert the first character to Uppercase - for  PosTags in Spanish
 toUpperStart t = (toUpper . T.head $ t) `T.cons` T.tail t
+
+dropLast :: Int -> [a] -> [a]
+dropLast n = reverse . drop n . reverse
+
+putIOwords :: MonadIO m =>  [Text] -> m ()
+putIOwords = liftIO . putStrLn . t2s . unwords'
+
+debugPrint :: (MonadIO m) => Bool -> [Text] -> m ()
+-- ^ print the texts when the bool is true (flag debug)
+debugPrint flag texts = when flag $ putIOwords texts 
+
 
 --instance Zeros String where zero = (""::String)
 instance Zeros Text where zero = "" :: Text
@@ -453,6 +469,7 @@ class   NiceStrings a where
 -- integrate in StringUtilities
     shownice, showNice :: a -> Text
     showNice = shownice
+    shownice = showNice 
     showlong :: a -> Text
     showlong = shownice  -- a default
 class Show a => PrettyStrings a where 

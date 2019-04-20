@@ -40,6 +40,8 @@ import           Uniform.Error (errorT)
 import           Uniform.Zero
 import Uniform.ListForm
 import           Uniform.Strings -- (IsString (..), (</>), (<.>))
+import Uniform.Strings.Infix ((</>), (<.>))
+
 import qualified Network.URI as N
 --import qualified   Network.URI.Encode as N2
 
