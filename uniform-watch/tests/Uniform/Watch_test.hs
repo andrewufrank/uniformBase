@@ -24,7 +24,7 @@
 module Uniform.Watch_test where
 
 import           Test.Framework
-import           Uniform.Strings hiding ((</>), (<.>), (<|>))
+import           Uniform.Strings  
 import Uniform.Watch
 
 import   Uniform.Error
