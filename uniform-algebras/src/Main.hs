@@ -30,7 +30,7 @@ import Uniform.Zero
 import System.Exit
 --import Data.Easy
 
-programName = "error-0.0.8"
+programName = "algebras"
 
 debug_main  =  True
 

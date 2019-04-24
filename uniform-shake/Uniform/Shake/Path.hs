@@ -18,6 +18,7 @@ module Uniform.Shake.Path
 
 
 import           Development.Shake
+import Uniform.FileIO 
 -- import           Development.Shake.FilePath     ( isAbsolute
 --                                                 , isRelative
 --                         -- , isFile, isDir
@@ -29,14 +30,14 @@ import           Development.Shake
 --                                                 , (<.>)
 --                                                 ) -- (Text, t2s)
 -- import qualified Path  
-import           Path                           ( Path
-                                                , File
-                                                , Dir
-                                                , Abs
-                                                , Rel
-                                                , toFilePath
-                                                -- , stripProperPrefix
-                                                )
+-- import           Path                           ( Path
+--                                                 , File
+--                                                 , Dir
+--                                                 , Abs
+--                                                 , Rel
+--                                                 , toFilePath
+--                                                 -- , stripProperPrefix
+--                                                 )
 
 
 getHashedShakeVersionP :: [Path r File] -> IO String

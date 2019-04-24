@@ -22,7 +22,7 @@ library
         , uniform-strings
         , uniform-error
         , uniform-fileio 
-        , path  
+        -- , path  
         , HTF
         -- , safe
         , aeson

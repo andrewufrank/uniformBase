@@ -35,24 +35,25 @@ module Uniform.Test.Utils (module Uniform.Test.Utils
 import           Safe
 import           Test.Framework
 import Uniform.FileIO
-import Text.Show.Pretty (ppShow )
-import qualified Path.IO as Path.IO (doesFileExist, getAppUserDataDir)
+import Uniform.Strings (ppShow )
+import Uniform.FileIO (doesFileExist, getAppUserDataDir)
+-- import qualified Path.IO as Path.IO (doesFileExist, getAppUserDataDir)
         -- necessary for operations in IO
 import Text.Read
 import Data.Time (UTCTime (..))
 
 -- operations are in IO not ErrIO, therefore here and not in fileio
 getLitTextTestDir ::  IO (Path Abs Dir)
-getLitTextTestDir  = Path.IO.getAppUserDataDir "LitTextTest"
+getLitTextTestDir  = getAppUserDataDir "LitTextTest"
 -- operations are in IO not ErrIO, therefore here and not in fileio
 getLitTextTestDir2 :: Text -> IO (Path Abs Dir)
-getLitTextTestDir2 progName = Path.IO.getAppUserDataDir . t2s $ progName
+getLitTextTestDir2 progName = getAppUserDataDir . t2s $ progName
 
 getLitTextTestDir3 :: Text -> ErrIO (Path Abs Dir)
-getLitTextTestDir3 progName =  callIO . Path.IO.getAppUserDataDir . t2s $ progName
+getLitTextTestDir3 progName =  callIO . getAppUserDataDir . t2s $ progName
 
 doesFileExistWrapped :: Path Abs File -> IO Bool
-doesFileExistWrapped fn = Path.IO.doesFileExist (unPath fn)
+doesFileExistWrapped fn = doesFileExist (unPath fn)
 
 readStartFile :: Bool -> Path Abs Dir -> FilePath -> IO String
 -- ^ read the start file as string

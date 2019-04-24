@@ -32,6 +32,9 @@ module Uniform.FileIO (
          , makeAbsoluteFile'
          , findDirs, isDir 
          , toFilePathT
+         , Path.IO.getAppUserDataDir
+         , Path.IO.doesFileExist  --works in IO, not ErrIO
+         , Path (..), Abs(..), Rel(..), Dir(..), File(..)
 --         , homeDir2
             ) where
 
@@ -43,7 +46,7 @@ import           Uniform.FileStrings
 import           Uniform.Piped
 import           Uniform.TypedFile
 import           Uniform.Zero
-import qualified Path.IO (makeAbsolute, getAppUserDataDir)
+import qualified Path.IO (makeAbsolute, getAppUserDataDir, doesFileExist)
 
 makeAbsoluteFile' :: Path a File -> ErrIO (Path Abs File)
 makeAbsoluteFile' file = do

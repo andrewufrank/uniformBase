@@ -21,8 +21,8 @@ library
     build-depends:
         base >=4.9 && <=5,
         shake >= 0.15 && < 0.18,
-        path,
-        path-io,
+        -- path,
+        -- path-io,
         uniform-fileio   
         , uniform-strings
         , uniform-error
@@ -54,8 +54,8 @@ Test-Suite errortest
        uniform-error,
        uniform-shake,
         shake >= 0.15 && < 0.18,
-        path ==0.6.1.1,
-        path-io ==1.4.2.1,
+        -- path ==0.6.1.1,
+        -- path-io ==1.4.2.1,
         uniform-fileio
     main-is: Testing.hs
     buildable: True

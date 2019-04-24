@@ -22,8 +22,8 @@ module Uniform.Shake (runErr2action, runErr2action
         , module Uniform.Strings
     --     , module Path
         -- , module Path.IO
-        , module Development.Shake.FilePath
-        , module Development.Shake
+        -- , module Development.Shake.FilePath
+        -- , module Development.Shake
         , shakeArgs
         )      where
 
@@ -35,13 +35,13 @@ import Development.Shake.FilePath (takeBaseName, splitPath
 -- import Uniform.FileIO (makeRelFile)
 
 -- import qualified Path  
-import  Path hiding ((</>)) 
+-- import  Path hiding ((</>)) 
                 -- (Path(..), File, Dir, Abs, Rel, toFilePath)
 -- import qualified Path.IO
 import Uniform.Error
 import Uniform.Shake.Path
 import Uniform.FileIO 
-import Uniform.Strings hiding ((</>), (<.>))
+import Uniform.Strings -- hiding ((</>), (<.>))
 
 ($-<.>) :: Path a File -> Text ->  Path a File
 f $-<.> e = replaceExtension' e f 

@@ -20,7 +20,7 @@ source-repository head
 library
     build-depends: base
             , bytestring
-            ,text
+            -- ,text
 --            , HTTP
             , http-conduit
             , http-client

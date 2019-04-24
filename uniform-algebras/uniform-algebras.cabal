@@ -22,7 +22,7 @@ library
         -- , safe
         , MissingH
         , HTF
-        , text
+        -- , text
     exposed-modules:
         Uniform.Zero
         Uniform.ListForm

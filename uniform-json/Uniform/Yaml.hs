@@ -32,10 +32,10 @@ module Uniform.Yaml (
 import Uniform.Error
 -- import Uniform.Strings
 
--- import Uniform.Filenames (Extension(..)) 
+import Uniform.FileIO 
 import Uniform.TypedFile (TypedFiles7(..), TypedFile5 (..))
-import Path -- (Path, Abs, Rel, File, Dir)
-import Uniform.FileIO (read8, Extension(..))
+-- import Path -- (Path, Abs, Rel, File, Dir)
+-- import Uniform.FileIO (read8, Extension(..))
 import Uniform.Json 
 
 import qualified Data.Yaml                     as Y

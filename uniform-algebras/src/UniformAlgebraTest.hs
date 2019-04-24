@@ -23,8 +23,8 @@ module Main     where      -- must have Main (main) or Main where
 --import System.Exit
 
 import Test.Framework
-import {-@ HTF_TESTS @-} Uniform.Error
-import Data.Strings
+-- import {-@ HTF_TESTS @-} Uniform.Error
+-- import Data.Strin
 
 main = do
     putIOwords ["HTF LayoutTest.hs:\n posTest"]

@@ -27,11 +27,12 @@ library
         , uniform-error
         , uniform-algebras
         , uniform-fileio 
+        , uniform-strings
         , csv
         , parsec
-        , path 
-        , path-io 
-        , pretty-show 
+        -- , path 
+        -- , path-io 
+        -- , pretty-show 
         , iso639
         , time
     exposed-modules:
