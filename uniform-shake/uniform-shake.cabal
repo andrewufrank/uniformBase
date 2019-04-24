@@ -21,8 +21,8 @@ library
     build-depends:
         base >=4.9 && <=5,
         shake >= 0.15 && < 0.18,
-        path ==0.6.1.1,
-        path-io ==1.4.2.1,
+        path,
+        path-io,
         uniform-fileio   
         , uniform-strings
         , uniform-error

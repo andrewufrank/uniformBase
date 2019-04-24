@@ -40,6 +40,7 @@ import           Uniform.Error (errorT)
 import           Uniform.Zero
 import Uniform.ListForm
 import           Uniform.Strings -- (IsString (..), (</>), (<.>))
+import Uniform.Json 
 import Uniform.Strings.Infix ((</>), (<.>))
 
 import qualified Network.URI as N
@@ -51,6 +52,12 @@ newtype ServerURI = ServerURI {unServerURI :: URI}
 --                        , ListForms
                         )
 --deriving  -- <> and mempty missing for Semigroup
+
+-- instance ToJSON ServerURI 
+-- instance ToJSON URI
+-- instance ToJSON N.URI  -- not possible, issue Auth
+-- instance ToJSON N.URIAuth
+-- instance Generic N.URIAuth 
 
 instance (Zeros ServerURI, Zeros (LF ServerURI)) => ListForms ServerURI
     where
