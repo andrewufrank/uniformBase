@@ -32,12 +32,13 @@ module Uniform.HttpURI (
     , module Uniform.Zero
     , module Uniform.Strings
 --    , module N.Network.URI
-    , uriT
+    -- , uriT
             )  where
 
 
 import qualified Network.URI as N
-import  Network.URI (URI(..))
+-- import  Network.URI (URI(..)) 
+-- URI is a newtype with URI as a wrapper
 import           Uniform.Error (errorT)
 import           Uniform.Json
 import           Uniform.ListForm -- (IsString (..), (</>), (<.>))
@@ -55,8 +56,8 @@ newtype ServerURI = ServerURI {unServerURI :: URI}
 --deriving  -- <> and mempty missing for Semigroup
 
 instance ToJSON ServerURI 
-instance ToJSON URI
-instance ToJSON N.URI  -- not possible, issue Auth
+instance ToJSON N.URI
+-- instance ToJSON N.URI  -- not possible, issue Auth
 instance ToJSON N.URIAuth
 
 deriving instance Generic N.URIAuth 
@@ -120,15 +121,18 @@ combineHttpQueryParams p1 p2 = p1 <> p2
 --        where   p11 = unHttpQueryParams p1
 --                p22 = unHttpQueryParams p2
 
--- newtype URI = URI N.URI  deriving (Eq, Ord, Generic,   Semigroup, Monoid)
+newtype URI = URI N.URI  deriving (Eq, Ord, Generic,   Semigroup, Monoid)
 -- show and read is separately instantiated
 -- zeros not available for N.URI
 
--- un2 (URI u) = u   -- to remove the newtype level
+un2 (URI u) = u   -- to remove the newtype level
 -- instance Zeros URI where
---     zero = makeURI "http://zero.zero"  -- there is no obvious zero here
-instance Zeros URI where zero = N.nullURI 
-
+    -- zero = makeURI "http://zero.zero"  -- there is no obvious zero here
+instance Zeros URI where zero = URI N.nullURI 
+instance ToJSON URI 
+instance FromJSON URI
+instance FromJSON N.URI
+instance FromJSON N.URIAuth
 
 instance ListForms URI where
     type LF URI = Text
@@ -171,7 +175,7 @@ addToURI u t =    --appendOne u t --
 addToURI2 :: URI -> URL -> URI   -- an url encoded string (use s2url or t2url)
 -- add a text at end to an URI
 addToURI2 u t =    --appendOne u t --
-            makeURI $ (uriT u) </> (s2t unURL t)
+            makeURI $ (uriT u) </> (s2t . unURL $ t)
 
 newtype PortNumber = PortNumber Int
     deriving (Eq, Ord, Show, Read, Generic, Zeros)

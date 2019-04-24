@@ -48,12 +48,14 @@ library
 
 Test-Suite httpTestAuto
     type:       exitcode-stdio-1.0
-    main-is:    TestMain.hs
+    main-is:    Testing.hs
     build-depends: base, HTF
         -- , uniform-fileio
         , uniform-strings
         , uniform-error
         , uniform-http
+        , uniform-json
+        -- , aeson
 --        -- needed because the two files
 
             , uniform-algebras

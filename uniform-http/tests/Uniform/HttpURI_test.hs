@@ -30,6 +30,8 @@ import           Uniform.Error
 import           Test.Framework
 import Uniform.HttpURI
 import Uniform.Json 
+import Uniform.Json (fromList)
+import Data.Aeson as A
 -- import Uniform.Zero
 --
 
@@ -126,7 +128,24 @@ test_parseURI9 = assertEqual "Just \"http://127.0.0.1:9001\""
 test_s1 = assertEqual "\"http://nlp.gerastree.at:9001\"" (show destTest9001g)
 test_r1 = assertEqual destTest9001g (read . show $ destTest9001g)
 
-test_json = assertEqual zero (toJSON destTest9001g)
+test_json = assertEqual resJson (toJSON destTest9001g)
 instance Zeros Value where zero = Null 
 
+resJson :: Value 
+resJson = Object
+  (fromList
+     [("uriQuery", String ""),
+      ("uriAuthority",
+       Object
+         (fromList
+            [("uriPort", String ":9001"),
+             ("uriRegName", String "nlp.gerastree.at"),
+             ("uriUserInfo", String "")])),
+      ("uriScheme", String "http:"), ("uriFragment", String ""),
+      ("uriPath", String "")])
 
+test_json2 = assertEqual (res2) in2
+
+in2 = fromJSON resJson :: A.Result URI
+
+res2 = A.Success "http://nlp.gerastree.at:9001"  ::A.Result URI

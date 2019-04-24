@@ -25,6 +25,8 @@ module Uniform.Json
     -- , encode
     , object, (.=)
     , genericParseJSON, defaultOptions
+    , HML.fromList
+    , Result(..)
     
     )
 where
