@@ -35,7 +35,7 @@ readsPrecForPath readOp prefix msg a =
                     -- could need to see if anything is left 
     else error ("not a  prefix for " ++ msg ++ " input " ++ show a)
 
-instance Read (Path Abs Dir) where 
+instance  Read (Path Abs Dir) where 
   readsPrec _ = readsPrecForPath parseAbsDir prefixAbsDir "Abs Dir"
 
 instance Read (Path Abs File) where 
@@ -47,13 +47,13 @@ instance Read (Path Rel Dir) where
   readsPrec _ = readsPrecForPath parseRelDir prefixRelDir "Rel Dir"
       
       
-instance Show (Path Abs Dir) where 
+instance  {-# OVERLAPPING #-} Show (Path Abs Dir) where 
     show a = concat' [prefixAbsDir,  toFilePath a]
-instance Show (Path Abs File) where 
+instance  {-# OVERLAPPING #-} Show (Path Abs File) where 
     show a = concat' [prefixAbsFile,  toFilePath a]
-instance Show (Path Rel File) where 
+instance  {-# OVERLAPPING #-} Show (Path Rel File) where 
     show a = concat' [prefixRelFile,  toFilePath a]
-instance Show (Path Rel Dir) where 
+instance  {-# OVERLAPPING #-} Show (Path Rel Dir) where 
     show a = concat' [prefixRelDir,  toFilePath a]
 
 -- class ShowPrefix p  where 

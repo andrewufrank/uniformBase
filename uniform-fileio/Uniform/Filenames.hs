@@ -281,6 +281,7 @@ instance Extensions (Path ar File) where
     type ExtensionType (Path ar File) = Extension
 
     getExtension f = Extension e -- . removeChar '.'
+--        where e =   Path.fileExtension $ f :: String
         where e = headNote "werwqerqw" . Path.fileExtension $ f :: String
 
     setExtension e f =

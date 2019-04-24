@@ -5,6 +5,11 @@ packages:
 - ../uniform-strings
 - ../uniform-error
 - ../uniform-algebras
+- ../uniform-json
+- ../uniform-fileio
+- ../../fromOthers/path
+- ../../fromOthers/path-io
+
 extra-deps:
 - test-invariant-0.4.5.0
-resolver: lts-13.12
+resolver: lts-12.26
