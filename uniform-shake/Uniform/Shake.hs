@@ -13,8 +13,8 @@
 -- {-# OPTIONS -Wall #-}
 --{-# OPTIONS -fno-warn-missing-signatures #-}
 
-module Uniform.Shake (runErr2action, runErr2action  
-        , module Uniform.Shake
+module Uniform.Shake ( 
+          module Uniform.Shake
         , module Uniform.Shake.Path
         , takeBaseName, splitPath 
         , Action

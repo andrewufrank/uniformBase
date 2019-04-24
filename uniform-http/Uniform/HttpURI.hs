@@ -37,6 +37,7 @@ module Uniform.HttpURI (
 
 
 import qualified Network.URI as N
+import  Network.URI (URI(..))
 import           Uniform.Error (errorT)
 import           Uniform.Json
 import           Uniform.ListForm -- (IsString (..), (</>), (<.>))
@@ -119,11 +120,11 @@ combineHttpQueryParams p1 p2 = p1 <> p2
 --        where   p11 = unHttpQueryParams p1
 --                p22 = unHttpQueryParams p2
 
-newtype URI = URI N.URI  deriving (Eq, Ord, Generic,   Semigroup, Monoid)
+-- newtype URI = URI N.URI  deriving (Eq, Ord, Generic,   Semigroup, Monoid)
 -- show and read is separately instantiated
 -- zeros not available for N.URI
 
-un2 (URI u) = u   -- to remove the newtype level
+-- un2 (URI u) = u   -- to remove the newtype level
 -- instance Zeros URI where
 --     zero = makeURI "http://zero.zero"  -- there is no obvious zero here
 instance Zeros URI where zero = N.nullURI 
