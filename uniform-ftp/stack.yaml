@@ -5,23 +5,22 @@ packages:
 - ../uniform-strings
 - ../uniform-algebras
 - ../uniform-convenience
-# - ../uniform-cmdLineArgs
+- ../uniform-cmdLineArgs
 - ../uniform-fileio
 - ../uniform-time
 - ../uniform-error
-# - ../uniform-json
-# - ../uniform-pandoc
-# - ../uniform-shake
-# - ../uniform-watch
-# - ../uniform-webserver
-# - ../../fromOthers/bibtex
+- ../uniform-json
+- ../uniform-pandoc
+- ../uniform-shake
+- ../uniform-watch
+- ../uniform-webserver
+- ../../fromOthers/bibtex
 - ../../fromOthers/path
 - ../../fromOthers/path-io
 - ../../fromOthers/pretty-show
 
 extra-deps:
 - test-invariant-0.4.5.0
-# - twitch-0.1.7.2
+- twitch-0.1.7.2
 - ftphs-1.0.9.2
-# - mtl-tf-0.2.1.0
-resolver: lts-13.12
+resolver: lts-12.26

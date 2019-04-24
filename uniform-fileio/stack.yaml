@@ -3,13 +3,24 @@ extra-package-dbs: []
 packages:
 - .
 - ../uniform-strings
-- ../uniform-error
 - ../uniform-algebras
+- ../uniform-convenience
+- ../uniform-cmdLineArgs
+#- ../uniform-fileio
+- ../uniform-time
+- ../uniform-error
+- ../uniform-json
+- ../uniform-pandoc
+- ../uniform-shake
+- ../uniform-watch
+- ../uniform-webserver
+- ../../fromOthers/bibtex
 - ../../fromOthers/path
 - ../../fromOthers/path-io
+- ../../fromOthers/pretty-show
 
 extra-deps:
-#- posix-paths-0.2.1.5
 - test-invariant-0.4.5.0
+- twitch-0.1.7.2
 
 resolver: lts-12.26

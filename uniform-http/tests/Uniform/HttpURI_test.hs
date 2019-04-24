@@ -121,3 +121,5 @@ test_parseURI9 = assertEqual "Just \"http://127.0.0.1:9001\""
 
 test_s1 = assertEqual "\"http://nlp.gerastree.at:9001\"" (show destTest9001g)
 test_r1 = assertEqual destTest9001g (read . show $ destTest9001g)
+
+test_json = assertEqual zero (toJSON destTest9001g)

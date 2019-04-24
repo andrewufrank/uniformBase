@@ -9,6 +9,8 @@ packages:
 - ../uniform-fileio
 - ../uniform-time
 - ../uniform-error
+- ../uniform-ftp
+- ../uniform-http
 - ../uniform-json
 - ../uniform-pandoc
 - ../uniform-shake
@@ -22,4 +24,4 @@ packages:
 extra-deps:
 - test-invariant-0.4.5.0
 - twitch-0.1.7.2
-resolver: lts-13.12
+resolver: lts-12.26
