@@ -15,7 +15,7 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE TypeSynonymInstances  #-}
+-- {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
@@ -26,17 +26,21 @@ import           Uniform.Error
 --import           Uniform.Strings
 --import Uniform.HttpCall
 --import Uniform.HttpCallWithConduit
---import Network.URI
+-- import qualified Network.URI as N
 import           Test.Framework
 import Uniform.HttpURI
-
+import Uniform.Json 
+-- import Uniform.Zero
 --
 
+test_add2uri :: IO ()
 test_add2uri = assertEqual "\"http://nlp.gerastree.at:9001/xtestx\""
                         (showT $ addToURI destTest9001g "xtestx")
+test_add2uri2 :: IO ()
 test_add2uri2 = assertEqual "ServerURI {unServerURI = \"http://127.0.0.1:9000\"}"
                         (showT $ addPort2ServerURI forportTest (PortNumber 9000))
-
+destTestFailx :: Text
+destTestOKx :: Text
 
 destTestFailx = "127.0.0.1:9000" ::Text  -- missing http://
 destTestOKx = "http://127.0.0.1:9001"
@@ -123,3 +127,6 @@ test_s1 = assertEqual "\"http://nlp.gerastree.at:9001\"" (show destTest9001g)
 test_r1 = assertEqual destTest9001g (read . show $ destTest9001g)
 
 test_json = assertEqual zero (toJSON destTest9001g)
+instance Zeros Value where zero = Null 
+
+

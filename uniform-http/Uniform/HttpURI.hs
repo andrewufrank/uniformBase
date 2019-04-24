@@ -36,14 +36,14 @@ module Uniform.HttpURI (
             )  where
 
 
-import           Uniform.Error (errorT)
-import           Uniform.Zero
-import Uniform.ListForm
-import           Uniform.Strings -- (IsString (..), (</>), (<.>))
-import Uniform.Json 
-import Uniform.Strings.Infix ((</>), (<.>))
-
 import qualified Network.URI as N
+import           Uniform.Error (errorT)
+import           Uniform.Json
+import           Uniform.ListForm -- (IsString (..), (</>), (<.>))
+import           Uniform.Strings 
+import           Uniform.Strings.Infix ((</>), (<.>))
+
+import           Uniform.Zero
 --import qualified   Network.URI.Encode as N2
 
 -- a server URI (not including the port, but absolute)
@@ -53,11 +53,12 @@ newtype ServerURI = ServerURI {unServerURI :: URI}
                         )
 --deriving  -- <> and mempty missing for Semigroup
 
--- instance ToJSON ServerURI 
--- instance ToJSON URI
--- instance ToJSON N.URI  -- not possible, issue Auth
--- instance ToJSON N.URIAuth
--- instance Generic N.URIAuth 
+instance ToJSON ServerURI 
+instance ToJSON URI
+instance ToJSON N.URI  -- not possible, issue Auth
+instance ToJSON N.URIAuth
+
+deriving instance Generic N.URIAuth 
 
 instance (Zeros ServerURI, Zeros (LF ServerURI)) => ListForms ServerURI
     where
@@ -77,11 +78,13 @@ mkServerURI = ServerURI . makeURI  -- check for absolute uri?
 -- after the URI till the ? (starts with /)
 newtype HttpPath = HttpPath Text
     deriving (Show, Read, Eq, Ord, Generic, Zeros)
+mkHttpPath :: Text -> HttpPath
 mkHttpPath = HttpPath    -- could check for acceptance here?
 
 -- | a timeout in seconds
 newtype TimeOutSec = TimeOutSec (Maybe Int)
     deriving (Eq, Ord, Show, Read, Generic, Zeros)
+mkTimeOutSec :: Int -> TimeOutSec
 mkTimeOutSec i = TimeOutSec (Just i)
 mkTimeOutDefault = TimeOutSec Nothing
 
@@ -95,6 +98,8 @@ newtype AppType = AppType Text
 mkAppType = AppType
 
 -- | the type for the paramter key - value pairs, comes after the ?
+unHttpQueryParams :: HttpQueryParams -> [(Text, Maybe Text)]
+mkHttpQueryParams :: [(Text, Maybe Text)] -> HttpQueryParams
 newtype HttpQueryParams = HttpQueryParams [(Text, Maybe Text)]
     deriving (Show, Read, Eq, Generic, Zeros, Semigroup, Monoid)
 unHttpQueryParams (HttpQueryParams p) = p
@@ -119,8 +124,10 @@ newtype URI = URI N.URI  deriving (Eq, Ord, Generic,   Semigroup, Monoid)
 -- zeros not available for N.URI
 
 un2 (URI u) = u   -- to remove the newtype level
-instance Zeros URI where
-    zero = makeURI "http://zero.zero"  -- there is no obvious zero here
+-- instance Zeros URI where
+--     zero = makeURI "http://zero.zero"  -- there is no obvious zero here
+instance Zeros URI where zero = N.nullURI 
+
 
 instance ListForms URI where
     type LF URI = Text
@@ -163,7 +170,7 @@ addToURI u t =    --appendOne u t --
 addToURI2 :: URI -> URL -> URI   -- an url encoded string (use s2url or t2url)
 -- add a text at end to an URI
 addToURI2 u t =    --appendOne u t --
-            makeURI $ (uriT u) </> (s2t $ unURL t)
+            makeURI $ (uriT u) </> (s2t unURL t)
 
 newtype PortNumber = PortNumber Int
     deriving (Eq, Ord, Show, Read, Generic, Zeros)

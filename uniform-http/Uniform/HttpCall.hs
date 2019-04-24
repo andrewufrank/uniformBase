@@ -32,7 +32,7 @@ import           Uniform.Error
 import     qualified      Network.HTTP.Simple          as Http
 import     qualified      Network.HTTP.Conduit         as Conduit
 
-import Data.Text (take)
+-- import Data.Text (take)
 import Uniform.HttpURI
 import GHC.Generics hiding (S)
 

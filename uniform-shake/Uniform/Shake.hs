@@ -24,7 +24,9 @@ module Uniform.Shake (runErr2action, runErr2action
         -- , module Path.IO
         -- , module Development.Shake.FilePath
         -- , module Development.Shake
-        , shakeArgs
+        , shakeArgs, shake, ShakeOptions(..), shakeOptions
+        , Verbosity(..), Lint(..)
+        , need, (%>), want, phony
         )      where
 
 import Development.Shake -- (Action, FilePattern, getDirectoryFiles)
