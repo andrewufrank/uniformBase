@@ -38,38 +38,38 @@ import  Test.Framework
 --import Uniform.HttpURI
 
 
-makeHTTPgetrequestNoBody :: URItext -> Text -> Text -> Net.Request String
-makeHTTPgetrequestNoBody uri argument text =
-    Net.getRequest  $ concat [ t2s uri , t2s argument , Net.urlEncode . t2s $ text]
+-- makeHTTPgetrequestNoBody :: URItext -> Text -> Text -> Net.Request String
+-- makeHTTPgetrequestNoBody uri argument text =
+--     Net.getRequest  $ concat [ t2s uri , t2s argument , Net.urlEncode . t2s $ text]
 
 
 
 
-parseURLchecked ::  Text -> ErrIO NetURI.URI
-parseURLchecked uri = do
-    let  urx = NetURI.parseURI $ t2s uri
-    case urx of
-            Nothing ->  throwErrorT ["URLerror" , "not a proper url " ,  uri]
-            Just uriEnc -> return uriEnc
+-- parseURLchecked ::  Text -> ErrIO NetURI.URI
+-- parseURLchecked uri = do
+--     let  urx = NetURI.parseURI $ t2s uri
+--     case urx of
+--             Nothing ->  throwErrorT ["URLerror" , "not a proper url " ,  uri]
+--             Just uriEnc -> return uriEnc
 
-urlEncodeVarsT:: [(Text,Text)] -> Text
-urlEncodeVarsT = s2t . Net.urlEncodeVars . map (pair t2s)
+-- urlEncodeVarsT:: [(Text,Text)] -> Text
+-- urlEncodeVarsT = s2t . Net.urlEncodeVars . map (pair t2s)
 
-urlEncode :: Text -> Text
-urlEncode = s2t . Net.urlEncode . t2s
+-- urlEncode :: Text -> Text
+-- urlEncode = s2t . Net.urlEncode . t2s
 
-destTestFail = "127.0.0.1:9000"
-destTest9001 = "http://127.0.0.1:9001"
+-- destTestFail = "127.0.0.1:9000"
+-- destTest9001 = "http://127.0.0.1:9001"
 
-test_parseURI = assertEqual "Just http://127.0.0.1:9001" (showT . NetURI.parseURI $ destTest9001)
-test_parseURI_fail  = assertEqual "Nothing" (showT . NetURI.parseURI $ destTestFail)
+-- test_parseURI = assertEqual "Just http://127.0.0.1:9001" (showT . NetURI.parseURI $ destTest9001)
+-- test_parseURI_fail  = assertEqual "Nothing" (showT . NetURI.parseURI $ destTestFail)
 
-uriTest = "http://127.0.0.1:9001/?annotators=tokenize%2Cssplit%2Cpos%2Clemma%2Cner%2Cparse&outputFormat=xml"
+-- uriTest = "http://127.0.0.1:9001/?annotators=tokenize%2Cssplit%2Cpos%2Clemma%2Cner%2Cparse&outputFormat=xml"
 
-mimetypeTest = "test/application"
-bodyTest = "This is a sentence."
-res5 = "POST http://127.0.0.1:9001/?annotators=tokenize%2Cssplit%2Cpos%2Clemma%2Cner%2\
-    \Cparse&outputFormat=xml HTTP/1.1\r\nAccept: */*\r\nContent-Length: 19\r\nContent-Type: \
-    \test/application\r\n\r\n"
+-- mimetypeTest = "test/application"
+-- bodyTest = "This is a sentence."
+-- res5 = "POST http://127.0.0.1:9001/?annotators=tokenize%2Cssplit%2Cpos%2Clemma%2Cner%2\
+--     \Cparse&outputFormat=xml HTTP/1.1\r\nAccept: */*\r\nContent-Length: 19\r\nContent-Type: \
+--     \test/application\r\n\r\n"
 
 
