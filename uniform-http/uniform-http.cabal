@@ -22,9 +22,11 @@ library
             , bytestring
             -- ,text
 --            , HTTP
+            , HTF 
             , http-conduit
             , http-client
             , network-uri
+            , modern-uri
 --            , uri-encode
 
 -- mine
@@ -60,6 +62,7 @@ Test-Suite httpTestAuto
 
             , uniform-algebras
             , network-uri
+            , modern-uri
 -- for tests
             , HTF
             , test-invariant

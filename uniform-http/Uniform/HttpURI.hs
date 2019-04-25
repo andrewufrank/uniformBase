@@ -11,12 +11,15 @@
 --{-# OPTIONS_GHC -F -pgmF htfpp #-}
 
 {-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE IncoherentInstances      #-}  -- necessary for overlapping
+{-# LANGUAGE OverlappingInstances #-} 
+{-# LANGUAGE Unsafe #-} 
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE TypeSynonymInstances  #-}
+-- {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
 {-# LANGUAGE StandaloneDeriving
 --    , GeneralizedNewtypeDeriving
@@ -36,7 +39,8 @@ module Uniform.HttpURI (
             )  where
 
 
-import qualified Network.URI as N
+-- import qualified Network.URI as N
+import Text.URI (URI)
 -- import  Network.URI (URI(..)) 
 -- URI is a newtype with URI as a wrapper
 import           Uniform.Error (errorT)
@@ -153,16 +157,14 @@ parseAbsoluteURI u = maybe (errorT ["parseAbsoluteURI in Uniform.HttpURI not acc
 
 makeAbsURI :: Text -> URI
 makeAbsURI u = -- error "absfr"
-    maybe (errorT ["makeAbsURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
-                id
-                (parseAbsoluteURI  u :: Maybe URI)
+    fromMaybe (errorT ["makeAbsURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
+                            (parseAbsoluteURI  u :: Maybe URI)
 --    URI $ maybe (errorT ["makeAbsURI in Uniform.HttpURI", u])
 --                id
 --                (N.parseAbsoluteURI . t2s   $ u)
 makeURI :: Text -> URI
 makeURI u = -- error "sdafsfs"
-    maybe (errorT ["makeURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
-                id
+    fromMaybe (errorT ["makeURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
                 (parseURI  u :: Maybe URI)
 -- alternative code: makeURI2 = fromMaybe zero . parseURI
 
@@ -206,15 +208,23 @@ defaultUserInfoMap uinf = user ++ newpass
                         then pass
                         else ":...@"
 
+deriving instance Show URI 
+deriving instance Read URI
+deriving instance Read N.URI 
+deriving instance Read N.URIAuth 
+deriving instance {-# Overlapping #-} Show N.URI 
+                -- the defined in N are not regular Show !!
+deriving instance {-# Overlapping #-} Show N.URIAuth 
+
 instance IsString URI where
     fromString = read . show
 
-instance Show URI where
-    showsPrec _ s s2 = (show $ uriS s )++ s2
+-- instance Show URI where
+--     showsPrec _ s s2 = (show $ uriS s )++ s2
 
-instance Read URI where
-        readsPrec i r =  maybe []  (\res -> [(URI res, rem1)] ) $ N.parseURI x
-                where  [(x ::String , rem1)] = readsPrec i r
+-- instance Read URI where
+--         readsPrec i r =  maybe []  (\res -> [(URI res, rem1)] ) $ N.parseURI x
+--                 where  [(x ::String , rem1)] = readsPrec i r
 
 
 

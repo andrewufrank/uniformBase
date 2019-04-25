@@ -8,13 +8,13 @@
 
 # Warnings currently triggered by your code
 - ignore: {name: "Redundant if"}
-#- ignore: {name: "Eta reduce"}
+- ignore: {name: "Eta reduce"}
 - ignore: {name: "Redundant bracket"}
 - ignore: {name: "Use dropWhile"}
 - ignore: {name: "Use takeWhile"}
-#- ignore: {name: "Unused LANGUAGE pragma"}
+- ignore: {name: "Unused LANGUAGE pragma"}
 - ignore: {name: "Use newtype instead of data"}
-#- ignore: {name: "Redundant return"}
+- ignore: {name: "Redundant return"}
 - ignore: {name: "Use all"}
 - ignore: {name: "Used otherwise as a pattern"}
 - ignore: {name: "Use map once"}

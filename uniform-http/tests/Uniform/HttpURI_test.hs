@@ -31,9 +31,9 @@ import           Test.Framework
 import Uniform.HttpURI
 import Uniform.Json 
 import Uniform.Json (fromList)
-import Data.Aeson as A
+-- import Data.Aeson as A
 -- import Uniform.Zero
---
+import qualified Network.URI as N
 
 test_add2uri :: IO ()
 test_add2uri = assertEqual "\"http://nlp.gerastree.at:9001/xtestx\""
@@ -125,7 +125,7 @@ test_parseURI9 = assertEqual "Just \"http://127.0.0.1:9001\""
 --                where  [(x ::String , rem)] = readsPrec i r
 
 
-test_s1 = assertEqual "\"http://nlp.gerastree.at:9001\"" (show destTest9001g)
+test_s1 = assertEqual "http://nlp.gerastree.at:9001" (show destTest9001g)
 test_r1 = assertEqual destTest9001g (read . show $ destTest9001g)
 
 test_json = assertEqual resJson (toJSON destTest9001g)
@@ -144,8 +144,22 @@ resJson = Object
       ("uriScheme", String "http:"), ("uriFragment", String ""),
       ("uriPath", String "")])
 
-test_json2 = assertEqual (res2) in2
+-- test_json2 = assertEqual (res2) in2
 
-in2 = fromJSON resJson :: A.Result URI
+-- in2 = fromJSON resJson :: A.Result URI
 
-res2 = A.Success "http://nlp.gerastree.at:9001"  ::A.Result URI
+-- res2 = A.Success "http://nlp.gerastree.at:9001"  ::A.Result URI
+
+-- same test but not needing import of Aeson 
+-- needs function in json from success to maybe
+test_json2 = assertEqual (Just destTest9001g) (fromJSONmaybe resJson)
+
+-- test for read show 
+sg = showT destTest9001g -- "URI http://nlp.gerastree.at:9001"
+test_readShow = assertEqual (un2 destTest9001g) (readT sg2)
+
+sg2 = showT (un2 destTest9001g ::N.URI) --  "http://nlp.gerastree.at:9001"
+sg2r = readNote "sg2r" . t2s $  sg2 :: N.URI 
+
+-- TODO 
+readT = read . t2s 
