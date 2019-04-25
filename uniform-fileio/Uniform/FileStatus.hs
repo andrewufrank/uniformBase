@@ -45,7 +45,7 @@ import Uniform.Error
 import Uniform.Zero
 import Uniform.Strings
 import Uniform.Filenames
-import Uniform.PathShowCase  -- read and show for Path
+import Uniform.PathWrapper -- read and show for Path
 
 --import Test.Framework
 

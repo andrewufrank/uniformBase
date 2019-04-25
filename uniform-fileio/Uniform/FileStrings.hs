@@ -29,7 +29,7 @@ module Uniform.FileStrings (
 
 import           Uniform.FileIOalgebra
 import           Uniform.Filenames as FN
-import Uniform.PathShowCase 
+import Uniform.PathWrapper 
 import           Uniform.Filenames
 import           Uniform.FileStatus
 -- import           Uniform.Strings hiding ((<.>), (</>))

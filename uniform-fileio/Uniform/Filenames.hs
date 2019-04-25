@@ -32,11 +32,12 @@ module Uniform.Filenames
     , Path
     , toFilePath
     -- , takeBaseName'
-    )
-where
+    ) where
+
+import Uniform.PathWrapper 
 import qualified Data.List.Split               as Sp -- hiding ((</>), (<.>))
 import qualified Path                           -- for Generics
-import           Path                           ( Path(..)
+import qualified Path                           ( Path(..)
                                                 , toFilePath
                                                 , Abs
                                                 , Rel
@@ -51,7 +52,7 @@ import           Uniform.Error -- prefered
 import           Uniform.Zero
 --import  qualified         Filesystem.Path       as F -- prefered
 -- not usable, has a different definition of FilePath
-import           Uniform.PathShowCase  -- read and show for Path
+import           Uniform.PathWrapper  -- read and show for Path
 
 takeBaseName' ::FilePath -> FilePath 
 takeBaseName' = S.takeBaseName 
