@@ -12,6 +12,7 @@
 {-# LANGUAGE ScopedTypeVariables            #-}
 {-# LANGUAGE TypeFamilies                   #-}
 {-# LANGUAGE UndecidableInstances           #-}
+{-# LANGUAGE OverloadedStrings       #-}
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
@@ -46,6 +47,18 @@ import           Uniform.Error           hiding ( at )
 
 encodeT :: ToJSON a => a -> Text  
 encodeT = bb2t . bl2b . encode 
+
+fromJSONmaybe :: FromJSON a => Value -> Maybe a 
+fromJSONmaybe v = case (fromJSON v) of 
+            Success a -> Just a 
+            _ -> Nothing 
+
+
+fromJSONm :: (FromJSON a, Show a) => Value -> ErrIO a 
+-- fromJSONm :: (FromJSON a, MonadError m) => Value -> m a   -- TODO in error
+fromJSONm v = case (fromJSON v) of 
+            Success a -> return a 
+            x -> throwErrorT ["fromJson", showT x]
 
 class AtKey vk v where
 -- ^ get and set at a key 

@@ -90,3 +90,6 @@ rec0 :: MetaRec
 rec0 = MetaRec zero   (Just year2000) year2000 zero
 
 -- test_force = assertBool False 
+
+test_fromJ = assertEqual  (Just rec1) (fromJSONmaybe rec1json')
+-- test_fromJx = assertEqual  Nothing (fromJSONmaybe rec1json')
