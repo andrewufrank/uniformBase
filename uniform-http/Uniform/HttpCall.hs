@@ -153,3 +153,18 @@ formatQuery (a, mb) = (t2b a, fmap t2b mb)
 --     return res2
 
 
+-- | a timeout in seconds
+newtype TimeOutSec = TimeOutSec (Maybe Int)
+    deriving (Eq, Ord, Show, Read, Generic, Zeros)
+mkTimeOutSec :: Int -> TimeOutSec
+mkTimeOutSec i = TimeOutSec (Just i)
+mkTimeOutDefault = TimeOutSec Nothing
+
+instance NiceStrings TimeOutSec where
+    shownice (TimeOutSec (Just i)) = unwords' ["TimeOut", shownice i, "sec"]
+    shownice (TimeOutSec Nothing) =   "TimeOut default"
+
+-- | a special type for the app type argumetn
+newtype AppType = AppType Text
+    deriving (Eq, Ord, Show, Read, Generic, Zeros)
+mkAppType = AppType

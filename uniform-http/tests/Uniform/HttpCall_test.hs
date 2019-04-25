@@ -37,7 +37,7 @@ import Uniform.HttpCall
 import  Test.Framework
 --import Uniform.HttpURI
 
-{-
+
 makeHTTPgetrequestNoBody :: URItext -> Text -> Text -> Net.Request String
 makeHTTPgetrequestNoBody uri argument text =
     Net.getRequest  $ concat [ t2s uri , t2s argument , Net.urlEncode . t2s $ text]
@@ -72,4 +72,4 @@ res5 = "POST http://127.0.0.1:9001/?annotators=tokenize%2Cssplit%2Cpos%2Clemma%2
     \Cparse&outputFormat=xml HTTP/1.1\r\nAccept: */*\r\nContent-Length: 19\r\nContent-Type: \
     \test/application\r\n\r\n"
 
--}
+
