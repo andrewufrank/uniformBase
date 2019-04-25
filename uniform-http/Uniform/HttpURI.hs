@@ -12,7 +12,7 @@
 
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE IncoherentInstances      #-}  -- necessary for overlapping
-{-# LANGUAGE OverlappingInstances #-} 
+-- {-# LANGUAGE OverlappingInstances #-} 
 {-# LANGUAGE Unsafe #-} 
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -40,7 +40,9 @@ module Uniform.HttpURI (
 
 
 -- import qualified Network.URI as N
-import Text.URI (URI)
+import Text.URI 
+    (URI(..), mkURI, emptyURI
+            , RText (..), RTextLabel(..))
 -- import  Network.URI (URI(..)) 
 -- URI is a newtype with URI as a wrapper
 import           Uniform.Error (errorT)
@@ -60,17 +62,24 @@ newtype ServerURI = ServerURI {unServerURI :: URI}
 --deriving  -- <> and mempty missing for Semigroup
 
 instance ToJSON ServerURI 
-instance ToJSON N.URI
+
+instance Zeros URI where zero = emptyURI -- fromJustNote "zero mk URI" $ mkURI ""
+deriving instance Read URI 
+deriving instance Read (RText l)
+instance ToJSON URI 
+instance FromJSON URI
+
+-- instance ToJSON N.URI
 -- instance ToJSON N.URI  -- not possible, issue Auth
-instance ToJSON N.URIAuth
+-- instance ToJSON N.URIAuth
 
-deriving instance Generic N.URIAuth 
+-- deriving instance Generic N.URIAuth 
 
-instance (Zeros ServerURI, Zeros (LF ServerURI)) => ListForms ServerURI
-    where
-    type LF ServerURI = Text
-    mkOne = mkServerURI  -- = ServerURI . makeAbsURI
-    appendTwo a b = ServerURI $ appendTwo (unServerURI a)  (unServerURI b)
+-- instance (Zeros ServerURI, Zeros (LF ServerURI)) => ListForms ServerURI
+--     where
+--     type LF ServerURI = Text
+--     mkOne = mkServerURI  -- = ServerURI . makeAbsURI
+--     appendTwo a b = ServerURI $ appendTwo (unServerURI a)  (unServerURI b)
 
 --instance ListForms URI where
 --    type LF URI = Text
@@ -87,21 +96,6 @@ newtype HttpPath = HttpPath Text
 mkHttpPath :: Text -> HttpPath
 mkHttpPath = HttpPath    -- could check for acceptance here?
 
--- | a timeout in seconds
-newtype TimeOutSec = TimeOutSec (Maybe Int)
-    deriving (Eq, Ord, Show, Read, Generic, Zeros)
-mkTimeOutSec :: Int -> TimeOutSec
-mkTimeOutSec i = TimeOutSec (Just i)
-mkTimeOutDefault = TimeOutSec Nothing
-
-instance NiceStrings TimeOutSec where
-    shownice (TimeOutSec (Just i)) = unwords' ["TimeOut", shownice i, "sec"]
-    shownice (TimeOutSec Nothing) =   "TimeOut default"
-
--- | a special type for the app type argumetn
-newtype AppType = AppType Text
-    deriving (Eq, Ord, Show, Read, Generic, Zeros)
-mkAppType = AppType
 
 -- | the type for the paramter key - value pairs, comes after the ?
 unHttpQueryParams :: HttpQueryParams -> [(Text, Maybe Text)]
@@ -125,49 +119,48 @@ combineHttpQueryParams p1 p2 = p1 <> p2
 --        where   p11 = unHttpQueryParams p1
 --                p22 = unHttpQueryParams p2
 
-newtype URI = URI N.URI  deriving (Eq, Ord, Generic,   Semigroup, Monoid)
+-- newtype URI = URI N.URI  deriving (Eq, Ord, Generic,   Semigroup, Monoid)
 -- show and read is separately instantiated
 -- zeros not available for N.URI
 
-un2 (URI u) = u   -- to remove the newtype level
+-- un2 (URI u) = u   -- to remove the newtype level
 -- instance Zeros URI where
     -- zero = makeURI "http://zero.zero"  -- there is no obvious zero here
-instance Zeros URI where zero = URI N.nullURI 
-instance ToJSON URI 
-instance FromJSON URI
-instance FromJSON N.URI
-instance FromJSON N.URIAuth
+-- instance FromJSON N.URI
+-- instance FromJSON N.URIAuth
 
-instance ListForms URI where
-    type LF URI = Text
-    mkOne = makeURI  -- do not test here for validity, because it is used for appendTwo
-    appendTwo a b = makeURI $ appendTwo  (uriT a) (uriT b)
+-- instance ListForms URI where
+--     type LF URI = Text
+--     mkOne = makeURI  -- do not test here for validity, because it is used for appendTwo
+--     appendTwo a b = makeURI $ appendTwo  (uriT a) (uriT b)
 
-parseURI :: Text -> Maybe URI
-parseURI u = maybe (errorT ["parseURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
-                (Just . URI)
-                (N.parseURI  . t2s $ u )
---                fmap URI . N.parseURI . t2s $ t
+-- parseURI :: Text -> Maybe URI
+-- parseURI u = maybe (errorT ["parseURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
+--                 (Just . URI)
+--                 (N.parseURI  . t2s $ u )
+-- --                fmap URI . N.parseURI . t2s $ t
 
-parseAbsoluteURI :: Text -> Maybe URI
-parseAbsoluteURI u = maybe (errorT ["parseAbsoluteURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
-                (Just . URI)
-                (N.parseAbsoluteURI  . t2s $ u )
---                fmap URI . N.parseAbsoluteURI . t2s $ t
+-- parseAbsoluteURI :: Text -> Maybe URI
+-- parseAbsoluteURI u = maybe (errorT ["parseAbsoluteURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
+--                 (Just . URI)
+--                 (N.parseAbsoluteURI  . t2s $ u )
+-- --                fmap URI . N.parseAbsoluteURI . t2s $ t
 
-makeAbsURI :: Text -> URI
-makeAbsURI u = -- error "absfr"
-    fromMaybe (errorT ["makeAbsURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
-                            (parseAbsoluteURI  u :: Maybe URI)
---    URI $ maybe (errorT ["makeAbsURI in Uniform.HttpURI", u])
---                id
---                (N.parseAbsoluteURI . t2s   $ u)
+-- makeAbsURI :: Text -> URI
+-- makeAbsURI u = -- error "absfr"
+--     fromMaybe (errorT ["makeAbsURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
+--                             (parseAbsoluteURI  u :: Maybe URI)
+-- --    URI $ maybe (errorT ["makeAbsURI in Uniform.HttpURI", u])
+-- --                id
+-- --                (N.parseAbsoluteURI . t2s   $ u)
 makeURI :: Text -> URI
-makeURI u = -- error "sdafsfs"
-    fromMaybe (errorT ["makeURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
-                (parseURI  u :: Maybe URI)
--- alternative code: makeURI2 = fromMaybe zero . parseURI
+-- makeURI u = -- error "sdafsfs"
+--     fromMaybe (errorT ["makeURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
+--                 (parseURI  u :: Maybe URI)
+-- -- alternative code: makeURI2 = fromMaybe zero . parseURI
 
+makeURI u = fromJustNote "makeURI" $ mkURI u 
+uriT = showT 
 
 addToURI :: URI -> Text -> URI   -- an url encoded string (use s2url or t2url)
 -- add a text at end to an URI
@@ -185,46 +178,62 @@ mkPortNumber i = if i > 0 && i < 64000 then  PortNumber i
                     else errorT ["PortNumber out of range", showT i]
 unPortNumber (PortNumber i) = i
 
-addPort2ServerURI :: ServerURI -> PortNumber -> ServerURI
-addPort2ServerURI u p = mkOne $ appendTwo  (uriT . unServerURI $ u)
-            (":" <> (showT . unPortNumber $ p))
+-- addPort2ServerURI :: ServerURI -> PortNumber -> ServerURI
+-- addPort2ServerURI u p = mkOne $ appendTwo  (uriT . unServerURI $ u)
+--             (":" <> (showT . unPortNumber $ p))
 --addPort2ServerURI (ServerURI u) (PortNumber i) = mkServerURI (uriT u <:> showT i)
 
-uriT :: URI -> Text
--- ^ convert an uri to a text (but not a show instance with "")
-uriT = s2t . uriS
+-- uriT :: URI -> Text
+-- -- ^ convert an uri to a text (but not a show instance with "")
+-- uriT = s2t . uriS
 
-uriS :: URI -> String
-uriS u =  N.uriToString defaultUserInfoMap (un2 u) $ ""
--- to filter out the password, if any in a URI
+-- uriS :: URI -> String
+-- uriS u =  N.uriToString defaultUserInfoMap (un2 u) $ ""
+-- -- to filter out the password, if any in a URI
 
--- copied
-defaultUserInfoMap :: String -> String
-defaultUserInfoMap uinf = user ++ newpass
-    where
-        (user,pass) = break (==':') uinf
-        newpass     = if null pass || (pass == "@")
-                                   || (pass == ":@")
-                        then pass
-                        else ":...@"
+-- -- copied
+-- defaultUserInfoMap :: String -> String
+-- defaultUserInfoMap uinf = user ++ newpass
+--     where
+--         (user,pass) = break (==':') uinf
+--         newpass     = if null pass || (pass == "@")
+--                                    || (pass == ":@")
+--                         then pass
+--                         else ":...@"
 
-deriving instance Show URI 
-deriving instance Read URI
-deriving instance Read N.URI 
-deriving instance Read N.URIAuth 
-deriving instance {-# Overlapping #-} Show N.URI 
-                -- the defined in N are not regular Show !!
-deriving instance {-# Overlapping #-} Show N.URIAuth 
+-- deriving instance Show URI 
+-- deriving instance Read URI
+-- deriving instance Read N.URI 
+-- deriving instance Read N.URIAuth 
+-- deriving instance {-# Overlapping #-} Show N.URI 
+--                 -- the defined in N are not regular Show !!
+-- deriving instance {-# Overlapping #-} Show N.URIAuth 
 
-instance IsString URI where
-    fromString = read . show
+-- instance IsString URI where
+--     fromString = read . show
 
--- instance Show URI where
---     showsPrec _ s s2 = (show $ uriS s )++ s2
+-- -- instance Show URI where
+-- --     showsPrec _ s s2 = (show $ uriS s )++ s2
 
--- instance Read URI where
---         readsPrec i r =  maybe []  (\res -> [(URI res, rem1)] ) $ N.parseURI x
---                 where  [(x ::String , rem1)] = readsPrec i r
+-- -- instance Read URI where
+-- --         readsPrec i r =  maybe []  (\res -> [(URI res, rem1)] ) $ N.parseURI x
+-- --                 where  [(x ::String , rem1)] = readsPrec i r
 
+-- other types which are used in HttpCall
+-- | a timeout in seconds
+newtype TimeOutSec = TimeOutSec (Maybe Int)
+    deriving (Eq, Ord, Show, Read, Generic, Zeros)
+mkTimeOutSec :: Int -> TimeOutSec
+mkTimeOutSec i = TimeOutSec (Just i)
+mkTimeOutDefault = TimeOutSec Nothing
+
+instance NiceStrings TimeOutSec where
+    shownice (TimeOutSec (Just i)) = unwords' ["TimeOut", shownice i, "sec"]
+    shownice (TimeOutSec Nothing) =   "TimeOut default"
+
+-- | a special type for the app type argumetn
+newtype AppType = AppType Text
+    deriving (Eq, Ord, Show, Read, Generic, Zeros)
+mkAppType = AppType
 
 
