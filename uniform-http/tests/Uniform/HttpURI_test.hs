@@ -60,17 +60,20 @@ u2 = URI "http://nlp.gerastree.at:9001/testx"
 
 -- server read/show test
 
-sv1 = mkServerURI2   "http://nlp.gerastree.at"
-sv2 = mkServerURI2   "http://nlp.gerastree.at:9001"
+sv1 = mkServerURI4text   "http://nlp.gerastree.at"
+sv2 = mkServerURI4text   "http://nlp.gerastree.at:9001"
 test_sv1 = assertEqual sv1 (read . show $ sv1)
 svShow = showT sv1 
 
 test_addport = assertEqual sv2
             (addPort2ServerURI sv1 (mkPortNumber 9001))
 
+test_gerastree = assertEqual r11 (showT . makeURI $ g11)
+g11 = "http://gerastree.at"
+r11 = "URI \"http://gerastree.at\""
 
 forportTest :: ServerURI
-forportTest = mkServerURI2 "http://127.0.0.1"
+forportTest = mkServerURI4text "http://127.0.0.1"
 
 -- test_add2uri :: IO ()
 -- test_add2uri = assertEqual "\"http://nlp.gerastree.at:9001/xtestx\""

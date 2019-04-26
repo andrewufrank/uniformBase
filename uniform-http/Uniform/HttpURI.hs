@@ -62,12 +62,12 @@ instance FromJSON URI
 instance NiceStrings URI where shownice s = unwords' ["URI", unURI s]
 
 makeURI :: Text -> URI 
-makeURI = URI . showT . fromJustNote "makeURI 3saf" . N.parseURI . t2s 
+makeURI = parseURI  
 -- make an URI (construct and show as string)
 
 addToURI :: URI -> Text -> URI   -- an url encoded string (use s2url or t2url)
 -- add a text at end to an URI
-addToURI u t = makeURI $ (uriT u) </> t
+addToURI u t = makeURI $ uriT u </> t
 -- less secure but simpler
 --              = case (t2,u2) of
 --                 (Just t3, Just u3) -> URI . showT $ N.nonStrictRelativeTo t3 u3
@@ -87,7 +87,7 @@ newtype ServerURI = ServerURI {unServerURI :: URI}
 --                        , ListForms
                         )
 mkServerURI = ServerURI 
-mkServerURI2 = ServerURI  . makeURI
+mkServerURI4text = ServerURI  . makeURI
 
 -- --deriving  -- <> and mempty missing for Semigroup
 
@@ -165,11 +165,15 @@ mkHttpQueryParams = HttpQueryParams
 -- --     mkOne = makeURI  -- do not test here for validity, because it is used for appendTwo
 -- --     appendTwo a b = makeURI $ appendTwo  (uriT a) (uriT b)
 
--- -- parseURI :: Text -> Maybe URI
--- -- parseURI u = maybe (errorT ["parseURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
--- --                 (Just . URI)
--- --                 (N.parseURI  . t2s $ u )
--- -- --                fmap URI . N.parseURI . t2s $ t
+parseURI :: Text ->  URI
+-- reads a text string, checks for URI conformity 
+-- and renders as text wrapped in URI 
+-- if this is the only way to convert a text to an URI
+-- they must be always save 
+parseURI u = URI . showT $  maybe (errorT ["parseURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
+                id
+                (N.parseURI  . t2s $ u )
+--                fmap URI . N.parseURI . t2s $ t
 
 -- -- parseAbsoluteURI :: Text -> Maybe URI
 -- -- parseAbsoluteURI u = maybe (errorT ["parseAbsoluteURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
@@ -177,7 +181,8 @@ mkHttpQueryParams = HttpQueryParams
 -- --                 (N.parseAbsoluteURI  . t2s $ u )
 -- -- --                fmap URI . N.parseAbsoluteURI . t2s $ t
 
--- -- makeAbsURI :: Text -> URI
+makeAbsURI :: Text -> URI
+makeAbsURI = makeURI  -- leave if later a differentiation is desired
 -- -- makeAbsURI u = -- error "absfr"
 -- --     fromMaybe (errorT ["makeAbsURI in Uniform.HttpURI not acceptable string \n", u, "END of string"])
 -- --                             (parseAbsoluteURI  u :: Maybe URI)
