@@ -29,6 +29,7 @@ library
         , hxt-regex-xmlschema
          , regex-tdfa
         , regex-tdfa-text
+        , regex-compat
     exposed-modules:
         Uniform.Regex
 

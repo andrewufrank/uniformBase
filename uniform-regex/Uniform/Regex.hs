@@ -23,13 +23,14 @@
 
 module Uniform.Regex (module Uniform.Regex
         , (=~)
+        , mkRegex, subRegex
         )  where
 
 import           Uniform.Strings 
 import Text.Regex.XMLSchema.Generic
 import Text.Regex.TDFA   
 import Text.Regex.TDFA.Text ()
-
+import Text.Regex (mkRegex, subRegex)
 
 splitWithPrefix :: Text -> Text -> (Text, Text)
 splitWithPrefix p t = split p t 

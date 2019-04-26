@@ -26,7 +26,7 @@ module Uniform.Json
     -- , encode
     , object, (.=)
     , genericParseJSON, defaultOptions
-    , HML.fromList
+    , HML.fromList, HML.toList
     , Result(..)
     
     )
