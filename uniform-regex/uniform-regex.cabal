@@ -26,7 +26,9 @@ library
         , uniform-algebras
         , uniform-strings
         , uniform-error 
-        , hxt-regex-xmlschem
+        , hxt-regex-xmlschema
+         , regex-tdfa
+        , regex-tdfa-text
     exposed-modules:
         Uniform.Regex
 
