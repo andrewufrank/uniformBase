@@ -48,6 +48,8 @@ module Uniform.Strings.Utilities
     , prop_filterChar
     , isSpace, isLower
     , PrettyStrings (..)
+    -- to generalize
+    , dropWhile, takeWhile, span, break
     )
     where
 
@@ -84,7 +86,7 @@ import Text.Show.Pretty
 import           "monads-tf" Control.Monad.State      (MonadIO, liftIO)
 import Control.Monad (when)
 
---
+
 -- | generalized functions to work on chains of characters
 -- (i.e. strings, text, url encoded, bytestring), text and bytestring
 -- with the same semantics
