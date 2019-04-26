@@ -42,10 +42,10 @@ import Path (File, Dir, Abs, Rel)
 import qualified System.FilePath               as S
 import qualified System.FilePath.Posix         as S -- prefered
 
-instance Show (P.Path a d) where 
-    show = P.toFilePath 
-instance Read (P.Path a d) where 
-    
+-- instance Show (P.Path a d) where 
+--     show = P.toFilePath 
+-- instance Read (P.Path a d) where 
+-- just for test
 
 data AR = Rel | Abs   deriving (Show, Read, Ord, Eq, Generic)
 data DF = File | Dir  deriving (Show, Read, Ord, Eq, Generic)

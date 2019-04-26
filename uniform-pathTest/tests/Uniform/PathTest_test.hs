@@ -57,3 +57,4 @@ n6 = makeRelFile . s2t $ n1
 r6 = makeRelFile "Workspace/testFile.txt"
 
 test_filename = assertEqual n6 (getFileName r6)
+

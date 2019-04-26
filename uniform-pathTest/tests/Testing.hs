@@ -22,7 +22,8 @@ module Main     where
 
 
 import Test.Framework
-import {-@ HTF_TESTS @-} Uniform.PathTest_test
+-- import {-@ HTF_TESTS @-} Uniform.PathTest_test
+import {-@ HTF_TESTS @-} Uniform.PathShowCase_test
 import Uniform.Strings
 
 main = do

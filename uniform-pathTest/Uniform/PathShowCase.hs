@@ -24,20 +24,31 @@ import Data.Data
 
 
 
-readsPrecForPath readOp prefix1 msg a1 = 
+readsPrecForPath parseAD prefix1 msg a1 = 
   -- case (p1,t1) of 
   --   ("",t2) -> errorT ["readPrexForPath", prefix1, msg, a1]
   --   (p2, t2) ->  -- prefix found 
   --               readOp 
   if (prefix1 `isPrefixOf'` a1 ) 
-    then  [ (
-      (fromJustNote (unwords["not a path ", msg, "input", show a1]) 
-            . readOp
-            . fromJustNote "prefix strip failed" 
-            . stripPrefix' prefix1 $ a1) 
-              , "")]
-                    -- could need to see if anything is left 
+    then  [ (res2, rem2)]
     else error ("not a  prefix for " ++ msg ++ " input " ++ show a1)
+
+  where 
+    a2 = stripPrefix' prefix1 a1
+    a3  = fromJustNote "readPrec not prefix"  a2  
+    a3s = words a3
+          -- to get the filepath in the first unit
+    a4 = headNote "readsPrec for path - nothing" a3s 
+    res1 = parseAD a4   -- there seem not to be a parser for filepath
+    res2 = fromJustNote (unwords["not a path ", msg, "input", show a1]) res1
+    rem2 = concat . tail $ a3s 
+
+      -- (fromJustNote (unwords["not a path ", msg, "input", show a1]) 
+      --       . parseAD
+      --       . fromJustNote "prefix strip failed" 
+      --       . stripPrefix' prefix1 $ a1) 
+      --         , "")]
+                    -- could need to see if anything is left 
   -- where (p1,t1) = splitWithPrefix prefix1 a1
 
 instance  Read (Path Abs Dir) where 
