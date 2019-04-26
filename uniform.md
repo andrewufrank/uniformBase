@@ -52,3 +52,26 @@ instances of `NiceStrings`.
 A Generic instance is desirable to allow `ToJSON` and `FromJSON` instances 
 automatically produced. 
 
+
+## Strings
+The overall goal is to have functions which work on all `CharacterSequences` 
+(what others have called `StringLike`) the same; same function name, 
+same arguments, same semantics. It is often trivially achieved by 
+selecting one implementation and then convert to and from this instance. 
+
+If performance is an issue, add native implementations.
+
+## FileIO
+The goal is to have a set of functions which work always and avoid the 
+different quirks. 
+
+### Typed Files
+An attempt to construct a connection between extensions and the data 
+in a file. An extension is linked to the transformation between the 
+representation on disk and the data type read in. 
+
+### Piped 
+Probably not used anymore.
+
+## Regex
+Should possibly be integrated into strings. Not used now.

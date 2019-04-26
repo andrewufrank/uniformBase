@@ -52,14 +52,12 @@ library
     exposed-modules:
              Uniform.FileIO
 --             FileIO.ByteString
---             Uniform.Filenames
              Uniform.Filenames
              -- exposed only for test use
              Uniform.FileStrings
 
              Uniform.Piped
              Uniform.FileIOalgebra
---             Uniform.FileStrings
              Uniform.FileStatus
              Uniform.TypedFile
 --             Uniform.FileText
