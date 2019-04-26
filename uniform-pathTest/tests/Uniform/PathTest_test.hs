@@ -28,6 +28,8 @@ import  Uniform.PathWrapper
 import qualified Path as P
 import Control.Exception
 
+
+
 s1 = Path Rel File "testFile.txt" :: Path Rel File 
 r1 = "Path Rel File \"testFile.txt\""
 test_show1 = assertEqual r1 (showT s1)

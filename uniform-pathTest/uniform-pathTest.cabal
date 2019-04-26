@@ -27,9 +27,10 @@ library
         , uniform-strings
         , uniform-error 
         , path, path-io
+        , filepath
     exposed-modules:
         Uniform.PathWrapper
-
+        Uniform.PathShowCase
     exposed: True
     buildable: True
     default-language: Haskell2010
@@ -43,7 +44,7 @@ Test-Suite tests_example
         , HTF
        , uniform-strings
        , uniform-error
-       , uniform-example
+       , uniform-pathTest
         , path, path-io
 
 --       , data-easy
