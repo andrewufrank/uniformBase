@@ -140,14 +140,14 @@ instance Zeros (Path Rel Dir) where
     zero = makeRelDir "./"
 instance Zeros (Path Rel File) where
     zero = makeRelFile "zero"
-instance IsString (Path Abs File) where
-    fromString = read
-instance IsString (Path Abs Dir) where
-    fromString = read
-instance IsString (Path Rel File) where
-    fromString = read
-instance IsString (Path Rel Dir) where
-    fromString = read
+-- instance IsString (Path Abs File) where
+--     fromString = read
+-- instance IsString (Path Abs Dir) where
+--     fromString = read
+-- instance IsString (Path Rel File) where
+--     fromString = read
+-- instance IsString (Path Rel Dir) where
+--     fromString = read
 -- instance  NiceStrings (Path a b) where
 --     shownice = s2t . toFilePath
 -- -- instance Show (Path a b) where 
