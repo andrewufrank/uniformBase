@@ -183,6 +183,8 @@ test_removeExt2 = assertEqual f1 (removeExtension . removeExtension $ f4)
 f4p = makeRelFile f4 
 f1p = makeRelFile f1
 
+
+
 test_removeExt2path  = assertEqual f1p 
                (removeExtension . removeExtension $ f4p)
 

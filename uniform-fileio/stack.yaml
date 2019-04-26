@@ -15,8 +15,8 @@ packages:
 - ../uniform-watch
 - ../uniform-webserver
 - ../../fromOthers/bibtex
-- ../../fromOthers/path
-- ../../fromOthers/path-io
+# - ../../fromOthers/path
+# - ../../fromOthers/path-io
 - ../../fromOthers/pretty-show
 
 extra-deps:

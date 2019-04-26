@@ -25,6 +25,8 @@
 module Uniform.Filenames
     ( module Uniform.Filenames
     , module Uniform.Error
+    , module Uniform.PathShowCase
+
     , Abs
     , Rel
     , File
@@ -34,10 +36,9 @@ module Uniform.Filenames
     -- , takeBaseName'
     ) where
 
-import Uniform.PathWrapper 
 import qualified Data.List.Split               as Sp -- hiding ((</>), (<.>))
 import qualified Path                           -- for Generics
-import qualified Path                           ( Path(..)
+import  Path                           ( Path(..)
                                                 , toFilePath
                                                 , Abs
                                                 , Rel
@@ -52,12 +53,13 @@ import           Uniform.Error -- prefered
 import           Uniform.Zero
 --import  qualified         Filesystem.Path       as F -- prefered
 -- not usable, has a different definition of FilePath
-import           Uniform.PathWrapper  -- read and show for Path
+-- import           Uniform.PathWrapper  -- read and show for Path
+import Uniform.PathShowCase
 
 takeBaseName' ::FilePath -> FilePath 
 takeBaseName' = S.takeBaseName 
 
-toFilePathT = s2t . toFilePath 
+-- toFilePathT = s2t . toFilePath 
 
 homeDir = makeAbsDir "/home/frank/" :: Path Abs Dir
 homeDir2 :: ErrIO (Path Abs Dir)
@@ -282,8 +284,9 @@ instance Extensions (Path ar File) where
     type ExtensionType (Path ar File) = Extension
 
     getExtension f = Extension e -- . removeChar '.'
---        where e =   Path.fileExtension $ f :: String
-        where e = headNote "werwqerqw" . Path.fileExtension $ f :: String
+       where e =   Path.fileExtension $ f :: String
+        -- where e = headNote "werwqerqw" . Path.fileExtension $ f :: String
+        -- difference in version 
 
     setExtension e f =
         fromJustNote "setExtension" $ Path.setFileExtension (unExtension e) f
