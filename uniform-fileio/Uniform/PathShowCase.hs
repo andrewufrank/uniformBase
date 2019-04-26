@@ -24,16 +24,21 @@ import Data.Data
 
 
 
-readsPrecForPath readOp prefix msg a = 
-  if (prefix `isPrefixOf'` a ) 
+readsPrecForPath readOp prefix1 msg a1 = 
+  case (p1,t1) of 
+    ("",t2) -> errorT ["readPrexForPath", prefix1, msg, a1]
+    (p2, t2) ->  -- prefix found 
+                readOp 
+  if (prefix1 `isPrefixOf'` a1 ) 
     then  [ (
-      (fromJustNote (unwords["not a path ", msg, "input", show a]) 
+      (fromJustNote (unwords["not a path ", msg, "input", show a1]) 
             . readOp
             . fromJustNote "prefix strip failed" 
-            . stripPrefix' prefix $ a) 
+            . stripPrefix' prefix1 $ a1) 
               , "")]
                     -- could need to see if anything is left 
-    else error ("not a  prefix for " ++ msg ++ " input " ++ show a)
+    else error ("not a  prefix for " ++ msg ++ " input " ++ show a1)
+  where (p1,t1) = splitWithPrefix prefix1 a1
 
 instance  Read (Path Abs Dir) where 
   readsPrec _ = readsPrecForPath parseAbsDir prefixAbsDir "Abs Dir"
