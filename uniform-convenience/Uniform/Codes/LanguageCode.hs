@@ -32,7 +32,7 @@ module Uniform.Codes.LanguageCode (module Uniform.Codes.LanguageCode
 
         )  where
 
-import           Safe
+-- import           Safe
 import Uniform.FileIO
 import Uniform.Error  hiding ((</>), (<.>)) -- to allow export
 import Uniform.Test.Utils

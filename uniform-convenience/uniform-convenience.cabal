@@ -20,7 +20,7 @@ library
     build-depends:
         base >=4.8 && <= 5
         , monads-tf
-        , safe
+        -- , safe
         , HTF
 --        , uniform-fileio
 --            , uniform-strings

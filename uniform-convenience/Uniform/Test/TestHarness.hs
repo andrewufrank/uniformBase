@@ -44,7 +44,7 @@ module Uniform.Test.TestHarness (module Uniform.Test.TestHarness
 
         )  where
 
-import           Safe
+-- import           Safe
 import           Test.Framework
 import Uniform.FileIO
 import Uniform.Error  hiding ((</>), (<.>)) -- to allow export

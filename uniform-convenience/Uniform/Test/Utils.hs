@@ -32,7 +32,7 @@ module Uniform.Test.Utils (module Uniform.Test.Utils
 
         )  where
 
-import           Safe
+-- import           Safe
 -- import           Test.Framework
 import Uniform.FileIO
 import Uniform.Strings (ppShow )
