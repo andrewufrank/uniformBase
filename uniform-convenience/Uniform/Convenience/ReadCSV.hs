@@ -3,7 +3,7 @@
 -- Module      :  read CSV files
 -- insert {-@ HTF_TESTS @-} for each import
 -----------------------------------------------------------------------------
-{-# OPTIONS_GHC -F -pgmF htfpp #-}
+-- {-# OPTIONS_GHC -F -pgmF htfpp #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -15,11 +15,11 @@
 module Uniform.Convenience.ReadCSV -- (closedMain)
     where
 
-import           Test.Framework
+-- import           Test.Framework
 --import Uniform.Strings
 --import Uniform.Error
 import Text.CSV
-import Text.Parsec.Error
+-- import Text.Parsec.Error
 import Uniform.FileIO
 
 csvExtension = Extension "csv" :: Extension
@@ -43,11 +43,11 @@ handleError csv = putStrLn "not a CSV"
 --toInt :: String -> Int
 --toInt = read
 
--- show produces the "xx"
-test_1 = do
-    r <- runErr $ readCSV (makeAbsFile "/home/test/input")
+-- -- show produces the "xx"
+-- test_1 = do
+--     r <- runErr $ readCSV (makeAbsFile "/home/test/input")
 
-    assertEqual r  res
+--     assertEqual r  res
 
 res = Right
   [["name", "age"], ["Alex", "22"], ["Anish", "22"], ["Becca", "23"],

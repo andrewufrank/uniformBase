@@ -21,7 +21,7 @@ library
         base >=4.8 && <= 5
         , monads-tf
         , safe
-        -- , HTF
+        , HTF
 --        , uniform-fileio
 --            , uniform-strings
         , uniform-error

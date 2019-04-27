@@ -14,6 +14,8 @@
 
 -----------------------------------------------------------Utils.hs------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
+-- is required to import the assertEqual used 
+-- later here for testing.. Int
 {-# LANGUAGE BangPatterns          #-}
 --{-# LANGUAGE DeriveDataTypeable    #-}
 {-# LANGUAGE DoAndIfThenElse       #-}

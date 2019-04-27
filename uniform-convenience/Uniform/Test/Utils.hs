@@ -6,7 +6,7 @@
 -- store data on disk
  -- interface must be in the wrapped Path, to allow the reading ??
 -----------------------------------------------------------------------------
-{-# OPTIONS_GHC -F -pgmF htfpp #-}
+-- {-# OPTIONS_GHC -F -pgmF htfpp #-}
 {-# LANGUAGE BangPatterns          #-}
 --{-# LANGUAGE DeriveDataTypeable    #-}
 {-# LANGUAGE DoAndIfThenElse       #-}
@@ -33,14 +33,15 @@ module Uniform.Test.Utils (module Uniform.Test.Utils
         )  where
 
 import           Safe
-import           Test.Framework
+-- import           Test.Framework
 import Uniform.FileIO
 import Uniform.Strings (ppShow )
 import Uniform.FileIO (doesFileExist, getAppUserDataDir)
 -- import qualified Path.IO as Path.IO (doesFileExist, getAppUserDataDir)
         -- necessary for operations in IO
 import Text.Read
-import Data.Time (UTCTime (..))
+-- import Data.Time (UTCTime (..))
+import Uniform.Time 
 
 -- operations are in IO not ErrIO, therefore here and not in fileio
 getLitTextTestDir ::  IO (Path Abs Dir)
