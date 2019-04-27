@@ -29,13 +29,13 @@ library
         bytestring,
         text,
         text-icu ,
-        -- for testing
-        -- test-invariant,
---        quickcheck-text,
+        -- for the properties to test
+       quickcheck-text,
+        test-invariant,
+
         numeric-prelude,
         snap-core,
         safe,
---        vector,
         split,
         zlib
         , MissingH

@@ -269,7 +269,7 @@ u2t :: Text -> Maybe Text
 u2t = fmap s2t . u2s . t2s
 
 b2u :: ByteString -> Maybe ByteString
-b2u a = fmap s2b .  fmap s2u . b2s $ a
+b2u a = (fmap (s2b . s2u) . b2s) $ a
 u2b :: ByteString -> Maybe ByteString
 u2b = fmap s2b . join  . fmap u2s . b2s
 

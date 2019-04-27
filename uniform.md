@@ -75,3 +75,10 @@ Probably not used anymore.
 
 ## Regex
 Should possibly be integrated into strings. Not used now.
+
+
+# Order of dependencies
+
+- algebras
+- strings 
+- 
