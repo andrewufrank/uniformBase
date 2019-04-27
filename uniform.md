@@ -85,3 +85,15 @@ Should possibly be integrated into strings. Not used now.
 - time
 - fileio
 - convenience 
+- ftp (needs ftphs)
+- json
+- http
+- webserve
+- pandoc (needs bibtex)
+- regex
+- watch
+- shake 
+
+Each yaml must include the previous ones but should not 
+include additional ones. The following must also 
+include the additional dependencies and local packages.

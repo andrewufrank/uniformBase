@@ -1,5 +1,5 @@
 name: uniform-algebras
-version: 0.0.9.3
+version: 0.0.9.4
 cabal-version: >=1.22
 build-type: Simple
 license: GPL
