@@ -18,10 +18,10 @@ source-repository head
 library
     build-depends:
         base >=4.8 && <= 5
-        , monads-tf
+        -- , monads-tf
         -- , safe
         , MissingH
-        , HTF
+        -- , HTF
         -- , text
     exposed-modules:
         Uniform.Zero

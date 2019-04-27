@@ -34,9 +34,9 @@ import Data.Either
 
 import GHC.Generics hiding (S)
 
-class  Zeros z where
--- ^ a minimal algebraic type with nothing than an identity
+-- | a minimal algebraic type with nothing than an identity
 --  useful to identify a specific value in a type
+class  Zeros z where
     zero :: z
     default zero :: (Generic z, GZero (Rep z)) => z
     zero = to gzero

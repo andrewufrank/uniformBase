@@ -30,7 +30,7 @@ library
         text,
         text-icu ,
         -- for testing
-        test-invariant,
+        -- test-invariant,
 --        quickcheck-text,
         numeric-prelude,
         snap-core,

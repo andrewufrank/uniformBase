@@ -2,22 +2,22 @@ flags: {}
 extra-package-dbs: []
 packages:
 - .
-- ../uniform-strings
-#- ../uniform-algebras
-- ../uniform-convenience
-- ../uniform-cmdLineArgs
-- ../uniform-fileio
-- ../uniform-time
-- ../uniform-error
-- ../uniform-json
-- ../uniform-pandoc
-- ../uniform-shake
-- ../uniform-watch
-- ../uniform-webserver
-- ../../fromOthers/bibtex
-- ../../fromOthers/path
-- ../../fromOthers/path-io
-- ../../fromOthers/pretty-show
+# - ../uniform-strings
+# #- ../uniform-algebras
+# - ../uniform-convenience
+# - ../uniform-cmdLineArgs
+# - ../uniform-fileio
+# - ../uniform-time
+# - ../uniform-error
+# - ../uniform-json
+# - ../uniform-pandoc
+# - ../uniform-shake
+# - ../uniform-watch
+# - ../uniform-webserver
+# - ../../fromOthers/bibtex
+# # - ../../fromOthers/path
+# # - ../../fromOthers/path-io
+# - ../../fromOthers/pretty-show
 
 extra-deps:
 - test-invariant-0.4.5.0
