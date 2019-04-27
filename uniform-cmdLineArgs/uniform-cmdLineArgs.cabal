@@ -20,9 +20,9 @@ library
         base >=4.8 && <= 5
         , monads-tf
         , exceptions
-        , safe
+        -- , safe
         , uniform-strings
-        , HTF
+        -- , HTF
         , uniform-algebras
         , uniform-strings
         , uniform-error 

@@ -84,3 +84,4 @@ Should possibly be integrated into strings. Not used now.
 - error
 - time
 - fileio
+- convenience 
