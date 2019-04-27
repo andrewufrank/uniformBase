@@ -318,8 +318,9 @@ instance DirOps (Path Abs Dir)  where
 --        if not t then  callIO $ D.createDirectory . unL $ fp
 --            else throwErrorT
 --                ["File or Dir exists", showT fp]
+
+    --  rename directory old to new
     renameDir' old new =    -- :: fp -> fp ->  ErrIO Text
-    -- ^ rename directory old to new
         PathIO.renameDir (unPath old) (unPath new)
 --        return $ unwordsT
 --                        [ "renamed dir from ", showT old
@@ -350,7 +351,7 @@ instance DirOps (Path Rel Dir)  where
 --            else throwErrorT
 --                ["File or Dir exists", showT fp]
     renameDir' old new =    -- :: fp -> fp ->  ErrIO Text
-    -- ^ rename directory old to new
+    --  rename directory old to new
         PathIO.renameDir (unPath old) (unPath new)
 --        return $ unwordsT
 --                        [ "renamed dir from ", showT old
@@ -376,7 +377,7 @@ instance (Show (Path ar File)) => FileOps (Path ar File)  where
 --    getPermissions' = P.getPermissions
     copyOneFile old new =  copyOneFile (unL old) (unL new)
     renameOneFile old new =    -- :: fp -> fp ->  ErrIO Text
-    -- ^ rename directory old to new
+    --  rename directory old to new
         PathIO.renameFile (unPath old) (unPath new)
 
     deleteFile f =  deleteFile (unL f)

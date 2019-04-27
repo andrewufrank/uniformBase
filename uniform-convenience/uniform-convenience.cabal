@@ -21,7 +21,7 @@ library
         base >=4.8 && <= 5
         , monads-tf
         , safe
-        , HTF
+        -- , HTF
 --        , uniform-fileio
 --            , uniform-strings
         , uniform-error
@@ -34,7 +34,7 @@ library
         -- , path-io 
         -- , pretty-show 
         , iso639
-        , time
+        , uniform-time
     exposed-modules:
         Uniform.Convenience.StartApp
         Uniform.Convenience.ReadCSV

@@ -24,12 +24,13 @@ data TypedFile5 a b = TypedFile5 { tpext5 :: Extension}
 
 rdfGraphDebug = False
 
-class (FileHandles a) =>
-        TypedFiles5 a b where
 -- | reads or writes  a structured file with the specified parsers or writer
 -- the first parameter is the type of file, the second an arbitrary differentiation
 -- to allow two file types with different extension and read
 -- the b can be () if no differentiation is desired
+class (FileHandles a) =>
+        TypedFiles5 a b where
+
     append5 f = errorT ["TypedFiles - no implementation for append5", showT f]
     read5 f = errorT ["TypedFiles - no implementation for read5", showT f]
     read6 f = errorT ["TypedFiles - no implementation for read6", showT f]
@@ -167,10 +168,12 @@ instance TypedFiles5 [Text] () where
         let fn2 =  setExtension (tpext5 tp) $ fn
         fmap lines' . readFile2 $ fn2
 
-data GZip  -- just a type, no data
+data GZip  
+-- ^ just a type, no data
 
+-- |files with full triples
 instance TypedFiles5 LazyByteString GZip where
--- ^ files with full triples
+
 --    mkTypedFile5 = TypedFile5 {tpext5 = Extension "nt.gz"}
 
 --    typedExtension tp = tpext5 tp
@@ -228,9 +231,9 @@ instance TypedFiles5 LazyByteString GZip where
     read6 fp  tp = error "read for jsonld is not easy and not required"
 
 
-class FileHandles a => TypedFiles7 a b where
--- ^ the a is the base type
+-- | the a is the base type
 -- which is written on file, b is the type for input and output
+class FileHandles a => TypedFiles7 a b where
     wrap7 :: a -> b
     unwrap7 :: b -> a
 

@@ -81,4 +81,6 @@ Should possibly be integrated into strings. Not used now.
 
 - algebras
 - strings 
-- 
+- error
+- time
+- fileio

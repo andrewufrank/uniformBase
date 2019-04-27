@@ -22,11 +22,11 @@ library
         -- , safe
         , uniform-strings
         , uniform-error
-        , HTF
+        -- , HTF
         -- , safe
         , time
 --        , old-time
-        , time
+        -- , time
         , convertible
 --        , old-time
     exposed-modules:

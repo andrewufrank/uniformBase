@@ -6,7 +6,7 @@
 -- at the moment only a wrapper to time
 -- examples in TestingTime.hs
 -----------------------------------------------------------------------------
-{-# OPTIONS_GHC -F -pgmF htfpp #-}
+-- {-# OPTIONS_GHC -F -pgmF htfpp #-}
 -- {-# LANGUAGE BangPatterns                   #-}
 {-# LANGUAGE ConstraintKinds          #-}
 -- {-# LANGUAGE DeriveDataTypeable    #-}
@@ -30,7 +30,7 @@ module Uniform.Time (
 --    , htf_thisModulesTests
         )  where
 
-import Test.Framework
+-- import Test.Framework
 
 import Data.Time as T
 import Uniform.Error

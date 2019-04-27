@@ -151,10 +151,10 @@ class (Show fp) => FileOps fp   where
 --    readFile3 :: fp -> m fc
 --    writeFile3 :: fp -> fc -> m ()
 
+-- | operations on dir to produce file
 class (Show fd, Show ff) => FileOps2a fd ff where 
--- ^ operations on dir to produce file
     getDirContentFiles :: fd -> ErrIO [ff]
-    -- getDirContentFiles dir = filterM f =<< getDirCont  dir
+    -- ^ getDirContentFiles dir = filterM f =<< getDirCont  dir
     --     where f x =  doesFileExist'   x
 
     getDirContentNonHiddenFiles :: fd -> ErrIO [ff]
@@ -182,10 +182,10 @@ class (Show fp) =>
 --    -- | create file in existing dir
 --
     writeFileOrCreate2 :: fp -> fc -> ErrIO ()
-   -- | write or create a file
-   -- if create dir if not exist (recursively for path)
-   -- cannot be instantiated in the abstract
-   -- because the getImmedateParentDir returns FilePath
+    -- ^ write or create a file
+    -- if create dir if not exist (recursively for path)
+    -- cannot be instantiated in the abstract
+    -- because the getImmedateParentDir returns FilePath
 --    writeFileOrCreate filepath st = do
 --        let dir = getImmediateParentDir filepath
 ----        let (dir, fn, ext) = splitFilepath filepath

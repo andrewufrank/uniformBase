@@ -31,7 +31,7 @@ module Uniform.FileIO (
             ,  getAppUserDataDir'
          , makeAbsoluteFile'
          , findDirs, isDir 
-         , toFilePathT
+        --  , toFilePathT
          , Path.IO.getAppUserDataDir
          , Path.IO.doesFileExist  --works in IO, not ErrIO
          , Path (..), Abs(..), Rel(..), Dir(..), File(..)

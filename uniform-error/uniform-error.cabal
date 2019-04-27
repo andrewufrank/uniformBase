@@ -24,7 +24,7 @@ library
         , exceptions
         , safe
         , uniform-strings
-        , HTF
+        -- , HTF
     exposed-modules:
         Uniform.Error
 

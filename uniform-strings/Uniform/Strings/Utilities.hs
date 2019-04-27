@@ -464,11 +464,11 @@ maybe2string (Just s) = s
 string2maybe :: (Eq a, IsString a) => a -> Maybe a
 string2maybe x = if x == "" then Nothing else Just x
 
-
-class   NiceStrings a where
--- ^ produce a text - any particular needs ? (otherwise replace with showT
+-- | produce a text - any particular needs ? (otherwise replace with showT
 -- the needs are to have a non-read-parse conversion
 -- integrate in StringUtilities
+
+class   NiceStrings a where
     shownice, showNice :: a -> Text
     showNice = shownice
     shownice = showNice 
