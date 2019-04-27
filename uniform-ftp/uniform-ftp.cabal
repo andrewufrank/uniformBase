@@ -19,8 +19,8 @@ library
     build-depends:
         base >=4.8 && <= 5
         , monads-tf
-        , exceptions
-        , safe
+        -- , exceptions
+        -- , safe
         , uniform-strings
         -- , HTF
         , uniform-algebras
@@ -32,7 +32,7 @@ library
         , ftphs
         -- , monads-tf
         , transformers
-        , utility-ht
+        -- , utility-ht
         , MissingH
 
     exposed-modules:
