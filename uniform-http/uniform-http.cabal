@@ -22,7 +22,7 @@ library
             , bytestring
             -- ,text
 --            , HTTP
-            , HTF 
+            -- , HTF 
             , http-conduit
             , http-client
             , network-uri

@@ -55,8 +55,8 @@ library
 Test-Suite jsontest
     type:       exitcode-stdio-1.0
     build-depends:  base -any
-        , HTF
-        , test-invariant
+        -- , HTF
+        -- , test-invariant
 --                    bytestring -any, mtl,
 --                   text -any, utf8-string -any
        , uniform-error

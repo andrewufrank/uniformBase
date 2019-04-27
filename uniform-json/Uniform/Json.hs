@@ -60,8 +60,8 @@ fromJSONm v = case (fromJSON v) of
             Success a -> return a 
             x -> throwErrorT ["fromJson", showT x]
 
+-- | get and set at a key 
 class AtKey vk v where
--- ^ get and set at a key 
     getAtKey :: vk -> Text -> Maybe v
     getAt2Key :: vk -> Text -> Text -> Maybe v
     putAtKey :: Text -> v -> vk -> vk

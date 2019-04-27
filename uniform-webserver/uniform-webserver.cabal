@@ -18,11 +18,11 @@ source-repository head
 library
     build-depends:
         base >=4.8 && <= 5
-        , monads-tf
-        , exceptions
-        , safe
+        -- , monads-tf
+        -- , exceptions
+        -- , safe
         , uniform-strings
-        , HTF
+        -- , HTF
         , uniform-algebras
         , uniform-strings
         , uniform-error 

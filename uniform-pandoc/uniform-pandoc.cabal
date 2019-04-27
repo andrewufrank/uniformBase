@@ -17,29 +17,29 @@ source-repository head
 library
     build-depends:
         base >=4.8 && <= 5
-        , monads-tf
+        -- , monads-tf
         -- , safe
         , uniform-strings
         , uniform-error
         , uniform-fileio
         , uniform-json 
-        , HTF
+        -- , HTF
         -- , safe
         -- , aeson
         -- , lens-aeson 
         -- , aeson-pretty
         -- , lens
         -- , yaml 
-        , unordered-containers
-        , containers
-        , convertible
+        -- , unordered-containers
+        -- , containers
+        -- , convertible
         , pandoc 
         , pandoc-types
         , bibtex
         , pandoc-citeproc
         , doctemplates
-        , directory
-        , parsec
+        -- , directory
+        -- , parsec
 
     exposed-modules:
         Uniform.Pandoc
