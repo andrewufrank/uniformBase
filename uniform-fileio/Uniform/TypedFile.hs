@@ -9,6 +9,7 @@
 
 module Uniform.TypedFile (
         module Uniform.TypedFile
+        , GZip.compress, GZip.decompress
         , EpochTime
 )  where
 
@@ -19,13 +20,16 @@ import           Uniform.FileStatus
 
 import qualified Path.IO (ensureDir)
 import qualified Codec.Compression.GZip as GZip
+import qualified Data.ByteString.Lazy   as L
 
 data TypedFile5 a b = TypedFile5 { tpext5 :: Extension}
 
 rdfGraphDebug = False
 
 -- | reads or writes  a structured file with the specified parsers or writer
--- the first parameter is the type of file, the second an arbitrary differentiation
+-- the first parameter is the type of file, it is the type of the 
+-- input data and the returned data
+-- the second an arbitrary differentiation
 -- to allow two file types with different extension and read
 -- the b can be () if no differentiation is desired
 class (FileHandles a) =>
@@ -67,13 +71,13 @@ class (FileHandles a) =>
         when rdfGraphDebug $ putIOwords ["sparql Turtle createDIrIfMissing' "
                 , showT (getParentDir fp)]
         hand <- openFile2handle fn2 WriteMode
---        when rdfGraphDebug $ putIOwords ["sparql Turtle write6", showT fn2]
+--        when rdfGraphDebug $ putIOwords ["write6", showT fn2]
 
         write2handle  hand   ( queryText) -- changed for Text not []
 
---        when rdfGraphDebug $ putIOwords ["sparql Turtle write6", showT fn2]
+--        when rdfGraphDebug $ putIOwords ["write2handle", showT fn2]
         closeFile2  hand
---        when rdfGraphDebug $ putIOwords ["sparql Turtle write6", showT fn2]
+--        when rdfGraphDebug $ putIOwords ["closeFile2", showT fn2]
 
     openHandle6 ::  Path Abs File -> TypedFile5 a b -> ErrIO Handle
     -- | create the file and open the handle
@@ -171,14 +175,9 @@ instance TypedFiles5 [Text] () where
 data GZip  
 -- ^ just a type, no data
 
--- |files with full triples
+-- |files with full triples stored as zip
 instance TypedFiles5 LazyByteString GZip where
 
---    mkTypedFile5 = TypedFile5 {tpext5 = Extension "nt.gz"}
-
---    typedExtension tp = tpext5 tp
---    isTyped :: Path Abs File -> TypedFile5 a b -> Bool
---    isTyped fp tp = (getExtension fp) == typedExtension tp
     append6 fp  tp jsonld = do
 
         when rdfGraphDebug $ putIOwords ["triples append6", showT fp]
@@ -238,27 +237,20 @@ class FileHandles a => TypedFiles7 a b where
     unwrap7 :: b -> a
 
 class FileHandles a => TypedFiles7a a b where
-
+    -- | the 7 have two arguments for path and file
     read7 :: Path Abs Dir -> Path Rel File -> TypedFile5 a b ->   ErrIO b
     write7 :: Path Abs Dir -> Path Rel File -> TypedFile5 a b -> b -> ErrIO ()
 
+    -- | the 8 versions have a single argument for path and file
     read8 :: Path Abs File -> TypedFile5 a b ->   ErrIO b
     write8 :: Path Abs File -> TypedFile5 a b -> b -> ErrIO ()
-    -- writeFileOrCreate8 :: Path Abs File -> TypedFile5 a b -> b -> ErrIO ()
+    -- ^ the createDir if missingis implied in the write
 
-instance TypedFiles7 Text b => TypedFiles7a Text b where
--- an instance for all what has text as underlying rep
+instance (TypedFiles7 Text b) => TypedFiles7a Text b where
+-- an instance for all what has text or bytestring  as underlying rep
     write7 fp fn tp ct = do
 --        let fn2 = fp </> fn <.> tpext5 tp -- :: Path ar File
         write8 (fp </> fn  ) tp ct
---        let parent = getParentDir fn2
---        createDirIfMissing' parent
---        t <- doesDirExist' fp
-----        putIOwords ["TypedFiles7 write7 Text parent", showT parent, "exists", showT t]
---
---        writeFile2 fn2 (unwrap7 ct :: Text )
-----        putIOwords ["TypedFiles7 write7 Text Gtemplate", showT fn2]
-----        putIOwords ["TypedFiles7 write7 Text Gtemplate text \n", unwrap7 ct]
 
     read7 fp fn tp   = do
 --        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
@@ -284,14 +276,32 @@ instance TypedFiles7 Text b => TypedFiles7a Text b where
         ares :: Text <- readFile2 $ fp2
         return . wrap7 $ ares
 
---     writeFileOrCreate8 fp   tp ct = do
---         let fn2 = fp   <.> tpext5 tp -- :: Path ar File
--- --        write8 (fp </> fn  ) tp ct
---         let parent = getParentDir fn2
---         createDirIfMissing' parent
--- --        t <- doesDirExist' fp
--- --        putIOwords ["TypedFiles7 write7 Text parent", showT parent, "exists", showT t]
-
---         writeFileOrCreate fn2 (unwrap7 ct :: Text )
--- --        putIOwords ["TypedFiles7 write7 Text Gtemplate", showT fn2]
--- --        putIOwords ["TypedFiles7 write7 Text Gtemplate text \n", unwrap7 ct]
+instance (TypedFiles7 L.ByteString b) => TypedFiles7a L.ByteString b where
+    -- an instance for all what has text or bytestring  as underlying rep
+        write7 fp fn tp ct = do
+    --        let fn2 = fp </> fn <.> tpext5 tp -- :: Path ar File
+            write8 (fp </> fn  ) tp ct
+    
+        read7 fp fn tp   = do
+    --        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
+    --        let fn2 = fn <.> tpext5 tp
+            read8 (fp </> fn) tp
+    --        return . wrap7 $ ares
+    
+        write8 fp   tp ct = do
+            let fn2 = fp   <.> tpext5 tp -- :: Path ar File
+    --        write8 (fp </> fn  ) tp ct
+            let parent = getParentDir fn2
+            createDirIfMissing' parent
+    --        t <- doesDirExist' fp
+    --        putIOwords ["TypedFiles7 write7 Text parent", showT parent, "exists", showT t]
+    
+            writeFile2 fn2 (unwrap7 ct :: L.ByteString )
+    --        putIOwords ["TypedFiles7 write7 Text Gtemplate", showT fn2]
+    --        putIOwords ["TypedFiles7 write7 Text Gtemplate text \n", unwrap7 ct]
+    
+        read8 fp  tp   = do
+    --        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
+            let fp2 = fp <.> tpext5 tp
+            ares :: L.ByteString <- readFile2 $ fp2
+            return . wrap7 $ ares

@@ -79,6 +79,7 @@ Test-Suite fileioTestAuto
         , uniform-strings
         , uniform-error
         , test-invariant
+        , QuickCheck
         , bytestring
 --        , pipes
        , path
