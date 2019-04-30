@@ -30,6 +30,9 @@ import  Path
     (parseRelDir, parseAbsDir, parseRelFile, parseAbsFile)
 import Control.Exception
 import Uniform.Filenames
+-- import Uniform.Test.TestHarness
+-- cannot be used (cycle fileio - convenience)
+
 
 
 data T1 = T1 {a11 :: Text
@@ -136,3 +139,4 @@ l2 =  parseAbsFile $ l1:: Maybe (Path Abs File)
 l2a = fromJustNote "l2" l2
 l3 = show l2a :: String
 l4 = read l3 :: Path Abs File
+

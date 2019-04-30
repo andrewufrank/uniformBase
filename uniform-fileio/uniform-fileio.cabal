@@ -78,6 +78,7 @@ Test-Suite fileioTestAuto
         , uniform-fileio
         , uniform-strings
         , uniform-error
+        -- , uniform-convenience
         , test-invariant
         , QuickCheck
         , bytestring
