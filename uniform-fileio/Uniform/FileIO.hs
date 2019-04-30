@@ -34,7 +34,7 @@ module Uniform.FileIO (
         --  , toFilePathT
          , Path.IO.getAppUserDataDir
          , Path.IO.doesFileExist  --works in IO, not ErrIO
-         , Path (..), Abs(..), Rel(..), Dir(..), File(..)
+         , Path, Abs, Rel, Dir, File
 --         , homeDir2
             ) where
 
