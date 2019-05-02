@@ -133,8 +133,45 @@ class (FileHandles a) =>
 --        let fn2 = fn <.> (tpext5 tp)
 --        readFile2 (fp </> fn2)
 --
+instance TypedFiles5 Text b where
+    -- file contains a list of lines (text)
+--    mkTypedFile5  = TypedFile5 { tpext5 = Extension "txt"}
+    write5 fp fn tp  ct = do
+        dirx <- Path.IO.ensureDir (unPath fp)
+        let fn2 = fn <.> tpext5 tp -- :: Path ar File
+        writeFile2 (fp </> fn2 ) ( ct)
+--      writeFile2 (fp </> (fn <.> (tpext tp) )) . unlines'
+    append5 fp fn tp  ct = do
+        dirx <- Path.IO.ensureDir (unPath fp)
+        let fn2 = fn <.> tpext5 tp -- :: Path ar File
+        appendFile2 (fp </> fn2 ) ( ct)
+    read5 fp fn tp   = do
+        let fn2 = fn <.> tpext5 tp
+        readFile2 $ fp </> fn2
 
-instance TypedFiles5 [Text] () where
+    append6 fn tp ct = do
+        let fn2 =   setExtension (tpext5 tp) $ fn
+        appendFile2 fn2 ( ct)
+    write6 fn tp ct = do
+        let fn2 =   setExtension (tpext5 tp) $ fn
+        hand <- openFile2handle fn2 WriteMode
+--        when rdfGraphDebug $ putIOwords ["triples write6", showT fn2]
+
+        write2handle  hand (  ct)
+
+--        when rdfGraphDebug $ putIOwords ["triples write6", showT fn2]
+        closeFile2  hand
+--        when rdfGraphDebug $ putIOwords ["triples write6", showT fn2]
+
+    exist6 fn tp = do
+        let fn2 =  setExtension (tpext5 tp) $ fn
+        doesFileExist'  fn2
+
+    read6 fn tp = do
+        let fn2 =  setExtension (tpext5 tp) $ fn
+        readFile2 $ fn2
+
+instance TypedFiles5 [Text] b where
     -- file contains a list of lines (text)
 --    mkTypedFile5  = TypedFile5 { tpext5 = Extension "txt"}
     write5 fp fn tp  ct = do
