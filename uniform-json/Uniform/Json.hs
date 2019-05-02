@@ -23,9 +23,12 @@ module Uniform.Json
     , ToJSON(..), FromJSON(..)
     , fromJSON
     , decode, omitNothingFields
+    , eitherDecode
     -- , encode
     , object, (.=)
     , genericParseJSON, defaultOptions
+    , fieldLabelModifier
+    , genericParseJSON
     , HML.fromList, HML.toList
     , Result(..)
     
