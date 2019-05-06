@@ -50,6 +50,7 @@ module Uniform.Strings.Utilities
     , PrettyStrings (..)
     -- to generalize
     , dropWhile, takeWhile, span, break
+    , formatInt
     )
     where
 
@@ -448,7 +449,14 @@ instance CharChains BSUTF  where
     splitOn' o s = fmap t2bu <$> splitOn' (bu2t o) (bu2t s)
     trim' = s2bu . trim' . bu2s
 
-
+formatInt :: Int -> Int -> Text
+-- probably not required ??
+formatInt n  = s2t . case n of
+        6 -> printf  ['%', '0', '6', 'd']
+        5 ->  printf  ['%', '0', '5', 'd']
+        3 -> printf  ['%', '0', '3', 'd']
+        2 ->  printf  ['%', '0', '2', 'd']
+        a -> error ("formatInt not expected int" <> show a)
 
 unlinesT :: [Text] -> Text
 unlinesT = unlines'
