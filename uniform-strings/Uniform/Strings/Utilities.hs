@@ -403,6 +403,8 @@ instance CharChains Text where
 instance CharChains LazyByteString where
     append' = Lazy.append
     lengthChar a = fromIntegral . Lazy.length $ a  -- gives not exact value??
+    take' = Lazy.take . fromIntegral 
+    drop' = Lazy.drop . fromIntegral  
 
 unwordsT :: [Text] -> Text
 unwordsT = T.unwords  -- to fix types for overloaded strings

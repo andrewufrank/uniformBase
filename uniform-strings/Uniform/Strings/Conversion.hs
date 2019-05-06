@@ -43,6 +43,7 @@ module Uniform.Strings.Conversion (
     , b2bu, bu2b, bu2s, bu2t, t2bu, s2bu
     , u2b, u2t, b2uf, u2s, b2u
     , b2bl, bl2b -- lazy bytestring
+    , bl2t, t2bl 
     , bb2t, bb2s  -- conversion with error if not UTF8
     , s2latin, t2latin, latin2t, latin2s -- conversion to the latin1 encoding
     , BSlat (..), s2lat, lat2s, t2lat, lat2t
@@ -95,6 +96,14 @@ import qualified Data.Text.Lazy as LText
 
 -- Text (UTF8) -- String
 -- trivial, are the same set of values
+
+bl2t :: LazyByteString ->Text
+-- ^ conversion from LazyByteString to text (only if guarantee that only utf8 values)
+bl2t =    bu2t . BSUTF . bl2b
+
+t2bl :: Text -> LazyByteString  
+t2bl =   b2bl . t2b 
+
 
 s2t :: String -> Text
 -- ^ String to Text (invertable)
