@@ -28,6 +28,7 @@ library
         , uniform-algebras
         , uniform-fileio 
         , uniform-strings
+        , uniform-json
         , csv
         , parsec
         -- , path 
@@ -43,6 +44,7 @@ library
         Uniform.Test.TestHarness
         Uniform.Test.Utils
         Uniform.Codes.LanguageCode
+        Uniform.Codes.LanguageTypedText
 
     exposed: True
     buildable: True
@@ -50,11 +52,11 @@ library
     hs-source-dirs: .
     other-modules:
 
--- requires start files in .TestHarness!
---Test-Suite TestHarnessTestAuto
+-- Test-Suite TestHarnessTestAuto
 --    type:       exitcode-stdio-1.0
 --    main-is:    Testing.hs
---    build-depends: base, HTF
+--    build-depends: base
+--         , HTF
 --        , uniform-strings
 --        , uniform-error
 --        , uniform-convenience
@@ -63,4 +65,8 @@ library
 --    default-language: Haskell2010
 --    hs-source-dirs: tests
 --    other-modules:
---        Uniform.Test.TestHarness_test
+-- -- requires start files in .TestHarness!
+--     --    Uniform.Test.TestHarness_test
+--         Uniform.Codes.LanguageCode_test
+--         Uniform.Codes.LanguageTypedText_test
+

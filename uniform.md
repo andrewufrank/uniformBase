@@ -1,3 +1,8 @@
+# issues
+Convenience has too many dependencies (time, fileio) - 
+not convenient when just Codes are required. Split ? 
+
+
 # Uniform Rules
 
 Constructing life size projects in Haskell is extremely time consuming, 

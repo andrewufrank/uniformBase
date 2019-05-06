@@ -31,7 +31,7 @@ module Uniform.Json
     , genericParseJSON
     , HML.fromList, HML.toList
     , Result(..)
-    
+    , encode, encodePretty
     )
 where
 

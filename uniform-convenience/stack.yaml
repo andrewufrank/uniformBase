@@ -9,6 +9,7 @@ packages:
 - ../uniform-fileio
 - ../uniform-time
 - ../uniform-error
+- ../uniform-json
 # - ../uniform-cers/path-io
 - ../../fromOthers/pretty-show
 
