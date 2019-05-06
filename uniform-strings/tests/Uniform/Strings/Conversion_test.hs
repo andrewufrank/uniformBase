@@ -123,8 +123,8 @@ testByteStringUtf8 b =
                     Right t -> True
 
 
-prop_s2url = inverts url2s s2url
-prop_url2s = inverts s2url url2s
+-- prop_s2url = inverts url2s s2url
+-- prop_url2s = inverts s2url url2s
 
 
 test_httpEncode = assertEqual "x%20x" (s2u "x x")
