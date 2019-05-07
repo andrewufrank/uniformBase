@@ -30,13 +30,14 @@ module Uniform.Pandoc
     , TypedFiles5
     , TypedFiles7
     , read8
-    , module Uniform.Json) where
+    , module Uniform.Json
+    , varListToJSON) where
 
 -- import           Data.Aeson                     ( toJSONList )
-import           Test.Framework
+-- import           Test.Framework
 -- import Data.Time as T
 import           Text.Pandoc.Readers (readMarkdown)
-import           Text.DocTemplates (applyTemplate)
+import           Text.DocTemplates (applyTemplate, varListToJSON)
 -- import qualified Data.Yaml                     as Y
 import           Uniform.Error
 -- import Uniform.Strings
@@ -46,6 +47,7 @@ import           Uniform.TypedFile (TypedFiles7(..), TypedFiles5(..)
 import           Uniform.FileIO (write8, read8)
 import           Uniform.Json
 import           Uniform.Yaml
+import Uniform.Pointless
 -- import qualified Data.Yaml                     as Y
 -- import qualified Data.HashMap.Lazy             as HML
 import qualified Text.Pandoc as Pandoc
@@ -193,16 +195,24 @@ instance TypedFiles7 Text HTMLout where
 extMD, extHTML :: Extension
 extHTML = Extension "html"
 
--- the final application
+ 
 applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
 
--- apply the template in the file to the text
---
+-- | apply the template in the file to the text
+-- for help look in ssg master.ptpl as an example 
 applyTemplate3 templText val =
   case applyTemplate (unwrap7 templText) (unDocValue val) of
     Left msg   -> throwError . s2t $ msg
     Right val2 -> return . HTMLout $ (val2 :: Text)
 
+applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text 
+-- | simpler types
+applyTemplate4 templText vals = do 
+  let varList = varListToJSON . map (cross (t2s,t2s)) $ vals
+  case applyTemplate templText (varList) of
+    Left msg   -> throwError . s2t $ msg
+    Right val2 -> return (val2 :: Text)
+    
 -- handling the doctype templates dtpl
 extDtemplate :: Extension
 extDtemplate = Extension "dtpl"
@@ -216,10 +226,10 @@ newtype Dtemplate = Dtemplate Text
 dtmplFileType :: TypedFile5 Text Dtemplate
 dtmplFileType = makeTyped extDtemplate :: TypedFile5 Text Dtemplate
 
-instance Zeros Dtemplate where
-  zero = Dtemplate zero
+-- instance Zeros Dtemplate where
+--   zero = Dtemplate zero
 
-instance TypedFiles5 Text Dtemplate where
+-- -- instance TypedFiles5 Text Dtemplate where
 
 
 instance TypedFiles7 Text Dtemplate where

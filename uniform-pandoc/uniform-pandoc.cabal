@@ -31,7 +31,7 @@ library
         -- , lens
         -- , yaml 
         -- , unordered-containers
-        -- , containers
+        , containers
         -- , convertible
         , pandoc 
         , pandoc-types
