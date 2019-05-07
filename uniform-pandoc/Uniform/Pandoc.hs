@@ -200,6 +200,7 @@ applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
 
 -- | apply the template in the file to the text
 -- for help look in ssg master.ptpl as an example 
+-- the description are in doctemplates (on hackage)
 applyTemplate3 templText val =
   case applyTemplate (unwrap7 templText) (unDocValue val) of
     Left msg   -> throwError . s2t $ msg
