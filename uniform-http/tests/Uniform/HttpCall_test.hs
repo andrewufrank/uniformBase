@@ -35,7 +35,7 @@ import Uniform.HttpCall
 
 --import Data.Text (take)
 import  Test.Framework
---import Uniform.HttpURI
+import Uniform.HttpURI
 
 
 -- makeHTTPgetrequestNoBody :: URItext -> Text -> Text -> Net.Request String
@@ -72,4 +72,23 @@ import  Test.Framework
 --     \Cparse&outputFormat=xml HTTP/1.1\r\nAccept: */*\r\nContent-Length: 19\r\nContent-Type: \
 --     \test/application\r\n\r\n"
 
+test_post = do 
+    r <- runErr $ do 
+                let appType1 = mkAppType "application/sparql-query"
+                let server0 =  mkServerURI4text $ "http://nlp.gerastree.at"
+                let server1 = addPort2ServerURI server0 (mkPortNumber 3030)
+                let pathName1 = mkHttpPath ("testDB/query")   -- sparql" -- "query"
 
+                let queryParams1 = mkHttpQueryParams [ ("output", Just "json")]  -- was csv
+                putIOwords ["input", "path", showT pathName1]
+
+                resp <- callHTTP10post True appType1   server1  pathName1
+                            (t2bl query0) queryParams1  mkTimeOutDefault
+                putIOwords ["resp", showT resp] 
+    assertEqual (Right ()) r 
+
+
+query0 :: Text 
+query0 = unlines' ["SELECT ?subject ?predicate ?object"
+                , "WHERE {   ?subject ?predicate ?object}"
+                ,"LIMIT 25"]

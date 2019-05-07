@@ -61,9 +61,12 @@ callHTTP10post :: Bool -> AppType -> ServerURI -> HttpPath -> LazyByteString
 --application/sparql-update
 -- timeout in seconds - will be converted, nothing gives default
     -- URI not text for destination
+-- if serverURI is http the post is made 'secure' which 
+    -- causes "Failed reading: invalid header type: 72"
 callHTTP10post debug (AppType apptype) (ServerURI dest) (HttpPath path)
                      txt vars (TimeOutSec timeout) = do
     req1 <- makeRequest dest
+    when debug $ putIOwords ["callHTTP10post", "serverURI", showT dest]
 --    let length = lengthChar . b2s . bl2b $ txt
     let req2 = Http.setRequestBodyLBS txt -- (b2bl . t2b $ txt)
                 $ Http.setRequestHeader "Content-Type" [t2b apptype]
@@ -77,7 +80,7 @@ callHTTP10post debug (AppType apptype) (ServerURI dest) (HttpPath path)
                                     (Conduit.responseTimeoutMicro . (1000000 *))
                                     timeout
                     }
-    when debug $ putIOwords ["callHTTP10post" , showT req2 ]
+    when debug $ putIOwords ["callHTTP10post" , "header req2", showT req2 ]
 --            "text length"
 --                    , showT length]
     res <- callIO $ do
