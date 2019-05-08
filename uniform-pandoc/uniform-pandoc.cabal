@@ -23,6 +23,7 @@ library
         , uniform-error
         , uniform-fileio
         , uniform-json 
+        , uniform-algebras
         -- , HTF
         -- , safe
         -- , aeson
