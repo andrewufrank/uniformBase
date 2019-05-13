@@ -20,7 +20,9 @@ import           Test.Framework
 --import {-@ HTF_TESTS @-} Lib.CorefOnly_test
 --import {-@ HTF_TESTS @-} Lib.Doc2ToDoc0_test
 --import {-@ HTF_TESTS @-} Lib.ProduceNLPtriples2_test
-import {-@ HTF_TESTS @-} Uniform.Test.TestHarness_test
+-- import {-@ HTF_TESTS @-} Uniform.Test.TestHarness_test
+import {-@ HTF_TESTS @-} Uniform.Codes.LanguageCode_test
+import {-@ HTF_TESTS @-}Uniform.Codes.LanguageTypedText_test
 -- main =  do  -- the local tests only
 --     putStrLn "HTF ExampleTest.hs:\n"
 --     r <- htfMain htf_thisModulesTests

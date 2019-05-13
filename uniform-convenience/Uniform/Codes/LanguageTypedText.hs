@@ -93,7 +93,12 @@ instance Monoid LCtext  where
 instance Semigroup LCtext 
 
 instance CharChains LCtext where 
-        trim' = do2text trim'
+    null' = null' . getText   
+    trim' = do2text trim'
+    lengthChar = lengthChar . getText 
+    isPrefixOf' t = isPrefixOf' (getText t) . getText 
+    stripPrefix' t s = maybe Nothing (\x -> Just $ do2text (const x) s) res 
+        where res = stripPrefix' (getText t) $ getText s
         -- unlines' = 
     -- stripPrefix' pre lct = do 
     --                 t2 <- stripPrefix' pre (getText lct)

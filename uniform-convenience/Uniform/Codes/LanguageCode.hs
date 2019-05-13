@@ -25,7 +25,7 @@
 {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
     -- runErrorT is depreceiated but used in monads-tf
 {-# OPTIONS_GHC -w #-}
-
+{-# OPTIONS_HADDOCK ignore-exports #-}
 
 module Uniform.Codes.LanguageCode (module Uniform.Codes.LanguageCode
     , module Uniform.Error

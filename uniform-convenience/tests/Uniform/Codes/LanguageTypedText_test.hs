@@ -17,8 +17,12 @@
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 {-# OPTIONS_GHC -w #-}
 
-module LitTypes.LanguageTypedText_test where
+module Uniform.Codes.LanguageTypedText_test where
 
 import           Test.Framework
+import Uniform.Codes.LanguageCode 
+import Uniform.Codes.LanguageTypedText
+
+test_iszero = assertBool (isZero (zero :: LCtext ))
 
 

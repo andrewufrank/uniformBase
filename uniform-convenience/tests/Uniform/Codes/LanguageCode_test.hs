@@ -21,10 +21,9 @@
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 --{-# OPTIONS_GHC -w #-}
 
-module Uniform.Codes.LanguageCode_test
+module Uniform.Codes.LanguageCode_test where
+
 import           Test.Framework
 import Uniform.Test.TestHarness
 import Uniform.Zero
 import Uniform.FileIO
-
-
