@@ -14,6 +14,8 @@
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables, MultiParamTypeClasses
     , DeriveGeneric
+    , GeneralizedNewtypeDeriving
+    , TypeFamilies
     , DeriveAnyClass  #-}
 {-# LANGUAGE RecordWildCards    #-}
 {-# OPTIONS_GHC -fno-warn-missing-methods #-}
@@ -78,4 +80,23 @@ instance LanguageCodedText LCtext where
 --mkTripleLang33 :: RDFsubj -> RDFproperty -> LCtext -> Triple
 --mkTripleLang33 o p lctext = mkTripleLang3 (getLanguageCode lctext) o p (getText lctext)
 
+
+----------- manipulation of LCtext 
+-- instance Zeros (LF LCtext) where 
+--     -- type LF LCtext = LCtext
+--     zero = codeText NoLanguage zero 
+
+instance ListForms LCtext where 
+    type LF LCtext = Text -- likely wrong?
+instance Monoid LCtext  where 
+        mempty = zero 
+instance Semigroup LCtext 
+
+instance CharChains LCtext where 
+        trim' = do2text trim'
+        -- unlines' = 
+    -- stripPrefix' pre lct = do 
+    --                 t2 <- stripPrefix' pre (getText lct)
+    --                 return $ codeText (getLanguageCode lct) t2 
+    -- requires for the prefix a code lang text 
 
