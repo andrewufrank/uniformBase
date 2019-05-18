@@ -12,6 +12,8 @@ packages:
 - ../uniform-json
 # - ../uniform-cers/path-io
 - ../../fromOthers/pretty-show
+# - /home/frank/Workspace8/LitTextWork/TreeTagSets
+# - /home/frank/Workspace8/4lit/treetagger
 
 extra-deps:
 - test-invariant-0.4.5.0

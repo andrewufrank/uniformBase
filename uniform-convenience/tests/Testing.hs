@@ -23,6 +23,7 @@ import           Test.Framework
 -- import {-@ HTF_TESTS @-} Uniform.Test.TestHarness_test
 import {-@ HTF_TESTS @-} Uniform.Codes.LanguageCode_test
 import {-@ HTF_TESTS @-}Uniform.Codes.LanguageTypedText_test
+-- import {-@ HTF_TESTS @-}Uniform.Convenience.Caps4german_test
 -- main =  do  -- the local tests only
 --     putStrLn "HTF ExampleTest.hs:\n"
 --     r <- htfMain htf_thisModulesTests
