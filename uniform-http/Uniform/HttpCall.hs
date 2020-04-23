@@ -44,8 +44,11 @@ callHTTP8get :: Bool -> ServerURI  -> ErrIO  Text
 -- call the http-conduit simple for a get
 -- see https://haskell-lang.org/library/http-client
 callHTTP8get debug (ServerURI dest) = do
-    request <- makeRequest dest
-    response <- callIO $  Http.httpLBS request
+    req2 <- makeRequest dest
+    when debug $ putIOwords ["callHTTP8get" 
+                    , "header req", showT req2
+                                ]
+    response <- callIO $  Http.httpLBS req2
     when debug $ putIOwords ["The status code was: " ,
                showT (Http.getResponseStatusCode response)]
     when debug $ putIOwords [showT (Http.getResponseHeader "Content-Type" response)]
@@ -59,7 +62,7 @@ callHTTP10post :: Bool -> AppType -> ServerURI -> HttpPath -> LazyByteString
                     -> HttpQueryParams -> TimeOutSec -> ErrIO Text
 -- post a body to the  url given as a type given
 --application/sparql-update
--- timeout in seconds - will be converted, nothing gives default
+-- timeout in seconds - will be converted, mkTimeOutDefault gives default
     -- URI not text for destination
 -- if serverURI is http the post is made 'secure' which 
     -- causes "Failed reading: invalid header type: 72"
@@ -80,7 +83,8 @@ callHTTP10post debug (AppType apptype) (ServerURI dest) (HttpPath path)
                                     (Conduit.responseTimeoutMicro . (1000000 *))
                                     timeout
                     }
-    when debug $ putIOwords ["callHTTP10post" , "header req2", showT req2 ]
+    when debug $ putIOwords ["callHTTP10post" , "header req", showT req2
+                                , "\nbody", bl2t txt ]
 --            "text length"
 --                    , showT length]
     res <- callIO $ do

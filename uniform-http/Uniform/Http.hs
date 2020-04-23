@@ -30,6 +30,7 @@ module Uniform.Http (
     , uriT  -- required?
     , mkAppType, AppType
     , callHTTP10post
+    , callHTTP8get  
     , mkHttpPath, HttpPath   -- from / to ?
     , mkHttpQueryParams, HttpQueryParams  -- after the ?
     , module Uniform.Error
