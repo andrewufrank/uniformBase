@@ -98,7 +98,7 @@ test_show = assertEqual (timeX)
         (readNote "test_showT" timeXshow :: UTCTime)
 timeXshow = show timeX :: String 
 
--- test_pp = assertEqual (show timeX) (ppShow timeX)
+test_pp = assertEqual (show timeX) (ppShow timeX)
 -- demonstrates the issue with ppShow which cannot be 
 -- read 
 

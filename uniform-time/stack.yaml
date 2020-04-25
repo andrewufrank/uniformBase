@@ -15,11 +15,11 @@ packages:
 # - ../uniform-watch
 # - ../uniform-webserver
 # - ../../fromOthers/bibtex
-# - ../../fromOthers/path
-# - ../../fromOthers/path-io
-- ../../fromOthers/pretty-show
+- ../../fromOthersInstalled/path
+- ../../fromOthersInstalled/path-io
+- ../../fromOthersInstalled/pretty-show
 
 extra-deps:
 - test-invariant-0.4.5.0
 - twitch-0.1.7.2
-resolver: lts-12.26
+resolver: lts-13.12
