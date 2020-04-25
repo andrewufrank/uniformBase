@@ -24,7 +24,6 @@ module Uniform.Time_test     where
 import Data.Time 
 import Uniform.Time {-@ HTF_TESTS @-} 
 import Test.Framework
-import Data.Time
 --import System.Time (calendarTimeToString)
 -- import Text.Show.Pretty
 import Uniform.Strings
