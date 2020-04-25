@@ -1,5 +1,5 @@
 name: uniform-fileio
-version: 0.0.14.5
+version: 0.0.14.6
 cabal-version: >=1.22
 build-type: Simple
 license: GPL
@@ -15,6 +15,7 @@ description: reduce complexity of Haskell by providing a set of uniformly named
     0.0.12 changed to use path library for filnames
     0.0.14.2 changed copyFile' to copyOneFile renameOneFile
     0.0.14.3 path without wrapper 
+    0.0.14.6 fix fileExtension confusiong: 
 
 source-repository head
     type: git
@@ -34,7 +35,7 @@ library
             unix -any,
             pipes ,
             safe,
-            path  ,
+            path ==0.7.0 ,
             path-io ,
             exceptions
             , split
