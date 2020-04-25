@@ -15,12 +15,13 @@ packages:
 # - ../uniform-watch
 # - ../uniform-webserver
 # - ../../fromOthers/bibtex
-# # - ../../fromOthers/path
-# # - ../../fromOthers/path-io
+- ../../fromOthersInstalled/path
+- ../../fromOthersInstalled/path-io
 - ../../fromOthers/pretty-show
 
 extra-deps:
 - test-invariant-0.4.5.0
 - twitch-0.1.7.2
+#- path-0.7.0@sha256:f1629c247f4673650046a690f07958343abc63adc035b451610a550a8ac6055e,3177
 
-resolver: lts-12.26
+resolver: lts-13.12
