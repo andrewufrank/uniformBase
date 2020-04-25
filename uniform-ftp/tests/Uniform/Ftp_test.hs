@@ -33,7 +33,7 @@ import Uniform.Time
 
 import Control.Exception
 
-test_0 = assertEqual "" "x"
+test_0 = assertEqual "x" "x"
 
 mainStateIOa ::  FTPstate  ()
 -- tests for changing dirs 
