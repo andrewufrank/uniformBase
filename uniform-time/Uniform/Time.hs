@@ -67,6 +67,8 @@ instance CharChains2 T.NominalDiffTime Text where
 instance CharChains2 (Integer, Int, Int) Text where
     show' = s2t . show
 
+instance IsString UTCTime where
+  fromString = readNote "IsString UTCTime"   
 
 getCurrentTimeUTC :: ErrIO UTCTime
 addSeconds :: Double -> UTCTime -> UTCTime
