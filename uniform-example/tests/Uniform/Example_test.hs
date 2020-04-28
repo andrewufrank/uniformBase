@@ -24,8 +24,10 @@ module Uniform.Example_test where
 
 import           Test.Framework
 import           Uniform.Strings hiding ((</>), (<.>), (<|>))
-import  {-@ HTF_TESTS @-} Uniform.Example_test
+import           Uniform.Example 
 
 import Control.Exception
+
+test_null = assertEqual "a" "a"
 
 

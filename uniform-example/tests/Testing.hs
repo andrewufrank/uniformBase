@@ -22,8 +22,10 @@ module Main     where
 
 
 import Test.Framework
-import {-@ HTF_TESTS @-} Uniform.Example_test
+import Uniform.Example 
 import Uniform.Strings
+-- import Uniform.Error 
+import  {-@ HTF_TESTS @-} Uniform.Example_test 
 
 main = do
     putIOwords ["HTF exampleTest.hs:\n uniform-example test"]

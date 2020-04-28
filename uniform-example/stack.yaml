@@ -4,21 +4,21 @@ packages:
 - .
 - ../uniform-strings
 - ../uniform-algebras
-- ../uniform-convenience
-- ../uniform-cmdLineArgs
-- ../uniform-fileio
-- ../uniform-time
+# - ../uniform-convenience
+# - ../uniform-cmdLineArgs
+# - ../uniform-fileio
+# - ../uniform-time
 - ../uniform-error
-- ../uniform-ftp
-- ../uniform-http
-- ../uniform-json
-- ../uniform-pandoc
-- ../uniform-shake
-- ../uniform-watch
-- ../uniform-webserver
-- ../../fromOthers/bibtex
-- ../../fromOthers/path
-- ../../fromOthers/path-io
+# - ../uniform-ftp
+# - ../uniform-http
+# - ../uniform-json
+# - ../uniform-pandoc
+# - ../uniform-shake
+# - ../uniform-watch
+# - ../uniform-webserver
+# - ../../fromOthersInstall/bibtex
+# - ../../fromOthersInstall/path
+# - ../../fromOthersInstall/path-io
 #- ../../fromOthersInstalled/pretty-show
 
 extra-deps:
