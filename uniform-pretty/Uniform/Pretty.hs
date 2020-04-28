@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 --
--- Module      :  Uniform.Example
+-- Module      :  Uniform.Pretty
 --
 -- | a miniaml set of
 -----------------------------------------------------------------------------
@@ -21,9 +21,9 @@
 {-# OPTIONS_GHC -w #-}
 
 
-module Uniform.Example (module Uniform.Example
+module Uniform.Pretty (module Uniform.Pretty
         )  where
 
-import           Uniform.Strings hiding ((</>), (<.>), S)
+-- import           Uniform.Strings hiding ((</>), (<.>), S)
 
 

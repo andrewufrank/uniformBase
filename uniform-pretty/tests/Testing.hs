@@ -22,13 +22,13 @@ module Main     where
 
 
 import Test.Framework
-import {-@ HTF_TESTS @-} Uniform.Example_test
+import {-@ HTF_TESTS @-} Uniform.Pretty_test
 import Uniform.Strings
 
 main = do
-    putIOwords ["HTF exampleTest.hs:\n uniform-example test"]
+    putIOwords ["HTF Testing uniform-pretty test"]
     r <- htfMainWithArgs ["--quiet"] htf_importedTests
-    putIOwords ["HTF end examp;eTest.hs:\n", showT r]
+    putIOwords ["HTF end \n", showT r]
     
     return r
 

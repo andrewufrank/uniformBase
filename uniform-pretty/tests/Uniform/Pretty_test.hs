@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 --
--- Module      :  Uniform.Example_test
+-- Module      :  Uniform.Pretty_test
 --
 -- | import examples to test with  {-@ HTF_TESTS @-}
 -----------------------------------------------------------------------------
@@ -20,12 +20,14 @@
 -- {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
 
 
-module Uniform.Example_test where
+module Uniform.Pretty_test where
 
 import           Test.Framework
-import           Uniform.Strings hiding ((</>), (<.>), (<|>))
-import  {-@ HTF_TESTS @-} Uniform.Example_test
+-- import           Uniform.Strings hiding ((</>), (<.>), (<|>))
+import   Uniform.Pretty
 
 import Control.Exception
+
+test_null = assertEqual "a" "b"
 
 

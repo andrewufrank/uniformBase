@@ -1,4 +1,4 @@
-name: uniform-example
+name: uniform-pretty
 version: 0.0.10.1
 
 cabal-version: >=1.22
@@ -7,27 +7,27 @@ license: GPL
 license-file: GPL_3
 maintainer: Andrew U. Frank <andrewufrank@gmail.com>
 author: Andrew Frank
-category:Example
-synopsis: Example
-description: Example
+category:uniform
+synopsis: A wrapper for ppretty package 
+description: layer to isolate the pretty package 
+    specifically to make it work for UTCTime 
 
 source-repository head
     type: git
-    location: https://github.com/andrewufrank/uniform-example.git
+    location: https://github.com/andrewufrank/uniform-pretty.git
 
 library
     build-depends:
         base >=4.8 && <= 5
-        , monads-tf
-        , exceptions
-        , safe
-        , uniform-strings
-        , HTF
-        , uniform-algebras
-        , uniform-strings
-        , uniform-error 
+        -- , monads-tf
+        -- , exceptions
+        -- , safe
+        -- , uniform-strings
+        -- , HTF
+        -- , uniform-algebras
+        -- , uniform-error 
     exposed-modules:
-        Uniform.Example
+        Uniform.Pretty
 
     exposed: True
     buildable: True
@@ -36,13 +36,13 @@ library
     other-modules:
 
 
-Test-Suite tests_example
+Test-Suite tests_pretty
     type:       exitcode-stdio-1.0
     build-depends:  base -any
         , HTF
        , uniform-strings
-       , uniform-error
-       , uniform-example
+    --    , uniform-error
+       , uniform-pretty
 --       , data-easy
 --       , basics -- must not be included, gives dependency issue
     main-is: Testing.hs
@@ -50,4 +50,4 @@ Test-Suite tests_example
     default-language: Haskell2010
     hs-source-dirs: tests
     other-modules:
-        Uniform.Example_test
+        Uniform.Pretty_test
