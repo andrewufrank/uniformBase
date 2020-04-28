@@ -49,6 +49,7 @@ library
             , uniform-strings
             , uniform-error
             , uniform-algebras
+            , uniform-time 
 
     exposed-modules:
              Uniform.FileIO
@@ -63,6 +64,7 @@ library
              Uniform.TypedFile
 --             Uniform.FileText
             Uniform.PathShowCase
+            Uniform.Time
 
     exposed: True
     buildable: True
@@ -79,6 +81,7 @@ Test-Suite fileioTestAuto
         , uniform-fileio
         , uniform-strings
         , uniform-error
+        , uniform-time
         -- , uniform-convenience
         , test-invariant
         , QuickCheck

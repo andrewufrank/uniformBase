@@ -39,7 +39,8 @@ import Uniform.FileStatus (FileStatus, EpochTime)
 ---- using uniform:
 import           Uniform.Error --hiding ((<.>), (</>))
 import           Uniform.Zero
-import           Uniform.Filenames
+-- import           Uniform.Filenames
+import Uniform.Time (epochTime2UTCTime, UTCTime)
 import System.IO (Handle, IOMode (..) )
 
 class FileHandles t where
@@ -137,6 +138,9 @@ class (Show fp) => FileOps fp   where
 
     getFileModificationTime :: fp -> ErrIO EpochTime
     -- ^ get the modification time  (replaces isFileAbeforeB)
+    getFileModificationUTCTime :: fp -> ErrIO UTCTime
+    -- ^ get the modification time  in UTCTIme
+    getFileModificationUTCTime = fmap epochTime2UTCTime . getFileModificationTime
 
 -- operations on handle
 
