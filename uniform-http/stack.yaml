@@ -17,7 +17,7 @@ packages:
 # - ../../fromOthers/bibtex
 # - ../../fromOthers/path
 # - ../../fromOthers/path-io
-- ../../fromOthers/pretty-show
+- ../../fromOthersInstalled/pretty-show
 
 extra-deps:
 - test-invariant-0.4.5.0

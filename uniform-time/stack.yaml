@@ -6,7 +6,7 @@ packages:
 - ../uniform-algebras
 # - ../uniform-convenience
 # - ../uniform-cmdLineArgs
-- ../uniform-fileio
+# - ../uniform-fileio
 #- ../uniform-time
 - ../uniform-error
 # - ../uniform-json
@@ -17,7 +17,10 @@ packages:
 # - ../../fromOthers/bibtex
 - ../../fromOthersInstalled/path
 - ../../fromOthersInstalled/path-io
-- ../../fromOthersInstalled/pretty-show
+# - ../../fromOthersInstalled/pretty-show
+
+#/home/frank/Workspace8/fromOthersInstalled
+#/home/frank/Workspace8/uniform/uniform-algebras
 
 extra-deps:
 - test-invariant-0.4.5.0

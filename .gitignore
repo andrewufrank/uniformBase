@@ -10,6 +10,8 @@ dist-newstyle
 */*.lkshw
 **/*.o
 **/*.hi
+stack.yaml.lock
+tasks.json
 unused.txt
 *.autosave*
 cabal.project.local

@@ -7,7 +7,7 @@ packages:
 # - ../uniform-convenience
 # - ../uniform-cmdLineArgs
 #- ../uniform-fileio
-# - ../uniform-time
+- ../uniform-time
 - ../uniform-error
 # - ../uniform-json
 # - ../uniform-pandoc
@@ -17,7 +17,7 @@ packages:
 # - ../../fromOthers/bibtex
 - ../../fromOthersInstalled/path
 - ../../fromOthersInstalled/path-io
-- ../../fromOthers/pretty-show
+- ../../fromOthersInstalled/pretty-show
 
 extra-deps:
 - test-invariant-0.4.5.0

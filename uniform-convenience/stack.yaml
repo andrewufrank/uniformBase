@@ -11,7 +11,7 @@ packages:
 - ../uniform-error
 - ../uniform-json
 # - ../uniform-cers/path-io
-- ../../fromOthers/pretty-show
+- ../../fromOthersInstalled/pretty-show
 # - /home/frank/Workspace8/LitTextWork/TreeTagSets
 # - /home/frank/Workspace8/4lit/treetagger
 
