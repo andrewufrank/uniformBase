@@ -1,5 +1,5 @@
 name: uniform-time
-version: 0.0.9
+version: 0.1.0
 cabal-version: >=1.22
 build-type: Simple
 license: GPL
@@ -10,6 +10,7 @@ category: Time
 synopsis: handling of time in the uniform framework
 description: a close to minimal package for time
     in a simple but flexible way to reduce complexity of Haskell.
+    version 0.1.0 to find problem with building 
 
 source-repository head
     type: git
@@ -19,16 +20,10 @@ library
     build-depends:
         base >=4.8 && <= 5
         , monads-tf
-        -- , safe
         , uniform-strings
         , uniform-error
-        -- , HTF
-        -- , safe
         , time
---        , old-time
-        -- , time
         , convertible
---        , old-time
     exposed-modules:
         Uniform.Time
 
@@ -43,17 +38,10 @@ Test-Suite timetest
     type:       exitcode-stdio-1.0
     build-depends:  base -any
         , HTF
---                    bytestring -any, mtl,
---                   text -any, utf8-string -any
        , uniform-error
        , uniform-time
        , uniform-strings
        , time
-    --    , uniform-pretty
-    --    , pretty-show 
---       , old-time
---       , data-easy
---       , basics -- must not be included, gives dependency issue
     main-is: TestingTime.hs
     buildable: True
     default-language: Haskell2010

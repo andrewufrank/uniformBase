@@ -11,11 +11,11 @@ packages:
 - ../uniform-error
 - ../uniform-json
 # - ../uniform-cers/path-io
-- ../../fromOthersInstalled/pretty-show
+#- ../../fromOthersInstalled/pretty-show
 # - /home/frank/Workspace8/LitTextWork/TreeTagSets
 # - /home/frank/Workspace8/4lit/treetagger
 
 extra-deps:
 - test-invariant-0.4.5.0
 - twitch-0.1.7.2
-resolver: lts-12.26
+resolver: lts-13.12
