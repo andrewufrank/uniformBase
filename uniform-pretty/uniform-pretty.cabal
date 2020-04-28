@@ -11,6 +11,10 @@ category:uniform
 synopsis: A wrapper for ppretty package 
 description: layer to isolate the pretty package 
     specifically to make it work for UTCTime 
+    (but this is done in uniform-time)
+
+    Not yet used - waits for solution for an instance 
+    for UTCTime 
 
 source-repository head
     type: git
@@ -19,6 +23,7 @@ source-repository head
 library
     build-depends:
         base >=4.8 && <= 5
+        , pretty-show 
         -- , monads-tf
         -- , exceptions
         -- , safe

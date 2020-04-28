@@ -9,6 +9,7 @@ packages:
 # - ../uniform-fileio
 #- ../uniform-time
 - ../uniform-error
+# - ../uniform-pretty
 # - ../uniform-json
 # - ../uniform-pandoc
 # - ../uniform-shake

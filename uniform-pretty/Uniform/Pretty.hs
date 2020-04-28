@@ -24,6 +24,18 @@
 module Uniform.Pretty (module Uniform.Pretty
         )  where
 
+import qualified Text.Show.Pretty as P 
 -- import           Uniform.Strings hiding ((</>), (<.>), S)
+
+ppShow :: Show a => a -> String
+ppShow = P.ppShow 
+
+    should use the following 
+    but only if one can exclude UTCTime 
+    generic instance 
+class Show a => PrettyStrings a where 
+    showPretty :: a -> Text
+instance Show a => PrettyStrings a where
+    showPretty = s2t . ppShow
 
 
