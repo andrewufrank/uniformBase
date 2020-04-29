@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../uniform-time"
+		},
+		{
+			"path": "../../../uniform-fileio"
+		},
+		{
+			"path": "../.."
+		}
+	],
+    "settings": {}
+}
