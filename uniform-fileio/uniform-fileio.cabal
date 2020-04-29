@@ -41,7 +41,7 @@ library
             , uniform-strings
             , uniform-error
             , uniform-algebras
-            , uniform-time ==  0.1.0
+            , uniform-time ==0.1.0
 
     exposed-modules:
              Uniform.FileIO
@@ -53,7 +53,7 @@ library
              Uniform.FileStatus
              Uniform.TypedFile
             Uniform.PathShowCase
-            Uniform.Time
+  --          Uniform.Time
 
     exposed: True
     buildable: True
