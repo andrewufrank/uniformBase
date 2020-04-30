@@ -230,3 +230,9 @@ test_doubleExtension =  assertEqual ("afile.triples.gzip")
 -- test_doubleExtensionBase =  assertEqual ("b2.triples.gzip")
 --         (toFilePath . fromJustNote "t1" $
 --              Path.addExtension ".triples.gzip" g1)
+
+test_hasExtension = assertEqual True $
+        hasExtension (Extension "md") (makeRelFile "test.md")
+
+test_getExtension = assertEqual (Extension "md")
+            $ getExtension (makeRelFile "test.md")

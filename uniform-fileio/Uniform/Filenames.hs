@@ -285,13 +285,16 @@ instance Extensions FilePath  where
 instance Extensions (Path ar File) where
     type ExtensionType (Path ar File) = Extension
 
-    getExtension f = Extension e -- . removeChar '.'
+    getExtension f = Extension e
        where 
-            -- previous  -- for path 0.7.0
-           -- e =   Path.fileExtension $ f :: String
-        -- for my version in fromOthersInstalled
-              e = headNote "werwqerqw" . Path.fileExtension $ f :: String
-        -- difference in version 
+            e = getExtension . toFilePath $ f 
+            -- the Path.fileExtension in  path 0.7.0
+            -- throws error when no extension present
+
+--            e =  Path.fileExtension  f 
+--         for my version in fromOthersInstalled
+--               e = headNote "werwqerqw" . Path.fileExtension $ f :: String
+--         difference in version 
 
 --     setExtension e f =
 --         fromJustNote "setExtension" $ Path.replaceExtension (unExtension e) f
