@@ -1,5 +1,5 @@
 name: uniform-fileio
-version: 0.0.15.0
+version: 0.0.15.1
 cabal-version: >=1.22
 build-type: Simple
 license: GPL
@@ -41,7 +41,7 @@ library
             , uniform-strings
             , uniform-error
             , uniform-algebras
-            , uniform-time ==0.1.0
+            , uniform-time 
 
     exposed-modules:
              Uniform.FileIO

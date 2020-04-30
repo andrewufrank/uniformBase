@@ -16,8 +16,8 @@ packages:
 # - ../uniform-watch
 # - ../uniform-webserver
 # - ../../fromOthers/bibtex
-- ../../fromOthersInstalled/path
-- ../../fromOthersInstalled/path-io
+#- ../../fromOthersInstalled/path
+#- ../../fromOthersInstalled/path-io
 # - ../../fromOthersInstalled/pretty-show
 
 #/home/frank/Workspace8/fromOthersInstalled
@@ -25,5 +25,7 @@ packages:
 
 extra-deps:
 - test-invariant-0.4.5.0
-- twitch-0.1.7.2
+#- twitch-0.1.7.2
+#- path-0.7.0
+#- path-io-1.6.0
 resolver: lts-13.12
