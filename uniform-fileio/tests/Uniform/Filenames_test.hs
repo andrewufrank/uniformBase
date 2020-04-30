@@ -29,6 +29,7 @@ import           Uniform.Error hiding ((</>), (<.>))
 import Test.Framework
 -- import Test.Invariant
 import Uniform.Filenames
+import qualified Path                           -- for Generics
 
 
 --
@@ -223,4 +224,9 @@ e1 = (Extension "ext")
 -- test_read12 = assertEqual "" (show inp1)
 -- test_read22 = assertEqual "TestRec {f11 = \"/home/frank/\"}" (show inp2)
 
-     
+test_doubleExtension =  assertEqual ("afile.triples.gzip")
+        (toFilePath $ addExtension (Extension "triples.gzip") g1)
+
+-- test_doubleExtensionBase =  assertEqual ("b2.triples.gzip")
+--         (toFilePath . fromJustNote "t1" $
+--              Path.addExtension ".triples.gzip" g1)

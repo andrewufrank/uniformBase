@@ -61,4 +61,14 @@ instance TypedFiles7 L.ByteString  [Text]    where
     --     wrap7 :: a -> b
     --     unwrap7 :: b -> a
     
+-- issues with extension - should not include leading '.' 
+-- but path operations require it
+test_extension :: IO ()
+test_extension = assertEqual (Extension "triples.gzip")
+                            (tpext5 gzippedTriples) 
+
+test_fileFormed = assertEqual ("b2.txt")
+                    (toFilePath $ file2 <.> (Extension "txt"))
+test_fileFormed2 = assertEqual ("b2.triples.gzip")
+                (toFilePath $ file2 <.> (tpext5 gzippedTriples))
 

@@ -159,6 +159,7 @@ unExtension (Extension e) = e
 
 makeExtension :: FilePath -> Extension
 makeExtension = Extension
+-- extension does not include a leading "."
 -- would need a makeExtension in IO to catch errors here
 makeExtensionT :: Text -> Extension
 makeExtensionT = Extension . t2s
@@ -252,6 +253,7 @@ instance Filenames1 FilePath   where
 
 
 class (Eq (ExtensionType fp)) => Extensions fp where
+-- extension do not include a leading '.'
     type ExtensionType fp
     getExtension :: fp -> ExtensionType fp
     removeExtension :: fp -> fp
@@ -291,9 +293,16 @@ instance Extensions (Path ar File) where
               e = headNote "werwqerqw" . Path.fileExtension $ f :: String
         -- difference in version 
 
+--     setExtension e f =
+--         fromJustNote "setExtension" $ Path.replaceExtension (unExtension e) f
+--     addExtension  e f  = fromJustNote "addExtension" 
+--                             $ Path.addExtension ("." ++ unExtension e) f 
+--     removeExtension f = fromJustNote "setFileExtension" 
+--                             $ Path.setFileExtension  "" f
+-- --    hasExtension e f = (e==). getExtension
+
     setExtension e f =
         fromJustNote "setExtension" $ Path.setFileExtension (unExtension e) f
     addExtension    = setExtension
     removeExtension = setExtension (Extension "")
 --    hasExtension e f = (e==). getExtension
-
