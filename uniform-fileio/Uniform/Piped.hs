@@ -127,16 +127,25 @@ getRecursiveContents  fp = do
 --
 --
 --
---pipedDoIO :: LegalPathname -> LegalPathname -> (LegalPathname -> ErrIO Text) -> ErrIO ()
----- | write to the first filename the operation applied to the dir tree in the second
----- first path must not be non-readable dir or
---pipedDoIO file path transf =  do
---  hand <-   openFile file WriteMode
---  runEffect $
+pipedDoIO :: Path Abs File -> Path Abs Dir -> (Path Abs File -> Text) -> ErrIO ()
+-- | write to the first filename the operation applied to the dir tree in the second
+-- first path must not be non-readable dir or
+-- pipedDoIO file path transf =  do
+--  hand <-   openFile2handle file WriteMode
+--  Pipe.runEffect $
 --    getRecursiveContents path
---    >-> P.mapM (fmap t2s . transf)
-----    >-> P.stdoutLn
---    >-> P.toHandle hand
+--    >-> PipePrelude.mapM (fmap t2s . transf)
+-- --    >-> P.stdoutLn
+--    >-> PipePrelude.toHandle hand
 --  closeFile2 hand
+
+pipedDoIO file path transf =  do
+    hand <-   openFile2handle file WriteMode
+    Pipe.runEffect $
+                getRecursiveContents path
+                >-> PipePrelude.map ( t2s . transf)  -- some IO type left?
+                >-> PipePrelude.toHandle hand    
+    closeFile2 hand
+    return ()
 
 
