@@ -105,7 +105,8 @@ readDate3 dateText = case (readDateMaybe dateText) of
 
 readDateMaybe :: Text -> Maybe  UTCTime
 -- ^ read data in various formats (but not 9.10.20 !)
-readDateMaybe dateText  = headNote "readDateMaybe werwerxx" . dropWhile isNothing $
+readDateMaybe dateText  = listToMaybe . catMaybes $
+        -- headNote "readDateMaybe werwerxx" . dropWhile isNothing $
             [shortMonth, longMonth, monthPoint
             , germanNumeralShort, germanNumeral, isoformat]
 
