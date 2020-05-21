@@ -18,6 +18,7 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
+{-# OPTIONS_GHC -fno-warn-deprecations #-}
 
 module Uniform.FileIO (
         module Uniform.Filenames
@@ -30,7 +31,7 @@ module Uniform.FileIO (
          , module Uniform.Piped
             ,  getAppUserDataDir'
          , makeAbsoluteFile'
-         , findDirs, isDir 
+         , findDirs, isDir
         --  , toFilePathT
          , Path.IO.getAppUserDataDir
          , Path.IO.doesFileExist  --works in IO, not ErrIO
@@ -38,14 +39,14 @@ module Uniform.FileIO (
 --         , homeDir2
             ) where
 
-import qualified System.Posix          as P (FileStatus)
-import           Uniform.FileIOalgebra hiding ((<.>), (</>))
+-- import qualified System.Posix          as P (FileStatus)
+import           Uniform.FileIOalgebra -- hiding ((<.>), (</>))
 import           Uniform.Filenames
 import           Uniform.FileStatus
 import           Uniform.FileStrings
 import           Uniform.Piped
 import           Uniform.TypedFile
-import           Uniform.Zero
+-- import           Uniform.Zero
 import qualified Path.IO (makeAbsolute, getAppUserDataDir, doesFileExist)
 
 makeAbsoluteFile' :: Path a File -> ErrIO (Path Abs File)
@@ -63,10 +64,10 @@ findDirs fns = do
     return . catMaybes $ mdirs
 
 isDir :: FilePath -> ErrIO (Maybe (Path Abs Dir))
--- ^ is this filepateh an directory 
+-- ^ is this filepateh an directory
 isDir fn = do
     st <- getFileStatus' fn
     return (if isDirectory st then Just (makeAbsDir fn) else Nothing)
 
--- toFilePathT :: Path a b  -> Text 
--- toFilePathT = s2t . toFilePath 
+-- toFilePathT :: Path a b  -> Text
+-- toFilePathT = s2t . toFilePath

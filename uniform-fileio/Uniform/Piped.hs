@@ -15,6 +15,7 @@
 -- {-# LANGUAGE TypeSynonymInstances     #-}
 {-# LANGUAGE UndecidableInstances     #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
+{-# OPTIONS_GHC -fno-warn-deprecations #-}
 
 module  Uniform.Piped ( getRecursiveContents
 --    , pipeMap, pipeStdoutLn
@@ -26,17 +27,17 @@ module  Uniform.Piped ( getRecursiveContents
 import qualified Pipes as Pipe
 import  Pipes ((>->))
 import qualified Pipes.Prelude as PipePrelude
-import System.Environment (getArgs)
+-- import System.Environment (getArgs)
 
 ---- using uniform:
 import Uniform.Error
-import Uniform.Strings hiding ((<.>), (</>))
- 
+-- import Uniform.Strings hiding ((<.>), (</>))
+
 import Uniform.FileStrings
-import Uniform.Filenames
+-- import Uniform.Filenames
 import Data.List (sort)
 import qualified Path.IO  (searchable, readable)
- 
+
 
 getRecursiveContents :: -- (Path Abs File-> Pipe.Proxy Pipe.X () () String (ErrorT Text IO) ())
                   Path Abs Dir
@@ -83,16 +84,14 @@ getRecursiveContents  fp = do
 --
 --
 --
--- a convenient function to go through a directory and 
--- recursively apply a function to each 
+-- a convenient function to go through a directory and
+-- recursively apply a function to each
 pipedDoIO :: Path Abs File -> Path Abs Dir -> (Path Abs File -> Text) -> ErrIO ()
 pipedDoIO file path transf =  do
     hand <-   openFile2handle file WriteMode
     Pipe.runEffect $
                 getRecursiveContents path
                 >-> PipePrelude.map ( t2s . transf)  -- some IO type left?
-                >-> PipePrelude.toHandle hand    
+                >-> PipePrelude.toHandle hand
     closeFile2 hand
     return ()
-
-

@@ -20,6 +20,7 @@
 -- {-# LANGUAGE TypeSynonymInstances       #-}
 {-# LANGUAGE UndecidableInstances           #-}
 
+{-# OPTIONS_GHC -Wall -fno-warn-orphans #-}
 
 module Uniform.Time (
         module Uniform.Time
@@ -60,7 +61,7 @@ year2000 = readDate3 "2000-01-01"
 --    type TimeUTC UTCTime =  T.UTCTime
 --    type YMD UTCTime = (Integer, Int, Int)
 
-instance CharChains2 UTCTime Text where
+instance CharChains2 UTCTime Text where  -- orphan instance
     show' = s2t . show
 instance CharChains2 T.NominalDiffTime Text where
     show' = s2t . show
@@ -68,7 +69,7 @@ instance CharChains2 (Integer, Int, Int) Text where
     show' = s2t . show
 
 instance IsString UTCTime where
-  fromString = readNote "IsString UTCTime"   
+  fromString = readNote "IsString UTCTime"
 
 getCurrentTimeUTC :: ErrIO UTCTime
 addSeconds :: Double -> UTCTime -> UTCTime
@@ -78,7 +79,9 @@ getCurrentTimeUTC = liftIO T.getCurrentTime
 addSeconds s t = T.addUTCTime (realToFrac s) t
 diffSeconds = T.diffUTCTime
 
+toYMD :: UTCTime -> (Integer, Int, Int)
 toYMD = T.toGregorian . T.utctDay
+diffDays :: UTCTime -> UTCTime -> Integer
 diffDays a b = T.diffDays (T.utctDay a) (T.utctDay b)
 
 epochTime2UTCTime :: EpochTime -> UTCTime
@@ -98,10 +101,10 @@ readDate2 :: Text ->  UTCTime
 readDate2 datestring = parseTimeOrError True defaultTimeLocale
             "%b %-d, %Y" (t2s datestring) :: UTCTime
 
-readDate3 :: Text -> UTCTime 
-readDate3 dateText = case (readDateMaybe dateText) of 
+readDate3 :: Text -> UTCTime
+readDate3 dateText = case (readDateMaybe dateText) of
     Nothing -> errorT   ["readDate3",dateText, "cannot be parsed"]
-    Just t -> t 
+    Just t -> t
 
 readDateMaybe :: Text -> Maybe  UTCTime
 -- ^ read data in various formats (but not 9.10.20 !)
@@ -122,7 +125,7 @@ readDateMaybe dateText  = listToMaybe . catMaybes $
     --               Just t4 -> Just t4
     --               Nothing -> case germanNumeral of
     --                 Just t5 -> Just t5
-    --                 Nothing ->  isoformat 
+    --                 Nothing ->  isoformat
 
     where
         shortMonth :: Maybe UTCTime

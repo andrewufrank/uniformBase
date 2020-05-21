@@ -21,6 +21,7 @@
 {-# LANGUAGE   UndecidableInstances    #-}
         -- , DeriveAnyClass
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
+{-# OPTIONS_GHC -Wall -fno-warn-orphans #-}
 
 module Uniform.Filenames
     ( module Uniform.Filenames
@@ -36,9 +37,9 @@ module Uniform.Filenames
     -- , takeBaseName'
     ) where
 
-import qualified Data.List.Split               as Sp -- hiding ((</>), (<.>))
+-- import qualified Data.List.Split               as Sp -- hiding ((</>), (<.>))
 import qualified Path                           -- for Generics
-import  Path                           ( Path(..)
+import  Path                           ( Path
                                                 , toFilePath
                                                 , Abs
                                                 , Rel
@@ -48,19 +49,20 @@ import  Path                           ( Path(..)
 import qualified Path.IO                       as PathIO
 import qualified System.FilePath               as S
 
-import qualified System.FilePath.Posix         as S -- prefered
+-- import qualified System.FilePath.Posix         as S -- prefered
 import           Uniform.Error -- prefered
-import           Uniform.Zero
+-- import           Uniform.Zero
 --import  qualified         Filesystem.Path       as F -- prefered
 -- not usable, has a different definition of FilePath
 -- import           Uniform.PathWrapper  -- read and show for Path
 import Uniform.PathShowCase
 
-takeBaseName' ::FilePath -> FilePath 
-takeBaseName' = S.takeBaseName 
+takeBaseName' ::FilePath -> FilePath
+takeBaseName' = S.takeBaseName
 
--- toFilePathT = s2t . toFilePath 
+-- toFilePathT = s2t . toFilePath
 
+homeDir :: Path Abs Dir
 homeDir = makeAbsDir "/home/frank/" :: Path Abs Dir
 homeDir2 :: ErrIO (Path Abs Dir)
 homeDir2 = callIO $ PathIO.getHomeDir :: ErrIO (Path Abs Dir)
@@ -100,6 +102,7 @@ stripProperPrefixMaybe dir fn = Path.stripProperPrefix (unPath dir) (unPath fn)
 -- instance NiceStrings (Path a b) where
 --     shownice = s2t . Path.toFile unPath
 
+unPath :: a -> a
 unPath = id
 -- toFilePath = Path.toFile unPath
 
@@ -123,9 +126,9 @@ makeAbsFileT :: Text -> Path Abs File
 makeAbsDirT :: Text -> Path Abs Dir
 
 makeRelFileT  = makeRelFile . t2s
-makeRelDirT  = makeRelDir . t2s 
-makeAbsFileT  = makeAbsFile .t2s 
-makeAbsDirT  =  makeAbsDir . t2s 
+makeRelDirT  = makeRelDir . t2s
+makeAbsFileT  = makeAbsFile .t2s
+makeAbsDirT  =  makeAbsDir . t2s
 
 toShortFilePath :: Path df ar -> FilePath
 ---- ^ get the filepath, but without the trailing separator
@@ -150,11 +153,12 @@ instance Zeros (Path Rel File) where
 --     fromString = read
 -- instance  NiceStrings (Path a b) where
 --     shownice = s2t . toFilePath
--- -- instance Show (Path a b) where 
--- --     show = toFilePath 
+-- -- instance Show (Path a b) where
+-- --     show = toFilePath
 
 
 newtype Extension = Extension FilePath deriving (Show, Read, Eq, Ord)
+unExtension :: Extension -> FilePath
 unExtension (Extension e) = e
 
 makeExtension :: FilePath -> Extension
@@ -286,21 +290,21 @@ instance Extensions (Path ar File) where
     type ExtensionType (Path ar File) = Extension
 
     getExtension f = Extension e
-       where 
-            e = getExtension . toFilePath $ f 
+       where
+            e = getExtension . toFilePath $ f
             -- the Path.fileExtension in  path 0.7.0
             -- throws error when no extension present
 
---            e =  Path.fileExtension  f 
+--            e =  Path.fileExtension  f
 --         for my version in fromOthersInstalled
 --               e = headNote "werwqerqw" . Path.fileExtension $ f :: String
---         difference in version 
+--         difference in version
 
 --     setExtension e f =
 --         fromJustNote "setExtension" $ Path.replaceExtension (unExtension e) f
---     addExtension  e f  = fromJustNote "addExtension" 
---                             $ Path.addExtension ("." ++ unExtension e) f 
---     removeExtension f = fromJustNote "setFileExtension" 
+--     addExtension  e f  = fromJustNote "addExtension"
+--                             $ Path.addExtension ("." ++ unExtension e) f
+--     removeExtension f = fromJustNote "setFileExtension"
 --                             $ Path.setFileExtension  "" f
 -- --    hasExtension e f = (e==). getExtension
 
