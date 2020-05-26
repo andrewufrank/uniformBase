@@ -153,6 +153,10 @@ unPandocM op1 =
              -- liftIO $putStrLn "unPandocM op"
           a <- op1 --       error "xx"
           -- liftIO $putStrLn "error xx"
+          -- should be
+          --     result <- P.runIO $ op
+          --     rst1   <- P.handleError result
+          -- and put then in the two parts of ErrIO 
           return a
         )
       either
