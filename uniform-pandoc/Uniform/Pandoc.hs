@@ -17,45 +17,60 @@
 {-# LANGUAGE DeriveGeneric #-}
 
 module Uniform.Pandoc
-    ( module Uniform.Pandoc
-      -- , readMd2meta 
-    , Pandoc(..)
+  ( module Uniform.Pandoc
+      -- , readMd2meta
+  , Pandoc(..)
       -- , unDocValue
-    , DocValue(..)
+  , DocValue(..)
       -- , docValueFileType
-    , getAtKey
-    , module Uniform.Error   -- or at least ErrIO
-    , write8
-    , TypedFile5
-    , TypedFiles5
-    , TypedFiles7
-    , read8
-    , module Uniform.Json
-    , varListToJSON) where
+  , getAtKey
+  , module Uniform.Error   -- or at least ErrIO
+  , write8
+  , TypedFile5
+  , TypedFiles5
+  , TypedFiles7
+  , read8
+  , module Uniform.Json
+  , varListToJSON
+  )
+where
 
 -- import           Data.Aeson                     ( toJSONList )
 -- import           Test.Framework
 -- import Data.Time as T
-import           Text.Pandoc.Readers (readMarkdown)
-import           Text.DocTemplates (applyTemplate, varListToJSON)
+import           Text.Pandoc.Readers            ( readMarkdown )
+import           Text.DocTemplates              ( applyTemplate
+                                                , varListToJSON
+                                                )
 -- import qualified Data.Yaml                     as Y
 import           Uniform.Error
 -- import Uniform.Strings
 import           Uniform.Filenames
-import           Uniform.TypedFile (TypedFiles7(..), TypedFiles5(..)
-                                  , TypedFile5(..))
-import           Uniform.FileIO (write8, read8)
+import           Uniform.TypedFile              ( TypedFiles7(..)
+                                                , TypedFiles5(..)
+                                                , TypedFile5(..)
+                                                )
+import           Uniform.FileIO                 ( write8
+                                                , read8
+                                                )
 import           Uniform.Json
 import           Uniform.Yaml
-import Uniform.Pointless
+import           Uniform.Pointless
 -- import qualified Data.Yaml                     as Y
 -- import qualified Data.HashMap.Lazy             as HML
-import qualified Text.Pandoc as Pandoc
-import           Text.Pandoc (Pandoc(..), ReaderOptions, Meta, MetaValue
-                            , writerHighlightStyle, writerExtensions
-                            , WriterOptions, writeHtml5String, def)
-import           Text.Pandoc.Highlighting (tango)
-import           Text.Pandoc.Shared (stringify)
+import qualified Text.Pandoc                   as Pandoc
+import           Text.Pandoc                    ( Pandoc(..)
+                                                , ReaderOptions
+                                                , Meta
+                                                , MetaValue
+                                                , writerHighlightStyle
+                                                , writerExtensions
+                                                , WriterOptions
+                                                , writeHtml5String
+                                                , def
+                                                )
+import           Text.Pandoc.Highlighting       ( tango )
+import           Text.Pandoc.Shared             ( stringify )
 
 -- import Text.Pandoc.Definition (Meta(..))
 extMD = Extension "md"
@@ -75,7 +90,8 @@ unMT (MarkdownText a) = a   --needed for other ops
 instance Zeros MarkdownText where
   zero = MarkdownText zero
 
-markdownFileType = TypedFile5 { tpext5 = extMD } :: TypedFile5 Text MarkdownText
+markdownFileType =
+  TypedFile5 { tpext5 = extMD } :: TypedFile5 Text MarkdownText
 
  --instance FileHandles MarkdownText
  -- what is missing here?
@@ -91,50 +107,65 @@ readMd2meta :: Path Abs File -> ErrIO (Pandoc, Value)
 readMd2meta md = do
   -- putIOwords ["readMd2meta", "readPandocFile", showT md]
   mdtext :: MarkdownText <- read8 md markdownFileType
-  pandoc <- readMarkdown2 mdtext
+  pandoc                 <- readMarkdown2 mdtext
   let meta2 = flattenMeta (getMeta pandoc)
   -- putIOwords ["readMd2meta", "readPandocFile", showT md, "done"]
   return (pandoc, meta2)
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc
-readMarkdown2 (MarkdownText text1) =
-  unPandocM $ readMarkdown markdownOptions text1
+readMarkdown2 text1 = unPandocM $ readMarkdown markdownOptions (unwrap7 text1)
+
+writeAST2md :: Pandoc -> ErrIO MarkdownText
+-- | write the AST to markdown
+
+writeAST2md dat = do
+  r <- unPandocM $ do
+    r1 <- Pandoc.writeMarkdown
+      Pandoc.def { Pandoc.writerSetextHeaders = False }
+      dat
+
+    return r1
+  return . wrap7 $ r
 
 -- | Reasonable options for reading a markdown file
 markdownOptions :: ReaderOptions
 markdownOptions = Pandoc.def { Pandoc.readerExtensions = exts }
-  where
-    exts = mconcat
-      [ Pandoc.extensionsFromList
-          [ Pandoc.Ext_yaml_metadata_block
-          , Pandoc.Ext_fenced_code_attributes
-          , Pandoc.Ext_auto_identifiers
-          , Pandoc.Ext_raw_html   -- three extension give markdown_strict
-          , Pandoc.Ext_shortcut_reference_links
-          , Pandoc.Ext_spaced_reference_links
-          , Pandoc.Ext_citations           -- <-- this is the important extension for bibTex
-          ]
-      , Pandoc.githubMarkdownExtensions]
+ where
+  exts = mconcat
+    [ Pandoc.extensionsFromList
+      [ Pandoc.Ext_yaml_metadata_block
+      , Pandoc.Ext_fenced_code_attributes
+      , Pandoc.Ext_auto_identifiers
+      , Pandoc.Ext_raw_html   -- three extension give markdown_strict
+      , Pandoc.Ext_shortcut_reference_links
+      , Pandoc.Ext_spaced_reference_links
+      , Pandoc.Ext_citations           -- <-- this is the important extension for bibTex
+      ]
+    , Pandoc.githubMarkdownExtensions
+    ]
 
 -- | Handle possible pandoc failure within the Action Monad
 unPandocM :: Pandoc.PandocIO a -> ErrIO a
-unPandocM op1 = do
-  res <- callIO
-    $ Pandoc.runIO
-      (do
-         -- liftIO $putStrLn "unPandocM op"
-         a <- op1 --       error "xx"
-         -- liftIO $putStrLn "error xx"
-         return a)
-  either
-    (\e -> do
-       putIOwords ["unPandocM error", showT e]
-       throwError . showT $ e)
-    return
-    res
-  `catchError` (\e -> do
-                  putIOwords ["unPandocM catchError", showT e]
-                  throwError . showT $ e)
+unPandocM op1 =
+  do
+      res <- callIO $ Pandoc.runIO
+        (do
+             -- liftIO $putStrLn "unPandocM op"
+          a <- op1 --       error "xx"
+          -- liftIO $putStrLn "error xx"
+          return a
+        )
+      either
+        (\e -> do
+          putIOwords ["unPandocM error", showT e]
+          throwError . showT $ e
+        )
+        return
+        res
+    `catchError` (\e -> do
+                   putIOwords ["unPandocM catchError", showT e]
+                   throwError . showT $ e
+                 )
 
 getMeta :: Pandoc -> Pandoc.Meta
 getMeta (Pandoc.Pandoc m _) = m
@@ -146,14 +177,14 @@ putMeta m1 (Pandoc _ p0) = Pandoc m1 p0
 -- text objects into plain strings along the way.
 flattenMeta :: Pandoc.Meta -> Value
 flattenMeta (Pandoc.Meta meta) = toJSON $ fmap go meta
-  where
-    go :: MetaValue -> Value
-    go (Pandoc.MetaMap m) = toJSON $ fmap go m
-    go (Pandoc.MetaList m) = toJSONList $ fmap go m
-    go (Pandoc.MetaBool m) = toJSON m
-    go (Pandoc.MetaString m) = toJSON m
-    go (Pandoc.MetaInlines m) = toJSON $ stringify m
-    go (Pandoc.MetaBlocks m) = toJSON $ stringify m
+ where
+  go :: MetaValue -> Value
+  go (Pandoc.MetaMap     m) = toJSON $ fmap go m
+  go (Pandoc.MetaList    m) = toJSONList $ fmap go m
+  go (Pandoc.MetaBool    m) = toJSON m
+  go (Pandoc.MetaString  m) = toJSON m
+  go (Pandoc.MetaInlines m) = toJSON $ stringify m
+  go (Pandoc.MetaBlocks  m) = toJSON $ stringify m
 
 readYaml2value :: Path Abs File -> ErrIO Value
 
@@ -166,7 +197,7 @@ readYaml2value fp = do
 -- | Reasonable options for rendering to HTML
 html5Options :: WriterOptions
 html5Options = def { writerHighlightStyle = Just tango
-                   , writerExtensions = writerExtensions def
+                   , writerExtensions     = writerExtensions def
                    }
 
 writeHtml5String2 :: Pandoc -> ErrIO HTMLout
@@ -195,25 +226,25 @@ instance TypedFiles7 Text HTMLout where
 extMD, extHTML :: Extension
 extHTML = Extension "html"
 
- 
+
 applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
 
 -- | apply the template in the file to the text
--- for help look in ssg master.ptpl as an example 
+-- for help look in ssg master.ptpl as an example
 -- the description are in doctemplates (on hackage)
 applyTemplate3 templText val =
   case applyTemplate (unwrap7 templText) (unDocValue val) of
-    Left msg   -> throwError . s2t $ msg
+    Left  msg  -> throwError . s2t $ msg
     Right val2 -> return . HTMLout $ (val2 :: Text)
 
-applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text 
+applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
 -- | simpler types
-applyTemplate4 templText vals = do 
-  let varList = varListToJSON . map (cross (t2s,t2s)) $ vals
+applyTemplate4 templText vals = do
+  let varList = varListToJSON . map (cross (t2s, t2s)) $ vals
   case applyTemplate templText (varList) of
-    Left msg   -> throwError . s2t $ msg
+    Left  msg  -> throwError . s2t $ msg
     Right val2 -> return (val2 :: Text)
-    
+
 -- handling the doctype templates dtpl
 extDtemplate :: Extension
 extDtemplate = Extension "dtpl"
