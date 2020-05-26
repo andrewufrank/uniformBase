@@ -28,7 +28,6 @@ module Uniform.Json
     , object, (.=)
     , genericParseJSON, defaultOptions
     , fieldLabelModifier
-    , genericParseJSON
     , HML.fromList, HML.toList
     , Result(..)
     , encode, encodePretty
