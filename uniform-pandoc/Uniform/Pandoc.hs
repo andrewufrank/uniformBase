@@ -16,6 +16,9 @@
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DeriveGeneric #-}
 
+{-# OPTIONS_GHC -Wall -fno-warn-orphans -fno-warn-missing-signatures
+            -fno-warn-missing-methods #-}
+
 module Uniform.Pandoc
   ( module Uniform.Pandoc
       -- , readMd2meta
@@ -23,7 +26,7 @@ module Uniform.Pandoc
       -- , unDocValue
   , DocValue(..)
       -- , docValueFileType
-  , getAtKey
+--    , getAtKey  -- exported by uniform.json, instances automatically exported 
   , module Uniform.Error   -- or at least ErrIO
   , write8
   , TypedFile5
@@ -31,7 +34,7 @@ module Uniform.Pandoc
   , TypedFiles7
   , read8
   , module Uniform.Json
-  , varListToJSON
+--   , varListToJSON
   )
 where
 
@@ -40,9 +43,12 @@ where
 -- import Data.Time as T
 import           Text.Pandoc.Readers            ( readMarkdown )
 import           Text.DocTemplates              ( applyTemplate
-                                                , varListToJSON
+                                                -- , varListToJSON  wegen 15.13
                                                 )
 -- import qualified Data.Yaml                     as Y
+-- added for trying with 15.13
+-- import qualified Data.Map as M
+-- import Data.List (nub)
 import           Uniform.Error
 -- import Uniform.Strings
 import           Uniform.Filenames
@@ -113,7 +119,11 @@ readMd2meta md = do
   return (pandoc, meta2)
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc
-readMarkdown2 text1 = unPandocM $ readMarkdown markdownOptions (unwrap7 text1)
+readMarkdown2 text1 = unPandocM $ 
+        readMarkdown markdownOptions (unwrap7 text1)
+readMarkdown3 :: ReaderOptions -> MarkdownText -> ErrIO Pandoc
+readMarkdown3 options text1 = unPandocM $ 
+        readMarkdown options (unwrap7 text1)
 
 writeAST2md :: Pandoc -> ErrIO MarkdownText
 -- | write the AST to markdown
@@ -122,6 +132,18 @@ writeAST2md dat = do
   r <- unPandocM $ do
     r1 <- Pandoc.writeMarkdown
       Pandoc.def { Pandoc.writerSetextHeaders = False }
+      dat
+
+    return r1
+  return . wrap7 $ r
+
+writeAST3md :: WriterOptions -> Pandoc -> ErrIO MarkdownText
+-- | write the AST to markdown
+
+writeAST3md options dat = do
+  r <- unPandocM $ do
+    r1 <- Pandoc.writeMarkdown
+      options -- Pandoc.def { Pandoc.writerSetextHeaders = False }
       dat
 
     return r1
@@ -231,23 +253,36 @@ extMD, extHTML :: Extension
 extHTML = Extension "html"
 
 
-applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
+-- applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
 
--- | apply the template in the file to the text
--- for help look in ssg master.ptpl as an example
--- the description are in doctemplates (on hackage)
-applyTemplate3 templText val =
-  case applyTemplate (unwrap7 templText) (unDocValue val) of
-    Left  msg  -> throwError . s2t $ msg
-    Right val2 -> return . HTMLout $ (val2 :: Text)
+-- -- | apply the template in the file to the text
+-- -- for help look in ssg master.ptpl as an example
+-- -- the description are in doctemplates (on hackage)
+-- applyTemplate3 templText val =
+--   case applyTemplate mempty (unwrap7 templText) (unDocValue val) of
+--     Left  msg  -> throwError . s2t $ msg
+--     Right val2 -> return . HTMLout . showT $ val2 --  $ (val2 :: Text)
 
-applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
--- | simpler types
-applyTemplate4 templText vals = do
-  let varList = varListToJSON . map (cross (t2s, t2s)) $ vals
-  case applyTemplate templText (varList) of
-    Left  msg  -> throwError . s2t $ msg
-    Right val2 -> return (val2 :: Text)
+-- applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
+-- -- | simpler types
+-- applyTemplate4 templText vals = do
+--   let varList = varListToJSON . map (cross (t2s, t2s)) $ vals
+--   case applyTemplate mempty templText (varList) of  --FilePath -> Text -> b -> m (Either String (Doc a))
+--     Left  msg  -> throwError . s2t $ msg
+--     Right val2 -> return . showT  $ val2 -- (val2 :: Text)
+
+-- -- | A convenience function for passing in an association
+-- -- list of string values instead of a JSON 'Value'.
+-- -- copied from old (outdated) docTemplates - removed in 0.8.2
+-- varListToJSON :: [(String, String)] -> Value
+-- varListToJSON assoc = toJSON $ M.fromList assoc'
+--   where assoc' = [(s2t k, toVal [s2t z | (y,z) <- assoc,
+--                                                 not (null z),
+--                                                 y == k])
+--                         | k <- nub $ map fst assoc ]  -- ordNub
+--         toVal [x] = toJSON x
+--         toVal []  = Null
+--         toVal xs  = toJSON xs
 
 -- handling the doctype templates dtpl
 extDtemplate :: Extension
