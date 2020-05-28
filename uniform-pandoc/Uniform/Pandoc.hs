@@ -42,9 +42,9 @@ where
 -- import           Test.Framework
 -- import Data.Time as T
 import           Text.Pandoc.Readers            ( readMarkdown )
-import           Text.DocTemplates              ( applyTemplate
-                                                -- , varListToJSON  wegen 15.13
-                                                )
+-- import           Text.DocTemplates              ( applyTemplate
+--                                                 -- , varListToJSON  wegen 15.13
+--                                                 )
 -- import qualified Data.Yaml                     as Y
 -- added for trying with 15.13
 -- import qualified Data.Map as M
@@ -61,7 +61,7 @@ import           Uniform.FileIO                 ( write8
                                                 )
 import           Uniform.Json
 import           Uniform.Yaml
-import           Uniform.Pointless
+-- import           Uniform.Pointless
 -- import qualified Data.Yaml                     as Y
 -- import qualified Data.HashMap.Lazy             as HML
 import qualified Text.Pandoc                   as Pandoc
