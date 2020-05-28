@@ -186,8 +186,7 @@ unPandocM op1 =
           putIOwords ["unPandocM error", showT e]
           throwError . showT $ e
         )
-        return
-        res
+        return res
     `catchError` (\e -> do
                    putIOwords ["unPandocM catchError", showT e]
                    throwError . showT $ e
