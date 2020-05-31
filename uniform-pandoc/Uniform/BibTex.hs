@@ -77,7 +77,7 @@ import           Uniform.Pandoc
 
 fillCitation :: Text -> PD.Citation
 -- ^ fill a citation with an id for the citation (nothing else)
-fillCitation citID = PD.Citation { PD.citationId      = citID
+fillCitation citID = PD.Citation { PD.citationId      = t2s citID
                                  , PD.citationPrefix  = zero
                                  , PD.citationSuffix  = zero
                                  , PD.citationMode    = PD.AuthorInText
@@ -90,7 +90,7 @@ constructNoCite :: [Text] -> P.Meta
 constructNoCite bibids = P.Meta map1
  where
   cits       = map (\s -> [fillCitation s]) bibids :: [[PD.Citation]]
-  refs       = map (\s -> [PD.Str ("@" <>   s)]) bibids :: [[PD.Inline]]
+  refs       = map (\s -> [PD.Str ("@" <>   s)]) (map t2s bibids) :: [[PD.Inline]]
   cites      = zipWith PD.Cite cits refs :: [PD.Inline]
   metablocks = PD.MetaBlocks [PD.Plain (intersperse PD.Space cites)]
   map1       = M.insert "nocite" metablocks M.empty

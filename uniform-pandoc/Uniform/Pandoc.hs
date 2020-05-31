@@ -252,15 +252,16 @@ extMD, extHTML :: Extension
 extHTML = Extension "html"
 
 
--- applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
+applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
+-- needed for old ssg lts-13.12
 
--- -- | apply the template in the file to the text
--- -- for help look in ssg master.ptpl as an example
--- -- the description are in doctemplates (on hackage)
--- applyTemplate3 templText val =
---   case applyTemplate mempty (unwrap7 templText) (unDocValue val) of
---     Left  msg  -> throwError . s2t $ msg
---     Right val2 -> return . HTMLout . showT $ val2 --  $ (val2 :: Text)
+-- | apply the template in the file to the text
+-- for help look in ssg master.ptpl as an example
+-- the description are in doctemplates (on hackage)
+applyTemplate3 templText val =
+  case Pandoc.applyTemplate (unwrap7 templText) (unDocValue val) of
+    Left  msg  -> throwError . s2t $ msg
+    Right val2 -> return . HTMLout  $ (val2 :: Text)
 
 -- applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
 -- -- | simpler types
