@@ -38,19 +38,9 @@ module Uniform.Pandoc
   )
 where
 
--- import           Data.Aeson                     ( toJSONList )
--- import           Test.Framework
--- import Data.Time as T
 import           Text.Pandoc.Readers            ( readMarkdown )
--- import           Text.DocTemplates              ( applyTemplate
---                                                 -- , varListToJSON  wegen 15.13
---                                                 )
--- import qualified Data.Yaml                     as Y
--- added for trying with 15.13
--- import qualified Data.Map as M
--- import Data.List (nub)
 import           Uniform.Error
--- import Uniform.Strings
+import Uniform.Pointless (cross)
 import           Uniform.Filenames
 import           Uniform.TypedFile              ( TypedFiles7(..)
                                                 , TypedFiles5(..)
@@ -61,9 +51,6 @@ import           Uniform.FileIO                 ( write8
                                                 )
 import           Uniform.Json
 import           Uniform.Yaml
--- import           Uniform.Pointless
--- import qualified Data.Yaml                     as Y
--- import qualified Data.HashMap.Lazy             as HML
 import qualified Text.Pandoc                   as Pandoc
 import           Text.Pandoc                    ( Pandoc(..)
                                                 , ReaderOptions
@@ -74,6 +61,7 @@ import           Text.Pandoc                    ( Pandoc(..)
                                                 , WriterOptions
                                                 , writeHtml5String
                                                 , def
+                                                , applyTemplate
                                                 )
 import           Text.Pandoc.Highlighting       ( tango )
 import           Text.Pandoc.Shared             ( stringify )
@@ -263,13 +251,15 @@ applyTemplate3 templText val =
     Left  msg  -> throwError . s2t $ msg
     Right val2 -> return . HTMLout  $ (val2 :: Text)
 
--- applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
--- -- | simpler types
--- applyTemplate4 templText vals = do
---   let varList = varListToJSON . map (cross (t2s, t2s)) $ vals
---   case applyTemplate mempty templText (varList) of  --FilePath -> Text -> b -> m (Either String (Doc a))
---     Left  msg  -> throwError . s2t $ msg
---     Right val2 -> return . showT  $ val2 -- (val2 :: Text)
+applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
+-- | simpler types
+applyTemplate4 templText vals = do
+  let varList = Pandoc.varListToJSON . map (cross (t2s, t2s)) $ vals
+  case applyTemplate  templText (varList) of  --FilePath -> Text -> b -> m (Either String (Doc a))
+        -- mempty
+    Left  msg  -> throwError . s2t $ msg
+    Right val2 -> return (val2 :: Text) -- . showT  $ val2 -- (val2 :: Text)
+        -- confusion because pandoc changes with 2.9
 
 -- -- | A convenience function for passing in an association
 -- -- list of string values instead of a JSON 'Value'.
