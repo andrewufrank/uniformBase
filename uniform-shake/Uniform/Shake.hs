@@ -15,6 +15,7 @@
 
 module Uniform.Shake ( 
           module Uniform.Shake
+        , getDirectoryToBake
         , module Uniform.Shake.Path
         , takeBaseName, splitPath 
         , Action
@@ -124,3 +125,15 @@ runErr2action op = liftIO $ do
 
 -- throwAction :: Text -> Action () 
 -- throwAction msg = liftIO . throwIO $ msg
+
+getDirectoryToBake :: Text -> Path Abs Dir -> [FilePattern] 
+        -> Action [Path Rel File]
+-- get all files according to the FilePattern (see Shake docs)
+-- but excludes all filepath which contain one of the strings in 
+-- the first argument to allow directories which are not baked
+
+getDirectoryToBake exclude d p = do
+    res :: [Path Rel File] <- getDirectoryFilesP d p
+    let filtered = filter (not . (isInfixOf' exclude) . toFilePathT  ) res
+    -- putIOwords [unlines' $ map (s2t . toFilePath) filtered]
+    return   filtered
