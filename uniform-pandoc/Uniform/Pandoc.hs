@@ -32,7 +32,7 @@ module Uniform.Pandoc
   , TypedFile5
   , TypedFiles5
   , TypedFiles7
-  , read8
+  , read8, extMD
   , module Uniform.Json
 --   , varListToJSON
   )
@@ -61,9 +61,10 @@ import           Text.Pandoc                    ( Pandoc(..)
                                                 , WriterOptions
                                                 , writeHtml5String
                                                 , def
-                                                , applyTemplate
                                                 )
 import           Text.Pandoc.Highlighting       ( tango )
+                                                  
+import Text.DocTemplates (applyTemplate, varListToJSON)
 import           Text.Pandoc.Shared             ( stringify )
 
 -- import Text.Pandoc.Definition (Meta(..))
