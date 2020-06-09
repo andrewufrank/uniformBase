@@ -20,7 +20,12 @@ packages:
 #- ../../fromOthersInstalled/pretty-show
 
 extra-deps:
-- test-invariant-0.4.5.0
-# - twitch-0.1.7.2
-- ftphs-1.0.9.2
-resolver: lts-13.12
+
+# - ftphs-1.0.9.2@sha256:3165cec1cd7a1df06f62a4abdca1508defdf8c5358558512ab6367977b65f6d7,1607
+- test-invariant-0.4.5.0@sha256:d1aa6b61e0057a4065eeff3286208e947a0b44c6a2186210399f5e5e7fb0d0dd,1902
+
+# - test-invariant-0.4.5.0
+# # - twitch-0.1.7.2
+# - ftphs-1.0.9.2
+# - network-2.8.0.1
+resolver: lts-15.13

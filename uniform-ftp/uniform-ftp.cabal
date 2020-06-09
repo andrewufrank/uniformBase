@@ -1,5 +1,5 @@
 name: uniform-ftp
-version: 0.0.1.4
+version: 0.0.1.5
 
 cabal-version: >=1.22
 build-type: Simple
@@ -10,6 +10,7 @@ author: Andrew Frank
 category:Ftp
 synopsis: Ftp
 description: Ftp
+    0.0.1.5 change to lts-15.13
 
 source-repository head
     type: git
@@ -29,7 +30,7 @@ library
         , uniform-fileio
         , uniform-time
         -- , ftp-client
-        , ftphs
+        -- , ftphs
         -- , monads-tf
         , transformers
         -- , utility-ht

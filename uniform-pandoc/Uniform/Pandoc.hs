@@ -32,7 +32,8 @@ module Uniform.Pandoc
   , TypedFile5
   , TypedFiles5
   , TypedFiles7
-  , read8, extMD
+  , read8
+--   , extMD
   , module Uniform.Json
 --   , varListToJSON
   )
@@ -40,7 +41,7 @@ where
 
 import           Text.Pandoc.Readers            ( readMarkdown )
 import           Uniform.Error
-import Uniform.Pointless (cross)
+-- import Uniform.Pointless (cross)
 import           Uniform.Filenames
 import           Uniform.TypedFile              ( TypedFiles7(..)
                                                 , TypedFiles5(..)
@@ -64,7 +65,7 @@ import           Text.Pandoc                    ( Pandoc(..)
                                                 )
 import           Text.Pandoc.Highlighting       ( tango )
                                                   
-import Text.DocTemplates as DocTemplates  (applyTemplate)
+import Text.DocTemplates as DocTemplates  (applyTemplate, Doc(..))
 import           Text.Pandoc.Shared             ( stringify )
 
 -- import Text.Pandoc.Definition (Meta(..))
@@ -241,16 +242,27 @@ extMD, extHTML :: Extension
 extHTML = Extension "html"
 
 
--- applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HT?MLout
+applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
 -- needed for old ssg lts-13.12 - also changed for 15.13
 
 -- | apply the template in the file to the text
 -- for help look in ssg master.ptpl as an example
 -- the description are in doctemplates (on hackage)
--- applyTemplate3 templText val =
---   case DocTemplates.applyTemplate (unwrap7 templText) (unDocValue val) of
---     Left  msg  -> throwError . s2t $ msg
---     Right val2 -> return . HTMLout  $ (val2 :: Text)
+applyTemplate3 templText val = do 
+    err1 :: Either String (Doc Text) <- liftIO $ DocTemplates.applyTemplate mempty (unwrap7 templText) (unDocValue val) 
+    let res = case err1 of
+                Left msg -> error msg 
+                Right val2 -> HTMLout . unDoc2text $ val2 
+    return (res :: HTMLout) 
+    -- let res = case err1 of  
+    --             Left  msg  -> Left . s2t $ msg
+    --             Right val2 -> Right . HTMLout . unDoc2text $ (val2 :: Doc Text) :: ErrOrVal HTMLout 
+    --             -- applyTemplate :: (TemplateMonad m, TemplateTarget a, ToContext a b) => FilePath -> Text -> b -> m (Either String (Doc a)) 
+    -- return (res  )
+
+unDoc2text :: Doc Text -> Text 
+unDoc2text (Text _ t) = t
+unDoc2text v  = error ("not a pandoc text value" ++ show v)
 
 -- applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
 -- -- | simpler types
