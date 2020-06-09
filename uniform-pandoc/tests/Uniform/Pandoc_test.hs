@@ -35,12 +35,19 @@ import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 -- import Test.Invariant
 -- import Uniform.Filenames
 
-test_temp4 = do 
-    res <- runErr $ applyTemplate4 tmp1 ( vals1 )
-    putIOwords ["test_temp4", "template", tmp1 
-                , "\n", "vals", showNice vals1
-                , "\n", "result", showT res]
-    assertEqual (Right res4) res 
+-- test_temp4 = do 
+--     res <- runErr $ applyTemplate4 tmp1 ( vals1 )
+--     putIOwords ["test_temp4", "template", tmp1 
+--                 , "\n", "vals", showNice vals1
+--                 , "\n", "result", showT res]
+--     assertEqual (Right res4) res 
+
+-- test_temp3 = do 
+--     res <- runErr $ applyTemplate3 tmp1 ( vals1 )
+--     putIOwords ["test_temp4", "template", tmp1 
+--                 , "\n", "vals", showNice vals1
+--                 , "\n", "result", showT res]
+--     assertEqual (Right res4) res 
 
 tmp1, res4 :: Text 
 tmp1 = "some $words$ are replaced $if(x1)$the text for x1 $x1$ $endif$."
