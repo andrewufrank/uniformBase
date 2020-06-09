@@ -64,7 +64,7 @@ import           Text.Pandoc                    ( Pandoc(..)
                                                 )
 import           Text.Pandoc.Highlighting       ( tango )
                                                   
-import Text.DocTemplates (applyTemplate, varListToJSON)
+import Text.DocTemplates as DocTemplates  (applyTemplate)
 import           Text.Pandoc.Shared             ( stringify )
 
 -- import Text.Pandoc.Definition (Meta(..))
@@ -241,26 +241,27 @@ extMD, extHTML :: Extension
 extHTML = Extension "html"
 
 
-applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
--- needed for old ssg lts-13.12
+-- applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HT?MLout
+-- needed for old ssg lts-13.12 - also changed for 15.13
 
 -- | apply the template in the file to the text
 -- for help look in ssg master.ptpl as an example
 -- the description are in doctemplates (on hackage)
-applyTemplate3 templText val =
-  case Pandoc.applyTemplate (unwrap7 templText) (unDocValue val) of
-    Left  msg  -> throwError . s2t $ msg
-    Right val2 -> return . HTMLout  $ (val2 :: Text)
+-- applyTemplate3 templText val =
+--   case DocTemplates.applyTemplate (unwrap7 templText) (unDocValue val) of
+--     Left  msg  -> throwError . s2t $ msg
+--     Right val2 -> return . HTMLout  $ (val2 :: Text)
 
-applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
--- | simpler types
-applyTemplate4 templText vals = do
-  let varList = Pandoc.varListToJSON . map (cross (t2s, t2s)) $ vals
-  case applyTemplate  templText (varList) of  --FilePath -> Text -> b -> m (Either String (Doc a))
-        -- mempty
-    Left  msg  -> throwError . s2t $ msg
-    Right val2 -> return (val2 :: Text) -- . showT  $ val2 -- (val2 :: Text)
-        -- confusion because pandoc changes with 2.9
+-- applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
+-- -- | simpler types
+-- applyTemplate4 templText vals = do
+--   let varList = Pandoc.varListToJSON . map (cross (t2s, t2s)) $ vals
+--   case applyTemplate  templText (varList) of  --FilePath -> Text -> b -> m (Either String (Doc a))
+--         -- mempty
+--     Left  msg  -> throwError . s2t $ msg
+--     Right val2 -> return (val2 :: Text) -- . showT  $ val2 -- (val2 :: Text)
+--         -- confusion because pandoc changes with 2.9
+--          varListToJSON is not exported anymore 
 
 -- -- | A convenience function for passing in an association
 -- -- list of string values instead of a JSON 'Value'.
