@@ -34,6 +34,7 @@ module Uniform.Pandoc
   , TypedFiles7
   , read8
   , extTex, writeLatex2text, texFileType
+  , extPDF, pdfFileType, writePDF2text
 --   , extMD
   , module Uniform.Json
 --   , varListToJSON
@@ -55,17 +56,20 @@ import           Uniform.Json
 import           Uniform.Yaml
 import qualified Text.Pandoc                   as Pandoc
 import           Text.Pandoc                    ( Pandoc(..)
-                                                , ReaderOptions
-                                                , Meta
-                                                , MetaValue
-                                                , writerHighlightStyle
-                                                , writerExtensions
-                                                , WriterOptions
-                                                , writeHtml5String
-                                                , writeLaTeX
-                                                , def
-                                                )
+                        , ReaderOptions
+                        , Meta
+                        , MetaValue
+                        , writerHighlightStyle
+                        , writerExtensions
+                        , WriterOptions(..)
+                        , writeHtml5String
+                        , writeLaTeX
+                        , def
+                        -- , writerStandalone
+                        , Template
+                        )
 import           Text.Pandoc.Highlighting       ( tango )
+import Text.Pandoc.PDF (makePDF)
                                                   
 import Text.DocTemplates as DocTemplates  (applyTemplate, Doc(..))
 import           Text.Pandoc.Shared             ( stringify )
@@ -194,22 +198,22 @@ putMeta m1 (Pandoc _ p0) = Pandoc m1 p0
 -- text objects into plain strings along the way.
 flattenMeta :: Pandoc.Meta -> Value
 flattenMeta (Pandoc.Meta meta) = toJSON $ fmap go meta
- where
-  go :: MetaValue -> Value
-  go (Pandoc.MetaMap     m) = toJSON $ fmap go m
-  go (Pandoc.MetaList    m) = toJSONList $ fmap go m
-  go (Pandoc.MetaBool    m) = toJSON m
-  go (Pandoc.MetaString  m) = toJSON m
-  go (Pandoc.MetaInlines m) = toJSON $ stringify m
-  go (Pandoc.MetaBlocks  m) = toJSON $ stringify m
+    where
+        go :: MetaValue -> Value
+        go (Pandoc.MetaMap     m) = toJSON $ fmap go m
+        go (Pandoc.MetaList    m) = toJSONList $ fmap go m
+        go (Pandoc.MetaBool    m) = toJSON m
+        go (Pandoc.MetaString  m) = toJSON m
+        go (Pandoc.MetaInlines m) = toJSON $ stringify m
+        go (Pandoc.MetaBlocks  m) = toJSON $ stringify m
 
 readYaml2value :: Path Abs File -> ErrIO Value
 
 -- read a yaml file to a value
 -- error when syntax issue
 readYaml2value fp = do
-  t <- read8 fp yamlFileType
-  return . yaml2value $ t
+    t <- read8 fp yamlFileType
+    return . yaml2value $ t
 
 -- | Reasonable options for rendering to HTML
 html5Options :: WriterOptions
@@ -219,8 +223,8 @@ html5Options = def { writerHighlightStyle = Just tango
 
 writeHtml5String2 :: Pandoc -> ErrIO HTMLout
 writeHtml5String2 pandocRes = do
-  p <- unPandocM $ writeHtml5String html5Options pandocRes
-  return . HTMLout $ p
+    p <- unPandocM $ writeHtml5String html5Options pandocRes
+    return . HTMLout $ p
 
 newtype HTMLout = HTMLout {contentHtml::Text}
   deriving (Show, Read, Eq, Ord, Generic)
@@ -239,15 +243,57 @@ latexOptions = def { writerHighlightStyle = Just tango
 
 -- writeLaTeX :: PandocMonad m => WriterOptions -> Pandoc -> m Text
 instance TypedFiles7 Text Text where
-  wrap7 = id
+    wrap7 = id
 
-  unwrap7 = id 
+    unwrap7 = id 
 
 
-writeLatex2text :: Pandoc -> ErrIO Text
-writeLatex2text pandocRes = do
-  p <- unPandocM $ writeLaTeX latexOptions pandocRes
-  return  p
+writeLatex2text ::   Pandoc -> ErrIO Text
+-- needs template
+writeLatex2text  pandocRes = do
+    p <- unPandocM $ writeLaTeX latexOptions pandocRes
+    return  p
+
+
+
+-- makePDF :: String
+-- pdf creator (pdflatex, lualatex, xelatex, wkhtmltopdf, weasyprint, prince, context, pdfroff, or path to executable)
+
+-- -> [String]	
+-- arguments to pass to pdf creator
+
+-- -> (WriterOptions -> Pandoc -> PandocIO Text)
+-- writer
+
+-- -> WriterOptions	-- options
+-- -> Pandoc -- document
+-- -> PandocIO (Either ByteString ByteString)	 
+
+writePDF2text ::   Pandoc -> ErrIO Text 
+writePDF2text pandocRes = do 
+    doc1 <- unPandocM $ do
+        -- templ :: Text <- readFile "template.tex"
+        -- let templ1 = Pandoc.Template templ
+        templ1 <- Pandoc.compileDefaultTemplate "latex"
+            -- :: PandocMonad m => Text -> m (Template Text) 
+        doc1 <- makePDF "lualatex" [] 
+                writeLaTeX (pdfOptions (Just templ1)) pandocRes
+        let doc2 = case doc1 of
+                    Left msg -> errorT ["wirtePDF2text", (bl2t $ msg)]
+                    Right bs -> bl2t bs 
+        return doc2
+    return doc1  -- does not fail - assume all chars are legal
+
+pdfOptions :: Maybe (Template Text) -> WriterOptions
+pdfOptions templ  = def {  writerExtensions     = writerExtensions def
+                    -- writerHighlightStyle = Just tango
+                    -- , writerStandalone = True 
+                    , writerTemplate = templ
+                   
+                   }
+
+extPDF = Extension "pdf"
+pdfFileType = TypedFile5 { tpext5 = extPDF } :: TypedFile5 Text Text
 
 
 -- a wrapper around html ready to publish

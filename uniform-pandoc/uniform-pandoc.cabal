@@ -34,7 +34,7 @@ library
         -- , unordered-containers
         , containers
         -- , convertible
-        , pandoc 
+        , pandoc ==2.9.2.1
         , pandoc-types
         , bibtex
         , pandoc-citeproc
