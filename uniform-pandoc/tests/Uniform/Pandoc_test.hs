@@ -32,6 +32,9 @@ import Uniform.Pandoc
 
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 
+-- test for tex production 
+
+
 -- import Test.Invariant
 -- import Uniform.Filenames
 

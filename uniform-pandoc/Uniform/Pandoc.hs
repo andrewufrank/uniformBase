@@ -33,8 +33,8 @@ module Uniform.Pandoc
   , TypedFiles5
   , TypedFiles7
   , read8
-  , extTex, writeLatex2text, texFileType
-  , extPDF, pdfFileType, writePDF2text
+--   , extTex, writeLatex2text, texFileType
+--   , extPDF, pdfFileType, writePDF2text
 --   , extMD
   , module Uniform.Json
 --   , varListToJSON
@@ -66,13 +66,14 @@ import           Text.Pandoc                    ( Pandoc(..)
                         , writeLaTeX
                         , def
                         -- , writerStandalone
-                        , Template
+                        -- , Template
                         )
 import           Text.Pandoc.Highlighting       ( tango )
-import Text.Pandoc.PDF (makePDF)
+-- import Text.Pandoc.PDF (makePDF)
                                                   
 import Text.DocTemplates as DocTemplates  (applyTemplate, Doc(..))
 import           Text.Pandoc.Shared             ( stringify )
+import System.Process 
 
 -- import Text.Pandoc.Definition (Meta(..))
 extMD = Extension "md"
@@ -249,48 +250,45 @@ instance TypedFiles7 Text Text where
 
 
 writeLatex2text ::   Pandoc -> ErrIO Text
--- needs template
+-- write a latex file from a pandoc doc 
 writeLatex2text  pandocRes = do
     p <- unPandocM $ writeLaTeX latexOptions pandocRes
     return  p
+---------- write PDF with Lualatex
+-- the process uses files - is this a preformance issue? 
 
+writePDF2text ::   Text -> Path Abs File -> ErrIO () 
+writePDF2text texInput resultFn =  
+ do
+    -- let fn1 = makeAbsFile "/home/frank/Workspace8/pandocTestLatex/example.tex"
+    -- inputTex :: Text <- read8 fn1 texFileType
+    putIOwords ["writePDF2text tex\n",  texInput]
 
+    let 
+        texFile = concat[pre1 , lines' texInput, end9]
+    
+    -- todo replace with a temp dir 
+    let tempDir = makeAbsDir "/home/frank/.SSG"
+        texfn = tempDir </> (makeRelFile "writePDF2text_input")
+    write8 texfn texFileType (unlines' texFile) 
 
--- makePDF :: String
--- pdf creator (pdflatex, lualatex, xelatex, wkhtmltopdf, weasyprint, prince, context, pdfroff, or path to executable)
+    putIOwords ["writePDF2text tex file", unlines' texFile]
 
--- -> [String]	
--- arguments to pass to pdf creator
+    callIO $ callProcess "lualatex" [toFilePath resultFn]
 
--- -> (WriterOptions -> Pandoc -> PandocIO Text)
--- writer
+    putIOwords ["writePDF2text lualatex result ok (otherwise error)"] 
 
--- -> WriterOptions	-- options
--- -> Pandoc -- document
--- -> PandocIO (Either ByteString ByteString)	 
+    return () 
 
-writePDF2text ::   Pandoc -> ErrIO Text 
-writePDF2text pandocRes = do 
-    doc1 <- unPandocM $ do
-        -- templ :: Text <- readFile "template.tex"
-        -- let templ1 = Pandoc.Template templ
-        templ1 <- Pandoc.compileDefaultTemplate "latex"
-            -- :: PandocMonad m => Text -> m (Template Text) 
-        doc1 <- makePDF "lualatex" [] 
-                writeLaTeX (pdfOptions (Just templ1)) pandocRes
-        let doc2 = case doc1 of
-                    Left msg -> errorT ["wirtePDF2text", (bl2t $ msg)]
-                    Right bs -> bl2t bs 
-        return doc2
-    return doc1  -- does not fail - assume all chars are legal
+--- the preamble and the end -- escape \
+pre1 = ["\\documentclass[a4paper,10pt]{scrbook}"
+        -- necessary for the pandoc produced TeX files: 
+        , "\\usepackage[colorlinks]{hyperref}" 
+        , "\\newenvironment{cslreferences}{}{\\par}"
+        , "\\begin{document}"] :: [Text]
 
-pdfOptions :: Maybe (Template Text) -> WriterOptions
-pdfOptions templ  = def {  writerExtensions     = writerExtensions def
-                    -- writerHighlightStyle = Just tango
-                    -- , writerStandalone = True 
-                    , writerTemplate = templ
-                   
-                   }
+end9    = ["\\end{document}"]
+----------------------------------------------
 
 extPDF = Extension "pdf"
 pdfFileType = TypedFile5 { tpext5 = extPDF } :: TypedFile5 Text Text

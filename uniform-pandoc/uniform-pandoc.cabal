@@ -19,6 +19,7 @@ library
         base >=4.8 && <= 5
         -- , monads-tf
         -- , safe
+        , process
         , uniform-strings
         , uniform-error
         , uniform-fileio
