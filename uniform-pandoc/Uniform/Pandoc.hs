@@ -51,7 +51,7 @@ import           Uniform.TypedFile              ( TypedFiles7(..)
                                                 )
 import           Uniform.FileIO                 ( write8
                                                 , read8
-                                                )
+                                                , setExtension)
 import           Uniform.Json
 import           Uniform.Yaml
 import qualified Text.Pandoc                   as Pandoc
@@ -71,7 +71,9 @@ import           Text.Pandoc                    ( Pandoc(..)
 import           Text.Pandoc.Highlighting       ( tango )
 -- import Text.Pandoc.PDF (makePDF)
                                                   
-import Text.DocTemplates as DocTemplates  (applyTemplate, Doc(..))
+import Text.DocTemplates as DocTemplates  ( -- applyTemplate, 
+        Doc(..), renderTemplate, compileTemplate, Template)
+import Text.DocLayout (render)
 import           Text.Pandoc.Shared             ( stringify )
 import System.Process 
 
@@ -257,31 +259,44 @@ writeLatex2text  pandocRes = do
 ---------- write PDF with Lualatex
 -- the process uses files - is this a preformance issue? 
 
-writePDF2text ::   Text -> Path Abs File -> ErrIO () 
-writePDF2text texInput resultFn =  
+writePDF2text :: Bool  ->   Path Abs File -> ErrIO ()
+-- convert the text in the file given (a full latex) into a pdf 
+-- with the same filename
+writePDF2text debug texInput  resfn =  
  do
     -- let fn1 = makeAbsFile "/home/frank/Workspace8/pandocTestLatex/example.tex"
     -- inputTex :: Text <- read8 fn1 texFileType
-    putIOwords ["writePDF2text tex\n",  texInput]
+    putIOwords ["writePDF2text 1 tex\n", take' 300 $ texInput
+                    , "resfn", showT resfn]
 
     let 
         texFile = concat[pre1 , lines' texInput, end9]
-    
+    putIOwords ["writePDF2text 2 texDilw\n", unlines' . take 10 $ texFile]
+
+
     -- todo replace with a temp dir 
     let tempDir = makeAbsDir "/home/frank/.SSG"
         texfn = tempDir </> (makeRelFile "writePDF2text_input")
     write8 texfn texFileType (unlines' texFile) 
 
-    putIOwords ["writePDF2text tex file", unlines' texFile]
+    putIOwords ["writePDF2text 3 tex file", unlines' texFile]
 
-    callIO $ callProcess "lualatex" [toFilePath resultFn]
+    callIO $ callProcess "lualatex" [toFilePath texfn]
 
-    putIOwords ["writePDF2text lualatex result ok (otherwise error)"] 
+    
+    let resfn = setExtension extPDF  texfn 
+    putIOwords ["writePDF2text 4 pdf filename", showT resfn]
 
-    return () 
+    resPDFtext <- read8 resfn pdfFileType 
+    putIOwords ["writePDF2text lualatex result ok (otherwise error)"
+                , "pdf is", take' 300 $ resPDFtext] 
+
+    return ()
 
 --- the preamble and the end -- escape \
-pre1 = ["\\documentclass[a4paper,10pt]{scrbook}"
+pre1 = ["%%% eval: (setenv \"LANG\" \"en_US.UTF-8\")"
+        , "\\documentclass[a4paper,10pt]{scrbook}"
+        , "\\usepackage[german]{babel}"
         -- necessary for the pandoc produced TeX files: 
         , "\\usepackage[colorlinks]{hyperref}" 
         , "\\newenvironment{cslreferences}{}{\\par}"
@@ -318,44 +333,32 @@ applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
 -- for help look in ssg master.ptpl as an example
 -- the description are in doctemplates (on hackage)
 applyTemplate3 templText val = do 
-    err1 :: Either String (Doc Text) <- liftIO $ DocTemplates.applyTemplate mempty (unwrap7 templText) (unDocValue val) 
-    let res = case err1 of
+    temp1 :: Either String (Template Text)   <- liftIO $ DocTemplates.compileTemplate mempty (unwrap7 templText)
+    -- err1 :: Either String (Doc Text) <- liftIO $ DocTemplates.applyTemplate mempty (unwrap7 templText) (unDocValue val) 
+    let temp2 = case temp1 of
                 Left msg -> error msg 
-                Right val2 -> HTMLout . unDoc2text $ val2 
-    return (res :: HTMLout) 
-    -- let res = case err1 of  
-    --             Left  msg  -> Left . s2t $ msg
-    --             Right val2 -> Right . HTMLout . unDoc2text $ (val2 :: Doc Text) :: ErrOrVal HTMLout 
-    --             -- applyTemplate :: (TemplateMonad m, TemplateTarget a, ToContext a b) => FilePath -> Text -> b -> m (Either String (Doc a)) 
-    -- return (res  )
+                Right val2 -> val2
+    when False $ putIOwords ["applyTemplate3 temp2", take' 300 $ showT temp2 ]
+    let res = DocTemplates.renderTemplate temp2 (unDocValue val)
+    when False $ putIOwords ["applyTemplate3 res", take' 300 $ showT res ]
+    let res2 =  render Nothing res 
+    let res3 = HTMLout res2 
+    return (res3 :: HTMLout) 
+
+--     renderTemplate :: (TemplateTarget a, ToContext a b) => Template a -> b -> Doc a
+
+-- Render a compiled template in a "context" which provides values for the template's variables.
+
+-- compileTemplate :: (TemplateMonad m, TemplateTarget a) => FilePath -> Text -> m (Either String (Template a))
+
+-- Compile a template. The FilePath parameter is used to determine a default path and extension for partials and may be left empty if partials are not used.
+
+
 
 unDoc2text :: Doc Text -> Text 
 unDoc2text (Text _ t) = t
 unDoc2text v  = error ("not a pandoc text value" ++ show v)
 
--- applyTemplate4 :: Text -> [(Text, Text)] -> ErrIO Text
--- -- | simpler types
--- applyTemplate4 templText vals = do
---   let varList = Pandoc.varListToJSON . map (cross (t2s, t2s)) $ vals
---   case applyTemplate  templText (varList) of  --FilePath -> Text -> b -> m (Either String (Doc a))
---         -- mempty
---     Left  msg  -> throwError . s2t $ msg
---     Right val2 -> return (val2 :: Text) -- . showT  $ val2 -- (val2 :: Text)
---         -- confusion because pandoc changes with 2.9
---          varListToJSON is not exported anymore 
-
--- -- | A convenience function for passing in an association
--- -- list of string values instead of a JSON 'Value'.
--- -- copied from old (outdated) docTemplates - removed in 0.8.2
--- varListToJSON :: [(String, String)] -> Value
--- varListToJSON assoc = toJSON $ M.fromList assoc'
---   where assoc' = [(s2t k, toVal [s2t z | (y,z) <- assoc,
---                                                 not (null z),
---                                                 y == k])
---                         | k <- nub $ map fst assoc ]  -- ordNub
---         toVal [x] = toJSON x
---         toVal []  = Null
---         toVal xs  = toJSON xs
 
 -- handling the doctype templates dtpl
 extDtemplate :: Extension

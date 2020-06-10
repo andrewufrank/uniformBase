@@ -37,6 +37,7 @@ library
         -- , convertible
         , pandoc ==2.9.2.1
         , pandoc-types
+        , doclayout
         , bibtex
         , pandoc-citeproc
         , doctemplates
