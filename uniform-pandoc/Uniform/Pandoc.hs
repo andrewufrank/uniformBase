@@ -33,6 +33,7 @@ module Uniform.Pandoc
   , TypedFiles5
   , TypedFiles7
   , read8
+  , extTex, writeLatex2text, texFileType
 --   , extMD
   , module Uniform.Json
 --   , varListToJSON
@@ -61,6 +62,7 @@ import           Text.Pandoc                    ( Pandoc(..)
                                                 , writerExtensions
                                                 , WriterOptions
                                                 , writeHtml5String
+                                                , writeLaTeX
                                                 , def
                                                 )
 import           Text.Pandoc.Highlighting       ( tango )
@@ -224,6 +226,29 @@ newtype HTMLout = HTMLout {contentHtml::Text}
   deriving (Show, Read, Eq, Ord, Generic)
 
 instance ToJSON HTMLout
+
+-- htmloutFileType = TypedFile5 { tpext5 = extHTML } :: TypedFile5 Text HTMLout
+extTex = Extension "tex"
+texFileType = TypedFile5 { tpext5 = extTex } :: TypedFile5 Text Text
+    -- | Reasonable options for rendering to HTML
+latexOptions :: WriterOptions
+latexOptions = def { writerHighlightStyle = Just tango
+                   , writerExtensions     = writerExtensions def
+                   }
+-- instance ToJSON Text 
+
+-- writeLaTeX :: PandocMonad m => WriterOptions -> Pandoc -> m Text
+instance TypedFiles7 Text Text where
+  wrap7 = id
+
+  unwrap7 = id 
+
+
+writeLatex2text :: Pandoc -> ErrIO Text
+writeLatex2text pandocRes = do
+  p <- unPandocM $ writeLaTeX latexOptions pandocRes
+  return  p
+
 
 -- a wrapper around html ready to publish
 unHTMLout (HTMLout a) = a
