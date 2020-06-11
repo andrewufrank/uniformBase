@@ -262,26 +262,27 @@ writeLatex2text  pandocRes = do
 writePDF2text :: Bool  ->   Path Abs File -> ErrIO ()
 -- convert the text in the file given (a full latex) into a pdf 
 -- with the same filename
-writePDF2text debug texInput  resfn =  
+writePDF2text debug fn =  
  do
     -- let fn1 = makeAbsFile "/home/frank/Workspace8/pandocTestLatex/example.tex"
     -- inputTex :: Text <- read8 fn1 texFileType
-    putIOwords ["writePDF2text 1 tex\n", take' 300 $ texInput
-                    , "resfn", showT resfn]
+    let infn = setExtension extTex fn 
+    putIOwords ["writePDF2text 1 infn", show infn]
+          
 
-    let 
-        texFile = concat[pre1 , lines' texInput, end9]
-    putIOwords ["writePDF2text 2 texDilw\n", unlines' . take 10 $ texFile]
+    -- let 
+    --     texFile = concat[pre1 , lines' texInput, end9]
+    -- putIOwords ["writePDF2text 2 texDilw\n", unlines' . take 10 $ texFile]
 
 
-    -- todo replace with a temp dir 
-    let tempDir = makeAbsDir "/home/frank/.SSG"
-        texfn = tempDir </> (makeRelFile "writePDF2text_input")
-    write8 texfn texFileType (unlines' texFile) 
+    -- -- todo replace with a temp dir 
+    -- let tempDir = makeAbsDir "/home/frank/.SSG"
+    --     texfn = tempDir </> (makeRelFile "writePDF2text_input")
+    -- write8 texfn texFileType (unlines' texFile) 
 
-    putIOwords ["writePDF2text 3 tex file", unlines' texFile]
+    -- putIOwords ["writePDF2text 3 tex file", unlines' texFile]
 
-    callIO $ callProcess "lualatex" [toFilePath texfn]
+    callIO $ callProcess "lualatex" [toFilePath infn]
 
     
     let resfn = setExtension extPDF  texfn 
@@ -293,16 +294,6 @@ writePDF2text debug texInput  resfn =
 
     return ()
 
---- the preamble and the end -- escape \
-pre1 = ["%%% eval: (setenv \"LANG\" \"en_US.UTF-8\")"
-        , "\\documentclass[a4paper,10pt]{scrbook}"
-        , "\\usepackage[german]{babel}"
-        -- necessary for the pandoc produced TeX files: 
-        , "\\usepackage[colorlinks]{hyperref}" 
-        , "\\newenvironment{cslreferences}{}{\\par}"
-        , "\\begin{document}"] :: [Text]
-
-end9    = ["\\end{document}"]
 ----------------------------------------------
 
 extPDF = Extension "pdf"

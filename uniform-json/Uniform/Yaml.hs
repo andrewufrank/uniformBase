@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 --
 -- Module      :  Uniform.Yaml
+-- TOD separate markdown
 -----------------------------------------------------------------------------
 -- {-# LANGUAGE BangPatterns                   #-}
 {-# LANGUAGE ConstraintKinds             #-}
@@ -47,6 +48,7 @@ decodeThrowT =  Y.decodeThrow . t2b
 
 newtype YamlText = YamlText Text deriving (Show, Read, Eq, Ord)
 -- a wrapper around Markdonw text
+-- todo clean up - use wrap7
 unYAML :: YamlText -> Text
 unYAML (YamlText a) = a   --needed for other ops
 extYAML :: Extension

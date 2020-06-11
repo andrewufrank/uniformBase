@@ -290,12 +290,17 @@ instance Extensions (Path ar File) where
     type ExtensionType (Path ar File) = Extension
 
     getExtension f = Extension e
+            -- definition of extension in path is with leading '.'
+            -- multiple extensions are gradually built and removed
+            -- split gives only the last
+            -- add allows only one to add
+            -- empty extensions throw error
        where
             e = getExtension . toFilePath $ f
             -- the Path.fileExtension in  path 0.7.0
             -- throws error when no extension present
 
---            e =  Path.fileExtension  f
+        --    e = snd .  Path.splitExtension $  f
 --         for my version in fromOthersInstalled
 --               e = headNote "werwqerqw" . Path.fileExtension $ f :: String
 --         difference in version
@@ -308,8 +313,9 @@ instance Extensions (Path ar File) where
 --                             $ Path.setFileExtension  "" f
 -- --    hasExtension e f = (e==). getExtension
 
-    setExtension e f =
+    setExtension e f = 
         fromJustNote "setExtension" $ Path.setFileExtension (unExtension e) f
+        -- must remove all existing extension, not add to 
     addExtension    = setExtension
     removeExtension = setExtension (Extension "")
 --    hasExtension e f = (e==). getExtension

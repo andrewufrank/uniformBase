@@ -203,16 +203,16 @@ g2 = makeRelFile "afile.ext"
 g3 = makeAbsFile "/somedir/more/afile.ext"
 g4 = makeAbsFile "/somedir/more/afile.txt"
 e1 = (Extension "ext")
---test_emptyExt_P = assertEqual (Extension "") (getExtension g1)
-----test_emptyExt0 = assertEqual "" (getExtension f0)
---test_getExt_P = assertEqual e1 (getExtension g2)
---test_hasExt_P = assertBool $  hasExtension e1 g2
---test_hasExt2_P = assertBool $  hasExtension e1 g2
---test_addExt_P = assertEqual ( g2) $  addExtension e1 g1
---test_removeExt_P = assertEqual g1 (removeExtension g2)
---test_setExt_P = assertEqual ( g4) (setExtension (Extension "txt") g3)
---d1 = makeAbsDir "/somedir/more/dir"
---test_nakedDir = assertEqual "dir" (getNakedDir d1)
+test_emptyExt_P = assertEqual (Extension "") (getExtension g1)
+--test_emptyExt0 = assertEqual "" (getExtension f0)
+test_getExt_P = assertEqual e1 (getExtension g2)
+test_hasExt_P = assertBool $  hasExtension e1 g2
+test_hasExt2_P = assertBool $  hasExtension e1 g2
+test_addExt_P = assertEqual ( g2) $  addExtension e1 g1
+test_removeExt_P = assertEqual g1 (removeExtension g2)
+test_setExt_P = assertEqual ( g4) (setExtension (Extension "txt") g3)
+d1 = makeAbsDir "/somedir/more/dir"
+test_nakedDir = assertEqual "dir" (getNakedDir d1)
 
 -- data TestRec = TestRec {f11:: Path Abs Dir} deriving (Show, Eq, Read)
 -- inp1 = TestRec { f11 = "/home/frank/"}
