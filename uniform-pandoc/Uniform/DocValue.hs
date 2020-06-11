@@ -22,72 +22,27 @@
             -fno-warn-missing-methods -fno-warn-deprecations #-}
 
 module Uniform.DocValue
-  ( module Uniform.DocValue
-    , Dtemplate
-    , Template 
-    , renderTemplate 
-
-      -- , readMd2meta
---   , Pandoc(..)
---       -- , unDocValue
--- --   , DocValue(..)
---       -- , docValueFileType
--- --    , getAtKey  -- exported by uniform.json, instances automatically exported 
---   , module Uniform.Error   -- or at least ErrIO
---   , write8
---   , TypedFile5
---   , TypedFiles5
---   , TypedFiles7
---   , read8
--- --   , extTex, writeLatex2text, texFileType
--- --   , extPDF, pdfFileType, writePDF2text
--- --   , extMD
---   , module Uniform.Json
--- --   , varListToJSON
-  )
+    ( module Uniform.DocValue
+        , Dtemplate
+        , Template 
+        , renderTemplate 
+    )
 where
 
--- import           Text.Pandoc.Readers            ( readMarkdown )
 import           Uniform.Error
--- import Uniform.Pointless (cross)
 import           Uniform.Filenames
 import           Uniform.TypedFile              ( TypedFiles7(..)
                                                 , TypedFiles5(..)
                                                 , TypedFile5(..)
                                                 )
--- import           Uniform.FileIO                 (  setExtension)
 import           Uniform.Json
--- import           Uniform.Yaml
--- import Uniform.HTMLout
-
-
--- import qualified Text.Pandoc                   as Pandoc
--- import           Text.Pandoc                    ( Pandoc(..)
---                         , ReaderOptions
---                         , Meta
---                         , MetaValue
---                         , writerHighlightStyle
---                         , writerExtensions
---                         , WriterOptions(..)
---                         , writeHtml5String
---                         , writeLaTeX
---                         , def
---                         -- , writerStandalone
---                         -- , Template
---                         )
--- import           Text.Pandoc.Highlighting       ( tango )
--- import Text.Pandoc.PDF (makePDF)
-                                                  
+                                                 
 import Text.DocTemplates as DocTemplates  ( -- applyTemplate, 
         Doc(..)
         , renderTemplate
         -- , compileTemplate
         , Template
         )
-
--- import Text.DocLayout (render)
--- import           Text.Pandoc.Shared             ( stringify )
--- import System.Process 
 
 
 --     renderTemplate :: (TemplateTarget a, ToContext a b) => Template a -> b -> Doc a
@@ -113,7 +68,6 @@ newtype Dtemplate = Dtemplate Text
   deriving (Show, Read, Eq, Ord)
 -- ^ a template which contains variables in doctype  $x$  format
 
--- a wrapper around html ready to publish
 --unDtemplate (Dtemplate a) = a
 dtmplFileType :: TypedFile5 Text Dtemplate
 dtmplFileType = makeTyped extDtemplate :: TypedFile5 Text Dtemplate
@@ -147,14 +101,11 @@ docValueFileType :: TypedFile5 Text DocValue
 docValueFileType =
   TypedFile5 { tpext5 = Extension "docval" } :: TypedFile5 Text DocValue
 
- --instance FileHandles MarkdownText
- -- what is missing here?
 instance TypedFiles7 Text DocValue
-  -- ^ handling Markdown and read them into DocValue
- where
-  wrap7 = DocValue . fromJustNote "wrap7 docvalue decode" . decode . b2bl . t2b
+     where
+        wrap7 = DocValue . fromJustNote "wrap7 docvalue decode" . decode . b2bl . t2b
 
-  unwrap7 (DocValue a) = shownice a
+        unwrap7 (DocValue a) = shownice a
 
 mergeAll :: [Value] -> DocValue
 -- ^ merge the four diffferent value -- last winns
