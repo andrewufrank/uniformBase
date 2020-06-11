@@ -25,10 +25,11 @@ module Uniform.Pandoc
   , Pandoc(..)
   , DocValue(..)
   , module Uniform.Error   -- or at least ErrIO
-  , write8
-  , TypedFile5
-  , TypedFiles5
-  , TypedFiles7
+  , module Uniform.Filenames 
+  , write8, read8,setExtension
+  , TypedFile5(..)
+  , TypedFiles5(..)
+  , TypedFiles7(..)
   , read8
   , module Uniform.Json
     , ReaderOptions

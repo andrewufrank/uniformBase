@@ -21,26 +21,26 @@
 
 module Uniform.Markdown
   ( module Uniform.Markdown
-  , Pandoc(..)
-  , module Uniform.Error   -- or at least ErrIO
-  , write8
-  , TypedFile5
-  , TypedFiles5
-  , TypedFiles7
-  , read8
-  , module Uniform.Json
+--   , Pandoc(..)
+--   , module Uniform.Error   -- or at least ErrIO
+--   , write8
+--   , TypedFile5
+--   , TypedFiles5
+--   , TypedFiles7
+--   , read8
+--   , module Uniform.Json
   )
 where
 
-import           Uniform.Error
+-- import           Uniform.Error
 import           Uniform.Filenames
-import           Uniform.TypedFile              ( TypedFiles7(..)
-                                                , TypedFiles5(..)
-                                                , TypedFile5(..)
-                                                )
-import           Uniform.FileIO                 ( write8
-                                                , read8
-                                                , setExtension)
+-- import           Uniform.TypedFile              ( TypedFiles7(..)
+--                                                 , TypedFiles5(..)
+--                                                 , TypedFile5(..)
+--                                                 )
+-- import           Uniform.FileIO                 ( write8
+--                                                 , read8
+--                                                 , setExtension)
 import           Uniform.Json
 import           Uniform.Yaml
 import Uniform.Pandoc

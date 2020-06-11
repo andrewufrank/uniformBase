@@ -21,24 +21,24 @@
 
 module Uniform.HTMLout
   ( module Uniform.HTMLout
-  , Pandoc(..)
-  , module Uniform.Error   -- or at least ErrIO
-  , write8
-  , TypedFile5
-  , TypedFiles5
-  , TypedFiles7
-  , read8
-  , module Uniform.Json
+--   , Pandoc(..)
+--   , module Uniform.Error   -- or at least ErrIO
+--   , write8
+--   , TypedFile5
+--   , TypedFiles5
+--   , TypedFiles7
+--   , read8
+--   , module Uniform.Json
   )
 where
 
-import           Uniform.Error
-import           Uniform.Filenames
-import           Uniform.TypedFile              ( TypedFiles7(..)
-                                                -- , TypedFiles5(..)
-                                                , TypedFile5(..)
-                                                )
-import           Uniform.Json
+-- import           Uniform.Error
+-- import           Uniform.Filenames
+-- import           Uniform.TypedFile              ( TypedFiles7(..)
+--                                                 -- , TypedFiles5(..)
+--                                                 , TypedFile5(..)
+--                                                 )
+-- import           Uniform.Json
 import Uniform.Pandoc
 import Uniform.DocValue
  
