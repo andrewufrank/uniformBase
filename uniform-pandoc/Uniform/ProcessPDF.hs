@@ -46,14 +46,16 @@ import           Uniform.Error
 -- import Uniform.Pointless (cross)
 import           Uniform.Filenames
 import           Uniform.TypedFile              ( TypedFiles7(..)
-                                                , TypedFiles5(..)
+                                                -- , TypedFiles5(..)
                                                 , TypedFile5(..)
                                                 )
-import           Uniform.FileIO                 ( write8
-                                                , read8
-                                                , setExtension)
+-- import           Uniform.FileIO                 ( write8
+--                                                 , read8
+--                                                 , setExtension)
 import           Uniform.Json
-import           Uniform.Yaml
+-- import           Uniform.Yaml
+import Uniform.Pandoc 
+
 -- import qualified Text.Pandoc                   as Pandoc
 -- import           Text.Pandoc                    ( Pandoc(..)
 --                         -- , ReaderOptions
@@ -80,27 +82,28 @@ import System.Process
 
 
 
-newtype Latex = Latex (unLatex::Text)
+newtype Latex = Latex {unLatex::Text}
 
 extTex = Extension "tex"
 texFileType = TypedFile5 { tpext5 = extTex } :: TypedFile5 Text Text
     -- | Reasonable options for rendering to HTML
-latexOptions :: WriterOptions
-latexOptions = def { writerHighlightStyle = Just tango
-                   , writerExtensions     = writerExtensions def
-                   }
+-- latexOptions :: WriterOptions
+-- latexOptions = def { writerHighlightStyle = Just tango
+--                    , writerExtensions     = writerExtensions def
+--                    }
 -- instance ToJSON Text 
 
 -- writeLaTeX :: PandocMonad m => WriterOptions -> Pandoc -> m Text
-instance TypedFiles7 Text Text where
+instance TypedFiles7 Text Latex where
     wrap7 = Latex
     unwrap7 = unLatex
 
-writeLatex2text ::   Pandoc -> ErrIO Text
--- write a latex file from a pandoc doc 
-writeLatex2text  pandocRes = do
-    p <- unPandocM $ writeLaTeX latexOptions pandocRes
-    return  p
+-- writeLatex2text ::   Pandoc -> ErrIO Text
+-- -- write a latex file from a pandoc doc 
+-- seems not to give a full tex and thus not processing
+-- writeLatex2text  pandocRes = do
+--     p <- unPandocM $ writeLaTeX latexOptions pandocRes
+--     return  p
 ---------- write PDF with Lualatex
 -- the process uses files - is this a preformance issue? 
 
@@ -110,22 +113,26 @@ writePDF2text :: Bool  ->   Path Abs File -> ErrIO ()
 writePDF2text debug fn =  
  do
     let infn = setExtension extTex fn 
-    putIOwords ["writePDF2text 1 infn", show infn]
+    putIOwords ["writePDF2text 1 infn", showT infn]
 
     callIO $ callProcess "lualatex" [toFilePath infn]
 
     
-    let resfn = setExtension extPDF  texfn 
+    let resfn = setExtension extPDF  fn 
     putIOwords ["writePDF2text 4 pdf filename", showT resfn]
 
-    resPDFtext <- read8 resfn pdfFileType 
+    resPDFtext :: pdfFileType <- read8 resfn pdfFileType 
     putIOwords ["writePDF2text lualatex result ok (otherwise error)"
-                , "pdf is", take' 300 $ resPDFtext] 
+                , "pdf is", take' 300 . unwrap7 $ resPDFtext] 
 
     return ()
 
 ----------------------------------------------
 
 extPDF = Extension "pdf"
-pdfFileType = TypedFile5 { tpext5 = extPDF } :: TypedFile5 Text Text
+pdfFileType = TypedFile5 { tpext5 = extPDF } :: TypedFile5 Text PDFfile
 
+newtype PDFfile = PDFfile {unpdffile :: Text }
+instance TypedFiles7 Text PDFfile where 
+    wrap7 = PDFfile
+    unwrap7 = unpdffile 

@@ -22,6 +22,7 @@
 module Uniform.Pandoc
   ( module Uniform.Pandoc
       -- , readMd2meta
+      , unPandocM
   , Pandoc(..)
       -- , unDocValue
   , DocValue(..)
@@ -39,7 +40,14 @@ module Uniform.Pandoc
   , module Uniform.Json
 --   , varListToJSON
     , ReaderOptions
-    , WriterOptions 
+    -- , WriterOptions 
+    -- , writeMarkdown
+    -- , Extensions(..)
+    -- , def
+    , writerExtensions
+    , writerHighlightStyle
+    , WriterOptions(..)
+    -- , writeHtml5String
   )
 where
 
@@ -65,12 +73,13 @@ import           Text.Pandoc                    ( Pandoc(..)
                         , ReaderOptions
                         , Meta
                         , MetaValue
---                         , writerHighlightStyle
---                         , writerExtensions
+                        , writerHighlightStyle
+                        , writerExtensions
                         , WriterOptions 
---                         , writeHtml5String
+                        -- , writeMarkdown
+                        , writeHtml5String
 --                         , writeLaTeX
---                         , def
+                        -- , def
 --                         -- , writerStandalone
 --                         -- , Template
                         )

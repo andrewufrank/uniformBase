@@ -23,7 +23,7 @@
 
 module Uniform.DocValue
   ( module Uniform.DocValue
-    -- , Dtemplate
+    , Dtemplate
     , Template 
     , renderTemplate 
 
@@ -80,7 +80,9 @@ import           Uniform.Json
                                                   
 import Text.DocTemplates as DocTemplates  ( -- applyTemplate, 
         Doc(..)
-        , renderTemplate, compileTemplate, Template
+        , renderTemplate
+        -- , compileTemplate
+        , Template
         )
 
 -- import Text.DocLayout (render)

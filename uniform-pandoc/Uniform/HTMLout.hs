@@ -55,27 +55,29 @@ import           Uniform.FileIO                 ( write8
 import           Uniform.Json
 import           Uniform.Yaml
 import Uniform.Pandoc
+import Uniform.DocValue
+ 
 
 -- import qualified Text.Pandoc                   as Pandoc
--- import           Text.Pandoc                    ( Pandoc(..)
+import           Text.Pandoc                    ( Pandoc(..)
 --                         -- , ReaderOptions
 --                         -- , Meta
 --                         -- , MetaValue
---                         -- , writerHighlightStyle
---                         -- , writerExtensions
---                         -- , WriterOptions(..)
---                         -- , writeHtml5String
+                        -- , writerHighlightStyle
+                        -- , writerExtensions
+                        -- , WriterOptions(..)
+                        , writeHtml5String
 --                         -- , writeLaTeX
---                         -- , def
+                        , def
 --                         -- -- , writerStandalone
 --                         -- -- , Template
---                         )
--- import           Text.Pandoc.Highlighting       ( tango )
+                        )
+import           Text.Pandoc.Highlighting       ( tango )
 -- import Text.Pandoc.PDF (makePDF)
                                                   
--- import Text.DocTemplates as DocTemplates  ( -- applyTemplate, 
---         Doc(..), renderTemplate, compileTemplate, Template)
--- import Text.DocLayout (render)
+import Text.DocTemplates as DocTemplates  ( -- applyTemplate, 
+        Doc(..), renderTemplate, compileTemplate, Template)
+import Text.DocLayout (render)
 -- import           Text.Pandoc.Shared             ( stringify )
 -- import System.Process 
 

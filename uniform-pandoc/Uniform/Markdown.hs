@@ -54,12 +54,12 @@ import           Uniform.FileIO                 ( write8
                                                 , setExtension)
 import           Uniform.Json
 import           Uniform.Yaml
--- import Uniform.Pandoc
--- import Uniform.Pandoc as Pandoc
+import Uniform.Pandoc
+import Uniform.Pandoc as Pandoc
 
 -- import Uniform.Doc 
 
--- import qualified Text.Pandoc                   as Pandoc
+import qualified Text.Pandoc                   as Pandoc
 -- import           Text.Pandoc                    ( Pandoc(..)
 --                         , ReaderOptions
 --                         -- , Meta
@@ -86,10 +86,10 @@ extMD = Extension "md"
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc
 readMarkdown2 text1 = unPandocM $ 
-        readMarkdown markdownOptions (unwrap7 text1)
+        Pandoc.readMarkdown markdownOptions (unwrap7 text1)
 readMarkdown3 :: Pandoc.ReaderOptions -> MarkdownText -> ErrIO Pandoc
 readMarkdown3 options text1 = unPandocM $ 
-        readMarkdown options (unwrap7 text1)
+        Pandoc.readMarkdown options (unwrap7 text1)
 
     -- | Reasonable options for reading a markdown file
 markdownOptions :: Pandoc.ReaderOptions
