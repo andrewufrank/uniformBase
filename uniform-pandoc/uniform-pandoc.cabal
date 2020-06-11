@@ -47,6 +47,10 @@ library
     exposed-modules:
         Uniform.Pandoc
         Uniform.BibTex
+        Uniform.Markdown
+        Uniform.ProcessPDF
+        Uniform.HTMLout
+        Uniform.DocValue 
 
     exposed: True
     buildable: True
