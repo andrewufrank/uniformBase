@@ -286,29 +286,21 @@ class FileHandles a => TypedFiles7a a b where
 instance (TypedFiles7 Text b) => TypedFiles7a Text b where
 -- an instance for all what has text or bytestring  as underlying rep
     write7 fp fn tp ct = do
---        let fn2 = fp </> fn <.> tpext5 tp -- :: Path ar File
         write8 (fp </> fn  ) tp ct
 
     read7 fp fn tp   = do
---        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
---        let fn2 = fn <.> tpext5 tp
         read8 (fp </> fn) tp
---        return . wrap7 $ ares
 
     write8 fp   tp ct = do
         let fn2 = fp   <.> tpext5 tp -- :: Path ar File
---        write8 (fp </> fn  ) tp ct
         let parent = getParentDir fn2
         createDirIfMissing' parent
 --        t <- doesDirExist' fp
 --        putIOwords ["TypedFiles7 write7 Text parent", showT parent, "exists", showT t]
 
         writeFile2 fn2 (unwrap7 ct :: Text )
---        putIOwords ["TypedFiles7 write7 Text Gtemplate", showT fn2]
---        putIOwords ["TypedFiles7 write7 Text Gtemplate text \n", unwrap7 ct]
 
     read8 fp  tp   = do
---        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
         let fp2 = fp <.> tpext5 tp
         ares :: Text <- readFile2 $ fp2
         return . wrap7 $ ares
@@ -320,25 +312,19 @@ instance (TypedFiles7 L.ByteString b) => TypedFiles7a L.ByteString b where
             write8 (fp </> fn  ) tp ct
     
         read7 fp fn tp   = do
-    --        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
-    --        let fn2 = fn <.> tpext5 tp
             read8 (fp </> fn) tp
     --        return . wrap7 $ ares
     
         write8 fp   tp ct = do
             let fn2 = fp   <.> tpext5 tp -- :: Path ar File
-    --        write8 (fp </> fn  ) tp ct
             let parent = getParentDir fn2
             createDirIfMissing' parent
     --        t <- doesDirExist' fp
     --        putIOwords ["TypedFiles7 write7 Text parent", showT parent, "exists", showT t]
     
             writeFile2 fn2 (unwrap7 ct :: L.ByteString )
-    --        putIOwords ["TypedFiles7 write7 Text Gtemplate", showT fn2]
-    --        putIOwords ["TypedFiles7 write7 Text Gtemplate text \n", unwrap7 ct]
     
         read8 fp  tp   = do
-    --        putIOwords ["TypedFiles7 read7 Text MarkdownText", showT fp, showT fn]
             let fp2 = fp <.> tpext5 tp
             ares :: L.ByteString <- readFile2 $ fp2
             return . wrap7 $ ares
