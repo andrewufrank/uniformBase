@@ -27,6 +27,7 @@ module Uniform.Pandoc
   , module Uniform.Error   -- or at least ErrIO
   , module Uniform.Filenames 
   , write8, read8,setExtension
+  , writeLatex2text
   , TypedFile5(..)
   , TypedFiles5(..)
   , TypedFiles7(..)
@@ -63,11 +64,12 @@ import           Text.Pandoc                    ( Pandoc(..)
                         , WriterOptions 
                         -- , writeMarkdown
                         , writeHtml5String
---                         , writeLaTeX
-                        -- , def
+                        , writeLaTeX
+                        , def
                         )
 
 import           Text.Pandoc.Shared             ( stringify )
+import           Text.Pandoc.Highlighting       ( tango )
 
 instance Zeros Pandoc where
   zero = Pandoc zero zero
@@ -129,5 +131,23 @@ readYaml2value fp = do
     return . yaml2value $ t
 
 
+latexOptions :: WriterOptions
+latexOptions = def { writerHighlightStyle = Just tango
+                   , writerExtensions     = writerExtensions def
+                   }
+-- instance ToJSON Text 
+
+-- writeLaTeX :: PandocMonad m => WriterOptions -> Pandoc -> m Text
+instance TypedFiles7 Text Text where
+    wrap7 = id
+
+    unwrap7 = id 
+
+
+writeLatex2text ::   Pandoc -> ErrIO Text
+-- write a latex file from a pandoc doc 
+writeLatex2text  pandocRes = do
+    p <- unPandocM $  writeLaTeX latexOptions pandocRes
+    return  p
 
 
