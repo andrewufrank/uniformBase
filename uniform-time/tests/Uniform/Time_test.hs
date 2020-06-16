@@ -3,7 +3,7 @@
 -- Module      :   top tests for time
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
-
+{-# OPTIONS_GHC -Wno-missing-signatures #-}
     {-# LANGUAGE
     MultiParamTypeClasses
     , TypeSynonymInstances

@@ -28,4 +28,4 @@ extra-deps:
 # # - twitch-0.1.7.2
 # - ftphs-1.0.9.2
 # - network-2.8.0.1
-resolver: lts-15.13
+resolver: lts-16.0

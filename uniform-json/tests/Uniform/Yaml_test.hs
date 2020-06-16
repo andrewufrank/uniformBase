@@ -22,7 +22,7 @@ module Uniform.Yaml_test  where
 -- --import qualified System.Directory as S
 --
 ---- using uniform:
-import           Uniform.Error hiding ((</>), (<.>))
+-- import           Uniform.Error -- hiding ((</>), (<.>))
 -- import           Uniform.Strings     hiding ((</>), (<.>))
             -- (s2t, showT, t2s, removeChar, CharChains2 (..), Text)
 --import Safe   -- todo error

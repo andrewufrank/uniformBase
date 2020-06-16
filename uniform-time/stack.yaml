@@ -28,4 +28,4 @@ extra-deps:
 #- twitch-0.1.7.2
 #- path-0.7.0
 #- path-io-1.6.0
-resolver: lts-13.12
+resolver: lts-16.0

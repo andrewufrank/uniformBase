@@ -12,6 +12,9 @@
 {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE OverloadedStrings     #-}
 
+{-# OPTIONS_GHC -Wno-unused-imports #-}
+{-# OPTIONS_GHC -Wno-missing-signatures #-}
+
 module Uniform.Convenience.ReadCSV -- (closedMain)
     where
 
@@ -32,13 +35,13 @@ readCSV fileName = do
   putIOwords ["readCSV", "filename", s2t $ toShortFilePath fileName1]
   input <- callIO $ readFile (toShortFilePath fileName1)
   when False $ putIOwords ["readCSV", "input", s2t $ input]
-  let csv = parseCSV (toShortFilePath fileName1) input
+  let csv2 = parseCSV (toShortFilePath fileName1) input
   -- filename is used only for error messages...
-  case csv of
+  case csv2 of
     Left e -> throwErrorT [s2t . show $ e]
     Right f -> return f
 
-handleError csv = putStrLn "not a CSV"
+handleError csv1 = putStrLn "not a CSV"
 
 --toInt :: String -> Int
 --toInt = read

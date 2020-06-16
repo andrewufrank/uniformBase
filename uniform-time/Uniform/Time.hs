@@ -21,6 +21,8 @@
 {-# LANGUAGE UndecidableInstances           #-}
 
 {-# OPTIONS_GHC -Wall -fno-warn-orphans #-}
+{-# OPTIONS_GHC -Wno-missing-signatures #-}
+-- {-# OPTIONS_GHC -Wno-unused-imports #-}
 
 module Uniform.Time (
         module Uniform.Time

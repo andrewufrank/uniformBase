@@ -22,6 +22,7 @@
 
 {-# OPTIONS_GHC  -fno-warn-warnings-deprecations #-}
 {-# OPTIONS_GHC  -fno-warn-unused-matches #-}
+{-# OPTIONS_GHC -Wno-missing-signatures #-}
     -- runErrorT is depreceiated but used in monads-tf
 -- {-# OPTIONS_GHC -w #-}
 

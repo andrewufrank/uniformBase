@@ -22,6 +22,7 @@
         -- , DeriveAnyClass
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 {-# OPTIONS_GHC -Wall -fno-warn-orphans #-}
+{-# OPTIONS_GHC -Wno-deprecations #-} 
 
 module Uniform.Filenames
     ( module Uniform.Filenames
