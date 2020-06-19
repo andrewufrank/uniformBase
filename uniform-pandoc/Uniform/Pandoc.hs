@@ -16,8 +16,13 @@
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-{-# OPTIONS_GHC -Wall -fno-warn-orphans -fno-warn-missing-signatures
-            -fno-warn-missing-methods #-}
+{-# OPTIONS_GHC -Wall -fno-warn-orphans 
+            -fno-warn-missing-signatures
+            -fno-warn-missing-methods 
+            -fno-warn-duplicate-exports 
+            -fno-warn-duplicate-exports
+            -fno-warn-unused-imports 
+            #-}
 
 module Uniform.Pandoc
   ( module Uniform.Pandoc
@@ -150,4 +155,24 @@ writeLatex2text  pandocRes = do
     p <- unPandocM $  writeLaTeX latexOptions pandocRes
     return  p
 
+-------------------- fileType ----------
+extPandoc = Extension "pandoc"
 
+-- newtype PandocText = PandocText Text
+--   deriving (Show, Read, Eq, Ord)
+
+-- -- a wrapper around Pandoc 
+-- unPandoc (PandocText a) = a   --needed for other ops
+
+-- instance Zeros PandocText where
+--   zero = PandocText zero
+
+pandocFileType =
+  TypedFile5 { tpext5 = extPandoc } :: TypedFile5 Text Pandoc
+
+ 
+instance TypedFiles7 Text Pandoc  where
+  -- handling Pandoc and read them into PandocText
+  wrap7 = readNote "wrap7 for pandoc 223d" .t2s
+
+  unwrap7   = showT

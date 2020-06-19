@@ -17,7 +17,9 @@
 {-# LANGUAGE DeriveGeneric #-}
 
 {-# OPTIONS_GHC -Wall -fno-warn-orphans -fno-warn-missing-signatures
-            -fno-warn-missing-methods -fno-warn-deprecations #-}
+            -fno-warn-missing-methods 
+            -fno-warn-duplicate-exports
+            -fno-warn-deprecations #-}
 
 module Uniform.Markdown
   ( module Uniform.Markdown
@@ -42,14 +44,13 @@ import           Uniform.Filenames
 --                                                 , read8
 --                                                 , setExtension)
 import           Uniform.Json
-import           Uniform.Yaml
+-- import           Uniform.Yaml
 import Uniform.Pandoc
 import Uniform.Pandoc as Pandoc
 
 
 import qualified Text.Pandoc                   as Pandoc
 
-extMD = Extension "md"
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc
 readMarkdown2 text1 = unPandocM $ 
@@ -100,6 +101,8 @@ writeAST3md options dat = do
     return r1
   return . wrap7 $ r
 
+-------------------- fileType ----------
+extMD = Extension "md"
     
 newtype MarkdownText = MarkdownText Text
   deriving (Show, Read, Eq, Ord)

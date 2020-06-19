@@ -57,6 +57,22 @@ tmp1 = "some $words$ are replaced $if(x1)$the text for x1 $x1$ $endif$."
 vals1 = [("words","Woerter"), ("x1","erstes x")]
 res4 = "some Woerter are replaced the text for x1 erstes x ."
 
+test_readWrite = do 
+    res4 <- runErr $ do 
+        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.pandoc" 
+        let pfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort2.pandoc" 
+
+        pan1 :: Pandoc <- read8 pfn1 pandocFileType 
+        -- let p1 = unwrap7 pan1 :: Pandoc 
+
+        write8 pfn2  pandocFileType pan1
+        pan2 <- read8 pfn2 pandocFileType
+        return (pan1, pan2)
+    let Right (target3, res3) = res4
+    assertEqual target3 res3
+
+
+
 -- test_writeLatex2text  -- pandoc -> text 
 
 -- a pandoc text value 
