@@ -33,3 +33,15 @@ import Uniform.DocValue
 
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 
+test_readWrite = do 
+    res4 <- runErr $ do 
+        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort" 
+        let pfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort2" 
+
+        pan1 <- read8 pfn1 docValueFileType 
+        write8 pfn2  docValueFileType pan1
+
+        pan2 <- read8 pfn2 docValueFileType
+        return (pan1, pan2)
+    let Right (target3, res3) = res4
+    assertEqual target3 res3

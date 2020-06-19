@@ -25,8 +25,10 @@ import            Test.Framework
 --import    {-@ HTF_TESTS @-}        Uniform.FileStatus_test
 --import     {-@ HTF_TESTS @-}       Uniform.Piped_test
 import    {-@ HTF_TESTS @-}        Uniform.Pandoc_test
-import    {-@ HTF_TESTS @-}        Uniform.Markdown_test
+-- import    {-@ HTF_TESTS @-}        Uniform.Markdown_test
+        -- TODO not yet working inut file missing
 import    {-@ HTF_TESTS @-}        Uniform.ProcessPDF_test
+import    {-@ HTF_TESTS @-}        Uniform.DocValue_test
 -- import    {-@ HTF_TESTS @-}        Uniform.BibTex_test
         -- braucht files 
 

@@ -87,6 +87,9 @@ instance TypedFiles7 Text Dtemplate where
   wrap7 = Dtemplate
 
   unwrap7 (Dtemplate a) = a
+--------------------------------------------typed file docval
+
+docvalExt = Extension "docval"
 
 newtype DocValue = DocValue Value
   deriving (Show, Eq, Read)
@@ -104,7 +107,7 @@ instance NiceStrings DocValue where
 
 docValueFileType :: TypedFile5 Text DocValue
 docValueFileType =
-  TypedFile5 { tpext5 = Extension "docval" } :: TypedFile5 Text DocValue
+  TypedFile5 { tpext5 = docvalExt } :: TypedFile5 Text DocValue
 
 instance TypedFiles7 Text DocValue
      where
