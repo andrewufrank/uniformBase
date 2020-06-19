@@ -76,3 +76,22 @@ test_tex2latex = do
         return (target1,  lat1)
     let Right (target3, res3) = res4
     assertEqual target3 res3
+
+
+test_latex2pdf = do
+    res4 <- runErr $ do
+        let tsfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort" 
+        -- tex1 <- read8 tsfn texSnipFileType 
+        -- let lat1 =  tex2latex  tex1
+        -- putIOwords ["test_tex2latex", showT tex1, "\n", "lat1\n", showT lat1, "\n"]
+        writePDF2text True tsfn 
+
+        -- let latfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShortTarget"
+        -- target1 :: Latex <- read8 latfn texFileType
+        -- putIOwords ["test_tex2latex target1\n", showT target1, "\n"]
+        -- write8 tsfn texFileType lat1
+        return ("ok" :: Text)  -- otherwise expect error!
+    -- let Right (target3, res3) = res4
+    assertEqual (Right ("ok" :: Text)) res4
+
+-- resok = Right ("ok" :: Text)

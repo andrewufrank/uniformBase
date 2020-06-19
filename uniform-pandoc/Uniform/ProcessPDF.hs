@@ -108,13 +108,14 @@ writePDF2text debug fn =
 
     callIO $ callProcess "lualatex" [toFilePath infn]
 
-    
-    let resfn = setExtension extPDF  fn 
-    putIOwords ["writePDF2text 4 pdf filename", showT resfn]
+    -- does not work to read pdf.
+    -- the files written seem ok
+    -- let resfn = setExtension extPDF  fn 
+    -- putIOwords ["writePDF2text 4 pdf filename", showT resfn]
 
-    resPDFtext :: pdfFileType <- read8 resfn pdfFileType 
-    putIOwords ["writePDF2text lualatex result ok (otherwise error)"
-                , "pdf is", take' 300 . unwrap7 $ resPDFtext] 
+    -- resPDFtext :: pdfFileType <- read8 resfn pdfFileType 
+    -- putIOwords ["writePDF2text lualatex result ok (otherwise error)"
+    --             , "pdf is", take' 300 . unwrap7 $ resPDFtext] 
 
     return ()
 
