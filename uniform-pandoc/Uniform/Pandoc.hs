@@ -164,7 +164,6 @@ pandocFileType =
 instance TypedFiles7 Text Pandoc  where
   -- handling Pandoc and read them into PandocText
   wrap7 = readNote "wrap7 for pandoc 223d" .t2s
-
   unwrap7   = showT
 
     -------------------- fileType ----------
@@ -185,10 +184,8 @@ instance Zeros TexSnip where
 texSnipFileType =
   TypedFile5 { tpext5 = extTexSnip } :: TypedFile5 Text TexSnip
 
- 
 instance TypedFiles7 Text TexSnip  where
   -- handling TexSnip and read them into TexSnipText
-  wrap7 = readNote "wrap7 for TexSnip dwe11d" .t2s
-
-  unwrap7   = showT
+  wrap7 = TexSnip  -- readNote "wrap7 for TexSnip dwe11d" .t2s
+  unwrap7   = unTexSnip -- showT
 
