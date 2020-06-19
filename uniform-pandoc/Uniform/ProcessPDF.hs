@@ -48,10 +48,10 @@ import Uniform.Pandoc
 
 import System.Process 
 
-tex2latex :: TexSnip -> Latex 
+tex2latex :: [TexSnip] -> Latex 
 -- ^ combine a snipped (produced from an md file) with a preamble to 
 -- produce a compilable latex file.
-tex2latex snip = Latex . concat' $ [unlines' preamble1, unTexSnip snip, unlines' postamble1]
+tex2latex snips = Latex . concat' $ [unlines' preamble1, concat' (map unTexSnip snips), unlines' postamble1]
 
 preamble1 = [
     "\\documentclass[a4paper,10pt]{scrbook}",  
