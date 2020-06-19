@@ -56,11 +56,9 @@ test_readPandoc2 = do
         let mfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.md" 
         text1 <- read8 mfn markdownFileType 
         res1 :: Pandoc <-  readMarkdown2  text1
-        putIOwords ["ptext1", showT text1 
-                    , "\n", "res1\n", showT res1, "\n"]
+        -- putIOwords ["ptext1", showT text1, "\n", "res1\n", showT res1, "\n"]
         let pfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.pandoc"
         pres :: Pandoc <- read8 pfn pandocFileType
-          
         return (pres,  res1)
     let Right (target3, res3) = res4
     assertEqual target3 res3
@@ -70,11 +68,9 @@ test_readPandoc2a = do
         let mfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.md"         
         text1 <- read8 mfn markdownFileType 
         res1 :: Pandoc <-  readMarkdown2  text1
-        putIOwords ["ptext1", showT text1 
-                    , "\n", "res1\n", showT res1, "\n"]
+        -- putIOwords ["ptext1", showT text1, "\n", "res1\n", showT res1, "\n"]
         let pfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.pandoc"
         pres :: Pandoc <- read8 pfn pandocFileType
-            
         return (pres,  res1)
     let Right (target3, res3) = res4
     assertEqual target3 res3

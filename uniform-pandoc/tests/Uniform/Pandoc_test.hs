@@ -73,6 +73,38 @@ test_readWrite = do
 
 
 
--- test_writeLatex2text  -- pandoc -> text 
+test_writeLatex = do 
+    res4 <- runErr $ do 
+        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.pandoc" 
+        let tsfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.texsnip" 
+
+        pan1 :: Pandoc <- read8 pfn1 pandocFileType 
+        -- let p1 = unwrap7 pan1 :: Pandoc 
+        tex1 :: TexSnip <- writeLatex2 pan1 
+
+        write8 tsfn1  texSnipFileType tex1
+
+        let tsfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort2.texsnip" 
+        texRes <- read8 tsfn2 texSnipFileType
+        return (tex1, texRes)
+    let Right (target3, res3) = res4
+    assertEqual target3 res3
+
+test_writeLatex2 = do 
+    res4 <- runErr $ do 
+        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.pandoc" 
+        let tsfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.texsnip" 
+
+        pan1 :: Pandoc <- read8 pfn1 pandocFileType 
+        -- let p1 = unwrap7 pan1 :: Pandoc 
+        tex1 :: TexSnip <- writeLatex2 pan1 
+
+        write8 tsfn1  texSnipFileType tex1
+
+        let tsfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText2.texsnip" 
+        texRes <- read8 tsfn2 texSnipFileType
+        return (tex1, texRes)
+    let Right (target3, res3) = res4
+    assertEqual target3 res3
 
 -- a pandoc text value 

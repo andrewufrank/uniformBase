@@ -18,8 +18,13 @@
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-{-# OPTIONS_GHC -Wall -fno-warn-orphans -fno-warn-missing-signatures
-            -fno-warn-missing-methods -fno-warn-deprecations #-}
+{-# OPTIONS_GHC -Wall -fno-warn-orphans 
+            -fno-warn-missing-signatures
+            -fno-warn-missing-methods 
+            -fno-warn-duplicate-exports 
+            -fno-warn-unused-imports 
+            #-}
+
 
 module Uniform.DocValue
     ( module Uniform.DocValue

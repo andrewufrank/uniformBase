@@ -20,7 +20,6 @@
             -fno-warn-missing-signatures
             -fno-warn-missing-methods 
             -fno-warn-duplicate-exports 
-            -fno-warn-duplicate-exports
             -fno-warn-unused-imports 
             #-}
 
@@ -32,7 +31,7 @@ module Uniform.Pandoc
   , module Uniform.Error   -- or at least ErrIO
   , module Uniform.Filenames 
   , write8, read8,setExtension
-  , writeLatex2text
+  , writeLatex2
   , TypedFile5(..)
   , TypedFiles5(..)
   , TypedFiles7(..)
@@ -149,23 +148,14 @@ instance TypedFiles7 Text Text where
     unwrap7 = id 
 
 
-writeLatex2text ::   Pandoc -> ErrIO Text
+writeLatex2 ::   Pandoc -> ErrIO TexSnip
 -- write a latex file from a pandoc doc 
-writeLatex2text  pandocRes = do
+writeLatex2  pandocRes = do
     p <- unPandocM $  writeLaTeX latexOptions pandocRes
-    return  p
+    return  . TexSnip $ p
 
 -------------------- fileType ----------
 extPandoc = Extension "pandoc"
-
--- newtype PandocText = PandocText Text
---   deriving (Show, Read, Eq, Ord)
-
--- -- a wrapper around Pandoc 
--- unPandoc (PandocText a) = a   --needed for other ops
-
--- instance Zeros PandocText where
---   zero = PandocText zero
 
 pandocFileType =
   TypedFile5 { tpext5 = extPandoc } :: TypedFile5 Text Pandoc
@@ -176,3 +166,29 @@ instance TypedFiles7 Text Pandoc  where
   wrap7 = readNote "wrap7 for pandoc 223d" .t2s
 
   unwrap7   = showT
+
+    -------------------- fileType ----------
+    -- a tex snip is a piece of latex code, but not a full compilable 
+    -- latex which results in a pdf 
+
+extTexSnip = Extension "texsnip"
+
+newtype TexSnip = TexSnip Text
+  deriving (Show, Read, Eq, Ord)
+
+-- a wrapper around TexSnip 
+unTexSnip (TexSnip a) = a   --needed for other ops
+
+instance Zeros TexSnip where
+  zero = TexSnip zero
+
+texSnipFileType =
+  TypedFile5 { tpext5 = extTexSnip } :: TypedFile5 Text TexSnip
+
+ 
+instance TypedFiles7 Text TexSnip  where
+  -- handling TexSnip and read them into TexSnipText
+  wrap7 = readNote "wrap7 for TexSnip dwe11d" .t2s
+
+  unwrap7   = showT
+
