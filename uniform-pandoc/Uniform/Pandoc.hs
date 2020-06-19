@@ -172,11 +172,11 @@ instance TypedFiles7 Text Pandoc  where
 
 extTexSnip = Extension "texsnip"
 
-newtype TexSnip = TexSnip Text
+-- | a wrapper around TexSnip 
+newtype TexSnip = TexSnip {unTexSnip ::Text}
   deriving (Show, Read, Eq, Ord)
 
--- a wrapper around TexSnip 
-unTexSnip (TexSnip a) = a   --needed for other ops
+-- unTexSnip (TexSnip a) = a   --needed for other ops
 
 instance Zeros TexSnip where
   zero = TexSnip zero
@@ -186,6 +186,8 @@ texSnipFileType =
 
 instance TypedFiles7 Text TexSnip  where
   -- handling TexSnip and read them into TexSnipText
+  -- the file on disk is readable for texstudio
+  
   wrap7 = TexSnip  -- readNote "wrap7 for TexSnip dwe11d" .t2s
   unwrap7   = unTexSnip -- showT
 

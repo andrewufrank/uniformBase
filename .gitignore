@@ -18,3 +18,9 @@ cabal.project.local
 ideaHaskellLib
 out
 testForLitTextdist
+*.aux
+*.idx
+*.log
+*.out
+*.synctex.gz
+

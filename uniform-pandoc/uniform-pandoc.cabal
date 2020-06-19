@@ -66,3 +66,4 @@ Test-Suite jsontest
         Uniform.Pandoc_test
         Uniform.BibTex_test
         Uniform.Markdown_test
+        Uniform.ProcessPDF_test

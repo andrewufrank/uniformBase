@@ -16,8 +16,13 @@
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-{-# OPTIONS_GHC -Wall -fno-warn-orphans -fno-warn-missing-signatures
-            -fno-warn-missing-methods -fno-warn-deprecations #-}
+{-# OPTIONS_GHC -Wall -fno-warn-orphans 
+            -fno-warn-missing-signatures
+            -fno-warn-missing-methods 
+            -fno-warn-duplicate-exports 
+            -fno-warn-unused-imports 
+            -fno-warn-unused-matches 
+            #-}
 
 module Uniform.ProcessPDF
   ( module Uniform.ProcessPDF
@@ -43,13 +48,35 @@ import Uniform.Pandoc
 
 import System.Process 
 
+tex2latex :: TexSnip -> Latex 
+-- ^ combine a snipped (produced from an md file) with a preamble to 
+-- produce a compilable latex file.
+tex2latex snip = Latex . concat' $ [unlines' preamble1, unTexSnip snip, unlines' postamble1]
 
+preamble1 = [
+    "\\documentclass[a4paper,10pt]{scrbook}",  
+    "\\usepackage{fontspec}",
+    "\\setsansfont{CMU Sans Serif}%{Arial}",
+    "\\setmainfont{CMU Serif}%{Times New Roman}",
+    "\\setmonofont{CMU Typewriter Text}%{Consolas}",
+    "\\usepackage[ngerman]{babel}",
+    "\\usepackage{makeidx}",
+    "\\makeindex",
+    "\\usepackage[colorlinks]{hyperref}",
+    "\\providecommand{\\tightlist}{%",
+        "\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}",
+    "\\begin{document}",""
+    ] :: [Text]
 
+postamble1 = [ "", "", "\\printindex",    
+                "\\end{document}" ] :: [Text]
 
 newtype Latex = Latex {unLatex::Text}
+    deriving (Eq, Ord, Read, Show)
+-- this is a full file, not just a snippet
 
 extTex = Extension "tex"
-texFileType = TypedFile5 { tpext5 = extTex } :: TypedFile5 Text Text
+texFileType = TypedFile5 { tpext5 = extTex } :: TypedFile5 Text Latex
     -- | Reasonable options for rendering to HTML
 -- latexOptions :: WriterOptions
 -- latexOptions = def { writerHighlightStyle = Just tango
@@ -97,6 +124,10 @@ extPDF = Extension "pdf"
 pdfFileType = TypedFile5 { tpext5 = extPDF } :: TypedFile5 Text PDFfile
 
 newtype PDFfile = PDFfile {unpdffile :: Text }
+    deriving (Eq, Ord, Read, Show)
+instance Zeros PDFfile where
+  zero = PDFfile zero
+
 instance TypedFiles7 Text PDFfile where 
     wrap7 = PDFfile
     unwrap7 = unpdffile 
