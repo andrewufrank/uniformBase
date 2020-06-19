@@ -65,3 +65,4 @@ Test-Suite jsontest
     other-modules:
         Uniform.Pandoc_test
         Uniform.BibTex_test
+        Uniform.Markdown_test

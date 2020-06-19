@@ -15,7 +15,7 @@
 -- {-# LANGUAGE TypeSynonymInstances  #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
-module Uniform.Pandoc_test where
+module Uniform.Markdown_test where
 --
 -- --import qualified Data.Text as T
 -- import qualified System.Posix  as P (FileStatus)
@@ -32,31 +32,18 @@ import Uniform.Pandoc
 
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 
--- test for tex production 
-
+-- test for text to pandoc 
 
 -- import Test.Invariant
 -- import Uniform.Filenames
 
--- test_temp4 = do 
---     res <- runErr $ applyTemplate4 tmp1 ( vals1 )
---     putIOwords ["test_temp4", "template", tmp1 
---                 , "\n", "vals", showNice vals1
---                 , "\n", "result", showT res]
---     assertEqual (Right res4) res 
+test_readPandoc2 = do
+    st <- read8 mdFileType (makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.md")
+    res1 <- runErr $ readMarkdown2 ptext1
+    putIOwords ["ptext1", ptext1 
+                , "\n", "res1", showNice res1]
+                -- , "\n", "result", showT res]
+    assertEqual (Right res4text1) res1 
 
--- test_temp3 = do 
---     res <- runErr $ applyTemplate3 tmp1 ( vals1 )
---     putIOwords ["test_temp4", "template", tmp1 
---                 , "\n", "vals", showNice vals1
---                 , "\n", "result", showT res]
---     assertEqual (Right res4) res 
-
-tmp1, res4 :: Text 
-tmp1 = "some $words$ are replaced $if(x1)$the text for x1 $x1$ $endif$."
-vals1 = [("words","Woerter"), ("x1","erstes x")]
-res4 = "some Woerter are replaced the text for x1 erstes x ."
-
--- test_writeLatex2text  -- pandoc -> text 
-
--- a pandoc text value 
+res4text1 = "ttxx   " :: Text
+ 
