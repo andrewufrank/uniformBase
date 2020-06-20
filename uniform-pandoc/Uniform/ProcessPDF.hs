@@ -99,15 +99,17 @@ instance TypedFiles7 Text Latex where
 ---------- write PDF with Lualatex
 -- the process uses files - is this a preformance issue? 
 
-writePDF2text :: Bool  ->   Path Abs File -> ErrIO ()
+writePDF2text :: Bool  ->   Path Abs File -> Path Abs File -> ErrIO ()
 -- convert the text in the file given (a full latex) into a pdf 
--- with the same filename
-writePDF2text debug fn =  
- do
-    let infn = setExtension extTex fn 
-    putIOwords ["writePDF2text 1 infn", showT infn]
-
-    callIO $ callProcess "lualatex" [toFilePath infn]
+-- in the second path 
+writePDF2text debug fn fnres = do 
+ 
+    let infn = setExtension extTex fn :: Path Abs File 
+    putIOwords ["writePDF2text 1 infn"] -- , showT infn]
+    let dir1 = getParentDir fnres ::  FilePath 
+    let out1 = "--output-directory=" <> ( dir1)
+    putIOwords ["writePDF2text 2 out1", showT out1]
+    callIO $ callProcess "lualatex" [out1, toFilePath infn]
 
     -- does not work to read pdf.
     -- the files written seem ok
