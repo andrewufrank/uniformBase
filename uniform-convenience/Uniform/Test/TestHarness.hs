@@ -55,6 +55,7 @@ testvardebug =   False
 -- cases with no IO
 testVar0File :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
             => Text -> a -> FilePath -> (a->  b) -> IO ()
+-- | program name - file to run test on - name of result file - op 
 testVar0File progName  a resfile op = do
         when testvardebug $ putIOwords ["testVar0File read text "]
         r <- runErr $  sub progName  a resfile op
