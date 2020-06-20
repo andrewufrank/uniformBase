@@ -31,7 +31,7 @@ module Uniform.Pandoc
   , module Uniform.Error   -- or at least ErrIO
   , module Uniform.Filenames 
   , write8, read8,setExtension
-  , writeLatex2
+  , writeTexSnip2
   , TypedFile5(..)
   , TypedFiles5(..)
   , TypedFiles7(..)
@@ -148,9 +148,9 @@ instance TypedFiles7 Text Text where
     unwrap7 = id 
 
 
-writeLatex2 ::   Pandoc -> ErrIO TexSnip
+writeTexSnip2 ::   Pandoc -> ErrIO TexSnip
 -- write a latex file from a pandoc doc 
-writeLatex2  pandocRes = do
+writeTexSnip2  pandocRes = do
     p <- unPandocM $  writeLaTeX latexOptions pandocRes
     return  . TexSnip $ p
 

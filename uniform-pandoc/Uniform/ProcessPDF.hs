@@ -54,6 +54,7 @@ tex2latex :: [TexSnip] -> Latex
 tex2latex snips = Latex . concat' $ [unlines' preamble1, concat' (map unTexSnip snips), unlines' postamble1]
 
 preamble1 = [
+    "%%% eval: (setenv \"LANG\" \"en_US.utf8\")",
     "\\documentclass[a4paper,10pt]{scrbook}",  
     "\\usepackage{fontspec}",
     "\\setsansfont{CMU Sans Serif}%{Arial}",
@@ -89,10 +90,10 @@ instance TypedFiles7 Text Latex where
     wrap7 = Latex
     unwrap7 = unLatex
 
--- writeLatex2text ::   Pandoc -> ErrIO Text
+-- writeTexSnip2text ::   Pandoc -> ErrIO Text
 -- -- write a latex file from a pandoc doc 
 -- seems not to give a full tex and thus not processing
--- writeLatex2text  pandocRes = do
+-- writeTexSnip2text  pandocRes = do
 --     p <- unPandocM $ writeLaTeX latexOptions pandocRes
 --     return  p
 ---------- write PDF with Lualatex

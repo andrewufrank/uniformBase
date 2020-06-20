@@ -59,8 +59,9 @@ res4 = "some Woerter are replaced the text for x1 erstes x ."
 
 test_readWrite = do 
     res4 <- runErr $ do 
-        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.pandoc" 
-        let pfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort2.pandoc" 
+        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.pandoc" 
+
+        let pfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort2.pandoc" 
 
         pan1 :: Pandoc <- read8 pfn1 pandocFileType 
         -- let p1 = unwrap7 pan1 :: Pandoc 
@@ -68,42 +69,45 @@ test_readWrite = do
         write8 pfn2  pandocFileType pan1
         pan2 <- read8 pfn2 pandocFileType
         return (pan1, pan2)
+    putIOwords ["test_readWrite", "\n res1\n", showT res4, "\n"]
     let Right (target3, res3) = res4
     assertEqual target3 res3
 
 
 
-test_writeLatex = do 
+test_writeTexSnip2short = do 
     res4 <- runErr $ do 
-        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.pandoc" 
-        let tsfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.texsnip" 
+        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.pandoc" 
+        let tsfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.texsnip" 
 
         pan1 :: Pandoc <- read8 pfn1 pandocFileType 
         -- let p1 = unwrap7 pan1 :: Pandoc 
-        tex1 :: TexSnip <- writeLatex2 pan1 
+        tex1 :: TexSnip <- writeTexSnip2 pan1 
 
         write8 tsfn1  texSnipFileType tex1
 
-        let tsfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort2.texsnip" 
+        let tsfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort2.texsnip" 
         texRes <- read8 tsfn2 texSnipFileType
         return (tex1, texRes)
+    putIOwords ["test_writeTexSnip2", "\n res1\n", showT res4, "\n"]
     let Right (target3, res3) = res4
     assertEqual target3 res3
 
-test_writeLatex2 = do 
+test_writeTexSnip2 = do 
     res4 <- runErr $ do 
-        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.pandoc" 
-        let tsfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.texsnip" 
+        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.pandoc" 
+        let tsfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.texsnip" 
 
         pan1 :: Pandoc <- read8 pfn1 pandocFileType 
         -- let p1 = unwrap7 pan1 :: Pandoc 
-        tex1 :: TexSnip <- writeLatex2 pan1 
+        tex1 :: TexSnip <- writeTexSnip2 pan1 
 
         write8 tsfn1  texSnipFileType tex1
 
-        let tsfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText2.texsnip" 
+        let tsfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText2.texsnip" 
         texRes <- read8 tsfn2 texSnipFileType
         return (tex1, texRes)
+    putIOwords ["test_writeTexSnip2", "\n res1\n", showT res4, "\n"]
     let Right (target3, res3) = res4
     assertEqual target3 res3
 

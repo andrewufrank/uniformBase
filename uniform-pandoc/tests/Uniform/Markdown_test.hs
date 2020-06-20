@@ -39,8 +39,8 @@ import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 -- import Uniform.Filenames
 test_readWrite = do 
     res4 <- runErr $ do 
-        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.md" 
-        let pfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort2.md" 
+        let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.md" 
+        let pfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort2.md" 
 
         pan1 <- read8 pfn1 markdownFileType 
         write8 pfn2  markdownFileType pan1
@@ -53,23 +53,24 @@ test_readWrite = do
 
 test_readPandoc2 = do
     res4 <- runErr $ do
-        let mfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.md" 
+        let mfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.md" 
         text1 <- read8 mfn markdownFileType 
         res1 :: Pandoc <-  readMarkdown2  text1
-        -- putIOwords ["ptext1", showT text1, "\n", "res1\n", showT res1, "\n"]
-        let pfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someTextShort.pandoc"
+        -- putIOwords ["test_readPandoc2", showT text1, "\n", "res1\n", showT res1, "\n"]
+        let pfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.pandoc"
         pres :: Pandoc <- read8 pfn pandocFileType
         return (pres,  res1)
+    putIOwords ["test_readPandoc2", "\n res1\n", showT res4, "\n"]
     let Right (target3, res3) = res4
     assertEqual target3 res3
 
 test_readPandoc2a = do
     res4 <- runErr $ do
-        let mfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.md"         
+        let mfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.md"         
         text1 <- read8 mfn markdownFileType 
         res1 :: Pandoc <-  readMarkdown2  text1
         -- putIOwords ["ptext1", showT text1, "\n", "res1\n", showT res1, "\n"]
-        let pfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/someText.pandoc"
+        let pfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.pandoc"
         pres :: Pandoc <- read8 pfn pandocFileType
         return (pres,  res1)
     let Right (target3, res3) = res4
