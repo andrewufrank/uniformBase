@@ -94,6 +94,7 @@ instance (FilePathes String , FileOps FilePath) => FileOps RawFilePath where
 
 
     copyOneFile old new = copyOneFile (b2s old) (b2s new)
+    copyOneFileOver old new = copyOneFile (b2s old) (b2s new)
 
     renameOneFile old new = renameFile (b2s old) (b2s new)
 

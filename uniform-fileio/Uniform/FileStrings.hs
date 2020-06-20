@@ -148,24 +148,41 @@ instance FileOps FilePath  where
 
 --    createDirIfMissing = callIO . D.createDirectoryIfMissing True
 
+
     copyOneFile old new = do
+    -- source must exist, target must not exist
         t <- doesFileExist' old
         t2 <- doesFileExist' new
         if t && (not t2) then do
-            let dir = getParentDir new  -- was takeDir
-            direxist <- doesDirExist'   dir
-            unless direxist $ 
-                createDirIfMissing'  dir
-            callIO $ D.copyFile old new 
-                else if not t
-                        then  throwErrorT
-                            ["copyFile source not exist", showT old]
+                let dir = getParentDir new  -- was takeDir
+                direxist <- doesDirExist'   dir
+                unless direxist $ 
+                    createDirIfMissing'  dir
+                callIO $ D.copyFile old new 
+            else if not t
+                    then  throwErrorT
+                        ["copyFile source not exist", showT old]
+                        -- signalf   SourceNotExist
+                    else if t2
+                        then throwErrorT
+                            ["copyFile target exist", showT new]
+                        --   signalf  TargetExist
+                        else throwErrorT ["copyOneFile", "other error"]
+    copyOneFileOver old new = do
+    -- may overwrite existing target
+        t <- doesFileExist' old
+        -- t2 <- doesFileExist' new
+        if t   
+            then do
+                let dir = getParentDir new  -- was takeDir
+                direxist <- doesDirExist'   dir
+                unless direxist $ 
+                    createDirIfMissing'  dir
+                callIO $ D.copyFile old new 
+            else  -- not t - not existing source 
+                throwErrorT ["copyFileOver source not exist", showT old]
                             -- signalf   SourceNotExist
-                        else if t2
-                            then throwErrorT
-                                ["copyFile target exist", showT new]
-                            --   signalf  TargetExist
-                            else throwErrorT ["copyOneFile", "other error"]
+                         
 
 --    renameFile old new = do
 --        t <- doesFileExist old
@@ -376,6 +393,7 @@ instance (Show (Path ar File)) => FileOps (Path ar File)  where
     doesFileExist'   =  PathIO.doesFileExist . unPath
 --    getPermissions' = P.getPermissions
     copyOneFile old new =  copyOneFile (unL old) (unL new)
+    copyOneFileOver old new =  copyOneFileOver (unL old) (unL new)
     renameOneFile old new =    -- :: fp -> fp ->  ErrIO Text
     --  rename directory old to new
         PathIO.renameFile (unPath old) (unPath new)

@@ -95,6 +95,11 @@ class (Show fp) => FileOps fp   where
 
     copyOneFile :: fp -> fp ->  ErrIO ()
     -- ^ copy a file from old to new
+    -- source must exist, target must NOT exist 
+    copyOneFileOver :: fp -> fp ->  ErrIO ()
+    -- ^ copy a file from old to new
+    -- source must exist, target may exist 
+
     renameOneFile :: fp -> fp ->  ErrIO ()
     -- ^ rename a file from old to new
 
