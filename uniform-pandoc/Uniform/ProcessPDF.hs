@@ -95,8 +95,8 @@ writePDF2text :: Bool  ->   Path Abs File -> Path Abs File -> ErrIO ()
 writePDF2text debug fn fnres = do 
 
     -- -- check for locale 
-    -- loc <- callIO $ Sys.callProcess "locale" []
-    -- putIOwords ["writePDF2text locale " ]
+    loc <- callIO $ Sys.callProcess "locale" []
+    putIOwords ["writePDF2text locale " ]
 
     -- process
  
@@ -105,7 +105,8 @@ writePDF2text debug fn fnres = do
     let dir1 = getParentDir fnres ::  FilePath 
     let out1 = "--output-directory=" <> ( dir1)
     putIOwords ["writePDF2text 2 out1", showT out1]
-    callIO $ Sys.callProcess "xelatex" [out1,  "-interaction=nonstopmode" , toFilePath infn]
+    callIO $ Sys.callProcess "lualatex" [out1,  "-interaction=nonstopmode" , toFilePath infn]
+    -- callIO $ Sys.callProcess "xelatex" [out1,  "-interaction=nonstopmode" , toFilePath infn]
     -- callIO $ Sys.callProcess "lualatex" [out1, toFilePath infn]
 
     -- does not work to read pdf.

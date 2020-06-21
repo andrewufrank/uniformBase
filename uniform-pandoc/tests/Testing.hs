@@ -30,7 +30,7 @@ import    {-@ HTF_TESTS @-}        Uniform.Markdown_test
 import    {-@ HTF_TESTS @-}        Uniform.Pandoc_test
         -- TODO not yet working inut file missing
 import    {-@ HTF_TESTS @-}        Uniform.ProcessPDF_test
--- import    {-@ HTF_TESTS @-}        Uniform.DocValue_test
+import    {-@ HTF_TESTS @-}        Uniform.DocValue_test
         -- braucht files 
 
 import           Uniform.Strings

@@ -63,6 +63,7 @@ markdownOptions = Pandoc.def { Pandoc.readerExtensions = exts }
       , Pandoc.Ext_raw_tex   --Allow raw TeX (other than math)
       , Pandoc.Ext_shortcut_reference_links
       , Pandoc.Ext_spaced_reference_links
+      , Pandoc.Ext_footnotes  -- all footnotes
       , Pandoc.Ext_citations           -- <-- this is the important extension for bibTex
       ]
     , Pandoc.githubMarkdownExtensions

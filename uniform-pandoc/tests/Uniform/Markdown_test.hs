@@ -61,5 +61,7 @@ readPandoc2 mfn  = do
         write8 mfn pandocFileType res1
         return res1
 
+ 
+
 -- res4text1 = "ttxx   " :: Text
 instance ShowTestHarness Pandoc  
