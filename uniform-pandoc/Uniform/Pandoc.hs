@@ -74,7 +74,8 @@ import           Text.Pandoc                    ( Pandoc(..)
 
 import           Text.Pandoc.Shared             ( stringify )
 import           Text.Pandoc.Highlighting       ( tango )
-
+import qualified Text.Pandoc                   as Pandoc
+import qualified Text.Pandoc.Extensions as Pandoc
 instance Zeros Pandoc where
   zero = Pandoc zero zero
 
@@ -136,9 +137,16 @@ readYaml2value fp = do
 
 
 latexOptions :: WriterOptions
-latexOptions = def { writerHighlightStyle = Just tango
-                   , writerExtensions     = writerExtensions def
-                   }
+latexOptions = 
+    def { writerHighlightStyle = Just tango
+        , writerExtensions     =  Pandoc.extensionsFromList
+                        [Pandoc.Ext_raw_tex   --Allow raw TeX (other than math)
+                        -- , Pandoc.Ext_shortcut_reference_links
+                        -- , Pandoc.Ext_spaced_reference_links
+                        -- , Pandoc.Ext_citations           -- <-- this is the important extension for bibTex
+                        ]
+                     
+        }
 -- instance ToJSON Text 
 
 -- writeLaTeX :: PandocMonad m => WriterOptions -> Pandoc -> m Text
