@@ -1,7 +1,7 @@
------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 --
 -- Module      :  Uniform.ProcessPDF
------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 -- {-# LANGUAGE BangPatterns                   #-}
 {-# LANGUAGE ConstraintKinds #-}
 -- {-# LANGUAGE DeriveDataTypeable    #-}
@@ -37,13 +37,6 @@ module Uniform.ProcessPDF
   )
 where
 
--- import           Uniform.Error
--- import           Uniform.Filenames
--- import           Uniform.TypedFile              ( TypedFiles7(..)
---                                                 -- , TypedFiles5(..)
---                                                 , TypedFile5(..)
---                                                 )
--- import           Uniform.Json
 import Uniform.Pandoc 
 
 import qualified System.Process as Sys 
@@ -57,7 +50,7 @@ preamble1 = [
     -- "%%% eval: (setenv \"LANG\" \"en_US.utf8\")",
     "\\documentclass[a4paper,10pt]{scrbook}",  
     "\\usepackage{fontspec}",
-    -- "\\setsansfont{CMU Sans Serif}%{Arial}",
+    -- "\\setsansfont{CMU Sans Serif}%{Arial}",  -- not for xetex
     -- "\\setmainfont{CMU Serif}%{Times New Roman}",
     -- "\\setmonofont{CMU Typewriter Text}%{Consolas}",
     "\\usepackage[ngerman]{babel}",
@@ -82,13 +75,7 @@ instance Zeros Latex where zero = Latex zero
 extTex = Extension "tex"
 texFileType = TypedFile5 { tpext5 = extTex } :: TypedFile5 Text Latex
     -- | Reasonable options for rendering to HTML
--- latexOptions :: WriterOptions
--- latexOptions = def { writerHighlightStyle = Just tango
---                    , writerExtensions     = writerExtensions def
---                    }
--- instance ToJSON Text 
 
--- writeLaTeX :: PandocMonad m => WriterOptions -> Pandoc -> m Text
 instance TypedFiles7 Text Latex where
     wrap7 = Latex
     unwrap7 = unLatex

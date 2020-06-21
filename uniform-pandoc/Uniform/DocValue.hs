@@ -1,4 +1,4 @@
------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 --
 -- Module      :  Uniform.DocValue for template mechanism in pandoc 
 -- imports only DocTemplates, nothing Pandoc 
@@ -25,7 +25,6 @@
             -fno-warn-unused-imports 
             #-}
 
-
 module Uniform.DocValue
     ( module Uniform.DocValue
         , Dtemplate
@@ -49,7 +48,6 @@ import Text.DocTemplates as DocTemplates  ( -- applyTemplate,
         , Template
         )
 
-
 --     renderTemplate :: (TemplateTarget a, ToContext a b) => Template a -> b -> Doc a
 
 -- Render a compiled template in a "context" which provides values for the template's variables.
@@ -57,7 +55,6 @@ import Text.DocTemplates as DocTemplates  ( -- applyTemplate,
 -- compileTemplate :: (TemplateMonad m, TemplateTarget a) => FilePath -> Text -> m (Either String (Template a))
 
 -- Compile a template. The FilePath parameter is used to determine a default path and extension for partials and may be left empty if partials are not used.
-
 
 
 unDoc2text :: Doc Text -> Text 

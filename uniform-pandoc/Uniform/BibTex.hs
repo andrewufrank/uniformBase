@@ -1,4 +1,4 @@
------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 --
 -- Module      : reading bibtex and producing the list for nocite
 -----------------------------------------------------------------------------
@@ -8,7 +8,6 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
-
 
 module Uniform.BibTex  -- (openMain, htf_thisModuelsTests)
                       where

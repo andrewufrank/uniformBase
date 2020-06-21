@@ -1,4 +1,4 @@
------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 --
 -- Module      :  Uniform.HTMLout
 -----------------------------------------------------------------------------
@@ -35,18 +35,10 @@ module Uniform.HTMLout
 --   , module Uniform.Json
   )
 where
-
--- import           Uniform.Error
--- import           Uniform.Filenames
--- import           Uniform.TypedFile              ( TypedFiles7(..)
---                                                 -- , TypedFiles5(..)
---                                                 , TypedFile5(..)
---                                                 )
 -- import           Uniform.Json
 import Uniform.Pandoc
 import Uniform.DocValue
  
-
 import           Text.Pandoc                    ( Pandoc(..)
                         , writeHtml5String
                         , def
@@ -67,9 +59,6 @@ writeHtml5String2 :: Pandoc -> ErrIO HTMLout
 writeHtml5String2 pandocRes = do
     p <- unPandocM $ writeHtml5String html5Options pandocRes
     return . HTMLout $ p
-
-
-
 
 applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
 -- needed for old ssg lts-13.12 - also changed for 15.13

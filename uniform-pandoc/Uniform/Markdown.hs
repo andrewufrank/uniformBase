@@ -1,7 +1,7 @@
------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 --
 -- Module      :  Uniform.Markdown
------------------------------------------------------------------------------
+-------------------------------------------------------------------------
 -- {-# LANGUAGE BangPatterns                   #-}
 {-# LANGUAGE ConstraintKinds #-}
 -- {-# LANGUAGE DeriveDataTypeable    #-}
@@ -34,24 +34,14 @@ module Uniform.Markdown
   )
 where
 
--- import           Uniform.Error
 import           Uniform.Filenames
--- import           Uniform.TypedFile              ( TypedFiles7(..)
---                                                 , TypedFiles5(..)
---                                                 , TypedFile5(..)
---                                                 )
--- import           Uniform.FileIO                 ( write8
---                                                 , read8
---                                                 , setExtension)
 import           Uniform.Json
 -- import           Uniform.Yaml
 import Uniform.Pandoc
 import Uniform.Pandoc as Pandoc
 
-
 import qualified Text.Pandoc                   as Pandoc
 import qualified Text.Pandoc.Extensions                   as Pandoc
-
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc
 readMarkdown2 text1 = unPandocM $ 
@@ -78,7 +68,6 @@ markdownOptions = Pandoc.def { Pandoc.readerExtensions = exts }
     , Pandoc.githubMarkdownExtensions
     ]
 
-
 writeAST2md :: Pandoc -> ErrIO MarkdownText
 -- | write the AST to markdown
 
@@ -87,7 +76,6 @@ writeAST2md dat = do
     r1 <- Pandoc.writeMarkdown
       Pandoc.def { Pandoc.writerSetextHeaders = False }
       dat
-
     return r1
   return . wrap7 $ r
 
@@ -99,7 +87,6 @@ writeAST3md options dat = do
     r1 <- Pandoc.writeMarkdown
       options -- Pandoc.def { Pandoc.writerSetextHeaders = False }
       dat
-
     return r1
   return . wrap7 $ r
 

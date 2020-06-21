@@ -1,8 +1,6 @@
------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 --
 -- Module      :  pandoc test
-
-
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 --{-# LANGUAGE AllowAmbiguousTypes   #-}
@@ -22,28 +20,7 @@ import Test.Framework
 import Uniform.Pandoc 
 import Uniform.Test.TestHarness
 import Uniform.Markdown_test 
-
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
-
--- test for tex production 
-
-
--- import Test.Invariant
--- import Uniform.Filenames
-
--- test_temp4 = do 
---     res <- runErr $ applyTemplate4 tmp1 ( vals1 )
---     putIOwords ["test_temp4", "template", tmp1 
---                 , "\n", "vals", showNice vals1
---                 , "\n", "result", showT res]
---     assertEqual (Right res4) res 
-
--- test_temp3 = do 
---     res <- runErr $ applyTemplate3 tmp1 ( vals1 )
---     putIOwords ["test_temp4", "template", tmp1 
---                 , "\n", "vals", showNice vals1
---                 , "\n", "result", showT res]
---     assertEqual (Right res4) res 
 
 tmp1, res4 :: Text 
 tmp1 = "some $words$ are replaced $if(x1)$the text for x1 $x1$ $endif$."
@@ -66,43 +43,6 @@ test_readWritePandoc = do
     let Right (target3, res3) = res4
     assertEqual target3 res3
 
-
-
--- test_writeTexSnip2short = do 
---     res4 <- runErr $ do 
---         let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.pandoc" 
---         let tsfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.texsnip" 
-
---         pan1 :: Pandoc <- read8 pfn1 pandocFileType 
---         -- let p1 = unwrap7 pan1 :: Pandoc 
---         tex1 :: TexSnip <- writeTexSnip2 pan1 
-
---         write8 tsfn1  texSnipFileType tex1
-
---         let tsfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort2.texsnip" 
---         texRes <- read8 tsfn2 texSnipFileType
---         return (tex1, texRes)
---     putIOwords ["test_writeTexSnip2", "\n res1\n", showT res4, "\n"]
---     let Right (target3, res3) = res4
---     assertEqual target3 res3
-
--- test_writeTexSnip2 = do 
---     res4 <- runErr $ do 
---         let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.pandoc" 
---         let tsfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.texsnip" 
-
---         pan1 :: Pandoc <- read8 pfn1 pandocFileType 
---         -- let p1 = unwrap7 pan1 :: Pandoc 
---         tex1 :: TexSnip <- writeTexSnip2 pan1 
-
---         write8 tsfn1  texSnipFileType tex1
-
---         let tsfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText2.texsnip" 
---         texRes <- read8 tsfn2 texSnipFileType
---         return (tex1, texRes)
---     putIOwords ["test_writeTexSnip2", "\n res1\n", showT res4, "\n"]
---     let Right (target3, res3) = res4
---     assertEqual target3 res3
 
 test_writeTexSnip2short = testVar0FileIO "uniform-pandoc" 
         shortFile

@@ -1,7 +1,7 @@
------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 --
 -- Module      :  Uniform.Pandoc
------------------------------------------------------------------------------
+-------------------------------
 -- {-# LANGUAGE BangPatterns                   #-}
 {-# LANGUAGE ConstraintKinds #-}
 -- {-# LANGUAGE DeriveDataTypeable    #-}
@@ -144,17 +144,13 @@ latexOptions =
                         -- , Pandoc.Ext_shortcut_reference_links
                         -- , Pandoc.Ext_spaced_reference_links
                         -- , Pandoc.Ext_citations           -- <-- this is the important extension for bibTex
-                        ]
-                     
+                        ]                     
         }
 -- instance ToJSON Text 
-
 -- writeLaTeX :: PandocMonad m => WriterOptions -> Pandoc -> m Text
 instance TypedFiles7 Text Text where
     wrap7 = id
-
     unwrap7 = id 
-
 
 writeTexSnip2 ::   Pandoc -> ErrIO TexSnip
 -- write a latex file from a pandoc doc 

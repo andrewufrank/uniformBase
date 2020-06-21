@@ -1,4 +1,4 @@
------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 --
 -- Module      :   a test for HTF framework
 -- insert {-@ HTF_TESTS @-} for each import
@@ -16,7 +16,6 @@
 
 module Uniform.BibTex_test  -- (openMain, htf_thisModuelsTests)
      where
-
 
 import Test.Framework
 import Text.BibTeX.Entry
@@ -159,19 +158,9 @@ resFilter =
          ("subtype", "popular")]}]
 
 
-
---deriving instance Eq T
-
---test_getIds = assertEqual resIds (getBibIdentifier resParse)
---
---resIds = ["alfer2002beginning", "thielemann2000foobar"]
-
 test_getIds2 = do
     bib <- readBibTex bibaf
     entries <- parseBibTex bib
     let entries1 = filterByGroup "authorAF" entries
     let ids = getBibIdentifier entries1
     assertEqual ["Frank2010a"] ids
-
-
---test_nocite = do

@@ -1,8 +1,6 @@
------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 --
 -- Module      :  pandoc test
-
-
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 --{-# LANGUAGE AllowAmbiguousTypes   #-}
@@ -17,21 +15,12 @@
 
 module Uniform.Markdown_test where
 --
--- --import qualified Data.Text as T
--- import qualified System.Posix  as P (FileStatus)
--- --import qualified System.Directory as S
 --
 ---- using uniform:
 import Test.Framework
 import Uniform.Pandoc 
 import Uniform.Markdown
 import Uniform.Test.TestHarness
-
--- import           Uniform.Strings     hiding ((</>), (<.>))
-            -- (s2t, showT, t2s, removeChar, CharChains2 (..), Text)
---import Safe   -- todo error
-
-
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 
     -- all filenames without extension 
@@ -53,31 +42,6 @@ test_readWrite = do
     let Right (target3, res3) = res4
     assertEqual target3 res3
 
-
--- test_readPandoc2 = do
---     res4 <- runErr $ do
---         let mfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.md" 
---         text1 <- read8 mfn markdownFileType 
---         res1 :: Pandoc <-  readMarkdown2  text1
---         -- putIOwords ["test_readPandoc2", showT text1, "\n", "res1\n", showT res1, "\n"]
---         let pfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.pandoc"
---         pres :: Pandoc <- read8 pfn pandocFileType
---         return (pres,  res1)
---     putIOwords ["test_readPandoc2", "\n res1\n", showT res4, "\n"]
---     let Right (target3, res3) = res4
---     assertEqual target3 res3
-
--- test_readPandoc2a = do
---     res4 <- runErr $ do
---         let mfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.md"         
---         text1 <- read8 mfn markdownFileType 
---         res1 :: Pandoc <-  readMarkdown2  text1
---         -- putIOwords ["ptext1", showT text1, "\n", "res1\n", showT res1, "\n"]
---         let pfn = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.pandoc"
---         pres :: Pandoc <- read8 pfn pandocFileType
---         return (pres,  res1)
---     let Right (target3, res3) = res4
---     assertEqual target3 res3
 
 test_readPandocShort = testVar0FileIO "uniform-pandoc" 
         shortFile
