@@ -34,8 +34,10 @@ import Uniform.Test.TestHarness
 
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 
-shortFile  =makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.md"
-regFile = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText.md"
+    -- all filenames without extension 
+shortFile  =makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort"
+regFile = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someText"
+complexFile = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/complex"
 
 -- problem with readwrite tests - need two files to start 
 test_readWrite = do 
@@ -79,10 +81,13 @@ test_readWrite = do
 
 test_readPandocShort = testVar0FileIO "uniform-pandoc" 
         shortFile
-        "shortFile" readPandoc2 
+        "test_readPandocShort" readPandoc2 
 test_readPandocReg = testVar0FileIO "uniform-pandoc" 
         regFile
-        "regFile" readPandoc2 
+        "test_readPandocReg" readPandoc2 
+test_readPandocComplex = testVar0FileIO "uniform-pandoc" 
+        complexFile
+        "test_readPandocComplex" readPandoc2 
 
 -- testVar0FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
             -- => Text -> a -> FilePath -> (a-> ErrIO b) -> IO ()
