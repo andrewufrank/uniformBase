@@ -46,7 +46,7 @@ where
 -- import           Uniform.Json
 import Uniform.Pandoc 
 
-import System.Process 
+import qualified System.Process as Sys 
 
 tex2latex :: [TexSnip] -> Latex 
 -- ^ combine a snipped (produced from an md file) with a preamble to 
@@ -54,13 +54,14 @@ tex2latex :: [TexSnip] -> Latex
 tex2latex snips = Latex . concat' $ [unlines' preamble1, concat' (map unTexSnip snips), unlines' postamble1]
 
 preamble1 = [
-    "%%% eval: (setenv \"LANG\" \"en_US.utf8\")",
+    -- "%%% eval: (setenv \"LANG\" \"en_US.utf8\")",
     "\\documentclass[a4paper,10pt]{scrbook}",  
     "\\usepackage{fontspec}",
-    "\\setsansfont{CMU Sans Serif}%{Arial}",
-    "\\setmainfont{CMU Serif}%{Times New Roman}",
-    "\\setmonofont{CMU Typewriter Text}%{Consolas}",
+    -- "\\setsansfont{CMU Sans Serif}%{Arial}",
+    -- "\\setmainfont{CMU Serif}%{Times New Roman}",
+    -- "\\setmonofont{CMU Typewriter Text}%{Consolas}",
     "\\usepackage[ngerman]{babel}",
+    "\\usepackage{graphicx}",
     "\\usepackage{makeidx}",
     "\\makeindex",
     "\\usepackage[colorlinks]{hyperref}",
@@ -103,13 +104,20 @@ writePDF2text :: Bool  ->   Path Abs File -> Path Abs File -> ErrIO ()
 -- convert the text in the file given (a full latex) into a pdf 
 -- in the second path 
 writePDF2text debug fn fnres = do 
+
+    -- -- check for locale 
+    -- loc <- callIO $ Sys.callProcess "locale" []
+    -- putIOwords ["writePDF2text locale " ]
+
+    -- process
  
     let infn = setExtension extTex fn :: Path Abs File 
     putIOwords ["writePDF2text 1 infn"] -- , showT infn]
     let dir1 = getParentDir fnres ::  FilePath 
     let out1 = "--output-directory=" <> ( dir1)
     putIOwords ["writePDF2text 2 out1", showT out1]
-    callIO $ callProcess "lualatex" [out1, toFilePath infn]
+    callIO $ Sys.callProcess "xelatex" [out1, toFilePath infn]
+    -- callIO $ Sys.callProcess "lualatex" [out1, toFilePath infn]
 
     -- does not work to read pdf.
     -- the files written seem ok
