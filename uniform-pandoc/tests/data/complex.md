@@ -1,6 +1,6 @@
 Some text without meaning; really? with an image
 
-\includegraphics{img/120-2026_IMG.JPG}
+![an example figure](/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/img/120-2026_IMG.JPG)
 
 An example post. postwk but in blog - not in SubBlog with some
 additional text which is always changed
