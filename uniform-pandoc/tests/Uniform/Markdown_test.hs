@@ -94,6 +94,7 @@ test_readPandocComplex = testVar0FileIO "uniform-pandoc"
 readPandoc2 mfn  = do       
         text1 <- read8 mfn markdownFileType 
         res1 :: Pandoc <-  readMarkdown2  text1 
+        write8 mfn pandocFileType res1
         return res1
 
 -- res4text1 = "ttxx   " :: Text

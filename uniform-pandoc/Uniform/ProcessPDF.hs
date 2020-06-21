@@ -77,6 +77,8 @@ newtype Latex = Latex {unLatex::Text}
     deriving (Eq, Ord, Read, Show)
 -- this is a full file, not just a snippet
 
+instance Zeros Latex where zero = Latex zero 
+
 extTex = Extension "tex"
 texFileType = TypedFile5 { tpext5 = extTex } :: TypedFile5 Text Latex
     -- | Reasonable options for rendering to HTML
@@ -116,7 +118,7 @@ writePDF2text debug fn fnres = do
     let dir1 = getParentDir fnres ::  FilePath 
     let out1 = "--output-directory=" <> ( dir1)
     putIOwords ["writePDF2text 2 out1", showT out1]
-    callIO $ Sys.callProcess "xelatex" [out1, toFilePath infn]
+    callIO $ Sys.callProcess "xelatex" [out1,  "-interaction=nonstopmode" , toFilePath infn]
     -- callIO $ Sys.callProcess "lualatex" [out1, toFilePath infn]
 
     -- does not work to read pdf.

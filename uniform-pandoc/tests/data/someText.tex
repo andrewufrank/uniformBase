@@ -1,0 +1,38 @@
+\documentclass[a4paper,10pt]{scrbook}
+\usepackage{fontspec}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\makeindex
+\usepackage[colorlinks]{hyperref}
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\begin{document}
+
+\hypertarget{an-new-start-for-an-ide-for-haskell}{%
+\section{An new start for an IDE for
+Haskell}\label{an-new-start-for-an-ide-for-haskell}}
+
+The current theorie is to combine components to achieve an Integrated
+Development Environment. The components must build on the existing base
+tools:
+
+\begin{itemize}
+\tightlist
+\item
+  ghc compiler
+\item
+  cabal and stack to manage packages and link them together
+\item
+  git for versioning and storage management
+\item
+  VScode, for editing and visualizationThis is a minimal Haskell project
+  with a library and some routines which all do nothing.
+\end{itemize}
+
+I used it for experimenting with data types, but the interest here is
+the integration with a Haskell IDE, namely the use of ghcide with
+VScode.
+
+\printindex
+\end{document}

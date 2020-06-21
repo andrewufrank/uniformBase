@@ -105,13 +105,13 @@ test_readWritePandoc = do
 --     assertEqual target3 res3
 
 test_writeTexSnip2short = testVar0FileIO "uniform-pandoc" 
-        regFile
+        shortFile
         "test_writeTexSnip2short" writeTexSnip4 
 test_writeTexSnip2reg = testVar0FileIO "uniform-pandoc" 
         regFile
         "test_writeTexSnip2reg" writeTexSnip4 
 test_writeTexSnip2complex = testVar0FileIO "uniform-pandoc" 
-        regFile
+        complexFile
         "test_writeTexSnip2complex" writeTexSnip4 
 
 -- testVar0FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
@@ -120,7 +120,7 @@ writeTexSnip4 pfn1  = do
         pan1 :: Pandoc <- read8 pfn1 pandocFileType 
         -- let p1 = unwrap7 pan1 :: Pandoc 
         tex1 :: TexSnip <- writeTexSnip2 pan1 
-
+        write8 pfn1 texSnipFileType tex1
         return tex1
 
 instance ShowTestHarness TexSnip 
