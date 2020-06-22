@@ -64,7 +64,7 @@ data DocRep = DocRep {yam:: Value, pan:: Pandoc}  -- a json value
         deriving (Show, Read, Eq)
 instance Zeros DocRep where zero = DocRep zero zero
 
-
+-- type Value  = LazyByteString
 --------------------------------------------typed file DocRep
 
 docrepExt = Extension "docrep"
