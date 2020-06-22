@@ -28,7 +28,7 @@ vals1 = [("words","Woerter"), ("x1","erstes x")]
 res4 = "some Woerter are replaced the text for x1 erstes x ."
 
 test_readWritePandoc = do 
-    res4 <- runErr $ do 
+    res5 <- runErr $ do 
         let pfn1 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort.pandoc" 
 
         let pfn2 = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/someTextShort2.pandoc" 
@@ -39,8 +39,8 @@ test_readWritePandoc = do
         write8 pfn2  pandocFileType pan1
         pan2 <- read8 pfn2 pandocFileType
         return (pan1, pan2)
-    putIOwords ["test_readWrite", "\n res1\n", showT res4, "\n"]
-    let Right (target3, res3) = res4
+    putIOwords ["test_readWrite", "\n res1\n", showT res5, "\n"]
+    let Right (target3, res3) = res5
     assertEqual target3 res3
 
 

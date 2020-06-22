@@ -25,12 +25,13 @@
             -fno-warn-unused-imports 
             #-}
 
-module Uniform.DocValue
+module Uniform.DocValue {-# DEPRECATED "Use Uniform.DocRep instead" #-}
     ( module Uniform.DocValue
         , Dtemplate
         , Template 
         , renderTemplate 
-    )
+    )  
+    
 where
 
 import           Uniform.Error

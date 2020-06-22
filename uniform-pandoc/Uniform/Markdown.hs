@@ -41,7 +41,7 @@ import Uniform.Pandoc
 import Uniform.Pandoc as Pandoc
 
 import qualified Text.Pandoc                   as Pandoc
-import qualified Text.Pandoc.Extensions                   as Pandoc
+-- import qualified Text.Pandoc.Extensions                   as Pandoc
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc
 readMarkdown2 text1 = unPandocM $ 

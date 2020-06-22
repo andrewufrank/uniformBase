@@ -55,6 +55,7 @@ fromJSONmaybe v = case (fromJSON v) of
             Success a -> Just a 
             _ -> Nothing 
 
+instance Zeros Value  where zero = Null 
 
 fromJSONm :: (FromJSON a, Show a) => Value -> ErrIO a 
 -- fromJSONm :: (FromJSON a, MonadError m) => Value -> m a   -- TODO in error
@@ -66,6 +67,7 @@ fromJSONm v = case (fromJSON v) of
 class AtKey vk v where
     getAtKey :: vk -> Text -> Maybe v
     getAt2Key :: vk -> Text -> Text -> Maybe v
+    -- ^ two keys: one after the other 
     putAtKey :: Text -> v -> vk -> vk
 
 instance AtKey Value Text where

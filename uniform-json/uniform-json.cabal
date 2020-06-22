@@ -29,7 +29,8 @@ library
         , lens-aeson 
         , aeson-pretty
         , lens
-        , yaml 
+        , yaml
+        -- , json -- use aeson!
         , unordered-containers
         , containers
         , convertible
