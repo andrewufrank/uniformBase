@@ -63,15 +63,20 @@ readPandoc2 mfn  = do
         write8 mfn pandocFileType res1
         return res1
 
-test_readDocRepShort = testVar0FileIO "uniform-DocRe" 
+test_readDocRepShort = testVar0FileIO "uniform-DocRep" 
         shortFile
         "test_readDocRepShort" readDocRep2 
-test_readDocRepReg = testVar0FileIO "uniform-DocRe" 
+test_readDocRepReg = testVar0FileIO "uniform-DocRep" 
         regFile
         "test_readDocRepReg" readDocRep2 
-test_readDocRepComplex = testVar0FileIO "uniform-DocRe" 
+test_readDocRepComplex = testVar0FileIO "uniform-DocRep" 
         complexFile
         "test_readDocRepComplex" readDocRep2 
+test_readDocRepWithRef = testVar0FileIO "uniform-DocRep" 
+        withRef
+        "test_readDocRepWithRef" readDocRep2 
+
+withRef = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/withRef.md"
 
 readDocRep2 mfn  = do       
     text1 <- read8 mfn markdownFileType 
@@ -79,6 +84,12 @@ readDocRep2 mfn  = do
     write8 mfn docRepFileType res1
     return res1
 
+test_addRefs = do       
+    runErr $ do 
+        dr1 <- read8 withRef docRepFileType 
+        res1 <- docRepAddRefs dr1
+        return () 
+    assertEqual True True 
 
 -- res4text1 = "ttxx   " :: Text
 instance ShowTestHarness Pandoc 
