@@ -36,12 +36,27 @@ where
 
 import           Uniform.Filenames
 import           Uniform.Json
+import Uniform.TypedFile -- (TypedFiles7(..))
 -- import           Uniform.Yaml
+import Uniform.DocRep 
 import Uniform.Pandoc
-import Uniform.Pandoc as Pandoc
+-- import Uniform.Pandoc as Pandoc
 
 import qualified Text.Pandoc                   as Pandoc
 -- import qualified Text.Pandoc.Extensions                   as Pandoc
+
+readMarkdown2docrep :: MarkdownText -> ErrIO DocRep
+-- | read a md file into a DocRep
+-- all values from meta are moved to yam (meta is zero to avoid problems)
+readMarkdown2docrep md  = do 
+    pd <- readMarkdown2 md 
+    let (Pandoc meta1 block1) = pd 
+    let meta2 = flattenMeta meta1 
+    return (DocRep meta2 (Pandoc zero block1))
+        -- zero the metadata 
+
+
+
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc
 readMarkdown2 text1 = unPandocM $ 

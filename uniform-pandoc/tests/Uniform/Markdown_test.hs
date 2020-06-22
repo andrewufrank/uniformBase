@@ -20,6 +20,8 @@ module Uniform.Markdown_test where
 import Test.Framework
 import Uniform.Pandoc 
 import Uniform.Markdown
+import Uniform.DocRep
+import Uniform.TypedFile --(TypedFiles7(..))
 import Uniform.Test.TestHarness
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 
@@ -61,7 +63,23 @@ readPandoc2 mfn  = do
         write8 mfn pandocFileType res1
         return res1
 
- 
+test_readDocRepShort = testVar0FileIO "uniform-DocRe" 
+        shortFile
+        "test_readDocRepShort" readDocRep2 
+test_readDocRepReg = testVar0FileIO "uniform-DocRe" 
+        regFile
+        "test_readDocRepReg" readDocRep2 
+test_readDocRepComplex = testVar0FileIO "uniform-DocRe" 
+        complexFile
+        "test_readDocRepComplex" readDocRep2 
+
+readDocRep2 mfn  = do       
+    text1 <- read8 mfn markdownFileType 
+    res1 :: DocRep <-  readMarkdown2docrep  text1 
+    write8 mfn docRepFileType res1
+    return res1
+
 
 -- res4text1 = "ttxx   " :: Text
-instance ShowTestHarness Pandoc  
+instance ShowTestHarness Pandoc 
+instance ShowTestHarness DocRep 
