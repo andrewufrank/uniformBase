@@ -85,12 +85,14 @@ readDocRep2 mfn  = do
     return res1
 
 test_addRefs = do       
-    runErr $ do 
+    res2 <- runErr $ do 
         dr1 <- read8 withRef docRepFileType 
         res1 <- docRepAddRefs dr1
-        return () 
-    assertEqual True True 
+        putIOwords ["test_addRefs", showT res1]
+        return (res1) 
+    assertEqual (Left "") res2 
 
+ 
 -- res4text1 = "ttxx   " :: Text
 instance ShowTestHarness Pandoc 
 instance ShowTestHarness DocRep 

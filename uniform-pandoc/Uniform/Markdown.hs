@@ -42,6 +42,7 @@ import           Uniform.DocRep
 import           Uniform.Pandoc
 -- import Uniform.Pandoc as Pandoc
 import           Text.CSL.Pandoc               as Bib
+import Text.CSL as Pars 
 
 import           Control.Lens                   ( (^?)
                                                 , (?~)
@@ -50,8 +51,14 @@ import           Control.Lens                   ( (^?)
                                                 )
 import           Data.Aeson         -- for ^?, key
 import           Data.Aeson.Lens
+import Data.Aeson.Types 
 import qualified Text.Pandoc                   as Pandoc
 -- import qualified Text.Pandoc.Extensions                   as Pandoc
+-- import qualified Data.Vector as V
+
+-- parseArray :: Value -> Parser [(String, Bool)]
+-- parseArray (Array arr) = mapM parseTuple (V.toList arr)
+-- parseArray _           = fail "expected an array"
 
 readMarkdown2docrep :: MarkdownText -> ErrIO DocRep
 -- | read a md file into a DocRep
@@ -71,7 +78,11 @@ docRepAddRefs :: DocRep -> ErrIO DocRep
 -- processCites :: Style -> [Reference] -> Pandoc -> Pandoc
 
 -- Process a Pandoc document by adding citations formatted according to a CSL style. Add a bibliography (if one is called for) at the end of the document.
-
+-- http://hackage.haskell.org/package/citeproc-hs-0.3.10/docs/Text-CSL.html
+--   m <- readBiblioFile "mybibdb.bib"
+--   s <- readCSLFile "apa-x.csl"
+--   let result = citeproc procOpts s m $ [cites]
+--   putStrLn . unlines . map (renderPlainStrict) . citations $ result
 
 docRepAddRefs dr1@(DocRep y1 p1) = do
     putIOwords ["docRepAddRefs", showT dr1, "\n"]
@@ -86,7 +97,28 @@ docRepAddRefs dr1@(DocRep y1 p1) = do
                 , "\n style", showT style1
                 , "\n refs", showT refs1 
                 , "\n nocite", showT nocite1]
-    return dr1
+
+    let refs2 = fromJustNote "refs in docRepAddRefs 443" $ refs1 :: Value
+    let refs3 = fromJSON $ refs2 -- :: Result [Reference]
+    let refs4 = case refs3 of  
+                    Error msg -> errorT ["docRepAddRefs fromJSON 8834", s2t msg]
+                    Success a -> a 
+
+    let bibliofp = t2s . fromJustNote "biblio2 in docRepAddRefs wer23" $ biblio1 :: FilePath
+    let stylefp = t2s . fromJustNote "style1 in docRepAddRefs wer23" $ style1 :: FilePath
+    
+    putIOwordsT ["docRepAddRefs", "done"]
+
+    biblio2 <- callIO $ Pars.readBiblioFile (const True) bibliofp 
+    style2 <- callIO $ Pars.readCSLFile (Just "en_US.utf8") stylefp
+
+    let refsSum = refs4 ++ biblio2
+    let p2 = processCites style2 refsSum  p1 
+
+    putIOwordsT ["docRepAddRefs", "p2\n", showT p2]
+
+    return (DocRep y1 p2)
+
 
     -- pandoc2 <- case (bibliography metaRec) of
     --     Nothing    -> return pandoc
@@ -155,6 +187,19 @@ writeAST3md options dat = do
     return . wrap7 $ r
 
 -------------------- fileType ----------
+-- extCSL = Extension "csl"
+-- cslFileType = TypedFile5 {tpext5 = extCSL} :: TypedFile5 Text Style
+
+-- instance TypedFiles7 Text Style where 
+--     wrap7 = id 
+--     unwrap7 = id 
+
+---------------------------------
+-- extBib = Extension "bib"
+-- bibFileType = TypedFile5 {tpext5 = extBib}
+
+-- instance TypedFiles7 Text 
+-----------------------------
 extMD = Extension "md"
 
 newtype MarkdownText = MarkdownText Text

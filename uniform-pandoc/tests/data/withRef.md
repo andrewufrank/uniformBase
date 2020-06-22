@@ -11,7 +11,7 @@ abstract: |
 nocite: |
   @navratil08
 
-bibliography: "resources/BibTexLatex.bib"
+bibliography: "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/reesources/BibTexLatex.bib"
 style: "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/reesources/chicago-fullnote-bibliography-bb.csl"
 references:
 - id: fenner2012a
