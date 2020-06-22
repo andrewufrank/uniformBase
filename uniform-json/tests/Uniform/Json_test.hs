@@ -24,14 +24,14 @@
 module Uniform.Json_test where
 
 
-import Test.Framework
-import Uniform.Zero
+import           Test.Framework
+import           Uniform.Zero
 import           Data.Aeson
 -- import Data.Map 
-import Uniform.Time 
+import           Uniform.Time
 -- import Uniform.Strings 
-import Uniform.Json  
- 
+import           Uniform.Json
+
 -- import Test.Invariant
 -- import Uniform.ByteString
 --import qualified Data.ByteString as BS
@@ -48,25 +48,24 @@ data MetaRec = MetaRec {
         } deriving (Generic, Eq, Ord, Show, Read)
 
 instance Zeros MetaRec where
-  zero = MetaRec zero   (Just year2000) year2000 zero
+    zero = MetaRec zero (Just year2000) year2000 zero
 --instance FromJSON IndexEntry
 instance ToJSON MetaRec
 instance FromJSON MetaRec where
 
 rec1 :: MetaRec
-rec1 = zero {title = Just "rec1"} :: MetaRec 
+rec1 = zero { title = Just "rec1" } :: MetaRec
 rec1shown :: String
-rec1shown = show rec1 :: String 
+rec1shown = show rec1 :: String
 
 test_jsonTime :: IO ()
-test_jsonTime = assertEqual rec1 
-        (readNote "testJsonTime" rec1shown :: MetaRec)
+test_jsonTime = assertEqual rec1 (readNote "testJsonTime" rec1shown :: MetaRec)
 
 test_encode :: IO ()
 test_encode = assertEqual res1 $ encode rec1
 -- res1 :: Data.ByteString.Lazy.Internal.ByteString
-res1 =   
-   "{\"int1\":0,\"date\":\"2000-01-01T00:00:00Z\",\"title\":\"rec1\",\"date2\":\"2000-01-01T00:00:00Z\"}"
+res1 =
+    "{\"int1\":0,\"date\":\"2000-01-01T00:00:00Z\",\"title\":\"rec1\",\"date2\":\"2000-01-01T00:00:00Z\"}"
 
 
 -- encode rec1 
@@ -76,20 +75,28 @@ res1 =
 --                         ,("title",String "rec1")
 --                         ,("date2",String "2000-01-01T00:00:00Z")])
 rec1json' :: Value
-rec1json' = toJSON rec1 
+rec1json' = toJSON rec1
 
 json2rec :: Either String MetaRec
-json2rec = eitherDecode res1 :: Either String MetaRec 
+json2rec = eitherDecode res1 :: Either String MetaRec
 test_setInt :: IO ()
-test_setInt = assertEqual rec2json
-        $ putAtKey "int1" (22::Integer) (toJSON rec0)
+test_setInt =
+    assertEqual rec2json $ putAtKey "int1" (22 :: Integer) (toJSON rec0)
 
 rec2json :: Value
-rec2json = toJSON $ MetaRec zero   (Just year2000) year2000 22
+rec2json = toJSON $ MetaRec zero (Just year2000) year2000 22
 rec0 :: MetaRec
-rec0 = MetaRec zero   (Just year2000) year2000 zero
+rec0 = MetaRec zero (Just year2000) year2000 zero
 
 -- test_force = assertBool False 
 
-test_fromJ = assertEqual  (Just rec1) (fromJSONmaybe rec1json')
+test_fromJ = assertEqual (Just rec1) (fromJSONmaybe rec1json')
 -- test_fromJx = assertEqual  Nothing (fromJSONmaybe rec1json')
+
+val :: Value
+val = object [
+  "boolean" .= True,
+  "numbers" .= [1,2,3::Int] ]  
+
+test_val = assertEqual v1 (showT val)
+v1 = "Object (fromList [(\"boolean\",Bool True),(\"numbers\",Array [Number 1.0,Number 2.0,Number 3.0])])"
