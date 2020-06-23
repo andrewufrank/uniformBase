@@ -36,7 +36,7 @@ where
 
 import           Uniform.Filenames
 import           Uniform.Json
-import           Uniform.TypedFile -- (TypedFiles7(..))
+-- import           Uniform.TypedFile -- (TypedFiles7(..))
 -- import           Uniform.Yaml
 import           Uniform.DocRep
 import           Uniform.Pandoc

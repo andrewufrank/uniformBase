@@ -20,12 +20,16 @@ import           Test.Framework
 import           Uniform.Pandoc
 import           Uniform.DocRep
 import Uniform.Json 
+import Uniform.Test.TestHarness
 import Text.Pandoc 
 import           Uniform.Error           hiding ( (<.>) )  -- (</>)
+import Uniform.Markdown_test
+
+    
 test_zero = assertEqual
     "DocRep {yam = Null, pan = Pandoc (Meta {unMeta = fromList []}) []}"
     (showT (zero :: DocRep))
-test_readWrite = do
+test_readWriteDR = do
     res4 <- runErr $ do
         let
             pfn1 =
@@ -93,3 +97,26 @@ val3 = [object [
   "numbs" .= [66,55,44::Int] ]  ]
 test_merge1 = assertEqual rec4 $ showT $ mergeAll dr3 val3
 rec4 = "DocRep {yam = Object (fromList [(\"a2\",String \"testa2\"),(\"boolean\",Bool True),(\"numbs\",Array [Number 66.0,Number 55.0,Number 44.0]),(\"numbers\",Array [Number 4.0,Number 44.0]),(\"boolean2\",Bool False),(\"b4\",String \"b4test\")]), pan = Pandoc (Meta {unMeta = fromList []}) []}"::Text 
+
+test_dr2texsnipShort = testVar0FileIO "uniform-DocRep" 
+        shortFile
+        "test_dr2texsnipShort" docRep2texsnipTest 
+test_dr2texsnipReg = testVar0FileIO "uniform-DocRep" 
+        regFile
+        "test_dr2texsnipReg" docRep2texsnipTest 
+test_dr2texsnipComplex = testVar0FileIO "uniform-DocRep" 
+        complexFile
+        "test_dr2texsnipComplex" docRep2texsnipTest 
+test_dr2texsnipWithRef = testVar0FileIO "uniform-DocRep" 
+        withRef
+        "test_dr2texsnipWithRef" docRep2texsnipTest 
+
+-- withRef = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/withRef.md"
+docRep2texsnipTest :: Path Abs File -> ErrIO TexSnip
+docRep2texsnipTest drfn  = do       
+    dr1 :: DocRep <- read8 drfn docRepFileType 
+    res1 :: TexSnip <-  docRep2texsnip  dr1 
+    write8 drfn texSnipFileType res1
+    return res1
+
+instance ShowTestHarness TexSnip

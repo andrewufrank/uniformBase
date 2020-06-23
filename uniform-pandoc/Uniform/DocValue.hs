@@ -23,9 +23,12 @@
             -fno-warn-missing-methods 
             -fno-warn-duplicate-exports 
             -fno-warn-unused-imports 
+            -fno-warn-unused-matches 
             #-}
 
-module Uniform.DocValue {-# DEPRECATED "Use Uniform.DocRep instead" #-}
+module Uniform.DocValue 
+-- {-# DEPRECATED "Use Uniform.DocRep instead" #-}
+-- macht aerger mit ghcid
     ( module Uniform.DocValue
         , Dtemplate
         , Template 

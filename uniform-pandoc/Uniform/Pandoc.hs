@@ -82,7 +82,24 @@ instance Zeros Pandoc where
 instance Zeros Text.Pandoc.Meta where
   zero = mempty
 
--- | Handle possible pandoc failure within the Action Monad
+-- -- | Handle possible pandoc failure within the PandocIO Monad
+-- unPandocM2 :: Zeros a =>  Pandoc.PandocIO a -> ErrIO a
+-- unPandocM2 op1 = 
+--     callIO $ do 
+--       res :: Either Pandoc.PandocError a <- Pandoc.runIO op1
+--       case res of 
+--         Left e -> do
+--             putIOwords ["unPandocM error", showT e]
+--             fail (show e)
+--             return zero 
+--         Right a -> return a
+--   `catchError` (\e -> do
+--                    putIOwords ["unPandocM2 catchError", showT e]
+--                    fail . t2s . unwords' $ ["unPandocM2 catchError", showT $ e]
+
+--                  )
+
+-- | Handle possible pandoc failure within the PandocIO Monad
 unPandocM :: Pandoc.PandocIO a -> ErrIO a
 unPandocM op1 =
   do

@@ -31,6 +31,7 @@
             -fno-warn-missing-methods 
             -fno-warn-duplicate-exports 
             -fno-warn-unused-imports 
+            -fno-warn-unused-matches 
             #-}
 
 module Uniform.DocRep
@@ -50,6 +51,7 @@ import           Uniform.TypedFile  ( TypedFiles7(..)
 import           Uniform.Json
 import Uniform.Pandoc 
 import Uniform.Json 
+import qualified Text.Pandoc                   as Pandoc
 -- import Text.JSON
 
 -- | a more uniform method to represent a document
@@ -64,7 +66,25 @@ data DocRep = DocRep {yam:: Value, pan:: Pandoc}  -- a json value
         deriving (Show, Read, Eq)
 instance Zeros DocRep where zero = DocRep zero zero
 
--- type Value  = LazyByteString
+
+docRep2texsnip :: DocRep -> ErrIO TexSnip
+-- ^ transform a docrep to a texsnip 
+-- does not need the references include in docRep
+-- which is done by tex to pdf conversion
+docRep2texsnip dr1@(DocRep y1 p1) = do 
+    ts1 :: Text <- unPandocM $ Pandoc.writeLaTeX latexOptions p1 
+    return . TexSnip $ ts1
+
+-- latexOptions :: WriterOptions  -- is Pandoc
+-- latexOptions = 
+--     def { writerHighlightStyle = Just tango
+--         , writerExtensions     =  Pandoc.extensionsFromList
+--                         [Pandoc.Ext_raw_tex   --Allow raw TeX (other than math)
+--                         -- , Pandoc.Ext_shortcut_reference_links
+--                         -- , Pandoc.Ext_spaced_reference_links
+--                         -- , Pandoc.Ext_citations           -- <-- this is the important extension for bibTex
+--                         ]                     
+--         }
 --------------------------------------------typed file DocRep
 
 docrepExt = Extension "docrep"
