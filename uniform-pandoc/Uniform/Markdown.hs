@@ -41,19 +41,10 @@ import           Uniform.Json
 import           Uniform.DocRep
 import           Uniform.Pandoc
 -- import Uniform.Pandoc as Pandoc
-import           Text.CSL.Pandoc               as Bib
-import           Text.CSL                      as Pars
 
-import           Control.Lens                   ( (^?)
-                                                -- , (?~)
-                                                -- , (&)
-                                                -- , at
-                                                )
 -- import           Data.Aeson         -- for ^?, key
 -- https://williamyaoh.com/posts/2019-10-19-a-cheatsheet-to-json-handling.html
 -- https://artyom.me/aeson
-import           Data.Aeson.Lens
-import           Data.Aeson.Types
 import qualified Text.Pandoc                   as Pandoc
 -- import qualified Text.Pandoc.Extensions                   as Pandoc
 -- import qualified Data.Vector as V
@@ -72,64 +63,8 @@ readMarkdown2docrep md = do
     return (DocRep meta2 (Pandoc zero block1))
         -- zero the metadata 
 
-docRepAddRefs :: DocRep -> ErrIO DocRep
--- ^ add the references to the pandoc block
--- the biblio is in the yam (otherwise nothing is done)
--- ths cls file must be in the yam
 
--- processCites :: Style -> [Reference] -> Pandoc -> Pandoc
 
--- Process a Pandoc document by adding citations formatted according to a CSL style. Add a bibliography (if one is called for) at the end of the document.
--- http://hackage.haskell.org/package/citeproc-hs-0.3.10/docs/Text-CSL.html
---   m <- readBiblioFile "mybibdb.bib"
---   s <- readCSLFile "apa-x.csl"
---   let result = citeproc procOpts s m $ [cites]
---   putStrLn . unlines . map (renderPlainStrict) . citations $ result
-
-docRepAddRefs dr1@(DocRep y1 p1) = do
-    putIOwords ["docRepAddRefs", showT dr1, "\n"]
-    let biblio1 = getAtKey y1 "bibliography" :: Maybe Text
-        style1  = getAtKey y1 "style" :: Maybe Text
-        refs1   = y1 ^? key "references" :: Maybe Value
-        nocite1 = getAtKey y1 "nocite" :: Maybe Text
-
-    putIOwordsT
-        [ "docRepAddRefs"
-        , "\n biblio"
-        , showT biblio1
-        , "\n style"
-        , showT style1
-        , "\n refs"
-        , showT refs1
-        , "\n nocite"
-        , showT nocite1
-        ]
-
-    let loc1  = (Just "en_US.utf8")  -- TODO depends on language
-
-    let refs2 = fromJustNote "refs in docRepAddRefs 443" $ refs1 :: Value
-    let refs3 = fromJSONValue $ refs2 -- :: Result [Reference]
-    let refs4 = fromJustNote "docRepAddReffs 08werwe" refs3 :: [Reference]
-
-    let bibliofp =
-            t2s . fromJustNote "biblio2 in docRepAddRefs wer23" $ biblio1 :: FilePath
-    let stylefp =
-            t2s . fromJustNote "style1 in docRepAddRefs wer23" $ style1 :: FilePath
-
-    putIOwordsT ["docRepAddRefs", "done"]
-
-    biblio2 <- callIO $ Pars.readBiblioFile (const True) bibliofp
-    style2  <- callIO $ Pars.readCSLFile loc1 stylefp
-
-    let refsSum = refs4 ++ biblio2
-    let p2      = processCites style2 refsSum p1
-
-    putIOwordsT ["docRepAddRefs", "p2\n", showT p2]
-
-    return (DocRep y1 p2)
-
-fromJSONValue :: FromJSON a => Value -> Maybe a
-fromJSONValue = parseMaybe parseJSON
 
     -- pandoc2 <- case (bibliography metaRec) of
     --     Nothing    -> return pandoc

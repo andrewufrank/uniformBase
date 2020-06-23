@@ -84,6 +84,7 @@ newtype HTMLout = HTMLout {contentHtml::Text}
 
 instance ToJSON HTMLout
 
+ 
 
 -- a wrapper around html ready to publish
 unHTMLout (HTMLout a) = a

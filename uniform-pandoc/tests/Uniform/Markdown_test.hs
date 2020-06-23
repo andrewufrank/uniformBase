@@ -84,13 +84,13 @@ readDocRep2 mfn  = do
     write8 mfn docRepFileType res1
     return res1
 
-test_addRefs = do       
-    res2 <- runErr $ do 
-        dr1 <- read8 withRef docRepFileType 
-        res1 <- docRepAddRefs dr1
-        putIOwords ["test_addRefs", showT res1]
-        return (res1) 
-    assertEqual (Left "") res2 
+-- test_addRefs = do    -- is visual test   
+--     res2 <- runErr $ do 
+--         dr1 <- read8 withRef docRepFileType 
+--         res1 <- docRepAddRefs dr1
+--         putIOwords ["test_addRefs", showT res1]
+--         return (res1) 
+--     assertEqual (Left "") res2 
 
  
 -- res4text1 = "ttxx   " :: Text

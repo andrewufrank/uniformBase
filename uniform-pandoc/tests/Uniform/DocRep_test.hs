@@ -112,6 +112,7 @@ test_dr2texsnipWithRef = testVar0FileIO "uniform-DocRep"
         "test_dr2texsnipWithRef" docRep2texsnipTest 
 
 -- withRef = makeAbsFile "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/withRef.md"
+
 docRep2texsnipTest :: Path Abs File -> ErrIO TexSnip
 docRep2texsnipTest drfn  = do       
     dr1 :: DocRep <- read8 drfn docRepFileType 
@@ -119,4 +120,27 @@ docRep2texsnipTest drfn  = do
     write8 drfn texSnipFileType res1
     return res1
 
+
+test_dr2drop2htmlShort = testVar0FileIO "uniform-DocRep" 
+        shortFile
+        "test_dr2drop2htmlShort" docRep2htmlTest 
+test_dr2drop2htmlReg = testVar0FileIO "uniform-DocRep" 
+        regFile
+        "test_dr2drop2htmlReg" docRep2htmlTest 
+test_dr2drop2htmlComplex = testVar0FileIO "uniform-DocRep" 
+        complexFile
+        "test_dr2drop2htmlComplex" docRep2htmlTest 
+test_dr2drop2htmlWithRef = testVar0FileIO "uniform-DocRep" 
+        withRef
+        "test_dr2drop2htmlWithRef" docRep2htmlTest 
+
+
+docRep2htmlTest :: Path Abs File -> ErrIO HTMLout
+docRep2htmlTest drfp = do 
+    dr1 <- read8 drfp docRepFileType 
+    h1 <- docRep2html dr1
+    write8 drfp htmloutFileType h1
+    return h1 
+
 instance ShowTestHarness TexSnip
+instance ShowTestHarness HTMLout
