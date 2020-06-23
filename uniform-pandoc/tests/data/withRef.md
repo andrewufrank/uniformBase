@@ -31,7 +31,7 @@ references:
 
 An example post [@fenner2012a]. With a reference to [@frank09geo] given and navratil08 as nocite. 
 Not including the "TUxx9999" addition in brackets.
-The frank2010a and frank09geo is a
+The [@frank2010a] and [@frank09geo] is a
 The references are in "resources/BibTexLatex.bib".
 
 # References
