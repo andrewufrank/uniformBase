@@ -59,18 +59,19 @@ import           Uniform.Yaml
 import Uniform.DocValue
 
 import qualified Text.Pandoc                   as Pandoc
-import           Text.Pandoc                    ( Pandoc(..)
-                        , ReaderOptions
-                        , Meta
-                        , MetaValue
-                        , writerHighlightStyle
-                        , writerExtensions
-                        , WriterOptions 
-                        -- , writeMarkdown
-                        , writeHtml5String
-                        , writeLaTeX
-                        , def
-                        )
+import           Text.Pandoc        
+            -- ( Pandoc(..)
+            --             , ReaderOptions
+            --             , Meta
+            --             , MetaValue
+            --             , writerHighlightStyle
+            --             , writerExtensions
+            --             , WriterOptions 
+            --             -- , writeMarkdown
+            --             , writeHtml5String
+            --             , writeLaTeX
+            --             , def
+            --             )
 
 import           Text.Pandoc.Shared             ( stringify )
 import           Text.Pandoc.Highlighting       ( tango )
@@ -156,6 +157,10 @@ readYaml2value fp = do
 latexOptions :: WriterOptions
 latexOptions = 
     def { writerHighlightStyle = Just tango
+        , writerCiteMethod = Natbib
+        -- Citeproc                        -- use citeproc to render them
+        --           | Natbib                        -- output natbib cite commands
+        --           | Biblatex                      -- output biblatex cite commands
         , writerExtensions     =  Pandoc.extensionsFromList
                         [Pandoc.Ext_raw_tex   --Allow raw TeX (other than math)
                         -- , Pandoc.Ext_shortcut_reference_links

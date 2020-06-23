@@ -134,7 +134,7 @@ docRepAddRefs dr1@(DocRep y1 p1) = do
     putIOwords ["docRepAddRefs", showT dr1, "\n"]
     let biblio1 = getAtKey y1 "bibliography" :: Maybe Text
     maybe (return dr1) (addRefs2 dr1) biblio1 
-addRefs2 dr1@(DocRep y1 p1) biblio2 = do 
+addRefs2 dr1@(DocRep y1 p1) biblio1 = do 
     putIOwords ["addRefs2", showT dr1, "\n"]   
     let  
         style1  = getAtKey y1 "style" :: Maybe Text
@@ -144,7 +144,7 @@ addRefs2 dr1@(DocRep y1 p1) biblio2 = do
     putIOwordsT
         [ "docRepAddRefs"
         , "\n biblio"
-        , showT biblio2
+        , showT biblio1
         , "\n style"
         , showT style1
         , "\n refs"
@@ -160,7 +160,7 @@ addRefs2 dr1@(DocRep y1 p1) biblio2 = do
     let refs4 = fromJustNote "docRepAddReffs 08werwe" refs3 :: [Reference]
 
     let bibliofp =
-            t2s  biblio2 :: FilePath
+            t2s  biblio1 :: FilePath
     let stylefp =
             t2s . fromJustNote "style1 in docRepAddRefs wer23" $ style1 :: FilePath
 
