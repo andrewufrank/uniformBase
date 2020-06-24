@@ -10,6 +10,7 @@
 :set -fno-warn-warnings-deprecations 
 :set -fno-warn-duplicate-exports
 :set -fno-warn-missing-methods
+-- :set -package Cabal 
 :set -itests
 :set -isrc
 :set -i.stack-work/dist/x86_64-linux-tinfo6/Cabal-2.4.0.1/build/autogen/

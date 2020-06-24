@@ -12,13 +12,15 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
+{-# LANGUAGE PackageImports #-}
+
 
 module Main     where      -- must have Main (main) or Main where
 
 
 --import System.Exit
 
-import            Test.Framework
+import         "HTF"  Test.Framework
 import     {-@ HTF_TESTS @-}       Uniform.Json_test
 import     {-@ HTF_TESTS @-}       Uniform.Yaml_test
 

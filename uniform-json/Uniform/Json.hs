@@ -41,6 +41,7 @@ import           Control.Lens                   ( (^?)
                                                 )
 
 import           Data.Aeson
+import           Data.Aeson  as Aeson 
 import           Data.Aeson.Lens
 import Data.Aeson.Encode.Pretty (encodePretty)
 import qualified Data.HashMap.Lazy   as HML
@@ -58,10 +59,15 @@ fromJSONmaybe v = case (fromJSON v) of
 instance Zeros Value  where zero = Null 
 
 fromJSONm :: (FromJSON a, Show a) => Value -> ErrIO a 
--- fromJSONm :: (FromJSON a, MonadError m) => Value -> m a   -- TODO in error
-fromJSONm v = case (fromJSON v) of 
-            Success a -> return a 
-            x -> throwErrorT ["fromJson", showT x]
+-- fromJSONm :: (FromJSON a, MonadError m) => Value -> m a   
+fromJSONm v = result1 (fromJSON v)
+
+-- fromJSONm v = case (fromJSON v) of 
+--             Success a -> return a 
+--             x -> throwErrorT ["fromJson", showT x]
+
+result1 (Aeson.Error msg)  = fail msg
+result1 (Aeson.Success a) = return  a 
 
 -- | get and set at a key 
 class AtKey vk v where

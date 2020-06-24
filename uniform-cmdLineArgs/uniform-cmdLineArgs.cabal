@@ -44,6 +44,7 @@ executable cmdLineExample
         , uniform-fileio
         , uniform-convenience
         , uniform-error 
+        , uniform-cmdLineArgs
         -- , CmdLineUtilities
        , optparse-applicative
        , optparse-generic

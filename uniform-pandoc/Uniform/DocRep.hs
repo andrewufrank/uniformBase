@@ -138,7 +138,7 @@ addRefs2 dr1@(DocRep y1 p1) biblio1 = do
     putIOwords ["addRefs2", showT dr1, "\n"]   
     let  
         style1  = getAtKey y1 "style" :: Maybe Text
-        refs1   = y1 ^? key "references" :: Maybe Value
+        refs1   = y1 ^? key "references" :: Maybe Value -- is an array 
         nocite1 = getAtKey y1 "nocite" :: Maybe Text
                      
     putIOwordsT

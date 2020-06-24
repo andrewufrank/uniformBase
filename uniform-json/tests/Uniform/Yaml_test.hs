@@ -13,6 +13,7 @@
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE PackageImports #-}
 -- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 module Uniform.Yaml_test  where
@@ -28,7 +29,7 @@ module Uniform.Yaml_test  where
 --import Safe   -- todo error
  
 
-import Test.Framework
+import         "HTF"  Test.Framework
 -- import Test.Invariant
 -- import Uniform.Filenames
 
