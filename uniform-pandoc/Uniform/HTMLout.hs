@@ -66,10 +66,10 @@ html5Options = def { writerHighlightStyle = Just tango
                    , writerExtensions     = writerExtensions def
                    }
 
-writeHtml5String2 :: Pandoc -> ErrIO HTMLout
-writeHtml5String2 pandocRes = do
-    p <- unPandocM $ writeHtml5String html5Options pandocRes
-    return . HTMLout $ p
+-- writeHtml5String2 :: Pandoc -> ErrIO HTMLout
+-- writeHtml5String2 pandocRes = do
+--     p <- unPandocM $ writeHtml5String html5Options pandocRes
+--     return . HTMLout $ p
 
 -- applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
 -- -- needed for old ssg lts-13.12 - also changed for 15.13

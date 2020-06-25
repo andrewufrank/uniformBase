@@ -59,6 +59,7 @@ preamble1 = [
     "\\usepackage[ngerman]{babel}",
     "\\usepackage{graphicx}",
     "\\usepackage{makeidx}",
+    "\\usepackage{natbib}",
     "\\makeindex",
     "\\usepackage[colorlinks]{hyperref}",
     "\\providecommand{\\tightlist}{%",

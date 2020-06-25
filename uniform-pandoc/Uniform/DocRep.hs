@@ -88,7 +88,7 @@ instance Zeros DocRep where zero = DocRep zero zero
 docRep2texsnip :: DocRep -> ErrIO TexSnip
 -- ^ transform a docrep to a texsnip 
 -- does not need the references include in docRep
--- which is done by tex to pdf conversion
+-- TODO needed!-- which is done by tex to pdf conversion
 docRep2texsnip dr1@(DocRep y1 p1) = do 
     ts1 :: Text <- unPandocM $ Pandoc.writeLaTeX latexOptions p1 
     return . TexSnip $ ts1
@@ -103,6 +103,8 @@ docRep2texsnip dr1@(DocRep y1 p1) = do
 --                         -- , Pandoc.Ext_citations           -- <-- this is the important extension for bibTex
 --                         ]                     
 --         }
+
+
 ------------------------------------
 
 docRep2html:: DocRep -> ErrIO HTMLout
@@ -110,8 +112,8 @@ docRep2html:: DocRep -> ErrIO HTMLout
 -- needs teh processing of the references with citeproc
 docRep2html dr1@(DocRep y1 p1) = do 
     dr2 <- docRepAddRefs dr1 
-    h1 <- writeHtml5String2 (pan dr2)
-    return h1
+    h1 <- unPandocM $ writeHtml5String html5Options (pan dr2)
+    return . HTMLout $  h1
 
 --------------------------------
 docRepAddRefs :: DocRep -> ErrIO DocRep
@@ -134,6 +136,7 @@ docRepAddRefs dr1@(DocRep y1 p1) = do
     putIOwords ["docRepAddRefs", showT dr1, "\n"]
     let biblio1 = getAtKey y1 "bibliography" :: Maybe Text
     maybe (return dr1) (addRefs2 dr1) biblio1 
+
 addRefs2 dr1@(DocRep y1 p1) biblio1 = do 
     putIOwords ["addRefs2", showT dr1, "\n"]   
     let  
@@ -163,7 +166,8 @@ addRefs2 dr1@(DocRep y1 p1) biblio1 = do
             t2s  biblio1 :: FilePath
     let stylefp =
             t2s . fromJustNote "style1 in docRepAddRefs wer23" $ style1 :: FilePath
-
+* Raised the exception:
+-- ["runErr2action","Safe.fromJustNote Nothing, style1 in docRepAddRefs wer23\nCallStack (from HasCallStack):\n  fromJustNote, called at ./Uniform/DocRep.hs:165:19 in uniform-pandoc-0.0.2-CQ6TrBvcdAe7Crud3c6Rca:Uniform.DocRep"]
     putIOwordsT ["docRepAddRefs", "done"]
 
     biblio2 <- callIO $ Pars.readBiblioFile (const True) bibliofp
