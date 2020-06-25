@@ -23,6 +23,7 @@
 
 module Uniform.Markdown
     ( module Uniform.Markdown
+    , Pandoc.ReaderOptions
 --   , Pandoc(..)
 --   , module Uniform.Error   -- or at least ErrIO
 --   , write8
@@ -34,12 +35,12 @@ module Uniform.Markdown
     )
 where
 
-import           Uniform.Filenames
+import           Uniform.FileIO
 import           Uniform.Json
 -- import           Uniform.TypedFile -- (TypedFiles7(..))
 -- import           Uniform.Yaml
 import           Uniform.DocRep
-import           Uniform.Pandoc
+import           Uniform.PandocImports
 -- import Uniform.Pandoc as Pandoc
 
 -- import           Data.Aeson         -- for ^?, key

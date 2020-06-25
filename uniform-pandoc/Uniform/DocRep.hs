@@ -51,7 +51,7 @@ import           Uniform.TypedFile  ( TypedFiles7(..)
                                     , TypedFile5(..)
                                     )
 import           Uniform.Json
-import Uniform.Pandoc 
+import Uniform.PandocImports
 import Uniform.Json 
 import Uniform.HTMLout
 -- import Uniform.Markdown
@@ -177,14 +177,14 @@ addRefs2 dr1@(DocRep y1 p1) biblio1 = do
     return (DocRep y1 p2)
 --------------------------------------------typed file DocRep
 
-docrepExt = Extension "docrep"
+extDocRep = Extension "docrep"
 
 -- instance NiceStrings DocRep where
 --   shownice = showNice . unDocRep
 
 docRepFileType :: TypedFile5 Text DocRep
 docRepFileType =
-  TypedFile5 { tpext5 = docrepExt } :: TypedFile5 Text DocRep
+  TypedFile5 { tpext5 = extDocRep } :: TypedFile5 Text DocRep
 
 instance TypedFiles7 Text DocRep
      where

@@ -37,7 +37,10 @@ module Uniform.ProcessPDF
   )
 where
 
-import Uniform.Pandoc 
+-- import Uniform.Pandoc 
+import Uniform.FileIO 
+import Uniform.DocRep
+import Uniform.PandocImports
 
 import qualified System.Process as Sys 
 

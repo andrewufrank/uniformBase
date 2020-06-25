@@ -25,6 +25,12 @@
             
 module Uniform.HTMLout
   ( module Uniform.HTMLout
+    , extHTML
+    , writeHtml5String
+                        , writerExtensions
+                        , writerHighlightStyle
+                        , WriterOptions
+                        , def
 --   , Pandoc(..)
 --   , module Uniform.Error   -- or at least ErrIO
 --   , write8
@@ -35,12 +41,17 @@ module Uniform.HTMLout
 --   , module Uniform.Json
   )
 where
--- import           Uniform.Json
-import Uniform.Pandoc
+import           Uniform.Json
+-- import Uniform.Pandoc
 import Uniform.DocValue
+import Uniform.FileIO 
+import Uniform.PandocImports 
  
 import           Text.Pandoc                    ( Pandoc(..)
                         , writeHtml5String
+                        , writerExtensions
+                        , writerHighlightStyle
+                        , WriterOptions
                         , def
                         )
 import           Text.Pandoc.Highlighting       ( tango )

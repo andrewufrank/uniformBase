@@ -48,6 +48,7 @@ import qualified Data.HashMap.Lazy   as HML
 import Uniform.Strings  hiding ( at )
 import           Uniform.Error           hiding ( at )
 
+
 encodeT :: ToJSON a => a -> Text  
 encodeT = bb2t . bl2b . encode 
 

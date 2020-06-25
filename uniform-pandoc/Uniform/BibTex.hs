@@ -28,7 +28,7 @@ import qualified Text.Pandoc.Definition        as PD
 
 import           Uniform.Error
 import           Uniform.FileIO
-import           Uniform.Pandoc
+import           Uniform.PandocImports
 
 
 {-
