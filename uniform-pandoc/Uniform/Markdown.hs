@@ -24,6 +24,7 @@
 module Uniform.Markdown
     ( module Uniform.Markdown
     , Pandoc.ReaderOptions
+    , markdownFileType
 --   , Pandoc(..)
 --   , module Uniform.Error   -- or at least ErrIO
 --   , write8

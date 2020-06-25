@@ -47,7 +47,7 @@ library
     other-modules: Uniform.PandocImports
 
 
-Test-Suite jsontest
+Test-Suite pandoctest
     type:       exitcode-stdio-1.0
     build-depends:  base -any
         , HTF

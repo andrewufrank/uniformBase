@@ -4,7 +4,7 @@ cradle:
       component: "uniform-pandoc:lib"
 
     - path: "./tests"
-      component: "uniform-pandoc:test:jsontest"
+      component: "uniform-pandoc:test:pandoctest"
 
     - path: "../../fromOthersInstalled/bibtex/src"
       component: "bibtex:lib"
