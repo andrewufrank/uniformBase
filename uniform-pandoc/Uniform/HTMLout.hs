@@ -43,7 +43,7 @@ module Uniform.HTMLout
 where
 import           Uniform.Json
 -- import Uniform.Pandoc
-import Uniform.DocValue
+-- import Uniform.DocValue
 import Uniform.FileIO 
 import Uniform.PandocImports 
  
@@ -71,24 +71,24 @@ writeHtml5String2 pandocRes = do
     p <- unPandocM $ writeHtml5String html5Options pandocRes
     return . HTMLout $ p
 
-applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
--- needed for old ssg lts-13.12 - also changed for 15.13
+-- applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
+-- -- needed for old ssg lts-13.12 - also changed for 15.13
 
--- | apply the template in the file to the text
--- for help look in ssg master.ptpl as an example
--- the description are in doctemplates (on hackage)
-applyTemplate3 templText val = do 
-    temp1 :: Either String (Template Text)   <- liftIO $ DocTemplates.compileTemplate mempty (unwrap7 templText)
-    -- err1 :: Either String (Doc Text) <- liftIO $ DocTemplates.applyTemplate mempty (unwrap7 templText) (unDocValue val) 
-    let temp2 = case temp1 of
-                Left msg -> error msg 
-                Right val2 -> val2
-    when False $ putIOwords ["applyTemplate3 temp2", take' 300 $ showT temp2 ]
-    let res = renderTemplate temp2 (unDocValue val)
-    when False $ putIOwords ["applyTemplate3 res", take' 300 $ showT res ]
-    let res2 =  render Nothing res 
-    let res3 = HTMLout res2 
-    return (res3 :: HTMLout) 
+-- -- | apply the template in the file to the text
+-- -- for help look in ssg master.ptpl as an example
+-- -- the description are in doctemplates (on hackage)
+-- applyTemplate3 templText val = do 
+--     temp1 :: Either String (Template Text)   <- liftIO $ DocTemplates.compileTemplate mempty (unwrap7 templText)
+--     -- err1 :: Either String (Doc Text) <- liftIO $ DocTemplates.applyTemplate mempty (unwrap7 templText) (unDocValue val) 
+--     let temp2 = case temp1 of
+--                 Left msg -> error msg 
+--                 Right val2 -> val2
+--     when False $ putIOwords ["applyTemplate3 temp2", take' 300 $ showT temp2 ]
+--     let res = renderTemplate temp2 (unDocValue val)
+--     when False $ putIOwords ["applyTemplate3 res", take' 300 $ showT res ]
+--     let res2 =  render Nothing res 
+--     let res3 = HTMLout res2 
+--     return (res3 :: HTMLout) 
 
 newtype HTMLout = HTMLout {contentHtml::Text}
   deriving (Show, Read, Eq, Ord, Generic)

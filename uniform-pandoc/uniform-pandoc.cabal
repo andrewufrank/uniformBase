@@ -38,7 +38,6 @@ library
         Uniform.Markdown
         Uniform.ProcessPDF
         Uniform.HTMLout
-        Uniform.DocValue 
         Uniform.DocRep
         
     exposed: True

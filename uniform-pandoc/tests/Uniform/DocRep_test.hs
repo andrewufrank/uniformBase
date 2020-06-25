@@ -29,6 +29,7 @@ import Uniform.Markdown_test
 test_zero = assertEqual
     "DocRep {yam = Null, pan = Pandoc (Meta {unMeta = fromList []}) []}"
     (showT (zero :: DocRep))
+    
 test_readWriteDR = do
     res4 <- runErr $ do
         let
