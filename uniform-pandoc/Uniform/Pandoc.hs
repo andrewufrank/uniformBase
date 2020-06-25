@@ -22,10 +22,11 @@
             -fno-warn-missing-methods 
             -fno-warn-duplicate-exports 
             -fno-warn-unused-imports 
+            -fno-warn-dodgy-exports 
             #-}
 
 module Uniform.Pandoc
-  ( module Uniform.Pandoc
+  ( module Uniform.Pandoc 
       , unPandocM
       , extPDF, extMD, extDocRep, extHTML, extTexSnip, extTex 
   , Pandoc(..)
@@ -86,3 +87,5 @@ import Uniform.PandocImports
 --             --             , def
 --             --             )
 
+justToKeepWarningAway :: Int 
+justToKeepWarningAway = 0 
