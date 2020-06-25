@@ -11,7 +11,13 @@
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
 -- {-# LANGUAGE TypeSynonymInstances  #-}
--- {-# OPTIONS_GHC -fno-warn-missing-methods #-}
+
+{-# OPTIONS_GHC -Wall -fno-warn-orphans
+ -fno-warn-missing-signatures
+ -fno-warn-missing-methods 
+-fno-warn-duplicate-exports
+-fno-warn-unused-imports 
+#-}
 
 module Uniform.Markdown_test where
 --
