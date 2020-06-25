@@ -21,7 +21,7 @@ import           Uniform.Pandoc
 import           Uniform.DocRep
 import Uniform.Json 
 import Uniform.Test.TestHarness
-import Text.Pandoc 
+-- import Text.Pandoc 
 import           Uniform.Error           hiding ( (<.>) )  -- (</>)
 import Uniform.Markdown_test
 

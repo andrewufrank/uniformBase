@@ -58,6 +58,7 @@ Test-Suite jsontest
        , uniform-strings
        , uniform-time
        , uniform-json 
+       , uniform-fileio
        , uniform-pandoc
        , uniform-convenience
        , bibtex 

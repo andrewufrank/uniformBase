@@ -21,7 +21,7 @@ import Test.Framework
 import Uniform.Pandoc 
 import Uniform.Markdown
 import Uniform.DocRep
-import Uniform.TypedFile --(TypedFiles7(..))
+import Uniform.FileIO --(TypedFiles7(..))
 import Uniform.Test.TestHarness
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 
