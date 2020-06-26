@@ -49,6 +49,8 @@ tex2latex :: [TexSnip] -> Latex
 -- produce a compilable latex file.
 tex2latex snips = Latex . concat' $ [unlines' preamble1, concat' (map unTexSnip snips), unlines' postamble1]
 
+-- todo  - macche einen file 
+
 preamble1 = [
     -- "%%% eval: (setenv \"LANG\" \"en_US.utf8\")",
     "\\documentclass[a4paper,10pt]{scrbook}",  

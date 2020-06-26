@@ -166,7 +166,7 @@ addRefs2 dr1@(DocRep y1 p1) biblio1 = do
             t2s  biblio1 :: FilePath
     let stylefp =
             t2s . fromJustNote "style1 in docRepAddRefs wer23" $ style1 :: FilePath
-* Raised the exception:
+--  Raised the exception:
 -- ["runErr2action","Safe.fromJustNote Nothing, style1 in docRepAddRefs wer23\nCallStack (from HasCallStack):\n  fromJustNote, called at ./Uniform/DocRep.hs:165:19 in uniform-pandoc-0.0.2-CQ6TrBvcdAe7Crud3c6Rca:Uniform.DocRep"]
     putIOwordsT ["docRepAddRefs", "done"]
 
