@@ -19,13 +19,14 @@ module Main     where      -- must have Main (main) or Main where
 --import System.Exit
 
 import            Test.Framework
-import     {-@ HTF_TESTS @-}       Uniform.FileStrings_test
--- import {-@ HTF_TESTS @-} Uniform.ByteString_test
+
+-- import     {-@ HTF_TESTS @-}       Uniform.FileStrings_test
+-- -- import {-@ HTF_TESTS @-} Uniform.ByteString_test
 import     {-@ HTF_TESTS @-}       Uniform.Filenames_test
-import     {-@ HTF_TESTS @-}       Uniform.PathShowCase_test
-import    {-@ HTF_TESTS @-}        Uniform.FileStatus_test
--- import     {-@ HTF_TESTS @-}       Uniform.Piped_test
-import    {-@ HTF_TESTS @-}        Uniform.TypedFile_test
+-- import     {-@ HTF_TESTS @-}       Uniform.PathShowCase_test
+-- import    {-@ HTF_TESTS @-}        Uniform.FileStatus_test
+-- -- import     {-@ HTF_TESTS @-}       Uniform.Piped_test
+-- import    {-@ HTF_TESTS @-}        Uniform.TypedFile_test
 
 import           Uniform.Strings
 import Uniform.Error 
@@ -47,5 +48,5 @@ file1test = do
     putStrLn "file1test"
     -- push2
     -- runErrorVoid $ do 
-    test_hidden1
+    -- test_hidden1
     return () 

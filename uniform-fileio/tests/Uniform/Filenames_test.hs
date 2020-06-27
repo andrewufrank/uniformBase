@@ -236,3 +236,6 @@ test_hasExtension = assertEqual True $
 
 test_getExtension = assertEqual (Extension "md")
             $ getExtension (makeRelFile "test.md")
+
+test_parentDir = assertEqual ("/somedir/more" ) (getParentDir f3)
+test_immediateparentDir = assertEqual ("more" ) (getImmediateParentDir f3)
