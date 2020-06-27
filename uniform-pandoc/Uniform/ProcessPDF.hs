@@ -115,13 +115,15 @@ writePDF2 debug fn fnres refDir = do
     -- -- check for locale 
     -- loc <- callIO $ Sys.callProcess "locale" []
     -- putIOwords ["writePDF2text locale "]
-    ls <- callIO $ Sys.callProcess "ls" []
-    putIOwords ["writePDF2text ls "]
+    -- ls <- callIO $ Sys.callProcess "ls" []
+    -- putIOwords ["writePDF2text ls "]
 
     -- process
 
     let infn = setExtension extTex fn :: Path Abs File
-    putIOwords ["writePDF2text 1 infn", showT infn]
+    putIOwords ["writePDF2text 1 infn", showT infn
+        , "\n\t fnres", showT fnres 
+        , "\n\t refDir", showT refDir]
     let dir1 = getParentDir fnres :: FilePath
     let out1 = "--output-directory=" <> (dir1)
     putIOwords ["writePDF2text 2 out1", showT out1]
