@@ -105,11 +105,12 @@ instance TypedFiles7 Text Latex where
 ---------- write PDF with Lualatex
 -- the process uses files - is this a preformance issue? 
 
-writePDF2 :: Bool -> Path Abs File -> Path Abs File -> ErrIO ()
+writePDF2 :: Bool -> Path Abs File -> Path Abs File -> Path Abs Dir -> ErrIO ()
 -- convert the text in the file given (a full latex) into a pdf 
 -- in the second path 
--- set the current working directory 
-writePDF2 debug fn fnres = do
+-- set the current working directory (which must be the directory 
+-- from which images etc. are searched for )
+writePDF2 debug fn fnres refDir = do
 
     -- -- check for locale 
     -- loc <- callIO $ Sys.callProcess "locale" []
@@ -127,7 +128,7 @@ writePDF2 debug fn fnres = do
     callProcessWithCWD
         "lualatex"
         [out1, "-interaction=nonstopmode", toFilePath infn]
-        (Just dir1)
+        refDir 
     -- callIO $ Sys.callProcess "xelatex" [out1,  "-interaction=nonstopmode" , toFilePath infn]
     -- callIO $ Sys.callProcess "lualatex" [out1, toFilePath infn]
 
@@ -155,12 +156,14 @@ writePDF2 debug fn fnres = do
 -- terminated.
 --
 -- @since 1.2.0.0
-callProcessWithCWD :: FilePath -> [String] -> Maybe FilePath -> ErrIO ()
+callProcessWithCWD :: FilePath -> [String] -> Path Abs Dir -> ErrIO ()
 callProcessWithCWD cmd args cwd1 = callIO $ do
-    exit_code <- Sys.withCreateProcess -- "callProcess"
-                   (Sys.proc cmd args) { Sys.delegate_ctlc = True 
-                                    , Sys.cwd = cwd1 } $ \_ _ _ p ->
-                   Sys.waitForProcess p
+    exit_code <- 
+        Sys.withCreateProcess -- "callProcess"
+            (Sys.proc cmd args) { Sys.delegate_ctlc = True 
+                            , Sys.cwd = (Just . toFilePath $ cwd1) } 
+                                $ \_ _ _ p ->
+                Sys.waitForProcess p
     case exit_code of
       Sys.ExitSuccess   -> return ()
       Sys.ExitFailure r -> fail . show $ r 

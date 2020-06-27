@@ -79,7 +79,8 @@ test_writePDF4complex = testVar0FileIO "uniform-pandoc"
 writePDF4 tsfn1  = do       
         pan1  <- read8 tsfn1 texFileType 
         -- let p1 = unwrap7 pan1 :: Pandoc 
-        writePDF2 True tsfn1 tsfn1
+        let cwd1 = makeAbsDir . getParentDir $ tsfn1 :: Path Abs Dir 
+        writePDF2 True tsfn1 tsfn1 cwd1
         -- writes the pdf file
         -- pdf1 <- read8 tsfn1 pdfFileType  -- read8 cannot read pdf
         return . PDFfile $ "ok"
