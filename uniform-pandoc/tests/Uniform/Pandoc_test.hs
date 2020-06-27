@@ -18,6 +18,7 @@ module Uniform.Pandoc_test where
 import Test.Framework
 ---- using uniform:
 import Uniform.Pandoc 
+import Uniform.Filenames 
 import Uniform.Test.TestHarness
 import Uniform.Markdown_test 
 import Uniform.Error           hiding (  (<.>)  )  -- (</>)
@@ -63,4 +64,14 @@ writeTexSnip4 pfn1  = do
         write8 pfn1 texSnipFileType tex1
         return tex1
 
+-- test_pdf1 = testVar0File "uniform-pandoc" shortFile 
+--                 "test_writePDF2short" writePDF4 
+
+-- writePDF4 pfn1  = do       
+--         let fnin = replaceExtension pfn1 extTex 
+--         let fnout = replaceExtension pfn1 extPDF 
+--         -- let p1 = unwrap7 pan1 :: Pandoc 
+--         res <- writePDF2 True fnin fnout 
+--         putIOwords ["writePDF4 res", showT res]
+--         return res
 instance ShowTestHarness TexSnip 
