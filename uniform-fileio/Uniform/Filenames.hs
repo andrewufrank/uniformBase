@@ -192,7 +192,7 @@ class Filenames4 fp file  where
     addDir  :: fp -> file -> FileResultT4 fp file
 
 class Filenames1 fp where
-    -- instantiate only for filepath
+    -- instantiate only for filepath TODO do for path 
     getImmediateParentDir :: fp -> FilePath
     -- ^ gets the name of the dir immediately above
     getParentDir :: fp -> FilePath
@@ -201,6 +201,18 @@ class Filenames1 fp where
     -- ^ filename without extension
     getNakedDir :: fp -> FilePath
     -- ^ get the last dir
+
+-- class Filenames2 fp where
+--     -- instantiate only for filepath TODO do for path 
+--     getImmediateParentDir2 :: fp -> fp
+-- instance Filenames2 FilePath where 
+--     getImmediateParentDir2 = getImmediateParentDir
+
+-- instance Filenames2 (Path Abs Dir) where 
+--     getImmediateParentDir2 = makeAbsDir . getImmediateParentDir . toFilePath
+-- instance Filenames2 (Path Rel Dir) where 
+--     getImmediateParentDir2 = makeAbsDir . getImmediateParentDir . toFilePath
+-- needs also differentiation if the input is a dir or a file 
 
 instance Filenames FilePath FilePath where
     getFileName = snd . S.splitFileName
