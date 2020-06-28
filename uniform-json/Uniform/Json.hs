@@ -67,6 +67,7 @@ fromJSONm v = result1 (fromJSON v)
 --             Success a -> return a 
 --             x -> throwErrorT ["fromJson", showT x]
 
+result1 ::(Monad m, MonadFail m) =>  Result a -> m a 
 result1 (Aeson.Error msg)  = fail msg
 result1 (Aeson.Success a) = return  a 
 

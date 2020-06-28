@@ -22,7 +22,7 @@ module Main     where      -- must have Main (main) or Main where
 
 import         "HTF"  Test.Framework
 import     {-@ HTF_TESTS @-}       Uniform.Json_test
-import     {-@ HTF_TESTS @-}       Uniform.Yaml_test
+-- import     {-@ HTF_TESTS @-}       Uniform.Yaml_test
 
 import           Uniform.Strings
 
