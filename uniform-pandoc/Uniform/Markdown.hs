@@ -48,12 +48,6 @@ import           Uniform.PandocImports
 -- https://williamyaoh.com/posts/2019-10-19-a-cheatsheet-to-json-handling.html
 -- https://artyom.me/aeson
 import qualified Text.Pandoc                   as Pandoc
--- import qualified Text.Pandoc.Extensions                   as Pandoc
--- import qualified Data.Vector as V
-
--- parseArray :: Value -> Parser [(String, Bool)]
--- parseArray (Array arr) = mapM parseTuple (V.toList arr)
--- parseArray _           = fail "expected an array"
 
 readMarkdown2docrep :: MarkdownText -> ErrIO DocRep
 -- | read a md file into a DocRep
@@ -63,28 +57,7 @@ readMarkdown2docrep md = do
     let (Pandoc meta1 block1) = pd
     let meta2                 = flattenMeta meta1
     return (DocRep meta2 (Pandoc zero block1))
-        -- zero the metadata 
-
-
-
-
-    -- pandoc2 <- case (bibliography metaRec) of
-    --     Nothing    -> return pandoc
-    --     Just bibfp -> do
-    --         when debug $ putIOwords
-    --             [ "markdownToPandocBiblio"
-    --             , "start pandocProcessCites"
-    --             , showT doughP
-    --             , showT bibfp
-    --             , showT (bibliographyGroup metaRec)
-    --             ]
-    --         pandocProcessCites doughP  -- required to set the current dir 
-    --                            (makeAbsFile bibfp) -- (doughP </> (makeRelFile . t2s $ bibfp))
-    --                            (bibliographyGroup metaRec)
-    --                            pandoc
-    --        -- here the dir is used for processing in my code
-    -- return pandoc2
-
+        -- zero the metadata to detect errors
 
 
 readMarkdown2 :: MarkdownText -> ErrIO Pandoc

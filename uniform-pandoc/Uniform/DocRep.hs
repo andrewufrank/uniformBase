@@ -9,7 +9,7 @@
     -- (but can be put into the json )
     -- metajson is just a wrapped json 
     
-    -- DocRep replaces DocRep 
+    -- DocRep replaces DocVal (Value is in json used) 
     -- metajson replaces metarec
     -- DocRep can be read8/write8 
 -----------------------------------------------------------------------------
@@ -44,6 +44,7 @@ module Uniform.DocRep
     )
 where
 
+import GHC.Generics
 import           Uniform.Error
 import           Uniform.Filenames
 import           Uniform.TypedFile  ( TypedFiles7(..)
@@ -81,9 +82,10 @@ fromJSONValue = parseMaybe parseJSON
 -- metadata keept in the yam json 
 -- TODO replace Pandoc with Block in DocRep 
 data DocRep = DocRep {yam:: Value, pan:: Pandoc}  -- a json value
-        deriving (Show, Read, Eq)
+        deriving (Show, Read, Eq, Generic)
 instance Zeros DocRep where zero = DocRep zero zero
-
+instance FromJSON DocRep 
+instance ToJSON DocRep 
 
 docRep2texsnip :: DocRep -> ErrIO TexSnip
 -- ^ transform a docrep to a texsnip 
