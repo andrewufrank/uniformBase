@@ -94,12 +94,15 @@ instance AtKey Value Bool where
     putAtKey k2 txt meta2 = meta2 & _Object . at k2 ?~ Bool txt
 
 
-mergeAeson :: [Value] -> Value
+mergeLeftPref :: [Value] -> Value
 -- ^ The (left-biased) union of two maps.
 -- all values must be objects 
 -- It prefers the first map when duplicate keys are encountered,
 -- http://hackage.haskell.org/package/hashmap-1.3.3/docs/Data-HashMap.html
-mergeAeson = Object . HML.unions . map (\(Object x) -> x)
+mergeLeftPref = Object . HML.unions . map (\(Object x) -> x)
+
+mergeRightPref :: [Value] -> Value
+mergeRightPref = mergeLeftPref . reverse 
 
 
 instance NiceStrings Value where

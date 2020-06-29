@@ -145,55 +145,68 @@ test_fromJSONm = do
 -- test_val = assertEqual v1 (showT val)
 -- v1 = "Object (fromList [(\"boolean\",Bool True),(\"numbers\",Array [Number 1.0,Number 2.0,Number 3.0])])"
 
--- -- test to see if a partial update with merge works
+-- test to see if a partial update with merge works
 
--- data RecFull = RecFull {boolean :: Bool 
---                         , numbers :: [Int]
---                         , firstInt :: Int
---                         , secondReal :: Double 
---                         , thirdString :: String 
---                         , fourthText :: Text 
---                         } 
---                         deriving (Read, Show, Eq, Ord, Generic)
+data RecFull = RecFull {boolean :: Bool 
+                        , numbers :: [Int]
+                        , firstInt :: Int
+                        , secondReal :: Double 
+                        , thirdString :: String 
+                        , fourthText :: Text 
+                        } 
+                        deriving (Read, Show, Eq, Ord, Generic)
 
--- instance ToJSON RecFull 
--- instance FromJSON RecFull
+instance ToJSON RecFull 
+instance FromJSON RecFull
 
  
--- data RecPart = RecPart {firstInt :: Int
---                 , fourthText :: Text }
---                 deriving (Read, Show, Eq, Ord, Generic)
+data RecPart = RecPart {firstInt :: Int
+                , fourthText :: Text }
+                deriving (Read, Show, Eq, Ord, Generic)
                 
--- instance ToJSON RecPart 
--- instance FromJSON RecPart
+instance ToJSON RecPart 
+instance FromJSON RecPart
 
--- val7 = RecFull True [1,2,3] 1 2.22 "aaaa"  "áäö"
--- valOutput :: RecFull 
--- valOutput = RecFull {boolean = True, numbers = [1,2,3], firstInt = 1, secondReal = 2.22, thirdString = "aaaa", fourthText = "\225\228\246"}
--- valj = toJSON val7 
+val7 = RecFull True [1,2,3] 1 2.22 "aaaa"  "áäö"
+valOutput :: RecFull 
+valOutput = RecFull {boolean = True, numbers = [1,2,3], firstInt = 1, secondReal = 2.22, thirdString = "aaaa", fourthText = "\225\228\246"}
+valj = toJSON val7 
 
--- aDemo = do 
---     p1 :: RecPart <-  (fromJSONm valj)
---     putIOwords["the the part record from json", showT p1]
+aDemo = do 
+    p1 :: RecPart <-  (fromJSONm valj)
+    putIOwords["the the part record from json", showT p1]
 
---     let p2 = p1 {firstInt = 2, fourthText = "ascii"} :: RecPart
---     let p2j = toJSON p2 
+    let p2 = p1 {firstInt = 2, fourthText = "ascii"} :: RecPart
+    let p2j = toJSON p2 
 
---     let p3j = mergeAeson [p2j, valj]   -- first wins?
---     putIOwords ["the merged p3", showT p3j]
+    let p3j = mergeLeftPref [p2j, valj]   -- first wins?
+    putIOwords ["the merged p3", showT p3j]
 
---     p3 :: RecFull <-  (fromJSONm p3j) 
---     putIOwords ["the merged p3 from json", showT p3]
+    p3 :: RecFull <-  (fromJSONm p3j) 
+    putIOwords ["the merged p3 from json", showT p3]
 
--- test_partialUpdate = do 
---     res <- runErr $ do
---         p1 :: RecPart <-  (fromJSONm valj)  -- get part
---         let p2 = p1 {firstInt = 2, fourthText = "ascii"} :: RecPart
---                 -- updated part
---         let p2j = toJSON p2
---         let p3j = mergeAeson [p2j, valj] -- first wins
---         p2check  :: RecPart <-  (fromJSONm p3j)
+test_partialUpdate = do 
+    res <- runErr $ do
+        p1 :: RecPart <-  (fromJSONm valj)  -- get part
+        let p2 = p1 {firstInt = 2, fourthText = "ascii"} :: RecPart
+                -- updated part
+        let p2j = toJSON p2
+        let p3j = mergeLeftPref [p2j, valj] -- first wins
+        p2check  :: RecPart <-  (fromJSONm p3j)
 
---         return (p2, p2check) 
---     let Right (p2, p2check) = res
---     assertEqual p2 p2check  
+        return (p2, p2check) 
+    let Right (p2, p2check) = res
+    assertEqual p2 p2check  
+
+test_partialUpdateReverse = do 
+    res <- runErr $ do
+        p1 :: RecPart <-  (fromJSONm valj)  -- get part
+        let p2 = p1 {firstInt = 2, fourthText = "ascii"} :: RecPart
+                -- updated part
+        let p2j = toJSON p2
+        let p3j = mergeRightPref [valj, p2j] -- first wins
+        p2check  :: RecPart <-  (fromJSONm p3j)
+
+        return (p2, p2check) 
+    let Right (p2, p2check) = res
+    assertEqual p2 p2check  
