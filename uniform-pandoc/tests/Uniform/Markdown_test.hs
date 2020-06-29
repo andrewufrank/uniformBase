@@ -97,7 +97,7 @@ readDocRep2 mfn  = do
 --         putIOwords ["test_addRefs", showT res1]
 --         return (res1) 
 --     assertEqual (Left "") res2 
-
+-- -- works but should be using a regression test. output is too long
  
 -- res4text1 = "ttxx   " :: Text
 instance ShowTestHarness Pandoc 

@@ -92,6 +92,7 @@ docRep2texsnip :: DocRep -> ErrIO TexSnip
 -- does not need the references include in docRep
 -- TODO needed!-- which is done by tex to pdf conversion
 docRep2texsnip dr1@(DocRep y1 p1) = do 
+    
     ts1 :: Text <- unPandocM $ Pandoc.writeLaTeX latexOptions p1 
     return . TexSnip $ ts1
 
