@@ -201,7 +201,7 @@ mergeAll :: DocRep -> [Value] -> DocRep
 -- ^ merge the values with the values in DocRec -- last winns
 -- issue how to collect all css?
 
-mergeAll (DocRep y p) vs = DocRep (mergeAeson . reverse $  y : vs) p
+mergeAll (DocRep y p) vs = DocRep (mergeRightPref $  y : vs) p
 
 instance AtKey DocRep Text where
   getAtKey dr k2 = getAtKey (yam dr) k2
