@@ -59,9 +59,17 @@ fromJSONmaybe v = case (fromJSON v) of
 
 instance Zeros Value  where zero = Null 
 
+
 fromJSONm :: (FromJSON a, Show a) => Value -> ErrIO a 
--- fromJSONm :: (FromJSON a, MonadError m) => Value -> m a   
+-- DO NOT USE ! fromJSONm :: (FromJSON a, MonadError m) => Value -> m a   
 fromJSONm v = result1 (fromJSON v)
+
+-- the following gives error msg 
+fromJSONerrio :: (FromJSON a, Show a) => Value -> ErrIO a 
+-- fromJSONm :: (FromJSON a, MonadError m) => Value -> m a   
+fromJSONerrio v =  callIO $ do 
+                                     result1 (fromJSON v)
+
 
 -- fromJSONm v = case (fromJSON v) of 
 --             Success a -> return a 

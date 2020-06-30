@@ -49,6 +49,14 @@ data Person =
 instance FromJSON Person
 instance ToJSON Person 
 
+data PersonKurz =
+  PersonKurz { firstName  :: !Text
+         , lastName   :: !Text
+           } deriving (Show, Read,Ord, Eq, Generic)
+instance FromJSON PersonKurz
+instance ToJSON PersonKurz 
+
+k1 = PersonKurz "paul" "kurz"
 p1 = Person "peter" "meier" 30 True
 
 -- ex1 = { "firstName"  : "Daniel"
@@ -57,10 +65,20 @@ p1 = Person "peter" "meier" 30 True
 --    , "likesPizza" :  true
 --      }        
 p2j = toJSON p1 
+k2j = toJSON k1 
 
 test_fromJSON = do 
         res <- runErr . callIO $ do 
                     let a =  fromJSON p2j 
+                    a2 :: Person <- result1 a
+                    return a2
+        assertEqual (Right p1) res 
+
+-- only solution, other hang without msg  
+test_fromJSONk = do  -- fails with error msg
+            -- important is callIO 
+        res <- runErr . callIO $ do 
+                    let a =  fromJSON k2j 
                     a2 :: Person <- result1 a
                     return a2
         assertEqual (Right p1) res 
@@ -72,7 +90,22 @@ test_fromJSONx = do
                     return a2
         assertEqual (Right p1) res 
 
--- the best solution 
+-- test_fromJSONxk = do  -- hangs
+--         res <- runErr  $ do 
+--                     let a =  fromJSON k2j 
+--                     a2 :: Person <- result1 a
+--                     return a2
+--         assertEqual (Right p1) res 
+
+-- the best solution -- but hangs if fields not present
+-- test_fromJSONm = do 
+--     res <- runErr $ 
+--                 do 
+--                     a2 <- fromJSONm k2j 
+--                     -- a2 :: Person <- result1 a
+--                     return a2
+--     assertEqual (Right p1) res  -- expects fields not present
+
 test_fromJSONm = do 
     res <- runErr $ 
                 do 
@@ -80,6 +113,18 @@ test_fromJSONm = do
                     -- a2 :: Person <- result1 a
                     return a2
     assertEqual (Right p1) res 
+
+test_fromJSONerrio = do 
+    res <- runErr $ fromJSONerrio p2j 
+                    -- a2 :: Person <- result1 a
+                    -- return a2
+    assertEqual (Right p1) res 
+test_fromJSONerrioKurz = do 
+    res <- runErr $ fromJSONerrio k2j 
+                    -- a2 :: Person <- result1 a
+                    -- return a2
+    assertEqual (Right p1) res 
+
 
 -- before 0.4 
 -- data MetaRec = MetaRec {
