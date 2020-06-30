@@ -83,12 +83,12 @@ test_fromJSONk = do  -- fails with error msg
                     return a2
         assertEqual (Right p1) res 
 
-test_fromJSONx = do 
-        res <- runErr  $ do 
-                    let a =  fromJSON p2j 
-                    a2 :: Person <- result1 a
-                    return a2
-        assertEqual (Right p1) res 
+-- test_fromJSONx = do 
+--         res <- runErr  $ do 
+--                     let a =  fromJSON p2j 
+--                     a2 :: Person <- result1 a
+--                     return a2
+--         assertEqual (Right p1) res 
 
 -- test_fromJSONxk = do  -- hangs
 --         res <- runErr  $ do 
@@ -106,13 +106,13 @@ test_fromJSONx = do
 --                     return a2
 --     assertEqual (Right p1) res  -- expects fields not present
 
-test_fromJSONm = do 
-    res <- runErr $ 
-                do 
-                    a2 <- fromJSONm p2j 
-                    -- a2 :: Person <- result1 a
-                    return a2
-    assertEqual (Right p1) res 
+-- test_fromJSONm = do 
+--     res <- runErr $ 
+--                 do 
+--                     a2 <- fromJSONm p2j 
+--                     -- a2 :: Person <- result1 a
+--                     return a2
+--     assertEqual (Right p1) res 
 
 test_fromJSONerrio = do 
     res <- runErr $ fromJSONerrio p2j 

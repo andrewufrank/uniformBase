@@ -1,6 +1,8 @@
 --------------------------------------------------------------------------
 --
 -- Module      :  Uniform.Markdown
+-- these are operations which are not influenced by SSG 
+-- just stuff that depends, for example, on pandoc 
 -------------------------------------------------------------------------
 -- {-# LANGUAGE BangPatterns                   #-}
 {-# LANGUAGE ConstraintKinds #-}
@@ -52,6 +54,7 @@ import qualified Text.Pandoc                   as Pandoc
 readMarkdown2docrep :: MarkdownText -> ErrIO DocRep
 -- | read a md file into a DocRep
 -- all values from meta are moved to yam (meta is zero to avoid problems)
+-- in a json format
 readMarkdown2docrep md = do
     pd <- readMarkdown2 md
     let (Pandoc meta1 block1) = pd
