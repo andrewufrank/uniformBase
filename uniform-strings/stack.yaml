@@ -2,6 +2,7 @@ flags: {}
 extra-package-dbs: []
 packages:
 - .
+extra-deps:
 #- ../uniform-strings
 - ../uniform-algebras
 # - ../uniform-convenience
@@ -19,7 +20,6 @@ packages:
 # # - ../../fromOthers/path-io
 # - ../../fromOthers/pretty-show
 
-extra-deps:
 - test-invariant-0.4.5.0
 - twitch-0.1.7.2
 resolver: lts-16.0

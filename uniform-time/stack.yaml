@@ -2,6 +2,7 @@ flags: {}
 extra-package-dbs: []
 packages:
 - .
+extra-deps:
 - ../uniform-strings
 - ../uniform-algebras
 # - ../uniform-convenience
@@ -23,7 +24,6 @@ packages:
 #/home/frank/Workspace8/fromOthersInstalled
 #/home/frank/Workspace8/uniform/uniform-algebras
 
-extra-deps:
 - test-invariant-0.4.5.0
 #- twitch-0.1.7.2
 #- path-0.7.0
