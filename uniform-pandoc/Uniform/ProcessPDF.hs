@@ -75,6 +75,7 @@ preamble1 =
     , "\\usepackage[colorlinks]{hyperref}"
     , "\\providecommand{\\tightlist}{%"
     , "\\setlength{\\itemsep}{0pt}\\setlength{\\parskip}{0pt}}"
+    , ""
     , "\\begin{document}"
     , ""
     ] :: [Text]
