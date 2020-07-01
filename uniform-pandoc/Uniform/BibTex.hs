@@ -137,7 +137,7 @@ readBibTex fp = do
 parseBibTex :: String -> IO [Entry.T]
 parseBibTex bib =
   case parse (Parse.skippingLeadingSpace Parse.file) "stdin" bib of
--- ^ parseBibTex bib = case Parsec.parse (Parsec.skipMany Parsec.space >> Parse.file) "stdin" bib of
+--  parseBibTex bib = case Parsec.parse (Parsec.skipMany Parsec.space >> Parse.file) "stdin" bib of
     Left  errMsg  -> error (show errMsg)
     Right entries -> return entries
 
