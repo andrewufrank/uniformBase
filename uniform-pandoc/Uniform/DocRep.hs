@@ -141,18 +141,18 @@ docRepAddRefs dr1@(DocRep y1 p1) = do
     maybe (return dr1) (addRefs2 dr1) biblio1 
 
 addRefs2 dr1@(DocRep y1 p1) biblio1 = do 
-    putIOwords ["addRefs2", showT dr1, "\n"]   
+    when False $ putIOwords ["addRefs2", showT dr1, "\n"]   
     let  
         style1  = getAtKey y1 "style" :: Maybe Text
         refs1   = y1 ^? key "references" :: Maybe Value -- is an array 
         nocite1 = getAtKey y1 "nocite" :: Maybe Text
                      
-    putIOwordsT
+    when False $ putIOwordsT
         [ "docRepAddRefs"
         , "\n biblio"
-        , showT biblio1
+        , showT biblio1 -- is only biblio "resources/BibTexLatex.bib"  
         , "\n style"
-        , showT style1
+        , showT style1 -- style Just "/home/frank/Workspace8/ssg/docs/site/dough/resources/chicago-fullnote-bibliography-bb.csl"
         , "\n refs"
         , showT refs1
         , "\n nocite"
@@ -171,7 +171,7 @@ addRefs2 dr1@(DocRep y1 p1) biblio1 = do
             t2s . fromJustNote "style1 in docRepAddRefs wer23" $ style1 :: FilePath
 --  Raised the exception:
 -- ["runErr2action","Safe.fromJustNote Nothing, style1 in docRepAddRefs wer23\nCallStack (from HasCallStack):\n  fromJustNote, called at ./Uniform/DocRep.hs:165:19 in uniform-pandoc-0.0.2-CQ6TrBvcdAe7Crud3c6Rca:Uniform.DocRep"]
-    putIOwordsT ["docRepAddRefs", "done"]
+    when False $ putIOwordsT ["docRepAddRefs", "done"]
 
     biblio2 <- callIO $ Pars.readBiblioFile (const True) bibliofp
     style2  <- callIO $ Pars.readCSLFile loc1 stylefp
@@ -179,7 +179,7 @@ addRefs2 dr1@(DocRep y1 p1) biblio1 = do
     let refsSum = refs4 ++ biblio2
     let p2      = processCites style2 refsSum p1
 
-    putIOwordsT ["docRepAddRefs", "p2\n", showT p2]
+    when False $ putIOwordsT ["docRepAddRefs", "p2\n", showT p2]
 
     return (DocRep y1 p2)
 --------------------------------------------typed file DocRep
