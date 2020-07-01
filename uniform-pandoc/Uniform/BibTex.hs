@@ -19,9 +19,9 @@ import qualified Data.Map                      as M
 import           Text.BibTeX.Entry             as T
 import qualified Text.BibTeX.Entry             as Entry
 import           Text.BibTeX.Entry              ( )
-import           Text.BibTeX.Parse
+-- import           Text.BibTeX.Parse
 import qualified Text.BibTeX.Parse             as Parse
-
+import qualified Text.Parsec                    as Parsec
 import           Text.CSL.Pandoc                ( processCites' )
 import qualified Text.Pandoc                   as P
 import qualified Text.Pandoc.Definition        as PD
@@ -136,7 +136,7 @@ readBibTex fp = do
 
 parseBibTex :: String -> IO [Entry.T]
 parseBibTex bib =
-  case parse (Parse.skippingLeadingSpace Parse.file) "stdin" bib of
+  case Parsec.parse (Parse.skippingLeadingSpace Parse.file) "stdin" bib of
 --  parseBibTex bib = case Parsec.parse (Parsec.skipMany Parsec.space >> Parse.file) "stdin" bib of
     Left  errMsg  -> error (show errMsg)
     Right entries -> return entries
