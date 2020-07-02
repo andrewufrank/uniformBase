@@ -46,6 +46,12 @@ import Uniform.Json
 import  qualified System.Process                as Sys
 import qualified System.Exit as Sys 
 
+panrep2texsnip  :: Panrep -> ErrIO TexSnip
+panrep2texsnip (Panrep y p) = do 
+    res1 <- writeTexSnip2 p 
+    return (TexSnip y res1)
+
+-- probably not needed?    
 data LatexParam = LatexParam {latBibliography:: Maybe Text
                              , latStyle :: Maybe Text}
                              deriving (Eq, Ord, Read, Show, Generic)
