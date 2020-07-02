@@ -88,39 +88,29 @@ instance Zeros DocRep where zero = DocRep zero zero
 instance FromJSON DocRep 
 instance ToJSON DocRep 
 
-docRep2texsnip :: DocRep -> ErrIO TexSnip
--- ^ transform a docrep to a texsnip 
--- does not need the references include in docRep
--- TODO needed!-- which is done by tex to pdf conversion
-docRep2texsnip dr1@(DocRep y1 p1) = do 
+docRep2panrep :: DocRep -> ErrIO Panrep
+-- ^ transform a docrep to a panrep
+-- does process the references 
+-- and will do index, but this goes to ssg
+--  
+docRep2panrep dr1@(DocRep y1 p1) = do 
     
-    ts1 :: Text <- unPandocM $ Pandoc.writeLaTeX latexOptions p1 
-    return $ TexSnip  y1 ts1
-
--- latexOptions :: WriterOptions  -- is Pandoc
--- latexOptions = 
---     def { writerHighlightStyle = Just tango
---         , writerExtensions     =  Pandoc.extensionsFromList
---                         [Pandoc.Ext_raw_tex   --Allow raw TeX (other than math)
---                         -- , Pandoc.Ext_shortcut_reference_links
---                         -- , Pandoc.Ext_spaced_reference_links
---                         -- , Pandoc.Ext_citations           -- <-- this is the important extension for bibTex
---                         ]                     
---         }
+    (DocRep y2 p2) <- addRefs dr1
+    return $ Panrep  y2 p2
 
 
 ------------------------------------
 
-docRep2html:: DocRep -> ErrIO HTMLout
+panrep2html:: Panrep  -> ErrIO HTMLout
 -- ^ transform a docrep to a html file 
 -- needs teh processing of the references with citeproc
-docRep2html dr1@(DocRep y1 p1) = do 
-    dr2 <- docRepAddRefs dr1 
-    h1 <- unPandocM $ writeHtml5String html5Options (pan dr2)
+panrep2html pr1@(Panrep y1 p1) = do 
+    -- dr2 <- addRefs pr1 
+    h1 <- unPandocM $ writeHtml5String html5Options (p1)
     return . HTMLout $  h1
 
 --------------------------------
-docRepAddRefs :: DocRep -> ErrIO DocRep
+addRefs :: DocRep -> ErrIO DocRep
 -- ^ add the references to the pandoc block
 -- the biblio is in the yam (otherwise nothing is done)
 -- ths cls file must be in the yam
@@ -134,7 +124,7 @@ docRepAddRefs :: DocRep -> ErrIO DocRep
 --   let result = citeproc procOpts s m $ [cites]
 --   putStrLn . unlines . map (renderPlainStrict) . citations $ result
 
-docRepAddRefs dr1@(DocRep y1 p1) = do
+addRefs dr1@(DocRep y1 p1) = do
     -- the biblio entry is the signal that refs need to be processed 
     -- only refs do not work 
     putIOwords ["docRepAddRefs", showT dr1, "\n"]
