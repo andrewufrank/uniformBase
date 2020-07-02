@@ -35,7 +35,7 @@ module Uniform.Pandoc
   , module Uniform.Filenames 
   , write8, read8,setExtension
   , writeTexSnip2
-  , pandocFileType
+  , panrepFileType
   , TypedFile5(..)
   , TypedFiles5(..)
   , TypedFiles7(..)

@@ -22,6 +22,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 -- {-# LANGUAGE TypeSynonymInstances        #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DeriveGeneric #-}
@@ -94,7 +95,7 @@ docRep2texsnip :: DocRep -> ErrIO TexSnip
 docRep2texsnip dr1@(DocRep y1 p1) = do 
     
     ts1 :: Text <- unPandocM $ Pandoc.writeLaTeX latexOptions p1 
-    return . TexSnip $ ts1
+    return $ TexSnip  y1 ts1
 
 -- latexOptions :: WriterOptions  -- is Pandoc
 -- latexOptions = 

@@ -163,20 +163,23 @@ instance TypedFiles7 Text Text where
     wrap7 = id
     unwrap7 = id 
 
-writeTexSnip2 ::   Pandoc -> ErrIO TexSnip
+writeTexSnip2 ::   Pandoc -> ErrIO Text
 -- write a latex file from a pandoc doc 
 writeTexSnip2  pandocRes = do
     p <- unPandocM $  writeLaTeX latexOptions pandocRes
-    return  . TexSnip $ p
+    return   p
 
 -------------------- fileType ----------
-extPandoc = Extension "pandoc"
+extPanrep = Extension "panrep"
 
-pandocFileType =
-  TypedFile5 { tpext5 = extPandoc } :: TypedFile5 Text Pandoc
+panrepFileType =
+  TypedFile5 { tpext5 = extPanrep } :: TypedFile5 Text Panrep
 
- 
-instance TypedFiles7 Text Pandoc  where
+data Panrep = Panrep {panyam :: Value, panpan :: Pandoc }
+    deriving (Eq, Show, Read )
+instance Zeros Panrep where zero = Panrep zero zero 
+
+instance TypedFiles7 Text Panrep  where
   -- handling Pandoc and read them into PandocText
   wrap7 = readNote "wrap7 for pandoc 223d" .t2s
   unwrap7   = showT
@@ -188,13 +191,13 @@ instance TypedFiles7 Text Pandoc  where
 extTexSnip = Extension "texsnip"
 
 -- | a wrapper around TexSnip 
-newtype TexSnip = TexSnip {unTexSnip ::Text}
-  deriving (Show, Read, Eq, Ord)
+data TexSnip = TexSnip {snipyam :: Value, unTexSnip ::Text}
+  deriving (Show, Read, Eq)
 
 -- unTexSnip (TexSnip a) = a   --needed for other ops
 
 instance Zeros TexSnip where
-  zero = TexSnip zero
+  zero = TexSnip zero zero
 
 texSnipFileType =
   TypedFile5 { tpext5 = extTexSnip } :: TypedFile5 Text TexSnip
@@ -203,6 +206,6 @@ instance TypedFiles7 Text TexSnip  where
   -- handling TexSnip and read them into TexSnipText
   -- the file on disk is readable for texstudio
   
-  wrap7 = TexSnip  -- readNote "wrap7 for TexSnip dwe11d" .t2s
-  unwrap7   = unTexSnip -- showT
+  wrap7 = readNote "wrap7 for TexSnip dwe11d" .t2s
+  unwrap7   = showT
 

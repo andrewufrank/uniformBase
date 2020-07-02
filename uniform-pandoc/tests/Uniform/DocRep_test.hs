@@ -117,8 +117,8 @@ test_dr2texsnipWithRef = testVar0FileIO "uniform-DocRep"
 docRep2texsnipTest :: Path Abs File -> ErrIO TexSnip
 docRep2texsnipTest drfn  = do       
     dr1 :: DocRep <- read8 drfn docRepFileType 
-    res1 :: TexSnip <-  docRep2texsnip  dr1 
-    write8 drfn texSnipFileType res1
+    res1 :: Text <-  docRep2texsnip  dr1 
+    write8 drfn texSnipFileType (TexSnip (yam dr1) res1)
     return res1
 
 

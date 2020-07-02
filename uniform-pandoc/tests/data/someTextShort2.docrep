@@ -1,1 +1,0 @@
-DocRep {yam = Object (fromList []), pan = Pandoc (Meta {unMeta = fromList []}) [Para [Str "An",Space,Str "new",Space,Str "start"]]}

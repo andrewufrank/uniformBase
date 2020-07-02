@@ -1,7 +1,9 @@
---------------------------------------------------------------------------
+-----------------------------------------------------------------------
 --
--- Module      :  pandoc test
------------------------------------------------------------------------------
+-- Module      : markdown test 
+    -- tests for narkdown - docrep  
+        -- docrep - panrec
+-------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 --{-# LANGUAGE AllowAmbiguousTypes   #-}
 {-# LANGUAGE FlexibleContexts      #-}
@@ -51,26 +53,7 @@ test_readWrite = do
     assertEqual target3 res3
 
 
-test_readPandocShort = testVar0FileIO "uniform-pandoc" 
-        shortFile
-        "test_readPandocShort" readPandoc2 
-test_readPandocReg = testVar0FileIO "uniform-pandoc" 
-        regFile
-        "test_readPandocReg" readPandoc2 
-test_readPandocComplex = testVar0FileIO "uniform-pandoc" 
-        complexFile
-        "test_readPandocComplex" readPandoc2 
-test_readPandocwithRef = testVar0FileIO "uniform-pandoc" 
-        withRef
-        "test_readPandocwithRef" readPandoc2 
 
--- testVar0FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
-            -- => Text -> a -> FilePath -> (a-> ErrIO b) -> IO ()
-readPandoc2 mfn  = do       
-        text1 <- read8 mfn markdownFileType 
-        res1 :: Pandoc <-  readMarkdown2  text1 
-        write8 mfn pandocFileType res1
-        return res1
 
 test_readDocRepShort = testVar0FileIO "uniform-DocRep" 
         shortFile
@@ -105,3 +88,26 @@ readDocRep2 mfn  = do
 -- res4text1 = "ttxx   " :: Text
 instance ShowTestHarness Pandoc 
 instance ShowTestHarness DocRep 
+
+test_readpanrecShort = testVar0FileIO "uniform-panrec" 
+        shortFile
+        "test_readpanrecShort" read2panrep2 
+test_readpanrecReg = testVar0FileIO "uniform-panrec" 
+        regFile
+        "test_readpanrecReg" read2panrep2 
+test_readpanrecComplex = testVar0FileIO "uniform-panrec" 
+        complexFile
+        "test_readpanrecComplex" read2panrep2 
+test_readpanrecwithRef = testVar0FileIO "uniform-panrec" 
+        withRef
+        "test_readpanrecwithRef" read2panrep2 
+
+-- testVar0FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
+            -- => Text -> a -> FilePath -> (a-> ErrIO b) -> IO ()
+read2panrep2 mfn  = do       
+        text1 <- read8 mfn docRepFileType 
+        let res1 = Panrep (yam text1) (pan text1)
+        write8 mfn panrepFileType res1
+        return res1
+
+instance ShowTestHarness Panrep

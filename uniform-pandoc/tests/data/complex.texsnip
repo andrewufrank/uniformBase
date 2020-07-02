@@ -1,8 +1,1 @@
-Some text without meaning; really? with an image
-
-\includegraphics{/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/img/120-2026_IMG.JPG}
-
-An example post. postwk but \footnote{This is a footnote!} in blog - not
-in SubBlog with some additional text which is always changed
-\includegraphics{/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/img/120-2026_IMG.JPG}
-addition
+TexSnip {snipyam = Object (fromList []), unTexSnip = "Some text without meaning; really? with an image\n\n\\includegraphics{/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/img/120-2026_IMG.JPG}\n\nAn example post. postwk but \\footnote{This is a footnote!} in blog - not\nin SubBlog with some additional text which is always changed\n\\includegraphics{/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/img/120-2026_IMG.JPG}\naddition"}
