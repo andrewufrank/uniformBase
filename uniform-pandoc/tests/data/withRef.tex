@@ -1,0 +1,27 @@
+\documentclass[a4paper,10pt]{scrbook}
+\usepackage{fontspec}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{natbib}
+\makeindex
+\usepackage[colorlinks]{hyperref}
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
+
+An example post \citep{fenner2012a}. With a reference to
+\citep{frank09geo} given and navratil08 as nocite. Not including the
+"TUxx9999" addition in brackets. The \citep{frank2010a} and
+\citep{frank09geo} is a The references are in
+"resources/BibTexLatex.bib".
+
+\bibliographystyle{plainnat}
+
+\bibliography{/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/resources/BibTexLatex.bib}
+
+
+
+\printindex
+\end{document}

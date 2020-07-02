@@ -41,18 +41,41 @@ where
 import           Uniform.FileIO
 import           Uniform.DocRep
 import           Uniform.PandocImports
+import Uniform.Json
 
 import  qualified System.Process                as Sys
 import qualified System.Exit as Sys 
 
-tex2latex :: [TexSnip] -> Latex
+data LatexParam = LatexParam {latBibliography:: Maybe Text
+                             , latStyle :: Maybe Text}
+                             deriving (Eq, Ord, Read, Show, Generic)
+instance Zeros LatexParam where zero = LatexParam zero zero 
+
+doclatexOptions =
+    defaultOptions 
+        {fieldLabelModifier = t2s . toLowerStart . s2t . drop 2 }
+instance ToJSON LatexParam where
+    toJSON = genericToJSON doclatexOptions
+instance FromJSON LatexParam where 
+    parseJSON = genericParseJSON doclatexOptions 
+
+tex2latex :: LatexParam -> [TexSnip] -> Latex
 -- ^ combine a snipped (produced from an md file) with a preamble to 
 -- produce a compilable latex file.
-tex2latex snips =
+-- does not use additional references 
+-- does not use style paramter
+-- does not do nocite 
+
+tex2latex latpar snips =
     Latex
         . concat'
         $ [ unlines' preamble1
           , concat' (map unTexSnip snips)
+          , unlines' $ if isZero latpar 
+                then [""] 
+                else makebiblio 
+                        (fromJustNote "tex2latex 2wrqwe" $ latStyle latpar) 
+                        (fromJustNote "tex2latex 00wr" $ latBibliography latpar)
           , unlines' postamble1
           ]
 
@@ -81,6 +104,15 @@ preamble1 =
     ] :: [Text]
 
 postamble1 = ["", "", "\\printindex", "\\end{document}"] :: [Text]
+
+makebiblio style biblio  = ["", "", "\\bibliographystyle{plainnat}"
+-- TODO does not yet use style parameter
+                , "", "\\bibliography{" <> biblio <> "}", ""]
+--     \bibliographystyle{plainnat}
+
+-- %achtung keine blanks in liste!
+-- \bibliography{/home/frank/Workspace8/ssg/docs/site/baked/resources/BibTexLatex.bib}
+
 
 newtype Latex = Latex {unLatex::Text}
     deriving (Eq, Ord, Read, Show)

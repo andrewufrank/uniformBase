@@ -42,26 +42,37 @@ import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 --     assertEqual target3 res3
 
 
--- test_text2latex4short = testVar0FileIO "uniform-pandoc" 
---         shortFile
---         "test_text2latex4short" text2latex4 
--- test_text2latex4reg = testVar0FileIO "uniform-pandoc" 
---         regFile
---         "test_text2latex4reg" text2latex4 
--- test_text2latex4complex = testVar0FileIO "uniform-pandoc" 
---         complexFile
---         "test_text2latex4complex" text2latex4 
+test_text2latex4short = testVar0FileIO "uniform-pandoc" 
+        shortFile
+        "test_text2latex4short" (text2latex4 zero) 
+test_text2latex4reg = testVar0FileIO "uniform-pandoc" 
+        regFile
+        "test_text2latex4reg" (text2latex4 zero) 
+test_text2latex4complex = testVar0FileIO "uniform-pandoc" 
+        complexFile
+        "test_text2latex4complex" (text2latex4 zero) 
+test_text2latex4withRef = testVar0FileIO "uniform-pandoc" 
+        withRef
+        "test_text2latex4withRef" (text2latex4 latexParam) 
 
--- -- testVar0FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
---             -- => Text -> a -> FilePath -> (a-> ErrIO b) -> IO ()
--- text2latex4 tsfn1  = do       
---         texsn1  <- read8 tsfn1 texSnipFileType 
---         -- let p1 = unwrap7 pan1 :: Pandoc 
---         let lat1 =  tex2latex  [texsn1] 
---         write8 tsfn1 texFileType lat1  
---         return lat1
+latexParam = LatexParam {latBibliography = Just "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/resources/BibTexLatex.bib"
+        , latStyle = Just "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/resources/chicago-fullnote-bibliography-bb.csl"}
 
--- instance ShowTestHarness Latex 
+
+-- testVar0FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
+            -- => Text -> a -> FilePath -> (a-> ErrIO b) -> IO ()
+
+text2latex4 latexParam tsfn1  = do       
+    texsn1  <- read8 tsfn1 texSnipFileType   -- does include json data 
+    -- let p1 = unwrap7 pan1 :: Pandoc 
+    -- let latexParam = LatexParam {latBibliography = Just "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/resources/BibTexLatex.bib"
+    --     , latStyle = Just "/home/frank/Workspace8/uniform/uniform-pandoc/tests/data/resources/chicago-fullnote-bibliography-bb.csl"}
+    -- putIOwords ["text2latex4", showT latexParam]
+    let lat1 =  tex2latex latexParam [texsn1] 
+    write8 tsfn1 texFileType lat1  
+    return lat1
+
+instance ShowTestHarness Latex 
  
 
 -- test_writePDF4short = testVar0FileIO "uniform-pandoc" 
@@ -72,9 +83,12 @@ import Uniform.Error           hiding (  (<.>)  )  -- (</>)
 --         "test_writePDF4reg" writePDF4 
 -- to here commented out
 
+-- test_writePDF4complex = testVar0FileIO "uniform-pandoc" 
+--         complexFile
+--         "test_writePDF4complex" writePDF4 
 test_writePDF4complex = testVar0FileIO "uniform-pandoc" 
-        complexFile
-        "test_writePDF4complex" writePDF4 
+        withRef
+        "test_writePDF4withRef" writePDF4 
 
 writePDF4 tsfn1  = do       
         pan1  <- read8 tsfn1 texFileType 

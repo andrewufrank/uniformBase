@@ -54,6 +54,9 @@ test_writeTexSnip2reg = testVar0FileIO "uniform-pandoc"
 test_writeTexSnip2complex = testVar0FileIO "uniform-pandoc" 
         complexFile
         "test_writeTexSnip2complex" writeTexSnip4 
+test_writeTexSnip2withRef = testVar0FileIO "uniform-pandoc" 
+        withRef
+        "test_writeTexSnip2withRef" writeTexSnip4 
 
 -- testVar0FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
             -- => Text -> a -> FilePath -> (a-> ErrIO b) -> IO ()

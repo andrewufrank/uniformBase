@@ -27,10 +27,10 @@ import            Test.Framework
 -- import    {-@ HTF_TESTS @-}        Uniform.BibTex_test
 
 import    {-@ HTF_TESTS @-}        Uniform.Markdown_test
--- import    {-@ HTF_TESTS @-}        Uniform.Pandoc_test
+import    {-@ HTF_TESTS @-}        Uniform.Pandoc_test
         -- TODO not yet working inut file missing
--- import    {-@ HTF_TESTS @-}        Uniform.ProcessPDF_test
-import    {-@ HTF_TESTS @-}        Uniform.DocRep_test
+import    {-@ HTF_TESTS @-}        Uniform.ProcessPDF_test
+-- import    {-@ HTF_TESTS @-}        Uniform.DocRep_test
         -- braucht files 
 
 import           Uniform.Strings

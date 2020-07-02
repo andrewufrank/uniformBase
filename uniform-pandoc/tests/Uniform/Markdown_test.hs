@@ -60,6 +60,9 @@ test_readPandocReg = testVar0FileIO "uniform-pandoc"
 test_readPandocComplex = testVar0FileIO "uniform-pandoc" 
         complexFile
         "test_readPandocComplex" readPandoc2 
+test_readPandocwithRef = testVar0FileIO "uniform-pandoc" 
+        withRef
+        "test_readPandocwithRef" readPandoc2 
 
 -- testVar0FileIO :: (Zeros b, Eq b, Show b, Read b, ShowTestHarness b)
             -- => Text -> a -> FilePath -> (a-> ErrIO b) -> IO ()
