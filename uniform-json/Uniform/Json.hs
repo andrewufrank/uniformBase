@@ -102,6 +102,17 @@ instance AtKey Value Bool where
     getAt2Key meta2 k1 k2 = meta2 ^? key k1 . key k2 . _Bool 
     putAtKey k2 txt meta2 = meta2 & _Object . at k2 ?~ Bool txt
 
+class AtKey2 vk v where
+    -- getAtKey :: vk -> Text -> Maybe v
+    -- getAt2Key :: vk -> Text -> Text -> Maybe v
+    -- ^ two keys: one after the other 
+    putAtKey2 :: Text -> v -> vk -> vk
+
+instance (ToJSON a) => AtKey2 Value a where
+    -- getAtKey meta2 k2 = meta2 ^? key k2 . _Integral
+    -- getAt2Key meta2 k1 k2 = meta2 ^? key k1 . key k2 . _Integral 
+    putAtKey2 k2 txt meta2 = meta2 & _Object . at k2 ?~ toJSON txt
+
 
 mergeLeftPref :: [Value] -> Value
 -- ^ The (left-biased) union of two maps.

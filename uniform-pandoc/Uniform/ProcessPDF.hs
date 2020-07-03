@@ -51,7 +51,6 @@ panrep2texsnip (Panrep y p) = do
     res1 <- writeTexSnip2 p 
     return (TexSnip y res1)
 
--- probably not needed?    
 data LatexParam = LatexParam {latBibliography:: Maybe Text
                              , latStyle :: Maybe Text}
                              deriving (Eq, Ord, Read, Show, Generic)
@@ -75,11 +74,11 @@ tex2latex latpar snips =
         . concat'
         $ [ unlines' preamble1
           , concat' (map unTexSnip snips)
-        --   , unlines' $ if isZero latpar 
-        --         then [""] 
-        --         else makebiblio 
-        --                 (fromJustNote "tex2latex 2wrqwe" $ latStyle latpar) 
-        --                 (fromJustNote "tex2latex 00wr" $ latBibliography latpar)
+          , unlines' $ if isZero latpar 
+                then [""] 
+                else makebiblio 
+                        (fromJustNote "tex2latex 2wrqwe" $ latStyle latpar) 
+                        (fromJustNote "tex2latex 00wr" $ latBibliography latpar)
           , unlines' postamble1
           ]
 
@@ -109,10 +108,10 @@ preamble1 =
 
 postamble1 = ["", "", "\\printindex", "\\end{document}"] :: [Text]
 
--- makebiblio style biblio  = ["", "", "\\bibliographystyle{plainnat}"
+makebiblio style biblio  = ["", "", "\\bibliographystyle{plainnat}"
+                , "", "\\bibliography{" <> biblio <> "}", ""]
 
 -- TODO does not yet use style parameter
-                -- , "", "\\bibliography{" <> biblio <> "}", ""]
 --     \bibliographystyle{plainnat}
 
 -- %achtung keine blanks in liste!

@@ -1,7 +1,7 @@
----------------------------------------------------------------------------
+------------------------------------------------------------------------
 --
 -- Module      :  Uniform.HTMLout
------------------------------------------------------------------------------
+-----------------------------------------------------------------------
 -- {-# LANGUAGE BangPatterns                   #-}
 {-# LANGUAGE ConstraintKinds #-}
 -- {-# LANGUAGE DeriveDataTypeable    #-}
@@ -71,24 +71,33 @@ html5Options = def { writerHighlightStyle = Just tango
 --     p <- unPandocM $ writeHtml5String html5Options pandocRes
 --     return . HTMLout $ p
 
--- applyTemplate3 :: Dtemplate -> DocValue -> ErrIO HTMLout
--- -- needed for old ssg lts-13.12 - also changed for 15.13
+-- type Dtemplate = Template Text
 
--- -- | apply the template in the file to the text
--- -- for help look in ssg master.ptpl as an example
--- -- the description are in doctemplates (on hackage)
--- applyTemplate3 templText val = do 
---     temp1 :: Either String (Template Text)   <- liftIO $ DocTemplates.compileTemplate mempty (unwrap7 templText)
---     -- err1 :: Either String (Doc Text) <- liftIO $ DocTemplates.applyTemplate mempty (unwrap7 templText) (unDocValue val) 
---     let temp2 = case temp1 of
---                 Left msg -> error msg 
---                 Right val2 -> val2
---     when False $ putIOwords ["applyTemplate3 temp2", take' 300 $ showT temp2 ]
---     let res = renderTemplate temp2 (unDocValue val)
---     when False $ putIOwords ["applyTemplate3 res", take' 300 $ showT res ]
---     let res2 =  render Nothing res 
---     let res3 = HTMLout res2 
---     return (res3 :: HTMLout) 
+applyTemplate3 :: Path Abs File -> Value -> ErrIO HTMLout
+-- needed for old ssg lts-13.12 - also changed for 15.13
+
+-- | apply the template in the file to the text
+-- for help look in ssg master.ptpl as an example
+-- the description are in doctemplates (on hackage)
+applyTemplate3 templName val = do
+    t1 ::   Text  <- readFile2 templName 
+    putIOwords ["test_readTempl", take' 300 . showT $ t1]
+    -- let t2 = read (t2s t1) :: Template Text
+    -- putIOwords ["test_readTempl Dtemplate", take' 300 . showT $ t2] 
+    temp1     <- liftIO $ DocTemplates.compileTemplate mempty t1
+    -- err1 :: Either String (Doc Text) <- liftIO $ DocTemplates.applyTemplate mempty (unwrap7 templText) (unDocValue val) 
+    let tmp3 = case temp1 of
+                Left msg -> error msg 
+                Right tmp2 -> tmp2
+    when False $ putIOwords ["applyTemplate3 temp2", take' 300 $ showT tmp3 ]
+-- renderTemplate :: (TemplateTarget a, ToContext a b) => Template a -> b -> Doc a     
+    let res = renderTemplate tmp3 val
+    when False $ putIOwords ["applyTemplate3 res", take' 300 $ showT res ]
+    let res2 =  render Nothing res
+    when True $ putIOwords ["applyTemplate3 done res2", take' 300 $ showT res2 ]
+
+    let res3 = HTMLout res2 
+    return (res3 :: HTMLout) 
 
 newtype HTMLout = HTMLout {contentHtml::Text}
   deriving (Show, Read, Eq, Ord, Generic)
@@ -112,3 +121,21 @@ instance TypedFiles7 Text HTMLout where
 extHTML :: Extension
 extHTML = Extension "html"
 
+-------------------- fileType --- Dtemplate---------
+
+    -- scheint nicht zu funktionieren fuer den type mit parameter? 
+-- type Dtemplate = Template Text
+
+-- extDtmpl= Extension "dtpl"
+
+-- dtmplFileType =
+--   TypedFile5 { tpext5 = extDtmpl } :: TypedFile5 Text Dtemplate
+
+-- -- data Panrep = Panrep {panyam :: Value, panpan :: Pandoc }
+-- --     deriving (Eq, Show, Read )
+-- -- instance Zeros Panrep where zero = Panrep zero zero 
+
+-- instance TypedFiles7 Text Dtemplate  where
+--   -- handling Pandoc and read them into PandocText
+--   wrap7 =  read . t2s  -- readNote "wrap7 for dtemplate 223d" .t2s
+--   unwrap7   = showT -- id -- showT

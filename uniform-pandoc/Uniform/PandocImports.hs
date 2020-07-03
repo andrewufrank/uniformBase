@@ -190,6 +190,6 @@ instance TypedFiles7 Text TexSnip  where
   -- handling TexSnip and read them into TexSnipText
   -- the file on disk is readable for texstudio
   
-  wrap7 = readNote "wrap7 for TexSnip dwe11d" .t2s
+  wrap7 = readNote "wrap7 for TexSnip dwe11d" . t2s
   unwrap7   = showT
 
