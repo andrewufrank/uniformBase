@@ -6,7 +6,7 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 {-# LANGUAGE OverloadedStrings     #-}
 
-module Main     where      -- must have Main (main) or Main where
+-- module Spec     where      -- must have Main (main) or Main where
 
 --import Uniform.Strings
 import           Test.Framework
@@ -25,3 +25,4 @@ main =  do
 
 
 -- examples
+-- could use https://hspec.github.io/hspec-discover.html

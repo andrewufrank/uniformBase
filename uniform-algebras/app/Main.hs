@@ -25,9 +25,9 @@ module Main (main) where
 
 --import qualified Data.Text as T (Text)
 --import Data.Strings
-import TestingAlgebras
-import Uniform.Zero
-import System.Exit
+-- import TestingAlgebras
+-- import Uniform.Zero
+-- import System.Exit
 --import Data.Easy
 
 programName = "algebras"
