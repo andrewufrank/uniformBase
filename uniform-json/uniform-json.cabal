@@ -1,81 +1,85 @@
-name: uniform-json
-version: 0.0.1
-cabal-version: >=1.22
-build-type: Simple
-license: GPL
-license-file: GPL_3
-maintainer: Andrew U. Frank <andrewufrank@gmail.com>
-author: Andrew Frank
-category: Uniform
-synopsis: handling of JSON and YAML in an uniform way and some pandoc stuff 
-description: remove particular aspects of abstraction in json and yaml
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: df67227ef2b60734897be8d34cd1486430ebc2cb6243eb46950d133a99b424d7
+
+name:           uniform-json
+version:        0.0.2
+synopsis:       handling of JSON and YAML in an uniform way and some pandoc stuff
+description:    remove particular aspects of abstraction in json and yaml
+                .
+                # source-repository head
+                # type: git
+category:       Data Text
+homepage:       https://github.com/ttps://github.com/andrewufrank/uniform-json.git#readme
+bug-reports:    https://github.com/ttps://github.com/andrewufrank/uniform-json.git/issues
+author:         Andrew Frank
+maintainer:     Andrew U. Frank <andrewufrank@gmail.com>
+copyright:      2021 Andrew U. Frank
+license:        GPL
+license-file:   GPL_3
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
 
 source-repository head
-    type: git
-    location: https://github.com/andrewufrank/uniform-json.git
+  type: git
+  location: https://github.com/ttps://github.com/andrewufrank/uniform-json.git
 
 library
-    build-depends:
-        base >=4.8 && <= 5
-        , monads-tf
-        -- , safe
-        , uniform-strings
-        , uniform-error
-        , uniform-fileio 
-        -- , path  
-        , HTF
-        -- , safe
-        , aeson
-        , lens-aeson 
-        , aeson-pretty
-        , lens
-        , yaml
-        -- , json -- use aeson!
-        , unordered-containers
-        , containers
-        , convertible
-        -- , pandoc 
-        -- , pandoc-types
-        -- , bibtex
-        -- , pandoc-citeproc
-        -- , doctemplates
-        , directory
-        , parsec
+  exposed-modules:
+      Lib
+      Uniform.Json
+      Uniform.Yaml
+  other-modules:
+      Paths_uniform_json
+  hs-source-dirs:
+      src
+  build-depends:
+      aeson
+    , aeson-pretty
+    , base >=4.7 && <5
+    , lens
+    , lens-aeson
+    , monads-tf
+    , pretty-show
+    , uniform-algebras
+    , uniform-error
+    , uniform-fileio
+    , uniform-strings
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010
 
-    exposed-modules:
-        Uniform.Json 
-        Uniform.Yaml 
-
-    exposed: True
-    buildable: True
-    default-language: Haskell2010
-    hs-source-dirs: .
-    other-modules:
-
-
-Test-Suite jsontest
-    type:       exitcode-stdio-1.0
-    build-depends:  base -any
-        , HTF
-        -- , test-invariant
---                    bytestring -any, mtl,
---                   text -any, utf8-string -any
-       , uniform-error
-       , uniform-time
-       , uniform-strings
-       , uniform-json 
-       , uniform-algebras
-       , aeson
-    --    , bibtex 
-    --    , pretty-show
---       , old-time
---       , data-easy
---       , basics -- must not be included, gives dependency issue
-    main-is: Testing.hs
-    buildable: True
-    default-language: Haskell2010
-    hs-source-dirs: tests
-    other-modules:
-        Uniform.Json_test
-        Uniform.Yaml_test
- 
+test-suite strings-test
+  type: exitcode-stdio-1.0
+  main-is: Testing.hs
+  other-modules:
+      TestingJson
+      Uniform.Json_test
+      Uniform.Yaml_test
+      Paths_uniform_json
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HTF
+    , aeson
+    , aeson-pretty
+    , base >=4.7 && <5
+    , lens
+    , lens-aeson
+    , monads-tf
+    , pretty-show
+    , quickcheck-text
+    , uniform-algebras
+    , uniform-error
+    , uniform-fileio
+    , uniform-strings
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010

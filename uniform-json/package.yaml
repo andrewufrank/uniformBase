@@ -1,0 +1,99 @@
+name:         uniform-json 
+version:      0.0.2
+license:      GPL
+license-file: GPL_3
+maintainer:   Andrew U. Frank <andrewufrank@gmail.com>
+author:       Andrew Frank
+copyright:    2021 Andrew U. Frank
+category:     Data Text 
+synopsis: handling of JSON and YAML in an uniform way and some pandoc stuff 
+description: |
+    remove particular aspects of abstraction in json and yaml
+
+    # source-repository head
+    # type: git
+github: ttps://github.com/andrewufrank/uniform-json.git
+ 
+
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+dependencies:
+- base >= 4.7 && < 5
+- monads-tf
+# - safe
+# - text
+# - bytestring
+- pretty-show
+- yaml
+- aeson
+- lens
+- lens-aeson
+- aeson-pretty
+- unordered-containers
+# - MissingH
+# - split
+# - snap-core
+# - text-icu
+# - network-uri
+# - test-invariant
+# - numeric-prelude
+- uniform-algebras
+- uniform-strings
+- uniform-error
+- uniform-fileio
+#         , monads-tf
+#         -- , safe
+#         , uniform-strings
+#         , uniform-error
+#         , uniform-fileio 
+#         -- , path  
+#         , HTF
+#         -- , safe
+#         , aeson
+#         , lens-aeson 
+#         , aeson-pretty
+#         , lens
+#         , yaml
+#         -- , json -- use aeson!
+#         , unordered-containers
+#         , containers
+#         , convertible
+#         -- , pandoc 
+#         -- , pandoc-types
+#         -- , bibtex
+#         -- , pandoc-citeproc
+#         -- , doctemplates
+#         , directory
+#         , parsec
+library:
+  source-dirs: src
+
+# this is only a library, no directly executable
+# executables:
+#   primo-exe:
+#     main:                Main.hs
+#     source-dirs:         app
+#     ghc-options:
+#     - -threaded
+#     - -rtsopts
+#     - -with-rtsopts=-N
+#     dependencies:
+#     - uniform-algebras
+
+tests:
+  strings-test:
+    main:                Testing.hs
+    # there is a second main test file TestingJson.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - uniform-algebras
+    - HTF
+    - quickcheck-text
+    - uniform-strings
