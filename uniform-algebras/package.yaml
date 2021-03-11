@@ -45,3 +45,4 @@ tests:
     dependencies:
     - uniform-algebras
     - HTF
+    - uniform-error

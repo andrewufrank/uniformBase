@@ -4,15 +4,16 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a6e410305c0d94b8f9e93604cca7da5930aadf242f0a9cc4ed61fa22cfe8b4e1
+-- hash: 7eb3ed4ca6de93819bd4dd4f20ca4336b507a4e22a1ea5be89a2f0a13f9b8360
 
-name:           uniform-algebras
+name:           uniform-error
 version:        0.0.10.0
-synopsis:       some simple algebras, eg. zero
-description:    simple algebras without too much mathematical underpinning
-                zero (not a semigroupoid...)
+synopsis:       handling of errors in the uniform framework
+description:    a close to minimal package to handle errors and exception
+                in a simple but flexible way to reduce complexity of Haskell.
+                .
                 Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
-category:       Algebra
+category:       Error Exception
 author:         Andrew Frank
 maintainer:     Andrew U. Frank <andrewufrank@gmail.com>
 copyright:      2021 Andrew U. Frank
@@ -25,28 +26,32 @@ extra-source-files:
 
 library
   exposed-modules:
-      Uniform.ListForm
-      Uniform.Pointless
-      Uniform.Zero
+      Uniform.Error
   other-modules:
-      Paths_uniform_algebras
+      Paths_uniform_error
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , monads-tf
+    , safe
+    , uniform-strings
   default-language: Haskell2010
 
-test-suite algebra-test
+test-suite error-test
   type: exitcode-stdio-1.0
-  main-is: Spec.hs
+  main-is: TestingError.hs
   other-modules:
-      Paths_uniform_algebras
+      Uniform.Error_test
+      Paths_uniform_error
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       HTF
     , base >=4.7 && <5
-    , uniform-algebras
+    , monads-tf
+    , safe
     , uniform-error
+    , uniform-strings
   default-language: Haskell2010

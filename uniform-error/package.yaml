@@ -19,6 +19,21 @@ extra-source-files:
 
 dependencies:
 - base >= 4.7 && < 5
+- base >= 4.7 && < 5
+- monads-tf
+- safe
+# - text
+# - bytestring
+# - pretty-show
+# - MissingH
+# - split
+# - snap-core
+# - text-icu
+# - network-uri
+# - test-invariant
+# - numeric-prelude
+# - uniform-algebras
+- uniform-strings
 
 library:
   source-dirs: src
@@ -43,6 +58,7 @@ tests:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
-    # dependencies:
+    dependencies:
     # - uniform-algebras
-    # - HTF
+    - uniform-error
+    - HTF
