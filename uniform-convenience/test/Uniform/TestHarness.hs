@@ -32,7 +32,7 @@
 {-# OPTIONS_GHC -w #-}
 
 
-module Uniform.Test.TestHarness (module Uniform.Test.TestHarness
+module Uniform.TestHarness (module Uniform.Test.TestHarness
     , module Uniform.Error
     , module Test.Framework
     , ShowTestHarness (..)

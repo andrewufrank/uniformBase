@@ -24,6 +24,6 @@
 module Uniform.Codes.LanguageCode_test where
 
 import           Test.Framework
-import Uniform.Test.TestHarness
+import Uniform.TestHarness
 import Uniform.Zero
 import Uniform.FileIO

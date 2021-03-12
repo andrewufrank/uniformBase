@@ -20,7 +20,7 @@
 
     #-}
 
-module Main where
+module CmdLineArgsExample where
 
 
 

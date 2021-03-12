@@ -1,74 +1,55 @@
-name: uniform-cmdLineArgs
-version: 0.0.1.0
+cabal-version: 1.12
 
-cabal-version: >=1.22
-build-type: Simple
-license: GPL
-license-file: GPL_3
-maintainer: Andrew U. Frank <andrewufrank@gmail.com>
-author: Andrew Frank
-category:CmdLineArgs
-synopsis: CmdLineArgs
-description: CmdLineArgs
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 4798bd3e4656aeab6d68eaaba7b6780b162f5b210d5de74eb780ba3f246b0e84
 
-source-repository head
-    type: git
-    location: https://github.com/andrewufrank/uniform-cmdLIneArgs.git
+name:           uniform-cmdLineArgs
+version:        0.0.1.0
+synopsis:       a convenient handling of command line arguments
+description:    deals with the command line arguments and fills with decent defaults
+category:       CmdLineArgs
+author:         Andrew Frank
+maintainer:     Andrew U. Frank <andrewufrank@gmail.com>
+copyright:      2021 Andrew U. Frank
+license:        GPL
+license-file:   GPL_3
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
 
 library
-    build-depends:
-        base >=4.8 && <= 5
-        , monads-tf
-        , exceptions
-        -- , safe
-        , uniform-strings
-        -- , HTF
-        , uniform-algebras
-        , uniform-strings
-        , uniform-error 
-       , optparse-applicative
-       , optparse-generic
-    exposed-modules:
-        Uniform.CmdLineArgs
+  exposed-modules:
+      CmdLineArgsExample
+      Uniform.CmdLineArgs
+  other-modules:
+      Paths_uniform_cmdLineArgs
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , monads-tf
+  default-language: Haskell2010
 
-    exposed: True
-    buildable: True
-    default-language: Haskell2010
-    hs-source-dirs: .
-    other-modules:
-
-executable cmdLineExample
-    main-is: CmdLineArgsExample.hs
-    build-depends: base, HTF
-        , uniform-strings
-        , uniform-fileio
-        , uniform-convenience
-        , uniform-error 
-        , uniform-cmdLineArgs
-        -- , CmdLineUtilities
-       , optparse-applicative
-       , optparse-generic
-        -- , MainLitText
-
-    default-language: Haskell2010
-    hs-source-dirs: src
-    other-modules:
---    other-modules: Main2sub
-
-Test-Suite errortest
-    type:       exitcode-stdio-1.0
-    build-depends:  base -any
-        , HTF
-        , uniform-strings
-        , uniform-error
-        , uniform-cmdLineArgs
-        , uniform-error 
-
---       , data-easy
---       , basics -- must not be included, gives dependency issue
-    main-is: Testing.hs
-    buildable: True
-    default-language: Haskell2010
-    hs-source-dirs: tests
-    other-modules:
-        Uniform.CmdLineArgs_test
+test-suite strings-test
+  type: exitcode-stdio-1.0
+  main-is: Testing.hs
+  other-modules:
+      Uniform.CmdLineArgs_test
+      Paths_uniform_cmdLineArgs
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HTF
+    , base >=4.7 && <5
+    , monads-tf
+    , quickcheck-text
+    , test-invariant
+    , uniform-algebras
+    , uniform-fileio
+    , uniform-strings
+  default-language: Haskell2010

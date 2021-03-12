@@ -1,75 +1,83 @@
-name: uniform-convenience
-version: 0.0.9.6
-cabal-version: >=1.22
-build-type: Simple
-license: GPL
-license-file: GPL_3
-maintainer: Andrew U. Frank <andrewufrank@gmail.com>
-author: Andrew Frank
-category: Uniform
-synopsis: convenience functions
-description: some convenience functions, which are not good algebras
-    and debatable
-    exports in multiple modules
+cabal-version: 1.12
 
-source-repository head
-    type: git
-    location: https://github.com/andrewufrank/uniform-algebra.git
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: a9caed993fdda2dfd33b303432bc38556ab03e8df050b7844f7aefc53b263a3a
+
+name:           uniform-convenience
+version:        0.0.9.6
+synopsis:       convenience functions
+description:    some convenience functions, which are not good algebras and debatable exports in multiple modules
+category:       Uniform
+author:         Andrew Frank
+maintainer:     Andrew U. Frank <andrewufrank@gmail.com>
+copyright:      2021 Andrew U. Frank
+license:        GPL
+license-file:   GPL_3
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
 
 library
-    build-depends:
-        base >=4.8 && <= 5
-        , monads-tf
-        -- , safe
-        , HTF
---        , uniform-fileio
---            , uniform-strings
-        , uniform-error
-        , uniform-algebras
-        , uniform-fileio 
-        , uniform-strings
-        , uniform-json
-        , csv
-        , parsec
-        -- , path 
-        -- , path-io 
-        -- , pretty-show 
-        , iso639
-        , uniform-time
-        -- , treetagger
-    exposed-modules:
-        Uniform.Convenience.StartApp
-        Uniform.Convenience.ReadCSV
-        Uniform.Convenience.DataVarious
+  exposed-modules:
+      Main
+      TestingConvenience
+      Uniform.Codes.LanguageCode
+      Uniform.Codes.LanguageTypedText
+      Uniform.Convenience.DataVarious
+      Uniform.Convenience.ReadCSV
+      Uniform.Convenience.StartApp
+      Uniform.Test.TestHarness
+      Uniform.Test.Utils
+  other-modules:
+      Paths_uniform_convenience
+  hs-source-dirs:
+      src
+  build-depends:
+      HTF
+    , base >=4.7 && <5
+    , csv
+    , iso639
+    , monads-tf
+    , safe
+    , text
+    , uniform-algebras
+    , uniform-error
+    , uniform-fileio
+    , uniform-json
+    , uniform-strings
+    , uniform-time
+  default-language: Haskell2010
 
-        Uniform.Test.TestHarness
-        Uniform.Test.Utils
-        Uniform.Codes.LanguageCode
-        Uniform.Codes.LanguageTypedText
-        -- Uniform.Convenience.Caps4german
-        -- NLP.CallTagger2 
-    exposed: True
-    buildable: True
-    default-language: Haskell2010
-    hs-source-dirs: .
-    other-modules:
-
-Test-Suite TestHarnessTestAuto
-   type:       exitcode-stdio-1.0
-   main-is:    Testing.hs
-   build-depends: base
-        , HTF
-       , uniform-strings
-       , uniform-error
-       , uniform-convenience
-       , uniform-fileio
-       , uniform-algebras
-   default-language: Haskell2010
-   hs-source-dirs: tests
-   other-modules:
--- requires start files in .TestHarness!
-    --    Uniform.Test.TestHarness_test
-        Uniform.Codes.LanguageCode_test
-        Uniform.Codes.LanguageTypedText_test
-        -- Uniform.Convenience.Caps4german_test
-
+test-suite strings-test
+  type: exitcode-stdio-1.0
+  main-is: Testing.hs
+  other-modules:
+      Uniform.Codes.LanguageCode_test
+      Uniform.Codes.LanguageTypedText_test
+      Uniform.Test.TestHarness_test
+      Uniform.TestHarness
+      Paths_uniform_convenience
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HTF
+    , base >=4.7 && <5
+    , csv
+    , iso639
+    , monads-tf
+    , quickcheck-text
+    , safe
+    , test-invariant
+    , text
+    , uniform-algebras
+    , uniform-error
+    , uniform-fileio
+    , uniform-json
+    , uniform-strings
+    , uniform-time
+  default-language: Haskell2010
