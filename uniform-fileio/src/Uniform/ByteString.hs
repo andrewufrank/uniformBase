@@ -21,7 +21,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-methods #-}
 
 
-module FileIO.ByteString (
+module Uniform.ByteString (
     module FileIO.ByteString
     , module FileIO.FileIO
     , htf_thisModulesTests
@@ -30,7 +30,7 @@ module FileIO.ByteString (
 -- using uniform
 import Uniform.Error
 -- import Data.Strings
-import FileIO.FileIO
+import Uniform.FileIO
 
 import Test.Framework
 import Test.Invariant
@@ -44,7 +44,7 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as T
 
 --import Basics  hiding ((</>), (<.>))
-import FileIO.Strings
+import Uniform.Strings
 
 import qualified System.Directory as S (getHomeDirectory)
 

@@ -25,4 +25,3 @@ main =  do
 
 
 -- examples
--- could use https://hspec.github.io/hspec-discover.html
