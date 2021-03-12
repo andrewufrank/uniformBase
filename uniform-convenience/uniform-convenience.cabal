@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 669d527b54996481ced09393670dbd29b8d79c725216cb70e83e7e31ae81d839
+-- hash: 99fd3e55a7e88eda29fd2bab243fee1692080f115d5b5096b10b1656e2f696dc
 
 name:           uniform-convenience
 version:        0.0.9.6
@@ -29,7 +29,6 @@ library
       Uniform.Codes.LanguageTypedText
       Uniform.Convenience.DataVarious
       Uniform.Convenience.ReadCSV
-      Uniform.Convenience.StartApp
       Uniform.Test.TestHarness
       Uniform.Test.Utils
   other-modules:
