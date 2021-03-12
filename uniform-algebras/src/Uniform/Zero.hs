@@ -20,19 +20,70 @@ module Uniform.Zero (module Uniform.Zero
         , module Data.Either
         , module GHC.Generics
 
-        --     Zeros (..)
-        -- , Text, pair, cross
-        -- ,  fst3, snd3, thd3
-        -- , first, second
---            , htf_thisModulesTests
+
 ) where
 
 
---import Data.Text (Text)
-import Data.Maybe
 import Data.Either
+    ( Either(..),
+      either,
+      fromLeft,
+      fromRight,
+      isLeft,
+      isRight,
+      lefts,
+      partitionEithers,
+      rights )
+import Data.Maybe
+    ( Maybe(..),
+      maybe,
+      catMaybes,
+      fromJust,
+      fromMaybe,
+      isJust,
+      isNothing,
+      listToMaybe,
+      mapMaybe,
+      maybeToList )
 
-import GHC.Generics hiding (S)
+import GHC.Generics
+    ( Generic(..),
+    --   Generic1(..),
+    --   Datatype(..),
+    --   Constructor(..),
+    --   Selector(..),
+    --   V1,
+      U1(..),
+    --   Par1(..),
+    --   Rec1(..),
+      K1(..),
+      M1(..),
+    --   type (:+:)(..),
+      type (:*:)(..),
+    --   type (:.:)(..),
+    --   R,
+    --   D,
+    --   C,
+    --   Rec0,
+    --   D1,
+    --   C1,
+    --   S1,
+    --   URec(..),
+    --   UAddr,
+    --   UChar,
+    --   UDouble,
+    --   UFloat,
+    --   UInt,
+    --   UWord,
+    --   prec,
+    --   Associativity(..),
+    --   DecidedStrictness(..),
+    --   Fixity(..),
+    --   FixityI(..),
+    --   Meta(..),
+    --   SourceStrictness(..),
+    --   SourceUnpackedness(..) 
+      )
 
 -- | a minimal algebraic type with nothing than an identity
 --  useful to identify a specific value in a type

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f1a82122bda6332f6f1f1cc06ed831f74252056b96460b37f811de7cc7d104be
+-- hash: fc4818797160c487b38dfa88c5a0c4522e52c6b6e2e77d2e829f4dd07b2142f9
 
 name:           uniform-algebras
 version:        0.0.10.0
@@ -33,19 +33,4 @@ library
       src
   build-depends:
       base >=4.7 && <5
-  default-language: Haskell2010
-
-test-suite algebra-test
-  type: exitcode-stdio-1.0
-  main-is: Testing.hs
-  other-modules:
-      Paths_uniform_algebras
-  hs-source-dirs:
-      test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      HTF
-    , base >=4.7 && <5
-    , uniform-algebras
-    , uniform-error
   default-language: Haskell2010

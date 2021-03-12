@@ -37,11 +37,16 @@ where
 --             , fst5, snd5, trd5, fth5, ffh5)
 
 
+pair :: (t -> b) -> (t, t) -> (b, b)
 pair f (a, b) = (f a, f b)
+cross :: (t1 -> a, t2 -> b) -> (t1, t2) -> (a, b)
 cross (f, g) (a, b) = (f a, g b)
+swapPair :: (b, a) -> (a, b)
 swapPair (a, b) = (b, a)
 
+first :: (t -> a) -> (t, b) -> (a, b)
 first f (a, b) = (f a, b)
+second :: (t -> b) -> (a, t) -> (a, b)
 second f (a, b) = (a, f b)
 
 fst3 :: (a, b, c) -> a
@@ -61,6 +66,7 @@ snd4 (x, y, z, w) = y
 
 trd4 :: (a, b, c, d) -> c
 trd4 (x, y, z, w) = z
+thd4 :: (a, b, c, d) -> c
 thd4 = trd4
 
 fth4 :: (a, b, c, d) -> d
@@ -74,6 +80,7 @@ snd5 (x, y, z, w, u) = y
 
 thd5 :: (a, b, c, d, e) -> c
 thd5 (x, y, z, w, u) = z
+trd5 :: (a, b, c, d, e) -> c
 trd5 = thd5
 
 fth5 :: (a, b, c, d, e) -> d
@@ -104,7 +111,3 @@ third4 f (a1, a2, a3, a4) = (a1, a2, f a3, a4)
 fourth4 :: (a4 -> b) -> (a1, a2, a3, a4) -> (a1, a2, a3, b)
 fourth4 f (a1, a2, a3, a4) = (a1, a2, a3, f a4)
 
--- -- move TODO algebras
--- fst3 (a,b,c) = a
--- snd3 (a,b,c) = b
--- thd3 (a,b,c) = c

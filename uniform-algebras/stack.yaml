@@ -4,12 +4,12 @@ packages:
 - .
 extra-deps:
 - ../uniform-strings
+- ../uniform-error
 # #- ../uniform-algebras
 # - ../uniform-convenience
 # - ../uniform-cmdLineArgs
 # - ../uniform-fileio
 # - ../uniform-time
-- ../uniform-error
 # - ../uniform-json
 # - ../uniform-pandoc
 # - ../uniform-shake

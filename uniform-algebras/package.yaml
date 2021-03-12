@@ -9,7 +9,7 @@ synopsis:     some simple algebras, eg. zero
 description: |
     simple algebras without too much mathematical underpinning
     zero (not a semigroupoid...)
-    Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
+# Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
 
 # verbatim:
 #   cabal-version: 3.0
@@ -25,26 +25,17 @@ library:
   source-dirs: src
 
 # this is only a library, no directly executable
-# executables:
-#   primo-exe:
-#     main:                Main.hs
-#     source-dirs:         app
+
+# there are no tests used so far:
+# tests:
+#   algebra-test:
+#     main:                Testing.hs
+#     source-dirs:         test
 #     ghc-options:
 #     - -threaded
 #     - -rtsopts
 #     - -with-rtsopts=-N
 #     dependencies:
+#     - HTF
 #     - uniform-algebras
-
-tests:
-  algebra-test:
-    main:                Testing.hs
-    source-dirs:         test
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - uniform-algebras
-    - HTF
-    - uniform-error
+#     - uniform-error
