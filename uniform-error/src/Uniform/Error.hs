@@ -34,12 +34,12 @@ module Uniform.Error (module Uniform.Error
 
         )  where
 
-import           "monads-tf" Control.Monad.Error
-import           Safe
---import           Test.Framework
-import           Uniform.Strings hiding ((</>), (<.>), S)
-
+import "monads-tf" Control.Monad.Error
 import Control.Exception
+import Safe
+
+import Uniform.Strings hiding ((</>), (<.>), S)
+
 instance CharChains2 IOError Text where
     show' = s2t . show
 
@@ -54,6 +54,7 @@ instance Exception [Text]
 --catchError :: (ErrIO a) -> ErrIO a -> ErrIO a
 ---- | redefine catchError - the definition in monads-tf seems broken
 --catchError = catch
+
 toErrOrVal :: Either String a -> ErrOrVal a
 toErrOrVal (Left s) = Left (s2t s)
 toErrOrVal (Right r) = Right r
@@ -109,7 +110,7 @@ callIO op = do
                     r <- op
                     return $ Right r
                 `catch` (\e -> do
---                                putStrLn "callIO catch caught error\n"
+--                         putStrLn "callIO catch caught error\n"
                                 return . Left $  (e::SomeException))
         case r2 of
             Left e -> do
@@ -149,6 +150,8 @@ headNoteT :: [Text] -> [a] -> a
 -- get head with a list of texts
 headNoteT msg s = headNote (t2s $ unwords' msg) s
 
+-- | tools I thought could be useful for testing 
+--  when writing tests which must fail
 class (MonadError m) => Musts  m where
     mustFail:: Text -> f -> m Bool
     mustFailIO :: Text -> m () -> m Bool

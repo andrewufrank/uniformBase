@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 --
--- Module      :   top tests for layout
+-- Module      :   top tests for error 
 -----------------------------------------------------------------------------
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 
@@ -19,12 +19,12 @@
 
 module Main     where
 
-
-
-import Test.Framework
 import {-@ HTF_TESTS @-} Uniform.Error_test
-import Uniform.Strings
+import Test.Framework ( htfMainWithArgs, makeTestSuite, TestSuite )
+    ( errorTest, htf_Uniform_Error_test_thisModulesTests  )
+import Uniform.Strings ( putIOwords, showT )
 
+main :: IO ()
 main = do
     putIOwords ["HTF errorTest.hs:\n uniform-error test"]
     r <- htfMainWithArgs ["--quiet"] htf_importedTests

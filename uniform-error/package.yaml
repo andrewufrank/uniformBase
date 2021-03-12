@@ -19,36 +19,13 @@ extra-source-files:
 
 dependencies:
 - base >= 4.7 && < 5
-- base >= 4.7 && < 5
 - monads-tf
 - safe
-# - text
-# - bytestring
-# - pretty-show
-# - MissingH
-# - split
-# - snap-core
-# - text-icu
-# - network-uri
-# - test-invariant
-# - numeric-prelude
-# - uniform-algebras
 - uniform-strings
 
 library:
   source-dirs: src
 
-# this is only a library, no directly executable
-# executables:
-#   primo-exe:
-#     main:                Main.hs
-#     source-dirs:         app
-#     ghc-options:
-#     - -threaded
-#     - -rtsopts
-#     - -with-rtsopts=-N
-#     dependencies:
-#     - uniform-algebras
 
 tests:
   error-test:

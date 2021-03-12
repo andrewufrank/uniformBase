@@ -30,16 +30,36 @@ module Uniform.Error_test where
 
 --import           "monads-tf" Control.Monad.Error
 --import           Safe
-import           Test.Framework
+import Test.Framework
+    ( assertBool_,
+      assertEqual_,
+      makeLoc,
+      makeTestSuite,
+      makeUnitTest,
+      TestSuite )
 --import           Uniform.Strings hiding ((</>), (<.>), (<|>))
 import Uniform.Error
+    ( catch,
+      SomeException,
+      MonadError(catchError, throwError),
+      putIOwords,
+      bracketErrIO,
+      callIO,
+      runErr,
+      ErrIO,
+      ErrOrVal,
+      Musts(mustSucceedM, mustFailM) )
 
-import Control.Exception
+import Control.Exception ( catch, SomeException )
 
+op1 :: ErrIO ()
 op1 = putIOwords ["acquire"] :: ErrIO ()
+op2 :: p -> ErrIO ()
 op2 h = putIOwords ["operate"]:: ErrIO ()
+op3 :: p -> ErrIO ()
 op3 h = putIOwords ["close"] :: ErrIO ()
 
+test_bracket0 :: IO ()
 test_bracket0 = do
     runErr $ do
                 op1
@@ -47,6 +67,7 @@ test_bracket0 = do
                 op3  ()
     assertEqual True True
 
+test_bracket1 :: IO ()
 test_bracket1 = do
     runErr $ bracketErrIO op1 op3 op2
     assertEqual True True
@@ -96,14 +117,17 @@ test2catch b =
         return ()
         )
 
+test_error2 :: IO ()
 test_error2 = do
     r <- (runErr errorTest2)
     assertEqual (Right True :: ErrOrVal Bool)  r
 
+test_catch2 :: IO ()
 test_catch2 = do
     r <- (runErr $ test2catch True)
     assertEqual (Right () :: ErrOrVal ())  r
 
+test_catch2f :: IO ()
 test_catch2f = do
     r <- (runErr $ test2catch False)
     assertEqual (Right () :: ErrOrVal ())  r
@@ -113,6 +137,7 @@ test_catch2f = do
 --    toString (Right r) = show r
 
 
+test_catch :: IO ()
 test_catch =
             error "some intentional error"
        `catch` \(e::SomeException) -> assertBool True
@@ -122,6 +147,7 @@ test_catch =
 --       `catchT` \(e :: S) -> assertBool True
 
 
+test_callIO :: IO ()
 test_callIO = do
         r <- runErr $ callIO $ readFile "xxxabc"
         case r of
