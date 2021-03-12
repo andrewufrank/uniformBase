@@ -24,7 +24,7 @@
 {-# OPTIONS_GHC -w #-}
 
 
-module Uniform.StartApp (module Uniform.Error
+module Uniform.StartApp (module Uniform.StartApp
     -- , module Uniform.Strings
     -- , module Safe
     -- , module Control.Monad.Error  -- is monads-tf

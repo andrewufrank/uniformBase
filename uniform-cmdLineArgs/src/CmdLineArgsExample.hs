@@ -30,8 +30,7 @@ import Uniform.Strings
     ( s2t, t2s, putIOwords, showT, unlinesT, Text, Zeros(isZero) )
 import Uniform.Zero ( Zeros(isZero) )
 import Uniform.Error
-    (  callIO,
-      ErrIO )
+import Uniform.StartApp
 import Uniform.FileIO
     ( homeDir2,
       makeRelFileT,
@@ -40,7 +39,7 @@ import Uniform.FileIO
       Dir,
       File,
       Filenames3(addFileName) )
-import Uniform.Convenience.StartApp ( startProg )
+--  import Uniform.Convenience.StartApp ( startProg )
 import           Data.Semigroup                 ( (<>) )
 import Options.Applicative.Builder
   
