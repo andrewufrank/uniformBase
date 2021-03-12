@@ -10,7 +10,6 @@
 
 --import Uniform.Strings
 import           Test.Framework
-import           Test.Framework
 import  {-@ HTF_TESTS @-}         Uniform.Strings.Conversion_test
 import  {-@ HTF_TESTS @-}         Uniform.Strings.Infix_test
 import   {-@ HTF_TESTS @-}        Uniform.Strings.Utilities_test

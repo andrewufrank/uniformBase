@@ -4,14 +4,13 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: fc4818797160c487b38dfa88c5a0c4522e52c6b6e2e77d2e829f4dd07b2142f9
+-- hash: d7ed8ccf5f02953fdc67073a1e1520945be3c4b35adcf0199c06ce00050bcc0a
 
 name:           uniform-algebras
 version:        0.0.10.0
 synopsis:       some simple algebras, eg. zero
 description:    simple algebras without too much mathematical underpinning
                 zero (not a semigroupoid...)
-                Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
 category:       Algebra
 author:         Andrew Frank
 maintainer:     Andrew U. Frank <andrewufrank@gmail.com>

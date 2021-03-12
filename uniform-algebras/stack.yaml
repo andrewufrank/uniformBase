@@ -22,5 +22,5 @@ extra-deps:
 
 # - test-invariant-0.4.5.0
 # - twitch-0.1.7.2
-resolver: lts-17.5
+#resolver: lts-17.5
 

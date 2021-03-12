@@ -127,6 +127,8 @@ instance Zeros LazyByteString where zero = b2bl zero
 -- bytestring with utf encoded characters
 newtype BSUTF = BSUTF ByteString
     deriving (Show, Read, Eq, Ord, Generic, Zeros, Semigroup, Monoid)
+    
+unBSUTF :: BSUTF -> ByteString
 unBSUTF (BSUTF a) = a
 
 

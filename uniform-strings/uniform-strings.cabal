@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e8241e8e1fa379deace8f6e4a04445a16a0989e3484bb756e729006b437b8aca
+-- hash: 1b6fe721f9546326f23feec67329ec0a8f246f1df5b57e49033d389beb0f93cb
 
 name:           uniform-strings
 version:        0.0.10.0
@@ -53,7 +53,7 @@ library
 
 test-suite strings-test
   type: exitcode-stdio-1.0
-  main-is: Spec.hs
+  main-is: Testing.hs
   other-modules:
       Uniform.Strings.Conversion_test
       Uniform.Strings.Infix_test

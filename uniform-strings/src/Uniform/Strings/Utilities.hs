@@ -59,7 +59,7 @@ import Uniform.ListForm
 
 import           Algebra.Laws             as Law
 --import           Test.Framework
-import           Test.Invariant           as Rule
+import           Test.Invariant           as Rule (associative)
 
 -- probably better just to move these module to package uniform-algebra
 -- but there is so far only zero
@@ -82,9 +82,9 @@ import           Safe
 -- not possible, because Error is based on String
 import           Uniform.Strings.Conversion
 import qualified Data.ByteString.Lazy as Lazy
-import Text.Read (readMaybe)
-import Text.Show.Pretty 
-import           "monads-tf" Control.Monad.State      (MonadIO, liftIO)
+import          Text.Read (readMaybe)
+import          Text.Show.Pretty 
+import "monads-tf" Control.Monad.State      (MonadIO, liftIO)
 import Control.Monad (when)
 
 
