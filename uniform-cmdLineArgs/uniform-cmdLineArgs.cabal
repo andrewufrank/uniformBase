@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cea1a637e257390c70179b4d5cbc98ecfc951f884041358296669e52f88e45e8
+-- hash: 21290e7675b502fcd96fb938d53572c7898dde168b5d7fa61d82c44c9e172c8c
 
 name:           uniform-cmdLineArgs
 version:        0.0.1.0
@@ -35,7 +35,6 @@ library
     , monads-tf
     , optparse-applicative
     , uniform-algebras
-    , uniform-convenience
     , uniform-error
     , uniform-fileio
     , uniform-strings
@@ -59,7 +58,6 @@ test-suite strings-test
     , test-invariant
     , uniform-algebras
     , uniform-cmdLineArgs
-    , uniform-convenience
     , uniform-error
     , uniform-fileio
     , uniform-strings

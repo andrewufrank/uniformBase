@@ -4,3 +4,4 @@
         test/Testing.hs
         .ghci 
         cleaned 
+0.0.10.1 added (moved) startApp from 

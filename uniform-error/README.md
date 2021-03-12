@@ -17,3 +17,5 @@ The reminder is a collection of things which I found useful once; it will be int
 
 The package depends on uniform-string, which depends on unif0rm-error for its handling of tests.
 
+The StartApp is a bridge between the ErrIO to the standard IO monad.
+

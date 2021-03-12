@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a260e4763f5b6e53153a5a701246b61d479fa004eb2b2a61c06dc1065e9dd51f
+-- hash: e5b8c804a64e43adf131679094ea6d8710f1475dc048ecdde21327920c1dfdd3
 
 name:           uniform-error
-version:        0.0.10.0
+version:        0.0.10.1
 synopsis:       handling of errors in the uniform framework
 description:    a close to minimal package to handle errors and exception
                 in a simple but flexible way to reduce complexity of Haskell.
@@ -27,6 +27,7 @@ extra-source-files:
 library
   exposed-modules:
       Uniform.Error
+      Uniform.StartApp
   other-modules:
       Paths_uniform_error
   hs-source-dirs:

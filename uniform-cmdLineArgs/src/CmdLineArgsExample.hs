@@ -24,15 +24,27 @@ module CmdLineArgsExample where
 
 
 
-import           Test.Framework
+import Test.Framework ( makeTestSuite, TestSuite )
 
-import           Uniform.Strings
-import           Uniform.FileIO
-import           Uniform.Error
-import           Uniform.Convenience.StartApp
+import Uniform.Strings
+    ( s2t, t2s, putIOwords, showT, unlinesT, Text, Zeros(isZero) )
+import Uniform.Zero ( Zeros(isZero) )
+import Uniform.Error
+    (  callIO,
+      ErrIO )
+import Uniform.FileIO
+    ( homeDir2,
+      makeRelFileT,
+      Path,
+      Abs,
+      Dir,
+      File,
+      Filenames3(addFileName) )
+import Uniform.Convenience.StartApp ( startProg )
 import           Data.Semigroup                 ( (<>) )
-import           Options.Applicative.Builder
-import           Options.Applicative
+import Options.Applicative.Builder
+  
+import Options.Applicative ( Parser, execParser, helper )
 
 programName = "CmdLineArgsExample.hs"
 progTitle = "example for command line argument processing" :: Text

@@ -1,5 +1,6 @@
-a uniform method to access data on file
+A simplified method to produce a convenient (standard) command line argument parser
+which is usable in the uniform framework .
 
-uniform means:
-- same functions with identical semantics independent of representation
-- all functions are total (or become so using Maybe or Either)
+It uses the methods to start applicatiosn from convenience. 
+
+TODO: split these and move somewhere better. Error?

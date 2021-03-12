@@ -57,7 +57,7 @@ dependencies:
 - uniform-strings
 - uniform-error
 - uniform-algebras
-- uniform-convenience
+# - uniform-convenience
 - uniform-fileio
 # - uniform-time
 # # - uniform-time 

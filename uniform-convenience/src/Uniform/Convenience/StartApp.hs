@@ -23,11 +23,18 @@ startProg programName   progTitle mainProg = do  -- (mainProg prefsfilename glad
 --        putIOwords ["the files to start with \n"
 --            ,"\n", "prefsfile", prefsfilename
 --            , "\ngladefile", gladefilename]
-        putIOwords [ "------------------ ", programName , progTitle, " ----------------------------"]
+        putIOwords [    "------------------ ", 
+                        programName ,   progTitle, 
+                        " ----------------------------"]
         r <- runErr $ mainProg
-        putIOwords ["\n------------------", "main", progTitle, "\nreturning", either id showT r, "\n -------------------------"]
+        putIOwords 
+            [ "\n------------------", "main", progTitle
+            , "\nreturning", either id showT r
+            , "\n -------------------------"]
         return ()
     `catchError` (\e  -> do
-            putIOwords ["startProg error caught\n", programName, progTitle, "\n", showT e ] -- " showT msg])
+            putIOwords 
+                [ "startProg error caught\n", programName, progTitle
+                , "\n", showT e ] -- " showT msg])
             return ()
             )
