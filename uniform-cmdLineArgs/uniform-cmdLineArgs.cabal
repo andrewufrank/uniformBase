@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4798bd3e4656aeab6d68eaaba7b6780b162f5b210d5de74eb780ba3f246b0e84
+-- hash: cea1a637e257390c70179b4d5cbc98ecfc951f884041358296669e52f88e45e8
 
 name:           uniform-cmdLineArgs
 version:        0.0.1.0
@@ -30,8 +30,15 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      HTF
+    , base >=4.7 && <5
     , monads-tf
+    , optparse-applicative
+    , uniform-algebras
+    , uniform-convenience
+    , uniform-error
+    , uniform-fileio
+    , uniform-strings
   default-language: Haskell2010
 
 test-suite strings-test
@@ -47,9 +54,13 @@ test-suite strings-test
       HTF
     , base >=4.7 && <5
     , monads-tf
+    , optparse-applicative
     , quickcheck-text
     , test-invariant
     , uniform-algebras
+    , uniform-cmdLineArgs
+    , uniform-convenience
+    , uniform-error
     , uniform-fileio
     , uniform-strings
   default-language: Haskell2010

@@ -57,9 +57,12 @@ dependencies:
 - uniform-strings
 - uniform-error
 - uniform-algebras
+- uniform-convenience
+- uniform-fileio
 # - uniform-time
 # # - uniform-time 
-# # - HTF
+- HTF
+- optparse-applicative
 # # - test-invariant
 
 library:
@@ -92,3 +95,4 @@ tests:
     - quickcheck-text
     - uniform-strings
     - uniform-fileio
+    - uniform-cmdLineArgs
