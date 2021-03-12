@@ -52,7 +52,7 @@ library:
 
 tests:
   error-test:
-    main:                TestingError.hs
+    main:                Testing.hs
     source-dirs:         test
     ghc-options:
     - -threaded

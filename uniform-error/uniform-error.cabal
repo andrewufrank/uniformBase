@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7eb3ed4ca6de93819bd4dd4f20ca4336b507a4e22a1ea5be89a2f0a13f9b8360
+-- hash: a260e4763f5b6e53153a5a701246b61d479fa004eb2b2a61c06dc1065e9dd51f
 
 name:           uniform-error
 version:        0.0.10.0
@@ -40,7 +40,7 @@ library
 
 test-suite error-test
   type: exitcode-stdio-1.0
-  main-is: TestingError.hs
+  main-is: Testing.hs
   other-modules:
       Uniform.Error_test
       Paths_uniform_error
