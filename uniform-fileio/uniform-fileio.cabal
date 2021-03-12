@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9ecff033b684b9f4802f326256524a0d25b04a52a40a7383e8f613b043344599
+-- hash: 8c8bdeecb9c9a89140f663ee8d9b5b50ef6108c237f157ad6880b948ea482ec1
 
 name:           uniform-fileio
 version:        0.0.16
@@ -23,7 +23,6 @@ extra-source-files:
 
 library
   exposed-modules:
-      Uniform.ByteString
       Uniform.FileIO
       Uniform.FileIOalgebra
       Uniform.Filenames
@@ -38,23 +37,30 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , deepseq
     , directory
+    , exceptions
     , filepath
     , monads-tf
     , path
     , path-io
+    , pipes
+    , pureMD5
+    , safe
+    , text
     , uniform-algebras
     , uniform-error
     , uniform-strings
+    , uniform-time
     , unix
+    , zlib
   default-language: Haskell2010
 
 test-suite strings-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Testing
-      Uniform.ByteString_test
       Uniform.Filenames_test
       Uniform.FileStatus_test
       Uniform.FileStrings_test
@@ -68,14 +74,25 @@ test-suite strings-test
   build-depends:
       HTF
     , base >=4.7 && <5
+    , bytestring
+    , deepseq
     , directory
+    , exceptions
     , filepath
     , monads-tf
     , path
     , path-io
+    , pipes
+    , pureMD5
     , quickcheck-text
+    , safe
+    , test-invariant
+    , text
     , uniform-algebras
     , uniform-error
+    , uniform-fileio
     , uniform-strings
+    , uniform-time
     , unix
+    , zlib
   default-language: Haskell2010

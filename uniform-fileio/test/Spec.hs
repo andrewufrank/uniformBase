@@ -13,7 +13,7 @@
 {-# LANGUAGE TypeSynonymInstances  #-}
 {-# LANGUAGE UndecidableInstances  #-}
 
-module Testing     where      -- must have Main (main) or Main where
+-- module Testing     where      -- must have Main (main) or Main where
 
 
 --import System.Exit

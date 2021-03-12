@@ -32,14 +32,14 @@ import Uniform.Error
 -- import Data.Strings
 import Uniform.FileIO
 
-import Test.Framework
-import Test.Invariant
+-- import Test.Framework
+-- import Test.Invariant
 
 import qualified Data.ByteString as BS
 
 import System.Posix.ByteString   -- what would be the windows corresponance? --needs cygwin...
-import qualified System.Posix.FilePath as P
-import System.Posix.FilePath (RawFilePath)
+-- import qualified System.Posix.FilePath as P
+-- import System.Posix.FilePath (RawFilePath)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 

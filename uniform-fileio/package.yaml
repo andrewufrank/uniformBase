@@ -19,9 +19,9 @@ extra-source-files:
 dependencies:
 - base >= 4.7 && < 5
 - monads-tf
-# - safe
-# - text
-# - bytestring
+- safe
+- text
+- bytestring
 # - pretty-show
 # - MissingH
 # - split
@@ -36,10 +36,14 @@ dependencies:
 - directory
 #             filepath -any,
 #             pureMD5 -any,
+- pureMD5
+- deepseq
+# - text
 #             deepseq,
 #             text -any,
 #             unix -any,
 - unix
+- pipes
 #             pipes ,
 #             safe,
 #             path ,
@@ -48,12 +52,16 @@ dependencies:
 - filepath
 #             path-io ,
 #             exceptions
+- exceptions
 #             , split
-#             , zlib
+- zlib
 - uniform-strings
 - uniform-error
 - uniform-algebras
+- uniform-time
 # - uniform-time 
+# - HTF
+# - test-invariant
 
 library:
   source-dirs: src
@@ -81,5 +89,7 @@ tests:
     dependencies:
     - uniform-algebras
     - HTF
+    - test-invariant
     - quickcheck-text
     - uniform-strings
+    - uniform-fileio
