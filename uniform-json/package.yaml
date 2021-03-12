@@ -93,7 +93,11 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - uniform-algebras
     - HTF
+    - uniform-algebras
     - quickcheck-text
     - uniform-strings
+    - time
+    - uniform-time
+    - uniform-json
+    

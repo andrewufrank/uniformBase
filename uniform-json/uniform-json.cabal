@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: df67227ef2b60734897be8d34cd1486430ebc2cb6243eb46950d133a99b424d7
+-- hash: f20048112f85522c6bcb284c4c207262e47c7a90a1e85df065b1bce44f80f19e
 
 name:           uniform-json
 version:        0.0.2
@@ -59,7 +59,6 @@ test-suite strings-test
   type: exitcode-stdio-1.0
   main-is: Testing.hs
   other-modules:
-      TestingJson
       Uniform.Json_test
       Uniform.Yaml_test
       Paths_uniform_json
@@ -76,10 +75,13 @@ test-suite strings-test
     , monads-tf
     , pretty-show
     , quickcheck-text
+    , time
     , uniform-algebras
     , uniform-error
     , uniform-fileio
+    , uniform-json
     , uniform-strings
+    , uniform-time
     , unordered-containers
     , yaml
   default-language: Haskell2010

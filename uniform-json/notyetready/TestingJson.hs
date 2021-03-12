@@ -17,7 +17,7 @@
 
     #-}
 
-module Main     where
+module TestingJson    where
 
 
 import Uniform.Strings
@@ -137,5 +137,4 @@ test_showRead =
 test_pp = assertEqual (show timeX) (ppShow timeX)
 
 timeX :: UTCTime
-timeX = parseTimeOrError True defaultTimeLocale "%-d-%-m-%Y %l:%M %p"
-                "9-8-2012 10:54 AM" :: UTCTime
+timeX = parseTimeOrError True defaultTimeLocale "%-d-%-m-%Y %l:%M %p" "9-8-2012 10:54 AM" :: UTCTime
