@@ -60,7 +60,7 @@ startMinimal programName  mainProg = do
         putIOwords 
             [ "\n------------------", "main", programName
             , "\nreturning", either id showT r
-            , "\n -------------------------"]
+            , "\n"]
         return ()
     `catchError` (\e  -> do
             putIOwords 
