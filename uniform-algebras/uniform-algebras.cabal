@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 66709b5ff83c33a4c32a717d20c153f72a29277860895925f58888562b3b633e
+-- hash: f1a82122bda6332f6f1f1cc06ed831f74252056b96460b37f811de7cc7d104be
 
 name:           uniform-algebras
 version:        0.0.10.0
@@ -16,8 +16,7 @@ category:       Algebra
 author:         Andrew Frank
 maintainer:     Andrew U. Frank <andrewufrank@gmail.com>
 copyright:      2021 Andrew U. Frank
-license:        GPL
-license-file:   GPL_3
+license:        MIT
 build-type:     Simple
 extra-source-files:
     README.md

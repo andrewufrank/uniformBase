@@ -1,7 +1,6 @@
 name:         uniform-algebras
 version:      0.0.10.0
-license:      GPL
-license-file: GPL_3
+license:      MIT
 maintainer:   Andrew U. Frank <andrewufrank@gmail.com>
 author:       Andrew Frank
 copyright:    2021 Andrew U. Frank
@@ -12,8 +11,8 @@ description: |
     zero (not a semigroupoid...)
     Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
 
-verbatim:
-  cabal-version: 2.2
+# verbatim:
+#   cabal-version: 3.0
 
 extra-source-files:
 - README.md
