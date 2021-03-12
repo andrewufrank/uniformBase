@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a6e410305c0d94b8f9e93604cca7da5930aadf242f0a9cc4ed61fa22cfe8b4e1
+-- hash: 66709b5ff83c33a4c32a717d20c153f72a29277860895925f58888562b3b633e
 
 name:           uniform-algebras
 version:        0.0.10.0
@@ -38,7 +38,7 @@ library
 
 test-suite algebra-test
   type: exitcode-stdio-1.0
-  main-is: Spec.hs
+  main-is: Testing.hs
   other-modules:
       Paths_uniform_algebras
   hs-source-dirs:

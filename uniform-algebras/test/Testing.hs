@@ -41,7 +41,7 @@ test_catch b = do
             return False
         Right v -> return v
 
-test2catch :: Bool -> ErrIO Bool
+test2catch :: Bool -> ErrIO Bool8
 test2catch b =
     if b then return True
         else throwError "false"

@@ -12,6 +12,9 @@ description: |
     zero (not a semigroupoid...)
     Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
 
+verbatim:
+  cabal-version: 2.2
+
 extra-source-files:
 - README.md
 - ChangeLog.md
@@ -36,7 +39,7 @@ library:
 
 tests:
   algebra-test:
-    main:                Spec.hs
+    main:                Testing.hs
     source-dirs:         test
     ghc-options:
     - -threaded
