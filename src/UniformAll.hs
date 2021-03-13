@@ -3,12 +3,15 @@
 
 module UniformAll 
     ( module UniformAll
-    , Uniform.Strings(Text)
+    , module Uniform.Error
+    , module Uniform.StartApp
+    , module Uniform.Strings
+    , module Uniform.FileIO
     -- , Uniform.StartApp
     -- , Uniform.FileIO
     ) where
 
-import Uniform.Strings (Text)
+import Uniform.Strings 
 import Uniform.StartApp
 import Uniform.FileIO
 import Uniform.Error

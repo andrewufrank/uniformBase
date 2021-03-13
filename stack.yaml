@@ -14,12 +14,12 @@ resolver: lts-17.5
 
 packages:
 - .
-- uniform-algebras
-- uniform-cmdLineArgs
+- uniform/uniform-algebras
+# - uniform/uniform-cmdLineArgs
 # - uniform-convenience
-- uniform-error
+- uniform/uniform-error
 #- uniform-example
-- uniform-fileio
+- uniform/uniform-fileio
 #- uniform-ftp
 #- uniform-http
 #- uniform-json
@@ -28,8 +28,8 @@ packages:
 #- uniform-pretty
 #- uniform-regex
 #- uniform-shake
-- uniform-strings
-- uniform-time
+- uniform/uniform-strings
+- uniform/uniform-time
 #- uniform-watch
 #- uniform-webserver
 
