@@ -13,6 +13,7 @@ resolver: lts-17.5
 
 
 packages:
+- .
 - uniform-algebras
 - uniform-cmdLineArgs
 # - uniform-convenience

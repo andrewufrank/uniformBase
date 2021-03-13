@@ -1,0 +1,40 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 5717ec779960f7a9e9752e7ba5ca4def413981d656abddd7e66f4b5e84c75399
+
+name:           uniform
+version:        0.0.0.1
+description:    Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
+homepage:       https://github.com/githubuser/uniform#readme
+bug-reports:    https://github.com/githubuser/uniform/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2021 Author name here
+license:        BSD3
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/uniform
+
+library
+  exposed-modules:
+      UniformAll
+  other-modules:
+      Paths_uniform
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , uniform-error
+    , uniform-fileio
+    , uniform-strings
+    , uniform-time
+  default-language: Haskell2010
