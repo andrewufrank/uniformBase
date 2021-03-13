@@ -7,6 +7,7 @@ module UniformAll
     , module Uniform.StartApp
     , module Uniform.Strings
     , module Uniform.FileIO
+    , module Uniform.Json
     -- , Uniform.StartApp
     -- , Uniform.FileIO
     ) where
@@ -15,3 +16,4 @@ import Uniform.Strings
 import Uniform.StartApp
 import Uniform.FileIO
 import Uniform.Error
+import Uniform.Json

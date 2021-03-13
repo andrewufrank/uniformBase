@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5717ec779960f7a9e9752e7ba5ca4def413981d656abddd7e66f4b5e84c75399
+-- hash: 2d17e87c9173ca8f5232e1a4062b4c813a0d3f09b368b85bb5d535a76eba4a1b
 
 name:           uniform
 version:        0.0.0.1
@@ -35,6 +35,7 @@ library
       base >=4.7 && <5
     , uniform-error
     , uniform-fileio
+    , uniform-json
     , uniform-strings
     , uniform-time
   default-language: Haskell2010

@@ -25,6 +25,7 @@ dependencies:
 - uniform-fileio
 - uniform-error
 - uniform-time
+- uniform-json
 
 library:
   source-dirs: src

@@ -16,22 +16,22 @@ packages:
 - .
 - uniform/uniform-algebras
 # - uniform/uniform-cmdLineArgs
-# - uniform-convenience
+# - uniform/uniform-convenience
 - uniform/uniform-error
-#- uniform-example
+#- uniform/uniform-example
 - uniform/uniform-fileio
-#- uniform-ftp
-#- uniform-http
-#- uniform-json
-#- uniform-pandoc
-#- uniform-pathTest
-#- uniform-pretty
-#- uniform-regex
-#- uniform-shake
+#- uniform/uniform-ftp
+#- uniform/uniform-http
+- uniform/uniform-json
+#- uniform/uniform-pandoc
+#- uniform/uniform-pathTest
+#- uniform/uniform-pretty
+#- uniform/uniform-regex
+#- uniform/uniform-shake
 - uniform/uniform-strings
 - uniform/uniform-time
-#- uniform-watch
-#- uniform-webserver
+#- uniform/uniform-watch
+#- uniform/uniform-webserver
 
 # Dependency packages to be pulled from upstream that are not in the resolver.
 # These entries can reference officially published versions as well as
