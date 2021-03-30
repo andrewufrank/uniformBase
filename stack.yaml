@@ -9,8 +9,6 @@ user-message: |
   You can omit this message by removing it from stack.yaml
 
 
-resolver: lts-17.5
-
 
 packages:
 - .
@@ -23,7 +21,7 @@ packages:
 #- uniform/uniform-ftp
 #- uniform/uniform-http
 - uniform/uniform-json
-#- uniform/uniform-pandoc
+# - uniform/uniform-pandoc
 #- uniform/uniform-pathTest
 #- uniform/uniform-pretty
 #- uniform/uniform-regex
@@ -44,7 +42,8 @@ packages:
 #
 extra-deps: 
 - test-invariant-0.4.5.0
-
+# - pandoc-2.9.2.1
+# - pandoc-citeproc-0.17.0.2
 # Override default flag values for local packages and extra-deps
 # flags: {}
 
@@ -68,3 +67,7 @@ extra-deps:
 #
 # Allow a newer minor version of GHC than the snapshot specifies
 # compiler-check: newer-minor
+
+resolver: lts-17.5
+ghc-options:
+  "$everything": -haddock

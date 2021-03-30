@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2d17e87c9173ca8f5232e1a4062b4c813a0d3f09b368b85bb5d535a76eba4a1b
+-- hash: 6a6f26c0d7d552b3406578072c13be3ec234304178dd71a02030d1a2987974ae
 
 name:           uniform
 version:        0.0.0.1
@@ -33,6 +33,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , uniform-algebras
     , uniform-error
     , uniform-fileio
     , uniform-json

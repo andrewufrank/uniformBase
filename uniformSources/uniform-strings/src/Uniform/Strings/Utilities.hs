@@ -213,7 +213,9 @@ class (Zeros a, ListForms a, Eq a) => CharChains a where
     -- returns Nothing if second  is empty and intercalate "x" "" gives Just ""
     -- return Nothing if first is empty or contained in second to achievee inverse with splitOn
     splitOn' :: a -> a -> Maybe [a]
-    -- ^ returns Nothing if second is empty
+    -- ^ splits the first by all occurences of the second 
+    -- the second is removed from results
+    -- returns Nothing if second is empty
 
     printf' :: (PrintfArg r) => String -> r -> a
     -- ^ formats a string accoding to a pattern - restricted to a single string (perhaps)
