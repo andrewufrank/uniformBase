@@ -11,7 +11,7 @@ module UniformAll
     , module Uniform.FileIO
     , module Uniform.Json
     -- , module Uniform.Pandoc
-    -- , Uniform.StartApp
+    , Uniform.StartApp
     -- , Uniform.FileIO
     ) where
 
