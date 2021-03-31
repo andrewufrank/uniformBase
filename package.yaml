@@ -2,7 +2,7 @@ name:                uniform
 version:             0.0.0.1
 github:              "githubuser/uniform"
 license:             BSD3
-author:              "Author name here"
+author:              Andrew U Frank 
 maintainer:          "example@example.com"
 copyright:           "2021 Author name here"
 
@@ -29,5 +29,19 @@ dependencies:
 - uniform-json
 
 library:
-  source-dirs: src
+  source-dirs: 
+        - src
+        - uniformSources
  
+executables:
+  startAppTest:
+    main:                StartAppTest.hs
+    source-dirs:         
+      - app
+      - uniformSources
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - uniform

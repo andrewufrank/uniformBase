@@ -5,31 +5,28 @@
 
 # A warning or info to be displayed to the user on config load.
 user-message: |
-  Warning (added by new or init): Some packages were found to be incompatible with the resolver and have been left commented out in the packages section.
-  You can omit this message by removing it from stack.yaml
-
-
+  Warning (added by new or init):
 
 packages:
 - .
-- uniform/uniform-algebras
-# - uniform/uniform-cmdLineArgs
-# - uniform/uniform-convenience
-- uniform/uniform-error
-#- uniform/uniform-example
-- uniform/uniform-fileio
-#- uniform/uniform-ftp
-#- uniform/uniform-http
-- uniform/uniform-json
-# - uniform/uniform-pandoc
-#- uniform/uniform-pathTest
-#- uniform/uniform-pretty
-#- uniform/uniform-regex
-#- uniform/uniform-shake
-- uniform/uniform-strings
-- uniform/uniform-time
-#- uniform/uniform-watch
-#- uniform/uniform-webserver
+- uniformSources/uniform-algebras
+# - uniformSources/uniform-cmdLineArgs
+# - uniformSources/uniform-convenience
+- uniformSources/uniform-error
+#- uniformSources/uniform-example
+- uniformSources/uniform-fileio
+#- uniformSources/uniform-ftp
+#- uniformSources/uniform-http
+- uniformSources/uniform-json
+# - uniformSources/uniform-pandoc
+#- uniformSources/uniform-pathTest
+#- uniformSources/uniform-pretty
+#- uniformSources/uniform-regex
+#- uniformSources/uniform-shake
+- uniformSources/uniform-strings
+- uniformSources/uniform-time
+#- uniformSources/uniform-watch
+#- uniformSources/uniform-webserver
 
 # Dependency packages to be pulled from upstream that are not in the resolver.
 # These entries can reference officially published versions as well as
