@@ -27,6 +27,7 @@ dependencies:
 - uniform-error
 - uniform-time
 - uniform-json
+- uniform-cmdLineArgs
 
 library:
   source-dirs: 

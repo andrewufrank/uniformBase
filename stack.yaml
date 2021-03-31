@@ -10,7 +10,7 @@ user-message: |
 packages:
 - .
 - uniformSources/uniform-algebras
-# - uniformSources/uniform-cmdLineArgs
+- uniformSources/uniform-cmdLineArgs
 # - uniformSources/uniform-convenience
 - uniformSources/uniform-error
 #- uniformSources/uniform-example
