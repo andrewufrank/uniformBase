@@ -24,6 +24,7 @@
 module Uniform.CmdLineArgs (module Uniform.CmdLineArgs
         , (<>), (<*>), Parser (..)
         ,switch, long, short, help
+        , metavar, argument, str
         , header, helper, fullDesc, progDesc, info, execParser
         )  where
 
