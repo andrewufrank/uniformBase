@@ -45,4 +45,5 @@ main = do
 
 
 someFunc :: Text -> Text -> ErrIO ()
+-- ^ the function must have two text arguments
 someFunc a b = putIOwords ["someFunc", a, b]
