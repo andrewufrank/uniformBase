@@ -13,13 +13,14 @@
 
 module Main  where      -- must have Main (main) or Main where
 
-import           Uniform.Convenience.StartApp
-import           Uniform.Filenames           --   ( makeExtension )
--- import           Data.Semigroup                 ( (<>) )
-import           Options.Applicative.Builder
-import           Options.Applicative
-import           Lib.ProcTxt
-import           Lib.ProcPandocDatei
+-- import           Uniform.Convenience.StartApp
+-- import           Uniform.Filenames           --   ( makeExtension )
+-- -- import           Data.Semigroup                 ( (<>) )
+-- import           Options.Applicative.Builder
+-- import           Options.Applicative
+-- import           Lib.ProcTxt
+-- import           Lib.ProcPandocDatei
+import UniformAll
 
 programName, progTitle :: Text
 programName = "Test Uniform package" :: Text
@@ -43,5 +44,5 @@ main = do
   return ()
 
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+someFunc :: Text -> Text -> ErrIO ()
+someFunc a b = putIOwords ["someFunc", a, b]
