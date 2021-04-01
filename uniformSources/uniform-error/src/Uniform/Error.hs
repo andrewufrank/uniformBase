@@ -31,13 +31,11 @@ module Uniform.Error (module Uniform.Error
     , module Safe
     , module Control.Monad.Error  -- is monads-tf
     , module Control.Exception   -- to avoid control.error
-
         )  where
 
 import "monads-tf" Control.Monad.Error
 import Control.Exception
 import Safe
-
 import Uniform.Strings hiding ((</>), (<.>), S)
 
 instance CharChains2 IOError Text where
@@ -149,6 +147,25 @@ fromRightNote _ (Right a) = a
 headNoteT :: [Text] -> [a] -> a
 -- get head with a list of texts
 headNoteT msg s = headNote (t2s $ unwords' msg) s
+
+startProg :: Show a => Text ->  ErrIO a -> IO ()
+startProg programName  mainProg = do  
+        putIOwords  [    "------------------ " 
+                    ,     programName  
+                    ,    " ----------------------------\n"]
+        r <- runErr $ mainProg
+        putIOwords 
+            [ "\n------------------", "main", programName
+            , "\nreturning", either id showT r
+            , "\n"]
+        return ()
+    `catchError` (\e  -> do
+            putIOwords 
+                [ "startProg error caught\n", programName 
+                , "\n", showT e ]  
+            return ()
+            )
+
 
 -- | tools I thought could be useful for testing 
 --  when writing tests which must fail

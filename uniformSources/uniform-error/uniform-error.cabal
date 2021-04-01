@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e5b8c804a64e43adf131679094ea6d8710f1475dc048ecdde21327920c1dfdd3
+-- hash: f64e97dd140e060b899446a01e5b05c829ffe1c546d1a9df323f6643612fed12
 
 name:           uniform-error
 version:        0.0.10.1
@@ -27,7 +27,6 @@ extra-source-files:
 library
   exposed-modules:
       Uniform.Error
-      Uniform.StartApp
   other-modules:
       Paths_uniform_error
   hs-source-dirs:

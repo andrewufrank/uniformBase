@@ -1,5 +1,5 @@
-name:                uniform
-version:             0.0.0.1
+name:                uniformBase
+version:             0.0.0.2
 github:              "githubuser/uniform"
 license:             BSD3
 author:              Andrew U Frank 
@@ -27,7 +27,7 @@ dependencies:
 - uniform-error
 - uniform-time
 - uniform-json
-- uniform-cmdLineArgs
+# - uniform-cmdLineArgs
 
 library:
   source-dirs: 
@@ -45,4 +45,4 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - uniform
+    - uniformBase

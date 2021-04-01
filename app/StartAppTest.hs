@@ -20,12 +20,10 @@ module Main  where      -- must have Main (main) or Main where
 -- import           Options.Applicative
 -- import           Lib.ProcTxt
 -- import           Lib.ProcPandocDatei
-import UniformAll
+import UniformBase
 
-programName, progTitle :: Text
+programName  :: Text
 programName = "Test Uniform package" :: Text
-progTitle =
-  "Test uniform package build" :: Text
 
 -- to run add in .ghci -- tests/Testing.hs
 
@@ -33,7 +31,6 @@ main :: IO ()
 main = do
   startProg
     programName
-    progTitle
     (someFunc
       (unlinesT
         [ "test the uniform package and its building"
