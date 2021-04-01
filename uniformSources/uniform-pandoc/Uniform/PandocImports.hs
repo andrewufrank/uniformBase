@@ -32,20 +32,21 @@ module Uniform.PandocImports
   )
 where
 
-import           Uniform.Error
-import           Uniform.Filenames
-import           Uniform.TypedFile              ( TypedFiles7(..)
-                                                , TypedFiles5(..)
-                                                , TypedFile5(..)
-                                                )
-import           Uniform.FileIO                 ( write8
-                                                , read8
-                                                -- , setExtension
-                                                )
-import           Uniform.Json
-import           Uniform.Yaml
--- import Uniform.DocRep
--- import Uniform.ProcessPDF 
+-- import           Uniform.Error
+-- import           Uniform.Filenames
+-- import           Uniform.TypedFile              ( TypedFiles7(..)
+--                                                 , TypedFiles5(..)
+--                                                 , TypedFile5(..)
+--                                                 )
+-- import           Uniform.FileIO                 ( write8
+--                                                 , read8
+--                                                 -- , setExtension
+--                                                 )
+-- import           Uniform.Json
+-- import           Uniform.Yaml
+-- -- import Uniform.DocRep
+-- -- import Uniform.ProcessPDF 
+import UniformAll  
 
 import qualified Text.Pandoc                   as Pandoc
 import           Text.Pandoc        

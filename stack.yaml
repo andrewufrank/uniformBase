@@ -18,7 +18,7 @@ packages:
 #- uniformSources/uniform-ftp
 #- uniformSources/uniform-http
 - uniformSources/uniform-json
-# - uniformSources/uniform-pandoc
+- uniformSources/uniform-pandoc
 #- uniformSources/uniform-pathTest
 #- uniformSources/uniform-pretty
 #- uniformSources/uniform-regex
@@ -39,8 +39,8 @@ packages:
 #
 extra-deps: 
 - test-invariant-0.4.5.0
-# - pandoc-2.9.2.1
-# - pandoc-citeproc-0.17.0.2
+- pandoc-2.9.2.1
+- pandoc-citeproc-0.17.0.2
 # Override default flag values for local packages and extra-deps
 # flags: {}
 
