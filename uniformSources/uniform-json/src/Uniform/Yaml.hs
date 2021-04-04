@@ -25,6 +25,7 @@ module Uniform.Yaml (
         -- , module Data.Yaml
         , Y.decodeFileThrow
         , Y.encode
+        , Y.decode, Y.decodeEither 
         )  where
 
 

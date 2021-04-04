@@ -5,7 +5,7 @@
 
 # A warning or info to be displayed to the user on config load.
 user-message: |
-  Warning (added by new or init):
+
 
 packages:
 - .

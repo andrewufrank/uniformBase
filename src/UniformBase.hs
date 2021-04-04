@@ -9,6 +9,7 @@ module UniformBase
     , module Uniform.Strings
     , module Uniform.FileIO
     , module Uniform.Json
+    , module Uniform.Time
     -- , module Uniform.Pandoc
     -- , module Uniform.StartApp   -- in package Error 
     -- , module Uniform.CmdLineArgs 
@@ -24,3 +25,4 @@ import Uniform.Error
 import Uniform.Json
 -- import  Uniform.CmdLineArgs
 -- import Uniform.Pandoc
+import Uniform.Time 

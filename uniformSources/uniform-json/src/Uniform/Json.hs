@@ -119,7 +119,7 @@ mergeLeftPref :: [Value] -> Value
 -- all values must be objects 
 -- It prefers the first map when duplicate keys are encountered,
 -- http://hackage.haskell.org/package/hashmap-1.3.3/docs/Data-HashMap.html
-mergeLeftPref = Object . HML.unions . map (\(Object x) -> x)
+mergeLeftPref = Object . HML.unions . map unObject
 
 mergeRightPref :: [Value] -> Value
 mergeRightPref = mergeLeftPref . reverse 
@@ -128,3 +128,6 @@ mergeRightPref = mergeLeftPref . reverse
 instance NiceStrings Value where
     shownice = bb2t . bl2b . encodePretty
 
+unObject :: Value -> Object
+unObject (Object x) = x
+unObject _ = error "unObject in Json.hs: No Object available"

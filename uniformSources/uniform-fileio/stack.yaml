@@ -25,4 +25,7 @@ extra-deps:
 #- path-0.7.0@sha256:f1629c247f4673650046a690f07958343abc63adc035b451610a550a8ac6055e,3177
 #- path-0.6.1@sha256:7a9a56f767a8e47b361af855fea0b4a8d18e7b029734957a65dcd5c0c1abef16,2423
 
-resolver: lts-16.0 # 13.12
+resolver: lts-17.5
+ghc-options:
+  "$everything": -haddock
+  "$everything": -Wno-deprecations # 13.12
