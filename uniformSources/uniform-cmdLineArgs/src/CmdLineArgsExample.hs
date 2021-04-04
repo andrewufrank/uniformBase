@@ -1,11 +1,11 @@
------------------------------------------------------------------------------
+----------------------------------------------------------------------
 --
 -- Module      :   an example for a command line argument setup 
 --                  is a Main and starts with convenience
 -- for information see https://github.com/pcapriotti/optparse-applicative
 -- change the getAttr function to return Text
 -----------------------------------------------------------------------------
-{-# OPTIONS_GHC -F -pgmF htfpp #-}
+-- {-# OPTIONS_GHC -F -pgmF htfpp #-}
 
     {-# LANGUAGE
     MultiParamTypeClasses
@@ -25,32 +25,32 @@ module CmdLineArgsExample where
 
 
 import Test.Framework ( makeTestSuite, TestSuite )
+import UniformBase
+-- import Uniform.Strings
+--     ( s2t, t2s, putIOwords, showT, unlinesT, Text, Zeros(isZero) )
+-- import Uniform.Zero ( Zeros(isZero) )
+-- import Uniform.Error
+-- import Uniform.StartApp
+-- import Uniform.FileIO
+--     ( homeDir2,
+--       makeRelFileT,
+--       Path,
+--       Abs,
+--       Dir,
+--       File,
+--       Filenames3(addFileName) )
+-- --  import Uniform.Convenience.StartApp ( startProg )
+-- import           Data.Semigroup                 ( (<>) )
+-- import Options.Applicative.Builder
+import Uniform.CmdLineArgs  
+-- import Options.Applicative ( Parser, execParser, helper )
 
-import Uniform.Strings
-    ( s2t, t2s, putIOwords, showT, unlinesT, Text, Zeros(isZero) )
-import Uniform.Zero ( Zeros(isZero) )
-import Uniform.Error
-import Uniform.StartApp
-import Uniform.FileIO
-    ( homeDir2,
-      makeRelFileT,
-      Path,
-      Abs,
-      Dir,
-      File,
-      Filenames3(addFileName) )
---  import Uniform.Convenience.StartApp ( startProg )
-import           Data.Semigroup                 ( (<>) )
-import Options.Applicative.Builder
-  
-import Options.Applicative ( Parser, execParser, helper )
-
-programName = "CmdLineArgsExample.hs"
+-- programName = "CmdLineArgsExample.hs"
 progTitle = "example for command line argument processing" :: Text
 
 main :: IO ()
 main = startProg
-  programName
+--   programName
   progTitle
   (do
     inp :: Inputs <- parseArgs2input

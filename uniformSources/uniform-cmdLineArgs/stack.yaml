@@ -3,6 +3,7 @@ extra-package-dbs: []
 packages:
 - .
 extra-deps:
+- ../../.   # for the uniformBase
 - ../uniform-strings
 - ../uniform-algebras
 - ../uniform-convenience
