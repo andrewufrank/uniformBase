@@ -130,4 +130,4 @@ instance NiceStrings Value where
 
 unObject :: Value -> Object
 unObject (Object x) = x
-unObject _ = error "unObject in Json.hs: No Object available"
+unObject z = errorT ["unObject in Json.hs: No Object available", "given", showT z]
