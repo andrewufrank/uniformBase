@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f20048112f85522c6bcb284c4c207262e47c7a90a1e85df065b1bce44f80f19e
+-- hash: 107569fc6abadb782f5614e106d1340489fbc9b70f91c7e121d9409b60fedb72
 
 name:           uniform-json
 version:        0.0.2
@@ -13,9 +13,8 @@ description:    remove particular aspects of abstraction in json and yaml
                 .
                 # source-repository head
                 # type: git
+                # github: https://github.com/andrewufrank/uniform-json.git
 category:       Data Text
-homepage:       https://github.com/ttps://github.com/andrewufrank/uniform-json.git#readme
-bug-reports:    https://github.com/ttps://github.com/andrewufrank/uniform-json.git/issues
 author:         Andrew Frank
 maintainer:     Andrew U. Frank <andrewufrank@gmail.com>
 copyright:      2021 Andrew U. Frank
@@ -25,10 +24,6 @@ build-type:     Simple
 extra-source-files:
     README.md
     ChangeLog.md
-
-source-repository head
-  type: git
-  location: https://github.com/ttps://github.com/andrewufrank/uniform-json.git
 
 library
   exposed-modules:

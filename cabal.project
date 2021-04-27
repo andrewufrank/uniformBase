@@ -1,0 +1,8 @@
+packages: 
+    *.cabal
+    uniformSources/uniform-algebras/*.cabal
+    uniformSources/uniform-error/*.cabal
+    uniformSources/uniform-fileio/*.cabal
+    uniformSources/uniform-json/*.cabal
+    uniformSources/uniform-strings/*.cabal
+    uniformSources/uniform-time/*.cabal
