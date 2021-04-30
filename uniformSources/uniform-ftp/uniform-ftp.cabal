@@ -1,86 +1,56 @@
-name: uniform-ftp
-version: 0.0.1.5
+cabal-version: 1.12
 
-cabal-version: >=1.22
-build-type: Simple
-license: GPL
-license-file: GPL_3
-maintainer: Andrew U. Frank <andrewufrank@gmail.com>
-author: Andrew Frank
-category:Ftp
-synopsis: Ftp
-description: Ftp
-    0.0.1.5 change to lts-15.13
+-- This file has been generated from package.yaml by hpack version 0.34.2.
+--
+-- see: https://github.com/sol/hpack
 
-source-repository head
-    type: git
-    location: https://github.com/andrewufrank/uniform-ftp.git
+name:           uniform-ftp
+version:        0.0.1.5
+synopsis:       access to ftp functions in an uniform way
+description:    a close to minimal package to handle file transfer in a simple but flexible way to reduce complexity of Haskell.
+                .
+                Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
+category:       ftp
+author:         Andrew Frank
+maintainer:     Andrew U. Frank <andrewufrank@gmail.com>
+copyright:      2021 Andrew U. Frank
+license:        GPL
+license-file:   GPL_3
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
 
 library
-    build-depends:
-        base >=4.8 && <= 5
-        , monads-tf
-        -- , exceptions
-        -- , safe
-        , uniform-strings
-        -- , HTF
-        , uniform-algebras
-        , uniform-strings
-        , uniform-error 
-        , uniform-fileio
-        , uniform-time
-        -- , ftp-client
-        -- , ftphs
-        -- , monads-tf
-        , transformers
-        -- , utility-ht
-        , MissingH
+  exposed-modules:
+      FtpMain
+  other-modules:
+      Paths_uniform_ftp
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , monads-tf
+    , safe
+    , uniform-algebras
+    , uniform-error
+    , uniform-strings
+  default-language: Haskell2010
 
-    exposed-modules:
-        Uniform.Ftp
-
-    exposed: True
-    buildable: True
-    default-language: Haskell2010
-    hs-source-dirs: .
-    other-modules:
-
-executable ftpTest
-    main-is: FtpMain.hs
-    hs-source-dirs: src, tests
-    default-language: Haskell2010
-    build-depends:
-        base ==4.*,
-        uniform-strings -any,
-        -- uniform-convenience -any,
-        -- uniform-cmdLineArgs,
-        uniform-fileio -any,
-        uniform-error
-        -- , uniform-shake
-        -- ,uniform-webserver  
-        -- , uniform-watch 
-        , uniform-ftp
-        , uniform-time
-        , transformers
-        , HTF
-    other-modules:
-        Uniform.Ftp_test
-
-Test-Suite tests_ftp
-    type:       exitcode-stdio-1.0
-    build-depends:  base -any
-        , HTF
-       , uniform-strings
-       , uniform-error
-       , uniform-ftp
-       , uniform-fileio
-       , uniform-time 
---       , data-easy
---       , basics -- must not be included, gives dependency issue
-        , transformers 
-    main-is: Testing.hs
-    buildable: True
-    default-language: Haskell2010
-    hs-source-dirs: tests
-    other-modules:
-        Uniform.Ftp_test
+test-suite ftp-test
+  type: exitcode-stdio-1.0
+  main-is: Testing.hs
+  other-modules:
+      Paths_uniform_ftp
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HTF
+    , base >=4.7 && <5
+    , monads-tf
+    , safe
+    , uniform-algebras
+    , uniform-error
+    , uniform-strings
+  default-language: Haskell2010

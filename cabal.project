@@ -6,3 +6,7 @@ packages:
     uniformSources/uniform-json/*.cabal
     uniformSources/uniform-strings/*.cabal
     uniformSources/uniform-time/*.cabal
+
+-- Disregard all upper bounds when dependency solving
+allow-newer: all 
+-- fails because  zlib <4.16
