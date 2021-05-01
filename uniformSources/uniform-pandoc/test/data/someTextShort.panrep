@@ -1,1 +1,0 @@
-Panrep {panyam = Object (fromList []), panpan = Pandoc (Meta {unMeta = fromList []}) [Para [Str "An",Space,Str "new",Space,Str "start"]]}

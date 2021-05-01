@@ -6,7 +6,7 @@ extra-deps:
 - ../uniform-strings
 - ../uniform-algebras
 - ../uniform-convenience
-- ../uniform-cmdLineArgs
+# - ../uniform-cmdLineArgs
 - ../uniform-fileio
 - ../uniform-time
 - ../uniform-error

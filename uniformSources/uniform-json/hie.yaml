@@ -9,8 +9,8 @@ cradle:
     - path: "../uniform-algebras/."
       component: "uniform-algebras:lib"
 
-    - path: "../uniform-cmdLineArgs/."
-      component: "uniform-cmdLineArgs:lib"
+    # - path: "../uniform-cmdLineArgs/."
+    #   component: "uniform-cmdLineArgs:lib"
 
     
     - path: "../uniform-convenience/."
