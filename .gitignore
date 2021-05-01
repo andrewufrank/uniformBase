@@ -4,6 +4,7 @@ dist-newstyle
 .HTF
 \#*#
 *~
+*~[0-9*]
 *.lkshs
 *.lkshw
 */*.lkshs
