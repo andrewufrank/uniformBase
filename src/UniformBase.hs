@@ -9,6 +9,7 @@ module UniformBase
     , module Uniform.Strings
     , module Uniform.FileIO
     , module Uniform.Json
+    , module Uniform.Yaml 
     , module Uniform.Time
     -- , module Uniform.Pandoc
     -- , module Uniform.StartApp   -- in package Error 
@@ -23,6 +24,8 @@ import Uniform.Strings
 import Uniform.FileIO
 import Uniform.Error
 import Uniform.Json
+import Uniform.Yaml hiding (encode,decode)
+    -- export qualified as Y.encode, Y.decode)
 -- import  Uniform.CmdLineArgs
 -- import Uniform.Pandoc
 import Uniform.Time 

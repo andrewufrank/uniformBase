@@ -18,7 +18,7 @@
 
 
 module Uniform.Yaml (
-        module Uniform.Yaml
+        module Uniform.Yaml 
         , module Uniform.Error   -- or at least ErrIO
         -- , Y.decodeEither'
         , Y.ParseException(..)
