@@ -33,7 +33,8 @@ dependencies:
 # - uniform-time 
 
 library:
-  source-dirs: src
+  source-dirs: 
+  - .
 
 # this is only a library, no directly executable
 # executables:

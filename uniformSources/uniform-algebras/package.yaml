@@ -7,8 +7,9 @@ copyright:    2021 Andrew U. Frank
 category:     Algebra
 synopsis:     some simple algebras, eg. zero
 description: |
-    simple algebras without too much mathematical underpinning
+    simple algebras without much mathematical underpinning
     zero (not a semigroupoid...)
+    exports also Maybe and Either
 # Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
 
 # verbatim:

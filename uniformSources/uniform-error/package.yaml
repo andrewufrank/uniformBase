@@ -24,8 +24,8 @@ dependencies:
 - uniform-strings
 
 library:
-  source-dirs: src
-
+  source-dirs: 
+  - .
 
 tests:
   error-test:

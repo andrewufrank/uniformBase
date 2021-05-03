@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 854928492b0ea6389a6421ec0cdabf4dfabc82f912848f98e40410e33027f666
+-- hash: f29ee1c52abc630ed4a0ea0707ee3f798469598eb41582c67fcf26fd25d16b73
 
 name:           uniform-time
 version:        0.1.0
@@ -27,7 +27,7 @@ library
   other-modules:
       Paths_uniform_time
   hs-source-dirs:
-      src
+      ./.
   build-depends:
       base >=4.7 && <5
     , convertible

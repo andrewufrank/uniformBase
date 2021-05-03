@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 107569fc6abadb782f5614e106d1340489fbc9b70f91c7e121d9409b60fedb72
+-- hash: 7e0909656d54b255e49e7b543ebfb4b5feaa91858e3737425df5946796c00935
 
 name:           uniform-json
 version:        0.0.2
@@ -27,13 +27,12 @@ extra-source-files:
 
 library
   exposed-modules:
-      Lib
       Uniform.Json
       Uniform.Yaml
   other-modules:
       Paths_uniform_json
   hs-source-dirs:
-      src
+      ./.
   build-depends:
       aeson
     , aeson-pretty

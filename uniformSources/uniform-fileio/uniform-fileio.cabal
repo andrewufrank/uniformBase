@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8c8bdeecb9c9a89140f663ee8d9b5b50ef6108c237f157ad6880b948ea482ec1
+-- hash: a3ded19d1a0cd1b2398c87cf19b72102d32b001d4934fa0e181ff138ab277a00
 
 name:           uniform-fileio
 version:        0.0.16
@@ -34,7 +34,7 @@ library
   other-modules:
       Paths_uniform_fileio
   hs-source-dirs:
-      src
+      ./.
   build-depends:
       base >=4.7 && <5
     , bytestring

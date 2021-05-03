@@ -4,13 +4,14 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7fce310e2d74571d2dd77410887273932a02930807b2f52d516955dff6486cb4
+-- hash: 6ca5161d33bcd3257d680b0bea2b40fb8b40e7e96864ad84a5d1981256c19eed
 
 name:           uniform-algebras
 version:        0.0.10.0
 synopsis:       some simple algebras, eg. zero
-description:    simple algebras without too much mathematical underpinning
+description:    simple algebras without much mathematical underpinning
                 zero (not a semigroupoid...)
+                exports also Maybe and Either
 category:       Algebra
 author:         Andrew Frank
 maintainer:     Andrew U. Frank <andrewufrank@gmail.com>
@@ -23,6 +24,7 @@ extra-source-files:
 
 library
   exposed-modules:
+      Uniform.ListForm
       Uniform.Pointless
       Uniform.Zero
   other-modules:

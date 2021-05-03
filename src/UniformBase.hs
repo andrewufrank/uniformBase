@@ -98,12 +98,9 @@ import Uniform.Pointless
       trd4,
       trd5 )
 import Uniform.Strings 
--- import Uniform.StartApp
 import Uniform.FileIO
 import Uniform.Error
 import Uniform.Json
 import Uniform.Yaml hiding (encode,decode)
     -- export qualified as Y.encode, Y.decode)
--- import  Uniform.CmdLineArgs
--- import Uniform.Pandoc
 import Uniform.Time 

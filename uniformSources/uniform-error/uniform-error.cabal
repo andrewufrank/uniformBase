@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f64e97dd140e060b899446a01e5b05c829ffe1c546d1a9df323f6643612fed12
+-- hash: 46457736953c59439f3de1f961bfa16ae4b45cf49e60f79077110ba7e98846a4
 
 name:           uniform-error
 version:        0.0.10.1
@@ -30,7 +30,7 @@ library
   other-modules:
       Paths_uniform_error
   hs-source-dirs:
-      src
+      ./.
   build-depends:
       base >=4.7 && <5
     , monads-tf

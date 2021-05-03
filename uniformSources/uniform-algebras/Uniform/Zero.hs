@@ -2,7 +2,9 @@
 ---Module      :   Zeros
 -- a naive and simple data type 
 -- usable to stand in for most kinds of nothing 
+-- added Either and Maybe to import wherever needed
 --
+-- Generics is for further experimentation
 -- includes commented out code and hints to
 -- experiment with automatic generation of instances
 ----------------------------------------------------------------------
