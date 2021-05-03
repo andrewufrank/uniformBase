@@ -1,4 +1,4 @@
------------------------------------------------------------------------------
+---------------------------------------------------------------------
 --Main.hs
 -- Module      :  Main
 -- Copyright   :  andrew u frank 2016
@@ -6,7 +6,7 @@
 -- | test  the error modue
 --
 --
------------------------------------------------------------------------------
+-------------------------------------------------------------------------
 {-# LANGUAGE
     MultiParamTypeClasses
     , TypeSynonymInstances
@@ -32,7 +32,7 @@ module Main (main) where
 
 programName = "algebras"
 
-debug_main  =  True
+debugMain  =  True
 
 putIOwords = putStrLn . unwords
 

@@ -1,0 +1,40 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:uniformBase"
+
+    - path: "uniformSources"
+      component: "lib:uniformBase"
+
+    - path: "uniformSources/uniform-algebras/src"
+      component: "lib:uniform-algebras"
+
+    - path: "uniformSources/uniform-error/src"
+      component: "lib:uniform-error"
+
+    - path: "uniformSources/uniform-error/test"
+      component: "uniform-error:test:error-test"
+
+    - path: "uniformSources/uniform-fileio/src"
+      component: "lib:uniform-fileio"
+
+    - path: "uniformSources/uniform-fileio/test"
+      component: "uniform-fileio:test:strings-test"
+
+    - path: "uniformSources/uniform-json/src"
+      component: "lib:uniform-json"
+
+    - path: "uniformSources/uniform-json/test"
+      component: "uniform-json:test:strings-test"
+
+    - path: "uniformSources/uniform-strings/src"
+      component: "lib:uniform-strings"
+
+    - path: "uniformSources/uniform-strings/test"
+      component: "uniform-strings:test:strings-test"
+
+    - path: "uniformSources/uniform-time/src"
+      component: "lib:uniform-time"
+
+    - path: "uniformSources/uniform-time/test"
+      component: "uniform-time:test:strings-test"

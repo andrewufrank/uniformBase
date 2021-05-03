@@ -7,31 +7,31 @@
 
 
 # Warnings currently triggered by your code
-- ignore: {name: "Redundant if"}
+# - ignore: {name: "Redundant if"}
 - ignore: {name: "Eta reduce"}
-- ignore: {name: "Redundant bracket"}
-- ignore: {name: "Use dropWhile"}
-- ignore: {name: "Use takeWhile"}
-- ignore: {name: "Unused LANGUAGE pragma"}
-- ignore: {name: "Use newtype instead of data"}
+# - ignore: {name: "Redundant bracket"}
+# - ignore: {name: "Use dropWhile"}
+# - ignore: {name: "Use takeWhile"}
+# - ignore: {name: "Unused LANGUAGE pragma"}
+# - ignore: {name: "Use newtype instead of data"}
 - ignore: {name: "Redundant return"}
-- ignore: {name: "Use all"}
-- ignore: {name: "Used otherwise as a pattern"}
-- ignore: {name: "Use map once"}
-- ignore: {name: "Avoid lambda using `infix`"}
-- ignore: {name: "Use fewer LANGUAGE pragmas"}
+# - ignore: {name: "Use all"}
+# - ignore: {name: "Used otherwise as a pattern"}
+# - ignore: {name: "Use map once"}
+# - ignore: {name: "Avoid lambda using `infix`"}
+# - ignore: {name: "Use fewer LANGUAGE pragmas"}
 - ignore: {name: "Redundant do"}
-- ignore: {name: "Redundant $"}
-- ignore: {name: "Use <$>"}
-- ignore: {name: "Avoid lambda"}
-- ignore: {name: "Use concatMap"}
-- ignore: {name: "Use :"}
-- ignore: {name: "Use mapM"}
-- ignore: {name: "Use /="}
-- ignore: {name: "Use list literal"}
-- ignore: {name: "Parse error"}
-- ignore: {name: "Use fewer imports"}
-- ignore: {name: "Use let"}
+# - ignore: {name: "Redundant $"}
+# - ignore: {name: "Use <$>"}
+# - ignore: {name: "Avoid lambda"}
+# - ignore: {name: "Use concatMap"}
+# - ignore: {name: "Use :"}
+# - ignore: {name: "Use mapM"}
+# - ignore: {name: "Use /="}
+# - ignore: {name: "Use list literal"}
+# - ignore: {name: "Parse error"}
+# - ignore: {name: "Use fewer imports"}
+# - ignore: {name: "Use let"}
 
 
 # Specify additional command line arguments

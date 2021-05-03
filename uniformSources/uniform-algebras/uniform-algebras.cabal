@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d7ed8ccf5f02953fdc67073a1e1520945be3c4b35adcf0199c06ce00050bcc0a
+-- hash: 7fce310e2d74571d2dd77410887273932a02930807b2f52d516955dff6486cb4
 
 name:           uniform-algebras
 version:        0.0.10.0
@@ -23,13 +23,12 @@ extra-source-files:
 
 library
   exposed-modules:
-      Uniform.ListForm
       Uniform.Pointless
       Uniform.Zero
   other-modules:
       Paths_uniform_algebras
   hs-source-dirs:
-      src
+      ./.
   build-depends:
       base >=4.7 && <5
   default-language: Haskell2010

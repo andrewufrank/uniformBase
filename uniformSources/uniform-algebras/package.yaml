@@ -22,7 +22,8 @@ dependencies:
 - base >= 4.7 && < 5
 
 library:
-  source-dirs: src
+  source-dirs: 
+    - .
 
 # this is only a library, no directly executable
 
