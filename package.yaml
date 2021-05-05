@@ -64,7 +64,10 @@ dependencies:
 library:
   source-dirs: 
         - .
- 
+  verbatim:
+    autogen-modules:
+        Paths_uniformBase
+
 # executables:
 #   startAppTest:
 #     main:                StartAppTest.hs
