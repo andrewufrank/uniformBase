@@ -1,7 +1,6 @@
 # UniformBase
 
-The package imports separately compiled packages and exports all its symbols. 
+The package imports separately compilable and usable packages. This package and all its parts are self-contained and need no further imports; no need to import the subpackages individually.
 
-# design
-- the individual packages must be listed in the cabal.project file (in packages which import as well!)
-- the symbols are imported globally with UniformBase (not needed to import the subpackages individually and not needed to list them in the package.yaml)
+The package depends indirectly on many often used packages but some concentration is planned in the future, using other attemps with similar goals. 
+ 

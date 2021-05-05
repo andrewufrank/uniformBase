@@ -16,6 +16,7 @@ module UniformBase
     -- , module Uniform.StartApp   -- in package Error 
     -- , module Uniform.CmdLineArgs 
     -- , Uniform.FileIO
+    , Generic
     ) where
 
 import Uniform.Zero
@@ -27,3 +28,4 @@ import Uniform.Error
 -- import Uniform.Yaml hiding (encode,decode)
     -- export qualified as Y.encode, Y.decode)
 import Uniform.Time 
+import GHC.Generics
