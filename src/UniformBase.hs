@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE ExplicitNamespaces #-}
 
 module UniformBase 
     ( module UniformBase
@@ -45,32 +46,6 @@ import Uniform.Zero
       GZero(..),
       Zeros(..) )
 import Uniform.Pointless
-    ( cross,
-      ffh5,
-      first,
-      first3,
-      first4,
-      fourth4,
-      fst3,
-      fst4,
-      fst5,
-      fth4,
-      fth5,
-      pair,
-      second,
-      second3,
-      second4,
-      snd3,
-      snd4,
-      snd5,
-      swapPair,
-      thd4,
-      thd5,
-      third3,
-      third4,
-      trd3,
-      trd4,
-      trd5 )
     ( cross,
       ffh5,
       first,

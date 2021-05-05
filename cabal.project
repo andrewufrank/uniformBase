@@ -1,6 +1,6 @@
 packages: 
     *.cabal
-    uniformSources/uniform-algebras/*.cabal
+    /home/frank/Workspace11/uBase/uniform-algebras/*.cabal
     uniformSources/uniform-error/*.cabal
     uniformSources/uniform-fileio/*.cabal
     uniformSources/uniform-json/*.cabal

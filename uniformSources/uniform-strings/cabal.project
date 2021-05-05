@@ -1,3 +1,0 @@
-packages: 
-    ./*.cabal
-    ../uniform-algebras/*.cabal
