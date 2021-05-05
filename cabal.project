@@ -1,12 +1,7 @@
 packages: 
-    *.cabal
-    /home/frank/Workspace11/uBase/uniform-algebras/*.cabal
-    uniformSources/uniform-error/*.cabal
-    uniformSources/uniform-fileio/*.cabal
-    uniformSources/uniform-json/*.cabal
-    uniformSources/uniform-strings/*.cabal
-    uniformSources/uniform-time/*.cabal
-
--- Disregard all upper bounds when dependency solving
--- allow-newer: all 
--- fails because  zlib <4.16
+    ./*.cabal
+    ../uniform-algebras/*.cabal
+    ../uniform-strings/*.cabal
+    ../uniform-error/*.cabal
+    ../uniform-time/*.cabal
+    ../uniform-fileio/*.cabal

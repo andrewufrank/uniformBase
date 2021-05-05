@@ -4,28 +4,28 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b304fd74f015846073ee026c18f0a9c32dd171385b634da9ab7cb1674430011f
+-- hash: 68f702fc74582b845e8ff22712150e5a305f6ed69f24d7057121ae91d002531b
 
 name:           uniformBase
 version:        0.0.0.2
 synopsis:       a uniform base to build apps on
-description:    Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
-category:       Programming
-homepage:       https://github.com/githubuser/uniform#readme
-bug-reports:    https://github.com/githubuser/uniform/issues
-author:         Andrew U Frank
-maintainer:     example@example.com
-copyright:      2021 Author name here
-license:        BSD3
-license-file:   LICENSE
+description:    Uniform goals:
+                - same functions with identical semantics independent of representation
+                - all functions are total (or become so using Maybe or Either)
+                - performance is NOT a goal - once the program logic is confirmed and tested, performance improvements can be achieved based on observations. The goal for "uniform" is reducing the complexity for the designer of a program - performance improvement come when the logic is correct.     
+                .
+                .
+                Please see the README on GitHub at <https://github.com/githubuser/primo#readme>
+category:       Programming Uniform
+author:         Andrew Frank
+maintainer:     Andrew U. Frank <andrewufrank@geoinfo.tuwien.ac.at>
+copyright:      2021 Andrew U. Frank
+license:        GPL
+license-file:   GPL_3
 build-type:     Simple
 extra-source-files:
     README.md
     ChangeLog.md
-
-source-repository head
-  type: git
-  location: https://github.com/githubuser/uniform
 
 library
   exposed-modules:
@@ -33,14 +33,12 @@ library
   other-modules:
       Paths_uniformBase
   hs-source-dirs:
-      src
-      uniformSources
+      ./.
   build-depends:
       base >=4.7 && <5
     , uniform-algebras
     , uniform-error
     , uniform-fileio
-    , uniform-json
     , uniform-strings
     , uniform-time
   default-language: Haskell2010
