@@ -58,12 +58,13 @@ dependencies:
 - uniform-fileio
 - uniform-error
 - uniform-time
+# - uniform-pathshowcase is part of fileio
 # - uniform-json
 # - uniform-cmdLineArgs
 
 library:
   source-dirs: 
-        - .
+        - src
   verbatim:
     autogen-modules:
         Paths_uniformBase
