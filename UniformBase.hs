@@ -9,6 +9,7 @@ module UniformBase
     , module Uniform.Error
     , module Uniform.Strings
     , module Uniform.FileIO
+    , module Uniform.PathShowCase
     , module Uniform.Time
     , Generic
     ) where
@@ -19,4 +20,7 @@ import Uniform.Strings
 import Uniform.FileIO
 import Uniform.Error
 import Uniform.Time 
+import Uniform.PathShowCase
 import GHC.Generics
+
+-- data Aby = Aby44 Int  (Path Abs Dir)  deriving (Eq, Ord, Show, Read )
