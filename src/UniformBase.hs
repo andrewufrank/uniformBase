@@ -12,8 +12,8 @@ module UniformBase
     -- , module Uniform.PathShowCase
     , module Uniform.Time
     , Generic
-    , Read 
-    , Path (..)
+    -- , Read 
+    -- , Path (..)
     ) where
 
 import Uniform.Zero
