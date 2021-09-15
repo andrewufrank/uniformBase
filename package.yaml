@@ -13,6 +13,9 @@ extra-source-files:
 
 synopsis:           A uniform base to build apps on
 category:           Programming Uniform 
+# v 0.1.0 is on hackage
+# v 0.1.2  added NoticeLevel
+#     problem with showPretty
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
@@ -54,7 +57,7 @@ description:  |
 dependencies:
 - base >= 4.7 && < 5
 - uniform-algebras
-- uniform-strings
+- uniform-strings ==0.1.1
 - uniform-fileio
 - uniform-error
 - uniform-time

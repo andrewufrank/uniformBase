@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE ExplicitNamespaces #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module UniformBase 
     ( module UniformBase
@@ -25,4 +26,11 @@ import Uniform.Time
 -- import Uniform.PathShowCase
 import GHC.Generics
 
--- data Aby = Aby44 Int  (Path Abs Dir)  deriving (Eq, Ord, Show, Read )
+-- TODO move 
+
+data NoticeLevel = NoticeLevel0 | NoticeLevel1 | NoticeLevel2 deriving (Eq, Ord, Show, Read, Generic)
+instance Zeros NoticeLevel where zero = NoticeLevel0 
+inform, informNone, informAll :: NoticeLevel -> Bool
+inform =  not . isZero
+informNone = const False  -- to use with: when (informNone debug)
+informAll = const True 
