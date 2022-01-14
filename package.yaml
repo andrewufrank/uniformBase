@@ -60,11 +60,11 @@ description:  |
   
 dependencies:
 - base >= 4.7 && < 5
-- uniform-algebras == 0.1.2
-- uniform-strings ==0.1.2
-- uniform-fileio ==0.1.2
-- uniform-error
-- uniform-time
+- uniform-algebras >= 0.1.2
+- uniform-strings >=0.1.2
+- uniform-fileio >=0.1.2
+- uniform-error   >= 0.1.0
+- uniform-time    >= 0.1.0
 # - uniform-pathshowcase is part of fileio
 # - uniform-json
 # - uniform-cmdLineArgs
