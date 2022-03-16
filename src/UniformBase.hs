@@ -31,6 +31,9 @@ import GHC.Generics
 
 data NoticeLevel = NoticeLevel0 | NoticeLevel1 | NoticeLevel2 deriving (Eq, Ord, Show, Read, Generic)
 instance Zeros NoticeLevel where zero = NoticeLevel0 
+instance Default NoticeLevel where 
+        def = NoticeLevel2 
+
 inform, informNone, informAll :: NoticeLevel -> Bool
 inform =  not . isZero
 informNone = const False  -- to use with: when (informNone debug)
