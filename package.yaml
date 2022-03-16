@@ -60,6 +60,8 @@ description:  |
   
 dependencies:
 - base >= 4.7 && < 5
+- data-default  # for noticeLevel
+
 - uniform-algebras >= 0.1.2
 - uniform-strings >=0.1.2
 - uniform-fileio >=0.1.3

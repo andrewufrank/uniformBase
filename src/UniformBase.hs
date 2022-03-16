@@ -26,6 +26,7 @@ import Uniform.Error
 import Uniform.Time 
 -- import Uniform.PathShowCase
 import GHC.Generics
+import Data.Default
 
 -- TODO move 
 
