@@ -5,6 +5,8 @@ packages:
 - .
  
 extra-deps:   #to expand with local packages 
+- ../uniform-algebras
+- ../uniform-strings
 - ../uniform-error
 - ../uniform-fileio
 - ../uniform-time
