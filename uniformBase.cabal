@@ -1,10 +1,10 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.34.6.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6716b3c22dd3faf3e6a8079a572c746bd8f4ce19b347c16f96c0d0e5b49640ea
+-- hash: 47d90d686136e205664eaa3fc8f70ebca548def6251b828a3c80015d915d9f97
 
 name:           uniformBase
 version:        0.1.4
@@ -63,6 +63,6 @@ library
     , uniform-error >=0.1.2
     , uniform-fileio >=0.1.3
     , uniform-strings >=0.1.2
-    , uniform-time >=0.1.0
+    , uniform-time >=0.1.1
   default-language: Haskell2010
   autogen-modules: Paths_uniformBase
