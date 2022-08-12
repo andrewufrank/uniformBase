@@ -4,10 +4,10 @@ cabal-version: 2.2
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 94719ec75f0162953f9ae152bc3cf3c7e9456e850e6a77785ec783171be06a28
+-- hash: 8594a5a19a11dd532d79878ef3041df0e3595112eef3640aa54a0ce062c60179
 
 name:           uniformBase
-version:        0.1.4
+version:        0.1.4.2
 synopsis:       A uniform base to build apps on
 description:    Goals:
                 .
@@ -59,8 +59,8 @@ library
   build-depends:
       base >=4.7 && <5
     , data-default
-    , uniform-algebras >=0.1.3
-    , uniform-error >=0.1.3
+    , uniform-algebras >=0.1.4.1
+    , uniform-error >=0.1.3.2
     , uniform-fileio >=0.1.3
     , uniform-strings >=0.1.3
     , uniform-time >=0.1.3

@@ -1,24 +1,26 @@
+# stack.yaml for uniformBase 
 
-resolver: lts-19.16 # for ghc 9.0.2 newest lts
+resolver: lts-18.26 # for ghc 9.0.2 newest lts
 
 packages:
 - .
  
 extra-deps:   #to expand with local packages 
-# - ../uniform-algebras
-# - ../uniform-strings
-# - ../uniform-error
 # - ../uniform-fileio
 # - ../uniform-time
 
-- uniform-algebras-0.1.3@sha256:b367633d547124f158e3db4b981ed05bdc9225c3bdbce53dd7127d542ac68132,1583
-- uniform-error-0.1.3@sha256:d7d1090c6900ec16229568b1ea167c4082bb65ab7bd3b0a52e2b873cb9fcaa3e,1870
+- ../uniform-algebras
+#- uniform-algebras-0.1.3@sha256:b367633d547124f158e3db4b981ed05bdc9225c3bdbce53dd7127d542ac68132,1583
+- ../uniform-error
+# - uniform-error-0.1.3@sha256:d7d1090c6900ec16229568b1ea167c4082bb65ab7bd3b0a52e2b873cb9fcaa3e,1870
 - uniform-fileio-0.1.3@sha256:574a17a2848c1fdf69554c3d208c6dcd13e652492794f15dcb5e97d4b1e05b98,2706
-- uniform-strings-0.1.3@sha256:8e5f482feedb9838ad485756fb9490d40bf27e1cf65b966558dc0ba0ee5e1097,1980
+- ../uniform-strings
+# - uniform-strings-0.1.3@sha256:8e5f482feedb9838ad485756fb9490d40bf27e1cf65b966558dc0ba0ee5e1097,1980
 - uniform-time-0.1.3@sha256:1605c2dd1bc617cb1237b29a5ba98b425dcd46ad75b750fdc6fe097acff55b0b,1430
 
 
 - test-invariant-0.4.5.0@sha256:d1aa6b61e0057a4065eeff3286208e947a0b44c6a2186210399f5e5e7fb0d0dd,1902
+- aop-prelude-0.4.1.1@sha256:87f541964bb8c0e042125955bf1580020a664e62ab101b0a1068b8f278c2e001,1207
 
 ghc-options:
   "$everything": -haddock  # for documentation
