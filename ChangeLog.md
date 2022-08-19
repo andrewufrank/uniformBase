@@ -19,6 +19,7 @@ is was started to include the change with aeson v 2
     - split pointless and tuples 
     - for pointless, aligned with function names from Algebra of Programming (aop-prelude) 
 
-
+### 0.1.4.2
+    pointless: add   dup
 
 
