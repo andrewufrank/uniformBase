@@ -8,6 +8,7 @@ module UniformBase
     , module Uniform.Pointless
     , module Uniform.Tuples
     , module Uniform.Error
+    , module Uniform.NoticeLevel
     , module Uniform.Strings
     , module Uniform.FileIO
     -- , module Uniform.PathShowCase
@@ -26,6 +27,7 @@ import Uniform.Tuples
 import Uniform.Strings 
 import Uniform.FileIO
 import Uniform.Error
+import Uniform.NoticeLevel
 import Uniform.Time 
 -- import Uniform.PathShowCase
 import GHC.Generics
