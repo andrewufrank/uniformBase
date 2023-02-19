@@ -22,4 +22,5 @@ is was started to include the change with aeson v 2
 ### 0.1.4.2
     pointless: add   dup
 
+0.1.4.3 added renameToBak8
 
