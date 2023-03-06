@@ -2,9 +2,14 @@
 ##  v 0.1.0 is on hackage
 ##  v 0.1.2  added NoticeLevel
       problem with showPretty
+    v 0.1.2    
+    added NoticeLevel to 
+        problem with ShowPretty defined differently
+
 ##  v 0.1.3 
 is was started to include the change with aeson v 2
               but was retracted to aeson < 2 for compatibility with pandoc
+
 
   probably works with all aeson version, nowhere stated which version 
 

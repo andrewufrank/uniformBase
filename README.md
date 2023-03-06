@@ -9,6 +9,4 @@ libraries required:
 - for uniform-strings
     debian: apt install libicu-dev
 
- v 0.1.2    
-    added NoticeLevel to 
-        problem with ShowPretty defined differently
+ 

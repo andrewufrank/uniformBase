@@ -4,10 +4,10 @@ cabal-version: 2.2
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 61754c39eba183291890ad18ad567f04bc6e0874e1020657c1bc3f5bb2565cef
+-- hash: 6d6a55820381db8ebe6aafa7fa5f0de193e5860098b21dbc45eb21e30ad258f5
 
 name:           uniformBase
-version:        0.1.4.3
+version:        0.1.5.1
 synopsis:       A uniform base to build apps on
 description:    Goals:
                 .
@@ -38,6 +38,7 @@ description:    Goals:
                 .
                 Please see the README on GitHub at <https://github.com/andrewufrank/uniformBase/readme>
 category:       Programming Uniform
+homepage:       https://github.com/github.com:andrewufrank/uniformBase.git#readme
 bug-reports:    https://github.com/andrewufrank/uniformBase/issues
 author:         Andrew Frank
 maintainer:     Andrew U. Frank <uniform@gerastree.at>
@@ -49,6 +50,10 @@ extra-source-files:
     README.md
     ChangeLog.md
 
+source-repository head
+  type: git
+  location: https://github.com/github.com:andrewufrank/uniformBase.git
+
 library
   exposed-modules:
       UniformBase
@@ -59,10 +64,10 @@ library
   build-depends:
       base >=4.7 && <5
     , data-default
-    , uniform-algebras >=0.1.4.2
-    , uniform-error >=0.1.3.2
-    , uniform-fileio >=0.1.3.1
-    , uniform-strings >=0.1.3.5
-    , uniform-time >=0.1.3
+    , uniform-algebras >=0.1.5
+    , uniform-error >=0.1.5
+    , uniform-fileio >=0.1.5
+    , uniform-strings >=0.1.5
+    , uniform-time >=0.1.5
   default-language: Haskell2010
   autogen-modules: Paths_uniformBase
