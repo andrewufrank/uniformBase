@@ -24,3 +24,4 @@ is was started to include the change with aeson v 2
 
 0.1.4.3 added renameToBak8
 
+0.1.5.1  ghc 9.2.5 changed versino to be in sync with other packages
